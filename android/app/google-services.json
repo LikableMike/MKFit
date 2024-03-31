@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "926368246232",
+    "project_id": "mkfit-e22fa",
+    "storage_bucket": "mkfit-e22fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926368246232:android:6e1a5f951042aea7842aad",
+        "android_client_info": {
+          "package_name": "com.GoGitters.mkfit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqp7dhS2ADjRyS3xm1dq5t0_nkiRPGAuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
