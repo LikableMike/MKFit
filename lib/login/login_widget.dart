@@ -171,6 +171,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Inter',
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
                                   letterSpacing: 0.0,
                                 ),
                             minLines: null,
@@ -252,6 +254,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Inter',
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
                                   letterSpacing: 0.0,
                                 ),
                             minLines: null,
