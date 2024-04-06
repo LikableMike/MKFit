@@ -9,7 +9,7 @@ class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode1;
   TextEditingController? emailAddressController1;
-  String? Function(BuildContext, String?)? emailAddressController1Validator;
+  String? Function(BuildContext, String?)? fullNameControllerValidator;
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode2;
   TextEditingController? emailAddressController2;

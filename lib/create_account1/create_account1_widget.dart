@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -16,6 +18,8 @@ class CreateAccount1Widget extends StatefulWidget {
 
 class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
   late CreateAccount1Model _model;
+  bool _isValid = false;
+  String _errorMessage = '';
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -43,6 +47,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
     _model.emailAddressFocusNode6 ??= FocusNode();
 
     _model.passwordController ??= TextEditingController();
+
     _model.passwordFocusNode ??= FocusNode();
 
     _model.passwordConfirmController ??= TextEditingController();
@@ -244,10 +249,10 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             letterSpacing: 0.0,
                                           ),
                                       minLines: null,
-                                      keyboardType: TextInputType.name,
-                                      validator: _model
-                                          .emailAddressController1Validator
-                                          .asValidator(context),
+                                      maxLength: 30,
+                                      keyboardType: TextInputType.text,
+                                      validator: _model.fullNameControllerValidator.asValidator(context),
+                                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]'))],
                                     ),
                                   ),
                                 ),
@@ -805,7 +810,13 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      context.pushNamed('weightSetting');
+                                      _isValid  = _validatePassword(_model.passwordController.text);
+                                      if(_isValid){
+                                        context.pushNamed('weightSetting');
+                                      }else{
+                                        print(_model.passwordController.text);
+                                      }
+
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
@@ -923,5 +934,38 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
         ),
       ),
     );
+  }
+
+  bool _validatePassword(String password) {
+    // Reset error message
+    _errorMessage = '';
+
+    // Password length greater than 6
+    if (password.length <6) {
+      _errorMessage += 'Password must be longer than 6 characters.\n';
+    }
+
+    // Contains at least one uppercase letter
+    if (!password.contains(RegExp(r'[A-Z]'))) {
+      _errorMessage += '• Uppercase letter is missing.\n';
+    }
+
+    // Contains at least one lowercase letter
+    if (!password.contains(RegExp(r'[a-z]'))) {
+      _errorMessage += '• Lowercase letter is missing.\n';
+    }
+
+    // Contains at least one digit
+    if (!password.contains(RegExp(r'[0-9]'))) {
+      _errorMessage += '• Digit is missing.\n';
+    }
+
+    // Contains at least one special character
+    if (!password.contains(RegExp(r'[$_+=~!@#%^&*(),.?":{}|<>]'))) {
+      _errorMessage += '• Special character is missing.\n';
+    }
+
+    // If there are no error messages, the password is valid
+    return _errorMessage.isEmpty;
   }
 }
