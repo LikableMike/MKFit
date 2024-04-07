@@ -1,15 +1,27 @@
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'create_account1_widget.dart' show CreateAccount1Widget;
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // State field(s) for FullName widget.
+  FocusNode? fullNameFocusNode;
+  TextEditingController? fullNameController;
+  String? Function(BuildContext, String?)? fullNameControllerValidator;
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode1;
   TextEditingController? emailAddressController1;
-  String? Function(BuildContext, String?)? fullNameControllerValidator;
+  String? Function(BuildContext, String?)? emailAddressController1Validator;
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode2;
   TextEditingController? emailAddressController2;
@@ -26,10 +38,6 @@ class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   FocusNode? emailAddressFocusNode5;
   TextEditingController? emailAddressController5;
   String? Function(BuildContext, String?)? emailAddressController5Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode6;
-  TextEditingController? emailAddressController6;
-  String? Function(BuildContext, String?)? emailAddressController6Validator;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordController;
@@ -50,6 +58,9 @@ class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   @override
   void dispose() {
     unfocusNode.dispose();
+    fullNameFocusNode?.dispose();
+    fullNameController?.dispose();
+
     emailAddressFocusNode1?.dispose();
     emailAddressController1?.dispose();
 
@@ -64,9 +75,6 @@ class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
 
     emailAddressFocusNode5?.dispose();
     emailAddressController5?.dispose();
-
-    emailAddressFocusNode6?.dispose();
-    emailAddressController6?.dispose();
 
     passwordFocusNode?.dispose();
     passwordController?.dispose();

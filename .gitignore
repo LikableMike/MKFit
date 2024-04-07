@@ -1,1 +1,67 @@
+# General
+*.log
+*.dart.js
+.dart_tool/
+.packages
 
+# Flutter/Dart/Pub related
+**/doc/api/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+.pub-cache/
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/local.properties
+
+# iOS related
+**/ios/**/Pods
+**/ios/.symlinks
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/GeneratedPluginRegistrant.*
+**/ios/Flutter/podhelper.rb
+**/ios/Flutter/App.framework
+**/ios/Flutter/FlutterPluginRegistrant/
+
+# macOS related
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral/
+**/macos/Pods/
+
+# Web related
+web: build/
+
+# IntelliJ related
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Others
+.vscode/
+
+
+# Gradle files
+.gradle/
+
+# Intermediate build files
+build/
+
+# Local configuration files
+local.properties
+
+# Flutter/Dart build artifacts
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Local .idea workspace files
+.idea/
+
+.gradle/
