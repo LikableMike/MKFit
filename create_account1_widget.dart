@@ -34,8 +34,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
     _model.emailAddressController2 ??= TextEditingController();
     _model.emailAddressFocusNode2 ??= FocusNode();
 //Phone Number Field
-    _model.emailAddressController3 ??= TextEditingController();
-    _model.emailAddressFocusNode3 ??= FocusNode();
+//Formerly emailAddressController3 and emailAddressFocusNode3
+    _model.phoneNumberController ??= TextEditingController();
+    _model.phoneNumberFocusNode ??= FocusNode();
 //Height Field
     _model.emailAddressController4 ??= TextEditingController();
     _model.emailAddressFocusNode4 ??= FocusNode();
@@ -338,8 +339,8 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     width: 370.0,
                                     child: TextFormField(
                                       controller:
-                                          _model.emailAddressController3,
-                                      focusNode: _model.emailAddressFocusNode3,
+                                          _model.phoneNumberController,
+                                      focusNode: _model.phoneNumberFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
                                       obscureText: false,
@@ -400,7 +401,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       minLines: null,
                                       keyboardType: TextInputType.emailAddress,
                                       validator: _model
-                                          .emailAddressController3Validator
+                                          .phoneNumberControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -619,10 +620,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
+                                       minLines: null,
+                                      maxLength: 20,
                                       validator: _model
                                           .userNameControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[a-zA-Z0-9]'))
+                                      ]
                                     ),
                                   ),
                                 ),
