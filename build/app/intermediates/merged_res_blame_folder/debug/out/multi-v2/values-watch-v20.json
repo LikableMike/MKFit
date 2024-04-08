@@ -4,7 +4,7 @@
             "outputFile": "com.GoGitters.mkfit.app-mergeDebugResources-20:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\avila\\.gradle\\caches\\transforms-3\\3944cf9a0b69db133b8f1cf3e05f998e\\transformed\\jetified-play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
+                    "source": "C:\\Users\\micha\\.gradle\\caches\\transforms-3\\3944cf9a0b69db133b8f1cf3e05f998e\\transformed\\jetified-play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\avila\\.gradle\\caches\\transforms-3\\f009572fa9d3826fa509854a45b726ac\\transformed\\appcompat-1.2.0\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "C:\\Users\\micha\\.gradle\\caches\\transforms-3\\f009572fa9d3826fa509854a45b726ac\\transformed\\appcompat-1.2.0\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

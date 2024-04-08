@@ -139,6 +139,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const WorkoutPlanPageWidget(),
         ),
         FFRoute(
+          name: 'IndividualExercisePage',
+          path: '/IndividualExercisePage',
+          builder: (context, params) => const IndividualWorkoutPageWidget(),
+        ),
+        FFRoute(
           name: 'ConfirmNewUsername',
           path: '/confirmNewUsername',
           builder: (context, params) => const ConfirmNewUsernameWidget(),
