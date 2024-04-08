@@ -4,7 +4,7 @@
             "outputFile": "com.GoGitters.mkfit.app-mergeDebugResources-20:/values-v31/values-v31.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\micha\\OneDrive\\Desktop\\MKFIT\\MKFit\\android\\app\\src\\main\\res\\values-v31\\styles.xml",
+                    "source": "C:\\Users\\avila\\OneDrive\\Desktop\\CSC 190\\MKFit\\android\\app\\src\\main\\res\\values-v31\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
