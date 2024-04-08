@@ -398,9 +398,11 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
-                                      keyboardType: TextInputType.emailAddress,
-                                      validator: _model
+                                        //Sets phone number to 10 characters maximum and phone input type  
+                                        minLines: null,
+                                        maxLength: 10,
+                                        keyboardType: TextInputType.phone,
+                                        validator: _model
                                           .phoneNumberControllerValidator
                                           .asValidator(context),
                                     ),
@@ -620,6 +622,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
+                                          //Sets username to 20 characters maximum and only alphanumberics
                                        minLines: null,
                                       maxLength: 20,
                                       validator: _model
