@@ -1,1 +1,8 @@
+*.filecache
+*.stamp
+*.d
+*.flutter-plugins-dependencies
+*.jar
+*.txt
+*.sha1
 
