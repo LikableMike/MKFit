@@ -812,7 +812,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     onPressed: () async {
                                       _isValid  = _validatePassword(_model.passwordController.text);
                                       if(_isValid){
-                                        context.pushNamed('weightSetting');
+                                        context.pushNamed('PARQ');
                                       }else{
                                         print(_model.passwordController.text);
                                       }
