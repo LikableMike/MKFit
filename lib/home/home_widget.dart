@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:math';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -12,46 +10,6 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'home_model.dart';
 export 'home_model.dart';
 
-class MotivationalMessageGenerator {
-  final List<String> _messages = [
-    "Believe in yourself and all that you are.",
-    "Success starts with self-discipline.",
-    "Your body can do anything. It's your brain you have to convince.",
-    "Don't stop until you're proud.",
-    "The only bad workout is the one that didn't happen.",
-    "Push yourself, because no one else is going to do it for you.",
-    "Strive for progress, not perfection.",
-    "Sweat is just fat crying.",
-    "Every workout is progress.",
-    "Wake up. Work out. Kick butt. Repeat."
-    // Add more motivational messages here
-  ];
-
-  late String _currentMessage;
-
-  String get currentMessage => _currentMessage;
-
-  MotivationalMessageGenerator() {
-    _currentMessage = _generateMessage();
-    _scheduleNextMessage();
-  }
-
-  String _generateMessage() {
-    final Random random = Random();
-    return _messages[random.nextInt(_messages.length)];
-  }
-
-  void _scheduleNextMessage() {
-    final now = DateTime.now();
-    final nextMidnight = DateTime(now.year, now.month, now.day + 1);
-    final durationUntilMidnight = nextMidnight.difference(now);
-    Timer(durationUntilMidnight, () {
-      _currentMessage = _generateMessage();
-      _scheduleNextMessage();
-    });
-  }
-}
-
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
 
@@ -61,7 +19,6 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   late HomeModel _model;
-  late MotivationalMessageGenerator _messageGenerator; // Declare _messageGenerator here
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -69,9 +26,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
-    _messageGenerator = MotivationalMessageGenerator(); // Initialize _messageGenerator here
   }
-
 
   @override
   void dispose() {
@@ -108,11 +63,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                   ),
                   Text(
-                    _messageGenerator.currentMessage,
+                    'Time to rise and grind',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Readex Pro',
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      letterSpacing: 0.0,
+                          fontFamily: 'Readex Pro',
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          letterSpacing: 0.0,
                         ),
                   ),
                   Divider(
@@ -153,7 +108,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           centerTitle: false,
           toolbarHeight: 72.0,
           elevation: 0.0,
-        ),//Stoppp
+        ),
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -256,7 +211,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 ),
                               ),
                               Container(
-                                width: 288.0,
+                                width: 222.0,
                                 height: 100.0,
                                 decoration: const BoxDecoration(),
                                 child: Align(
@@ -267,7 +222,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .titleLarge
                                         .override(
                                           fontFamily: 'Inter',
-                                          fontSize: 25.0,
+                                          fontSize: 23.0,
                                           letterSpacing: 0.0,
                                         ),
                                   ),
