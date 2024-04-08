@@ -484,8 +484,13 @@ file:///C:/Users/micha/AppData/Local/Pub/Cache/hosted/pub.dev/yaml-3.1.2/
 file:///C:/Users/micha/AppData/Local/Pub/Cache/hosted/pub.dev/yaml-3.1.2/lib/
 m_k_fit
 3.0
+<<<<<<< Updated upstream
 file:///C:/Users/micha/OneDrive/Desktop/MKFIT/MKFit/
 file:///C:/Users/micha/OneDrive/Desktop/MKFIT/MKFit/lib/
+=======
+file:///C:/Users/micha/OneDrive/Documents/GitHub/MKFit/
+file:///C:/Users/micha/OneDrive/Documents/GitHub/MKFit/lib/
+>>>>>>> Stashed changes
 sky_engine
 3.2
 file:///C:/flutter/bin/cache/pkg/sky_engine/
