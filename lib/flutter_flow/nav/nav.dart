@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:m_k_fit/IndividualWorkoutPage/IndividualWorkoutPage_widget.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
@@ -148,11 +147,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'forgotPassword',
           path: '/forgotPassword',
           builder: (context, params) => const ForgotPasswordWidget(),
-        ),
-        FFRoute(
-          name: 'IndividualWorkoutPage',
-          path: '/IndividualWorkoutPage',
-          builder: (context, params) => const IndividualWorkoutPageWidget(),
         ),
         FFRoute(
           name: 'weightSetting',

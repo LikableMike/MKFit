@@ -79,7 +79,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -141,8 +142,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 4.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                         child: Text(
                                           'Weight',
                                           style: FlutterFlowTheme.of(context)
@@ -178,7 +179,45 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () {
-                                  print('IconButton pressed ...');
+                                  TextEditingController textController =
+                                      TextEditingController();
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Weight'),
+                                        content: TextField(
+                                          controller: textController,
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter Weight"),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              String input =
+                                                  textController.text;
+                                              try {
+                                                double weight =
+                                                    double.parse(input);
+                                                textController.clear();
+                                                //store weight placeholder
+                                              } catch (e) {
+                                                print("Invalid input");
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Submit'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
                                 },
                               ),
                             ],
@@ -246,7 +285,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -308,8 +348,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 4.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0.0, 0.0, 0.0, 4.0),
                                         child: Text(
                                           'BMI',
                                           style: FlutterFlowTheme.of(context)
@@ -345,7 +385,45 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                   size: 30.0,
                                 ),
                                 onPressed: () {
-                                  print('IconButton pressed ...');
+                                  TextEditingController textController =
+                                      TextEditingController();
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('BMI'),
+                                        content: TextField(
+                                          controller: textController,
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter BMI"),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              String input =
+                                                  textController.text;
+                                              try {
+                                                double bmi =
+                                                    double.parse(input);
+                                                textController.clear();
+                                                //store bmi placeholder
+                                              } catch (e) {
+                                                print("Invalid input");
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Submit'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
                                 },
                               ),
                             ],
@@ -414,7 +492,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -463,7 +542,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               ),
                               alignment: const AlignmentDirectional(-1.0, 0.0),
                               child: Align(
-                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                alignment:
+                                    const AlignmentDirectional(-1.0, 0.0),
                                 child: ListView(
                                   padding: EdgeInsets.zero,
                                   scrollDirection: Axis.vertical,
