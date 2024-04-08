@@ -97,7 +97,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) =>
               params.isEmpty ? const NavBarPage(initialPage: 'home') : const HomeWidget(),
         ),
-        FFRoute(
+        FFRoute(//Progress page Nav bar
           name: 'ProgressPage',
           path: '/progressPage',
           builder: (context, params) => params.isEmpty
