@@ -1,8 +1,23 @@
+// Jira task MA - 18        -      child task MA - 18 ,  MA - 21, and MA - 91
+
+/*
+Once in the settings page, clicking on weight and height information will take you the the
+weight and height settings page. Here, the user can input or update their weight, and height information.
+A person is now able to upload an image to track progress (MA-21), text box to enter and store wight and height
+(MA - 19, MA - 91)
+ */
+
+
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'weight_setting_model.dart';
 export 'weight_setting_model.dart';
 
@@ -28,7 +43,8 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
     super.initState();
     _model = createModel(context, () => WeightSettingModel());
 
-    _model.textController1 ??= TextEditingController();
+    _model.textController1 ??=
+        TextEditingController(text: currentUserDisplayName);
     _model.textFieldFocusNode1 ??= FocusNode();
 
     _model.textController2 ??= TextEditingController();
@@ -54,28 +70,28 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          buttonSize: 48.0,
+          borderColor: FlutterFlowTheme.of(context).error,
+          borderRadius: 30,
+          buttonSize: 48,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.home,
             color: FlutterFlowTheme.of(context).info,
-            size: 25.0,
+            size: 25,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            context.pushNamed('home');
           },
         ),
         title: Text(
           'Work Out Profile',
           style: FlutterFlowTheme.of(context).titleSmall.override(
-                fontFamily: 'Inter',
-                letterSpacing: 0.0,
-              ),
+            fontFamily: 'Inter',
+            letterSpacing: 0,
+          ),
         ),
-        actions: const [],
+        actions: [],
         centerTitle: false,
-        elevation: 0.0,
+        elevation: 0,
       ),
       body: SafeArea(
         top: true,
@@ -98,39 +114,38 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
                       'Weight Inofrmation',
                       style:
-                          FlutterFlowTheme.of(context).headlineMedium.override(
-                                fontFamily: 'Readex Pro',
-                                letterSpacing: 0.0,
-                              ),
+                      FlutterFlowTheme.of(context).headlineMedium.override(
+                        fontFamily: 'Readex Pro',
+                        letterSpacing: 0,
+                      ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(120.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(120, 0, 0, 0),
                       child: Container(
-                        width: 100.0,
-                        height: 100.0,
+                        width: 100,
+                        height: 100,
                         clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
                         ),
-                        child: Image.memory(
-                          widget.currentImage?.bytes ?? Uint8List.fromList([]),
+                        child: Image.asset(
+                          'assets/images/MK_Fit_Logo.png',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -140,8 +155,8 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding:
+                            EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                             child: TextFormField(
                               controller: _model.textController1,
                               focusNode: _model.textFieldFocusNode1,
@@ -151,43 +166,43 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0,
+                                ),
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0,
+                                ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 2.0,
+                                    FlutterFlowTheme.of(context).alternate,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).primary,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
                                 fillColor: FlutterFlowTheme.of(context)
@@ -196,9 +211,9 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                                fontFamily: 'Inter',
+                                letterSpacing: 0,
+                              ),
                               minLines: null,
                               validator: _model.textController1Validator
                                   .asValidator(context),
@@ -212,55 +227,55 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding:
+                            EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                             child: TextFormField(
                               controller: _model.textController2,
                               focusNode: _model.textFieldFocusNode2,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Current Weight',
+                                labelText: 'Current Weight in lbs',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
-                                hintText: 'Current Height',
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0,
+                                ),
+                                hintText: 'Current Weight',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0,
+                                ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 2.0,
+                                    FlutterFlowTheme.of(context).alternate,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).primary,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
                                 fillColor: FlutterFlowTheme.of(context)
@@ -269,10 +284,10 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Inter',
-                                    color: const Color(0xFFDBE2E7),
-                                    letterSpacing: 0.0,
-                                  ),
+                                fontFamily: 'Inter',
+                                color: Color(0xFFDBE2E7),
+                                letterSpacing: 0,
+                              ),
                               minLines: null,
                               validator: _model.textController2Validator
                                   .asValidator(context),
@@ -286,8 +301,8 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding:
+                            EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                             child: TextFormField(
                               controller: _model.textController3,
                               focusNode: _model.textFieldFocusNode3,
@@ -297,44 +312,45 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
-                                hintText: 'Current Height',
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0,
+                                ),
+                                hintText:
+                                'Current Height - ex. if 5\'8, type \"5.8',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0,
+                                ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    width: 2.0,
+                                    FlutterFlowTheme.of(context).alternate,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).primary,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).error,
-                                    width: 2.0,
+                                    width: 2,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
                                 fillColor: FlutterFlowTheme.of(context)
@@ -343,11 +359,17 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Inter',
-                                    color: const Color(0xFFDBE2E7),
-                                    letterSpacing: 0.0,
-                                  ),
+                                fontFamily: 'Inter',
+                                color: Color(0xFFDBE2E7),
+                                letterSpacing: 0,
+                              ),
                               minLines: null,
+                              maxLength: 4,
+                              maxLengthEnforcement:
+                              MaxLengthEnforcement.enforced,
+                              keyboardType:
+                              const TextInputType.numberWithOptions(
+                                  decimal: true),
                               validator: _model.textController3Validator
                                   .asValidator(context),
                             ),
@@ -359,13 +381,13 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     context.pushNamed(
                       'home',
                       extra: <String, dynamic>{
-                        kTransitionInfoKey: const TransitionInfo(
+                        kTransitionInfoKey: TransitionInfo(
                           hasTransition: true,
                           transitionType: PageTransitionType.fade,
                         ),
@@ -374,23 +396,22 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                   },
                   text: 'Save Changes',
                   options: FFButtonOptions(
-                    width: 270.0,
-                    height: 50.0,
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    width: 270,
+                    height: 50,
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     color: FlutterFlowTheme.of(context).primary,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Inter',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 3.0,
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                      fontFamily: 'Inter',
+                      color: Colors.white,
+                      letterSpacing: 0,
                     ),
-                    borderRadius: BorderRadius.circular(12.0),
+                    elevation: 3,
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
               ),
