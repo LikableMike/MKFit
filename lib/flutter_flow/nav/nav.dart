@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:m_k_fit/waiver/waiver_widget.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
@@ -127,6 +128,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ForgotUsernameWidget(),
         ),
         FFRoute(
+          name: 'PARQ',
+          path: '/PARQ',
+          builder: (context, params) => const ParqWidget(),
+        ),
+        FFRoute(
           name: 'ConfirmNewPassword',
           path: '/confirmNewPassword',
           builder: (context, params) => const ConfirmNewPasswordWidget(),
@@ -152,6 +158,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'forgotPassword',
           path: '/forgotPassword',
           builder: (context, params) => const ForgotPasswordWidget(),
+        ),
+        FFRoute(
+          name: 'waiver',
+          path: '/waiver',
+          builder: (context, params) => const WaiverWidget(),
         ),
         FFRoute(
           name: 'weightSetting',
