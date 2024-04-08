@@ -28,11 +28,13 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
     super.initState();
     _model = createModel(context, () => CreateAccount1Model());
 //Full Name Field
-    _model.emailAddressController1 ??= TextEditingController();
-    _model.emailAddressFocusNode1 ??= FocusNode();
+//Formerly emailAddressController1 and emailAddressFocusNode1
+    _model.fullNameController ??= TextEditingController();
+    _model.fullNameFocusNode ??= FocusNode();
 //Email Field
-    _model.emailAddressController2 ??= TextEditingController();
-    _model.emailAddressFocusNode2 ??= FocusNode();
+//Formerly emailAddressController2 and mailAddressFocusNode2
+    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressFocusNode ??= FocusNode();
 //Phone Number Field
 //Formerly emailAddressController3 and emailAddressFocusNode3
     _model.phoneNumberController ??= TextEditingController();
@@ -191,7 +193,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     width: 370.0,
                                     child: TextFormField(
                                       controller:
-                                          _model.emailAddressController1,
+                                          _model.fullNameController,
                                       focusNode: _model.emailAddressFocusNode1,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
@@ -265,8 +267,8 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     width: 370.0,
                                     child: TextFormField(
                                       controller:
-                                          _model.emailAddressController2,
-                                      focusNode: _model.emailAddressFocusNode2,
+                                          _model.emailAddressController,
+                                      focusNode: _model.emailAddressFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
                                       obscureText: false,
@@ -324,10 +326,11 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
+                                          //Email Address Validation
                                       minLines: null,
                                       keyboardType: TextInputType.emailAddress,
                                       validator: _model
-                                          .emailAddressController2Validator
+                                          .emailAddressControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
