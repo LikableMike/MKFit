@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Sun Apr 07 21:33:58 PDT 2024
 base.0=C\:\\Users\\micha\\OneDrive\\Desktop\\MKFIT\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\micha\\OneDrive\\Desktop\\MKFIT\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
@@ -5,6 +6,15 @@ base.2=C\:\\Users\\micha\\OneDrive\\Desktop\\MKFIT\\MKFit\\build\\app\\intermedi
 base.3=C\:\\Users\\micha\\OneDrive\\Desktop\\MKFIT\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
 base.4=C\:\\Users\\micha\\OneDrive\\Desktop\\MKFIT\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
 base.5=C\:\\Users\\micha\\OneDrive\\Desktop\\MKFIT\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+=======
+#Sun Apr 07 18:11:56 PDT 2024
+base.0=C\:\\Users\\avila\\OneDrive\\Desktop\\CSC 190\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\avila\\OneDrive\\Desktop\\CSC 190\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
+base.2=C\:\\Users\\avila\\OneDrive\\Desktop\\CSC 190\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.3=C\:\\Users\\avila\\OneDrive\\Desktop\\CSC 190\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.4=C\:\\Users\\avila\\OneDrive\\Desktop\\CSC 190\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
+base.5=C\:\\Users\\avila\\OneDrive\\Desktop\\CSC 190\\MKFit\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+>>>>>>> Phillip-
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=0/classes.dex
