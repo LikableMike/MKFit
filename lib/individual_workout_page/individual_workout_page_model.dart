@@ -1,13 +1,12 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'waiver_widget.dart' show WaiverWidget;
+import 'individual_workout_page_widget.dart' show IndividualWorkoutPageWidget;
 import 'package:flutter/material.dart';
 
-class WaiverModel extends FlutterFlowModel<WaiverWidget> {
+class IndividualWorkoutPageModel
+    extends FlutterFlowModel<IndividualWorkoutPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue;
 
   @override
   void initState(BuildContext context) {}
