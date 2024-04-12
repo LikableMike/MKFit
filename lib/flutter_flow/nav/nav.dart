@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:m_k_fit/waiver/waiver_widget.dart';
 import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
@@ -98,7 +97,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) =>
               params.isEmpty ? const NavBarPage(initialPage: 'home') : const HomeWidget(),
         ),
-        FFRoute( //Navigation button directs user to the progress page
+        FFRoute(
           name: 'ProgressPage',
           path: '/progressPage',
           builder: (context, params) => params.isEmpty
@@ -128,11 +127,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ForgotUsernameWidget(),
         ),
         FFRoute(
-          name: 'PARQ',
-          path: '/PARQ',
-          builder: (context, params) => const ParqWidget(),
-        ),
-        FFRoute(
           name: 'ConfirmNewPassword',
           path: '/confirmNewPassword',
           builder: (context, params) => const ConfirmNewPasswordWidget(),
@@ -145,11 +139,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const WorkoutPlanPageWidget(),
         ),
         FFRoute(
-          name: 'IndividualExercisePage',
-          path: '/IndividualExercisePage',
-          builder: (context, params) => const IndividualWorkoutPageWidget(),
-        ),
-        FFRoute(
           name: 'ConfirmNewUsername',
           path: '/confirmNewUsername',
           builder: (context, params) => const ConfirmNewUsernameWidget(),
@@ -160,11 +149,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ForgotPasswordWidget(),
         ),
         FFRoute(
-          name: 'waiver',
-          path: '/waiver',
-          builder: (context, params) => const WaiverWidget(),
-        ),
-        FFRoute(
           name: 'weightSetting',
           path: '/weightSetting',
           builder: (context, params) => WeightSettingWidget(
@@ -173,6 +157,45 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.FFUploadedFile,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'PARQ',
+          path: '/parq',
+          builder: (context, params) => const ParqWidget(),
+        ),
+        FFRoute(
+          name: 'Waiver',
+          path: '/waiver',
+          builder: (context, params) => const WaiverWidget(),
+        ),
+        FFRoute(
+          name: 'IndividualWorkoutPage',
+          path: '/individualWorkoutPage',
+          builder: (context, params) => const IndividualWorkoutPageWidget(),
+        ),
+        FFRoute(
+          name: 'changeAddress',
+          path: '/changeAddress',
+          builder: (context, params) => const ChangeAddressWidget(),
+        ),
+        FFRoute(
+          name: 'changeNumber',
+          path: '/changeNumber',
+          builder: (context, params) => const ChangeNumberWidget(),
+        ),
+        FFRoute(
+          name: 'homeCopy2',
+          path: '/homeCopy2',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'homeCopy2')
+              : const HomeCopy2Widget(),
+        ),
+        FFRoute(
+          name: 'homeCopy',
+          path: '/homeCopy',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'homeCopy')
+              : const HomeCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

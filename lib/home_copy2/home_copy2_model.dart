@@ -1,13 +1,11 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'waiver_widget.dart' show WaiverWidget;
+import 'home_copy2_widget.dart' show HomeCopy2Widget;
 import 'package:flutter/material.dart';
 
-class WaiverModel extends FlutterFlowModel<WaiverWidget> {
+class HomeCopy2Model extends FlutterFlowModel<HomeCopy2Widget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue;
 
   @override
   void initState(BuildContext context) {}

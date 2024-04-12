@@ -1,35 +1,37 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'create_account1_widget.dart' show CreateAccount1Widget;
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode1;
-  TextEditingController? emailAddressController1;
+  // State field(s) for FullName widget.
+  FocusNode? fullNameFocusNode;
+  TextEditingController? fullNameController;
   String? Function(BuildContext, String?)? fullNameControllerValidator;
   // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode2;
-  TextEditingController? emailAddressController2;
-  String? Function(BuildContext, String?)? emailAddressController2Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode3;
-  TextEditingController? emailAddressController3;
-  String? Function(BuildContext, String?)? emailAddressController3Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode4;
-  TextEditingController? emailAddressController4;
-  String? Function(BuildContext, String?)? emailAddressController4Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode5;
-  TextEditingController? emailAddressController5;
-  String? Function(BuildContext, String?)? emailAddressController5Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode6;
-  TextEditingController? emailAddressController6;
-  String? Function(BuildContext, String?)? emailAddressController6Validator;
+  FocusNode? emailAddressFocusNode;
+  TextEditingController? emailAddressController;
+  String? Function(BuildContext, String?)? emailAddressControllerValidator;
+  // State field(s) for phoneNumber widget.
+  FocusNode? phoneNumberFocusNode;
+  TextEditingController? phoneNumberController;
+  final phoneNumberMask = MaskTextInputFormatter(mask: '(###) ###-####');
+  String? Function(BuildContext, String?)? phoneNumberControllerValidator;
+  // State field(s) for Height widget.
+  FocusNode? heightFocusNode;
+  TextEditingController? heightController;
+  String? Function(BuildContext, String?)? heightControllerValidator;
+  // State field(s) for Weight widget.
+  FocusNode? weightFocusNode;
+  TextEditingController? weightController;
+  String? Function(BuildContext, String?)? weightControllerValidator;
+  // State field(s) for userName widget.
+  FocusNode? userNameFocusNode;
+  TextEditingController? userNameController;
+  String? Function(BuildContext, String?)? userNameControllerValidator;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordController;
@@ -50,23 +52,23 @@ class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    emailAddressFocusNode1?.dispose();
-    emailAddressController1?.dispose();
+    fullNameFocusNode?.dispose();
+    fullNameController?.dispose();
 
-    emailAddressFocusNode2?.dispose();
-    emailAddressController2?.dispose();
+    emailAddressFocusNode?.dispose();
+    emailAddressController?.dispose();
 
-    emailAddressFocusNode3?.dispose();
-    emailAddressController3?.dispose();
+    phoneNumberFocusNode?.dispose();
+    phoneNumberController?.dispose();
 
-    emailAddressFocusNode4?.dispose();
-    emailAddressController4?.dispose();
+    heightFocusNode?.dispose();
+    heightController?.dispose();
 
-    emailAddressFocusNode5?.dispose();
-    emailAddressController5?.dispose();
+    weightFocusNode?.dispose();
+    weightController?.dispose();
 
-    emailAddressFocusNode6?.dispose();
-    emailAddressController6?.dispose();
+    userNameFocusNode?.dispose();
+    userNameController?.dispose();
 
     passwordFocusNode?.dispose();
     passwordController?.dispose();

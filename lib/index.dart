@@ -16,8 +16,11 @@ export '/confirm_new_username/confirm_new_username_widget.dart'
     show ConfirmNewUsernameWidget;
 export '/forgot_password/forgot_password_widget.dart' show ForgotPasswordWidget;
 export '/weight_setting/weight_setting_widget.dart' show WeightSettingWidget;
-<<<<<<< HEAD
-export '/IndividualExercisePage/IndividualWorkoutPage_widget.dart' show IndividualWorkoutPageWidget;
-=======
 export '/parq/parq_widget.dart' show ParqWidget;
->>>>>>> origin/Isaiah
+export '/waiver/waiver_widget.dart' show WaiverWidget;
+export '/individual_workout_page/individual_workout_page_widget.dart'
+    show IndividualWorkoutPageWidget;
+export '/change_address/change_address_widget.dart' show ChangeAddressWidget;
+export '/change_number/change_number_widget.dart' show ChangeNumberWidget;
+export '/home_copy2/home_copy2_widget.dart' show HomeCopy2Widget;
+export '/home_copy/home_copy_widget.dart' show HomeCopyWidget;
