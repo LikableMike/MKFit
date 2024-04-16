@@ -1,6 +1,10 @@
 # General
 *.log
 *.dart.js
+*.bin
+*.probe
+*.lock
+*.stamp
 
 # Dart/Flutter
 .dart_tool/
