@@ -1,11 +1,10 @@
-import 'package:flutter/services.dart';
-
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'create_account1_model.dart';
 export 'create_account1_model.dart';
 
@@ -18,8 +17,6 @@ class CreateAccount1Widget extends StatefulWidget {
 
 class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
   late CreateAccount1Model _model;
-  bool _isValid = false;
-  String _errorMessage = '';
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -28,26 +25,25 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
     super.initState();
     _model = createModel(context, () => CreateAccount1Model());
 
-    _model.emailAddressController1 ??= TextEditingController();
-    _model.emailAddressFocusNode1 ??= FocusNode();
+    _model.fullNameController ??= TextEditingController();
+    _model.fullNameFocusNode ??= FocusNode();
 
-    _model.emailAddressController2 ??= TextEditingController();
-    _model.emailAddressFocusNode2 ??= FocusNode();
+    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.emailAddressController3 ??= TextEditingController();
-    _model.emailAddressFocusNode3 ??= FocusNode();
+    _model.phoneNumberController ??= TextEditingController();
+    _model.phoneNumberFocusNode ??= FocusNode();
 
-    _model.emailAddressController4 ??= TextEditingController();
-    _model.emailAddressFocusNode4 ??= FocusNode();
+    _model.heightController ??= TextEditingController();
+    _model.heightFocusNode ??= FocusNode();
 
-    _model.emailAddressController5 ??= TextEditingController();
-    _model.emailAddressFocusNode5 ??= FocusNode();
+    _model.weightController ??= TextEditingController();
+    _model.weightFocusNode ??= FocusNode();
 
-    _model.emailAddressController6 ??= TextEditingController();
-    _model.emailAddressFocusNode6 ??= FocusNode();
+    _model.userNameController ??= TextEditingController();
+    _model.userNameFocusNode ??= FocusNode();
 
     _model.passwordController ??= TextEditingController();
-
     _model.passwordFocusNode ??= FocusNode();
 
     _model.passwordConfirmController ??= TextEditingController();
@@ -188,11 +184,12 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller:
-                                          _model.emailAddressController1,
-                                      focusNode: _model.emailAddressFocusNode1,
+                                      controller: _model.fullNameController,
+                                      focusNode: _model.fullNameFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [AutofillHints.name],
+                                      textCapitalization:
+                                          TextCapitalization.words,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Full Name',
@@ -248,11 +245,16 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
                                       maxLength: 30,
-                                      keyboardType: TextInputType.text,
-                                      validator: _model.fullNameControllerValidator.asValidator(context),
-                                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]'))],
+                                      maxLengthEnforcement:
+                                          MaxLengthEnforcement.enforced,
+                                      validator: _model
+                                          .fullNameControllerValidator
+                                          .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[a-zA-Z]'))
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -262,9 +264,8 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller:
-                                          _model.emailAddressController2,
-                                      focusNode: _model.emailAddressFocusNode2,
+                                      controller: _model.emailAddressController,
+                                      focusNode: _model.emailAddressFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
                                       obscureText: false,
@@ -322,10 +323,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
                                       keyboardType: TextInputType.emailAddress,
                                       validator: _model
-                                          .emailAddressController2Validator
+                                          .emailAddressControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -336,9 +336,8 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller:
-                                          _model.emailAddressController3,
-                                      focusNode: _model.emailAddressFocusNode3,
+                                      controller: _model.phoneNumberController,
+                                      focusNode: _model.phoneNumberFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
                                       obscureText: false,
@@ -396,11 +395,14 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
-                                      keyboardType: TextInputType.emailAddress,
+                                      maxLength: 10,
+                                      maxLengthEnforcement:
+                                          MaxLengthEnforcement.enforced,
+                                      keyboardType: TextInputType.phone,
                                       validator: _model
-                                          .emailAddressController3Validator
+                                          .phoneNumberControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [_model.phoneNumberMask],
                                     ),
                                   ),
                                 ),
@@ -410,9 +412,8 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller:
-                                          _model.emailAddressController4,
-                                      focusNode: _model.emailAddressFocusNode4,
+                                      controller: _model.heightController,
+                                      focusNode: _model.heightFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
                                       obscureText: false,
@@ -470,10 +471,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
                                       keyboardType: TextInputType.emailAddress,
                                       validator: _model
-                                          .emailAddressController4Validator
+                                          .heightControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -484,14 +484,13 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller:
-                                          _model.emailAddressController5,
-                                      focusNode: _model.emailAddressFocusNode5,
+                                      controller: _model.weightController,
+                                      focusNode: _model.weightFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Weight Optional (Optional)',
+                                        labelText: 'Weight (Optional)',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
@@ -544,10 +543,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
-                                      keyboardType: TextInputType.emailAddress,
+                                      keyboardType: TextInputType.number,
                                       validator: _model
-                                          .emailAddressController5Validator
+                                          .weightControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -558,9 +556,8 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller:
-                                          _model.emailAddressController6,
-                                      focusNode: _model.emailAddressFocusNode6,
+                                      controller: _model.userNameController,
+                                      focusNode: _model.userNameFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
                                       obscureText: false,
@@ -618,10 +615,16 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
+                                      maxLength: 20,
+                                      maxLengthEnforcement:
+                                          MaxLengthEnforcement.enforced,
                                       validator: _model
-                                          .emailAddressController6Validator
+                                          .userNameControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[a-zA-Z0-9]'))
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -706,7 +709,6 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
                                       validator: _model
                                           .passwordControllerValidator
                                           .asValidator(context),
@@ -799,6 +801,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
+                                      minLines: 1,
                                       validator: _model
                                           .passwordConfirmControllerValidator
                                           .asValidator(context),
@@ -810,13 +813,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      _isValid  = _validatePassword(_model.passwordController.text);
-                                      if(_isValid){
-                                        context.pushNamed('weightSetting');
-                                      }else{
-                                        print(_model.passwordController.text);
-                                      }
-
+                                      context.pushNamed('PARQ');
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
@@ -934,38 +931,5 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
         ),
       ),
     );
-  }
-
-  bool _validatePassword(String password) {
-    // Reset error message
-    _errorMessage = '';
-
-    // Password length greater than 6
-    if (password.length <6) {
-      _errorMessage += 'Password must be longer than 6 characters.\n';
-    }
-
-    // Contains at least one uppercase letter
-    if (!password.contains(RegExp(r'[A-Z]'))) {
-      _errorMessage += '• Uppercase letter is missing.\n';
-    }
-
-    // Contains at least one lowercase letter
-    if (!password.contains(RegExp(r'[a-z]'))) {
-      _errorMessage += '• Lowercase letter is missing.\n';
-    }
-
-    // Contains at least one digit
-    if (!password.contains(RegExp(r'[0-9]'))) {
-      _errorMessage += '• Digit is missing.\n';
-    }
-
-    // Contains at least one special character
-    if (!password.contains(RegExp(r'[$_+=~!@#%^&*(),.?":{}|<>]'))) {
-      _errorMessage += '• Special character is missing.\n';
-    }
-
-    // If there are no error messages, the password is valid
-    return _errorMessage.isEmpty;
   }
 }
