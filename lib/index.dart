@@ -17,3 +17,4 @@ export '/confirm_new_username/confirm_new_username_widget.dart'
 export '/forgot_password/forgot_password_widget.dart' show ForgotPasswordWidget;
 export '/weight_setting/weight_setting_widget.dart' show WeightSettingWidget;
 export '/IndividualExercisePage/IndividualWorkoutPage_widget.dart' show IndividualWorkoutPageWidget;
+export '/createExercisePage/createExercisePage_widget.dart' show CreateExercisePageWidget;
