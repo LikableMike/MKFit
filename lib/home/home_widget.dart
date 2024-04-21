@@ -279,35 +279,35 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 60.0,
+                        height: 60,
                         decoration: const BoxDecoration(),
                         child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: FFButtonWidget(
+                          alignment: const AlignmentDirectional(0, 0),
+                          child: FFButtonWidget(//Navigates the user to the Calendar page
                             onPressed: () async {
                               context.pushNamed('makeAppointment');
                             },
                             text: 'Reschedule/Cancel Appointment',
                             options: FFButtonOptions(
-                              height: 40.0,
+                              height: 40,
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
+                                  24, 0, 24, 0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
+                                  0, 0, 0, 0),
                               color: const Color(0xFF00831B),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
                                     fontFamily: 'Inter',
                                     color: Colors.white,
-                                    letterSpacing: 0.0,
+                                    letterSpacing: 0,
                                   ),
-                              elevation: 3.0,
+                              elevation: 3,
                               borderSide: const BorderSide(
                                 color: Colors.transparent,
-                                width: 1.0,
+                                width: 1,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
