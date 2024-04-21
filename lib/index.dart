@@ -18,6 +18,7 @@ export '/forgot_password/forgot_password_widget.dart' show ForgotPasswordWidget;
 export '/weight_setting/weight_setting_widget.dart' show WeightSettingWidget;
 export '/individual_workout_page/individual_workout_page_widget.dart' show IndividualWorkoutPageWidget;
 export '/createExercisePage/createExercisePage_widget.dart' show CreateExercisePageWidget;
+export '/create_workout_page/create_workout_page_widget.dart' show CreateWorkoutPageWidget;
 export '/parq/parq_widget.dart' show ParqWidget;
 export '/waiver/waiver_widget.dart' show WaiverWidget;
 export '/change_address/change_address_widget.dart' show ChangeAddressWidget;
