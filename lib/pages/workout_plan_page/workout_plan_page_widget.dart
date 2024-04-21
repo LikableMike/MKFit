@@ -6,6 +6,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'workout_plan_page_model.dart';
+import 'package:m_k_fit/pdf_viewer/pdf_viewer.dart';
+import 'package:m_k_fit/api/pdf_api.dart';
 export 'workout_plan_page_model.dart';
 
 class WorkoutPlanPageWidget extends StatefulWidget {
@@ -179,7 +181,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
                 child: Text(
                   'Your Workouts',
                   style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -202,8 +205,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                 scrollDirection: Axis.vertical,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
@@ -299,8 +302,15 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                             ),
                           ),
                           FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              const path = 'assets/pdfs/example.pdf';
+                              final file = await PDFLoader.loadAsset(path);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PDFViewerPage(pdfFile: file)),
+                              );
                             },
                             text: '',
                             options: FFButtonOptions(
@@ -332,8 +342,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                         animationsMap['containerOnPageLoadAnimation1']!),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
@@ -429,7 +439,14 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                           ),
                           FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('IndividualWorkoutPage');
+                              const path = 'assets/pdfs/example.pdf';
+                              final file = await PDFLoader.loadAsset(path);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PDFViewerPage(pdfFile: file)),
+                              );
                             },
                             text: '',
                             options: FFButtonOptions(

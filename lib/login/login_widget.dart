@@ -85,8 +85,8 @@ class _LoginWidgetState extends State<LoginWidget>
               child: Align(
                 alignment: const AlignmentDirectional(0.0, -20.0),
                 child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 0.0, 16.0, 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -197,8 +197,8 @@ class _LoginWidgetState extends State<LoginWidget>
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 16.0),
                         child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
@@ -292,7 +292,11 @@ class _LoginWidgetState extends State<LoginWidget>
                               0.0, 0.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('home');
+                              if (_model.usernameController.text == 'admin1') {
+                                context.pushNamed('admin');
+                              } else {
+                                context.pushNamed('home');
+                              }
                             },
                             text: 'Sign In',
                             options: FFButtonOptions(
