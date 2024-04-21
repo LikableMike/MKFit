@@ -1,0 +1,1 @@
+ C:\\Users\\avila\\OneDrive\\Desktop\\CSC\ 190\\MKFit\\.dart_tool\\flutter_build\\25fb02b65ad8ca579527ce4443bc279b\\native_assets.yaml: 
