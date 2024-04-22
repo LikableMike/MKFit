@@ -25,24 +25,25 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
     super.initState();
     _model = createModel(context, () => CreateAccount1Model());
 
+//Full Name Field
     _model.fullNameController ??= TextEditingController();
     _model.fullNameFocusNode ??= FocusNode();
-
+//Email Field
     _model.emailAddressController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
-
+//Phone Number Field
     _model.phoneNumberController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
-
+//Height Field
     _model.heightController ??= TextEditingController();
     _model.heightFocusNode ??= FocusNode();
-
+//Weight Field
     _model.weightController ??= TextEditingController();
     _model.weightFocusNode ??= FocusNode();
-
+//Username Field
     _model.userNameController ??= TextEditingController();
     _model.userNameFocusNode ??= FocusNode();
-
+//Password Field
     _model.passwordController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
 
@@ -178,12 +179,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+                                //Full Name Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
+
+
                                       controller: _model.fullNameController,
                                       focusNode: _model.fullNameFocusNode,
                                       autofocus: true,
@@ -258,12 +262,14 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+                                //Email Address textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
+
                                       controller: _model.emailAddressController,
                                       focusNode: _model.emailAddressFocusNode,
                                       autofocus: true,
@@ -323,6 +329,10 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
+                                      
+                                       //Email Address Validation
+                                      minLines: null,
+
                                       keyboardType: TextInputType.emailAddress,
                                       validator: _model
                                           .emailAddressControllerValidator
@@ -330,6 +340,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+                                //Phone Number Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -395,6 +406,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
+
+                                        //Sets phone number to 10 characters maximum and phone input type  
+                                      minLines: null,
                                       maxLength: 10,
                                       maxLengthEnforcement:
                                           MaxLengthEnforcement.enforced,
@@ -406,6 +420,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+                                //Height Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -478,6 +493,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+                                //Weight Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -550,6 +566,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+                                //Username Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -615,6 +632,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
+                                      
+                                          //Sets non-null username to 20 characters maximum and only alphanumberics
+                                      minLines: null,
                                       maxLength: 20,
                                       maxLengthEnforcement:
                                           MaxLengthEnforcement.enforced,
@@ -624,10 +644,11 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(
                                             RegExp('[a-zA-Z0-9]'))
-                                      ],
+                                      ]
                                     ),
                                   ),
                                 ),
+                                //Enter Password Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -715,6 +736,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+                                //Password Confirm Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -813,7 +835,12 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      context.pushNamed('PARQ');
+                                      _isValid  = _validatePassword(_model.passwordController.text);
+                                      if(_isValid){
+                                        context.pushNamed('PARQ');
+                                      }else{
+                                        print(_model.passwordController.text);
+                                      }
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
@@ -842,6 +869,10 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
+
+                              
+
+
 
                                 // You will have to add an action on this rich text to go to your login page.
                                 Padding(
@@ -931,5 +962,38 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
         ),
       ),
     );
+  }
+
+  bool _validatePassword(String password) {
+    // Reset error message
+    _errorMessage = '';
+
+    //The password length must be greater than 6
+    if (password.length <6) {
+      _errorMessage += 'Password must be longer than 6 characters.\n';
+    }
+
+    //The password must contain at least one uppercase letter
+    if (!password.contains(RegExp(r'[A-Z]'))) {
+      _errorMessage += '• Uppercase letter is missing.\n';
+    }
+
+    //The password must contain at least one lowercase letter
+    if (!password.contains(RegExp(r'[a-z]'))) {
+      _errorMessage += '• Lowercase letter is missing.\n';
+    }
+
+    //The password must contain at least one digit
+    if (!password.contains(RegExp(r'[0-9]'))) {
+      _errorMessage += '• Digit is missing.\n';
+    }
+
+    //The password must contain at least one special character
+    if (!password.contains(RegExp(r'[$_+=~!@#%^&*(),.?":{}|<>]'))) {
+      _errorMessage += '• Special character is missing.\n';
+    }
+
+    // If there are no error messages, the password is valid
+    return _errorMessage.isEmpty;
   }
 }
