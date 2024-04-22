@@ -127,6 +127,52 @@ class _AdminWidgetState extends State<AdminWidget> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+              FFButtonWidget(
+                onPressed: () async {
+                  context.pushNamed('CreateExcersise');
+                },
+                text: 'Create Exercise',
+                options: FFButtonOptions(
+                  height: 40,
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                    fontFamily: 'Inter',
+                    color: Colors.white,
+                    letterSpacing: 0,
+                  ),
+                  elevation: 3,
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              FFButtonWidget(
+                onPressed: () async {
+                  context.pushNamed('CreateWorkoutPage');
+                },
+                text: 'Create Workout',
+                options: FFButtonOptions(
+                  height: 40,
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                    fontFamily: 'Inter',
+                    color: Colors.white,
+                    letterSpacing: 0,
+                  ),
+                  elevation: 3,
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ],
           ),
         ),
@@ -134,3 +180,4 @@ class _AdminWidgetState extends State<AdminWidget> {
     );
   }
 }
+
