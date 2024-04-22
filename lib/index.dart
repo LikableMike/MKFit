@@ -17,3 +17,10 @@ export '/confirm_new_username/confirm_new_username_widget.dart'
 export '/forgot_password/forgot_password_widget.dart' show ForgotPasswordWidget;
 export '/weight_setting/weight_setting_widget.dart' show WeightSettingWidget;
 export '/parq/parq_widget.dart' show ParqWidget;
+export '/changeName/changeName_widget.dart' show ChangeNameWidget;
+export '/changeNumber/changeNumber_widget.dart' show ChangeNumberWidget;
+export '/changePassword/changePassword_widget.dart' show ChangePasswordWidget;
+export '/changeHW/changeHW_widget.dart' show ChangeHWWidget;
+
+
+

@@ -133,6 +133,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ParqWidget(),
         ),
         FFRoute(
+          name: 'changeName',
+          path: '/changeName',
+          builder: (context, params) => const ChangeNameWidget(),
+        ),
+        FFRoute(
+          name: 'changeNumber',
+          path: '/changeNumber',
+          builder: (context, params) => const ChangeNumberWidget(),
+        ),
+        FFRoute(
+          name: 'changePassword',
+          path: '/changePassword',
+          builder: (context, params) => const ChangePasswordWidget(),
+        ),
+        FFRoute(
+          name: 'changeHW',
+          path: '/changeHW',
+          builder: (context, params) => const ChangeHWWidget(),
+        ),
+        FFRoute(
           name: 'ConfirmNewPassword',
           path: '/confirmNewPassword',
           builder: (context, params) => const ConfirmNewPasswordWidget(),

@@ -110,11 +110,20 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                   letterSpacing: 0.0,
                                 ),
                           ),
-                          Icon(
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pushNamed('changeName');
+                        },
+                          child:Icon(
                             Icons.chevron_right_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
                             size: 24.0,
                           ),
+                        ),
                         ],
                       ),
                     ),
@@ -142,10 +151,19 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                   letterSpacing: 0.0,
                                 ),
                           ),
-                          Icon(
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('changeAddress');
+                          },
+                          child:Icon(
                             Icons.chevron_right_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
                             size: 24.0,
+                          ),
                           ),
                         ],
                       ),
@@ -174,10 +192,18 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                   letterSpacing: 0.0,
                                 ),
                           ),
-                          Icon(
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed('changePassword');},
+                          child:Icon(
                             Icons.chevron_right_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
                             size: 24.0,
+                          ),
                           ),
                         ],
                       ),
@@ -238,10 +264,60 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                   letterSpacing: 0.0,
                                 ),
                           ),
-                          Icon(
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed('changeNumber');
+                            },
+                          child:Icon(
                             Icons.chevron_right_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
                             size: 24.0,
+                          ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Weight and Height Information',
+                            style: FlutterFlowTheme.of(context)
+                                .titleLarge
+                                .override(
+                              fontFamily: 'Inter',
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed('changeHW');
+                            },
+                            child:Icon(
+                              Icons.chevron_right_rounded,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
                           ),
                         ],
                       ),
