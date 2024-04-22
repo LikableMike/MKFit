@@ -1,1 +1,34 @@
+# Ignore build output directories
+/build/
+/build/app/intermediates/
+/build/app/outputs/
+/build/firebase_auth/
+/build/firebase_core/
+/build/firebase_performance/
+/build/google_sign_in_android/
+/build/path_provider_android/
+/build/shared_preferences_android/
+/build/sign_in_with_apple/
+/build/sqflite/
+
+# Ignore compiled Kotlin files
+**/*.class
+
+# Ignore generated source code
+**/generated/
+**/kotlin/
+
+# Ignore temporary and cache files
+**/*.bin
+**/*.stamp
+
+# Ignore APK files
+**/*.apk
+
+# Ignore log files
+**/logs/
+
+# Ignore AndroidManifest and output metadata
+**/AndroidManifest.xml
+**/output-metadata.json
 
