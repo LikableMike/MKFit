@@ -3,10 +3,16 @@ import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'make_appointment_model.dart';
 export 'make_appointment_model.dart';
 
+
+//Base Calendar page
 class MakeAppointmentWidget extends StatefulWidget {
   const MakeAppointmentWidget({super.key});
 
@@ -53,43 +59,45 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 70.0,
-            icon: const Icon(
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 70,
+            icon: Icon(
               Icons.person,
               color: Colors.white,
-              size: 40.0,
+              size: 40,
             ),
             onPressed: () async {
               context.pop();
             },
           ),
+          //Calendar
           title: Text(
             'Calendar',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 30.0,
-                  letterSpacing: 0.0,
+                  fontSize: 30,
+                  letterSpacing: 0,
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
-          elevation: 2.0,
+          elevation: 2,
         ),
+        //Calendar Style
         body: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
                 child: Column(
                   children: [
                     Align(
-                      alignment: const Alignment(0.0, 0),
+                      alignment: Alignment(0, 0),
                       child: FlutterFlowButtonTabBar(
                         useToggleButtonStyle: true,
                         isScrollable: true,
@@ -97,25 +105,24 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                             FlutterFlowTheme.of(context).titleMedium.override(
                                   fontFamily: 'Plus Jakarta Sans',
                                   color: Colors.white,
-                                  fontSize: 18.0,
-                                  letterSpacing: 0.0,
+                                  fontSize: 18,
+                                  letterSpacing: 0,
                                   fontWeight: FontWeight.normal,
                                 ),
-                        unselectedLabelStyle: const TextStyle(),
-                        labelColor: const Color(0xFF14181B),
+                        unselectedLabelStyle: TextStyle(),
+                        labelColor: Color(0xFF14181B),
                         unselectedLabelColor:
                             FlutterFlowTheme.of(context).primaryText,
                         backgroundColor: Colors.white,
-                        unselectedBackgroundColor: const Color(0xFFE0E3E7),
-                        borderColor: const Color(0xFFE0E3E7),
-                        borderWidth: 2.0,
-                        borderRadius: 12.0,
-                        elevation: 0.0,
-                        labelPadding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 0.0),
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 12.0, 0.0, 12.0),
-                        tabs: const [
+                        unselectedBackgroundColor: Color(0xFFE0E3E7),
+                        borderColor: Color(0xFFE0E3E7),
+                        borderWidth: 2,
+                        borderRadius: 12,
+                        elevation: 0,
+                        labelPadding:
+                            EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
+                        tabs: [
                           Tab(
                             text: 'Month',
                           ),
@@ -134,11 +141,11 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                         controller: _model.tabBarController,
                         children: [
                           Container(
-                            width: 100.0,
-                            height: 100.0,
+                            width: 100,
+                            height: 100,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF103E0C),
-                              borderRadius: BorderRadius.circular(12.0),
+                              color: Color(0xFF103E0C),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                             child: SingleChildScrollView(
                               child: Column(
@@ -149,21 +156,21 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      boxShadow: const [
+                                      boxShadow: [
                                         BoxShadow(
-                                          blurRadius: 3.0,
+                                          blurRadius: 3,
                                           color: Color(0x33000000),
                                           offset: Offset(
-                                            0.0,
-                                            1.0,
+                                            0,
+                                            1,
                                           ),
                                         )
                                       ],
-                                      borderRadius: BorderRadius.circular(12.0),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: FlutterFlowCalendar(
-                                      color: const Color(0xFF40DC28),
-                                      iconColor: const Color(0xFF57636C),
+                                      color: Color(0xFF40DC28),
+                                      iconColor: Color(0xFF57636C),
                                       weekFormat: false,
                                       weekStartsMonday: true,
                                       onChange:
@@ -176,9 +183,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           .titleLarge
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 22.0,
-                                            letterSpacing: 0.0,
+                                            color: Color(0xFF14181B),
+                                            fontSize: 22,
+                                            letterSpacing: 0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                       dayOfWeekStyle:
@@ -186,18 +193,18 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                color: Color(0xFF57636C),
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                       dateStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
+                                            color: Color(0xFF14181B),
+                                            fontSize: 14,
+                                            letterSpacing: 0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       selectedDateStyle:
@@ -206,8 +213,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
                                                 color: Colors.white,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
+                                                fontSize: 16,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                       inactiveDateStyle:
@@ -215,9 +222,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                color: Color(0xFF57636C),
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                     ),
@@ -228,8 +235,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 12.0, 0.0, 0.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 12, 0, 0),
                                         child: Text(
                                           'Coming Up',
                                           style: FlutterFlowTheme.of(context)
@@ -239,15 +246,15 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 0.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 12, 0, 0),
                                         child: ListView(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -255,29 +262,27 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           scrollDirection: Axis.vertical,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(16, 0, 16, 12),
                                               child: Container(
-                                                width: 100.0,
+                                                width: 100,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  boxShadow: const [
+                                                  boxShadow: [
                                                     BoxShadow(
-                                                      blurRadius: 3.0,
+                                                      blurRadius: 3,
                                                       color: Color(0x33000000),
                                                       offset: Offset(
-                                                        0.0,
-                                                        1.0,
+                                                        0,
+                                                        1,
                                                       ),
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding: EdgeInsets.all(8),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -297,12 +302,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                             child: Text(
                                                               'Next Session with Makayla',
                                                               style: FlutterFlowTheme
@@ -311,12 +316,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                   .override(
                                                                     fontFamily:
                                                                         'Outfit',
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0xFF14181B),
                                                                     fontSize:
-                                                                        24.0,
+                                                                        24,
                                                                     letterSpacing:
-                                                                        0.0,
+                                                                        0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -325,44 +330,45 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        0,
+                                                                        4,
+                                                                        0,
+                                                                        0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
+                                                                          0,
+                                                                          0,
+                                                                          8,
+                                                                          0),
                                                                   child: Card(
                                                                     clipBehavior:
                                                                         Clip.antiAliasWithSaveLayer,
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0x4DEE8B60),
                                                                     elevation:
-                                                                        0.0,
+                                                                        0,
                                                                     shape:
                                                                         RoundedRectangleBorder(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              8.0),
+                                                                              8),
                                                                     ),
                                                                     child:
                                                                         Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          8.0,
-                                                                          4.0),
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              8,
+                                                                              4,
+                                                                              8,
+                                                                              4),
                                                                       child:
                                                                           Text(
                                                                         '2:20pm',
@@ -370,9 +376,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Plus Jakarta Sans',
-                                                                              color: const Color(0xFFEE8B60),
-                                                                              fontSize: 14.0,
-                                                                              letterSpacing: 0.0,
+                                                                              color: Color(0xFFEE8B60),
+                                                                              fontSize: 14,
+                                                                              letterSpacing: 0,
                                                                               fontWeight: FontWeight.normal,
                                                                             ),
                                                                       ),
@@ -387,12 +393,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                       .override(
                                                                         fontFamily:
                                                                             'Plus Jakarta Sans',
-                                                                        color: const Color(
+                                                                        color: Color(
                                                                             0xFF14181B),
                                                                         fontSize:
-                                                                            12.0,
+                                                                            12,
                                                                         letterSpacing:
-                                                                            0.0,
+                                                                            0,
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                       ),
@@ -411,8 +417,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 12.0, 0.0, 0.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 12, 0, 0),
                                         child: Text(
                                           'Payment',
                                           style: FlutterFlowTheme.of(context)
@@ -422,15 +428,15 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 24.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 12, 0, 24),
                                         child: ListView(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -438,29 +444,27 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           scrollDirection: Axis.vertical,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(16, 0, 16, 12),
                                               child: Container(
-                                                width: 100.0,
+                                                width: 100,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  boxShadow: const [
+                                                  boxShadow: [
                                                     BoxShadow(
-                                                      blurRadius: 3.0,
+                                                      blurRadius: 3,
                                                       color: Color(0x33000000),
                                                       offset: Offset(
-                                                        0.0,
-                                                        1.0,
+                                                        0,
+                                                        1,
                                                       ),
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding: EdgeInsets.all(8),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -480,12 +484,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                             child: Text(
                                                               'Next Payment',
                                                               style: FlutterFlowTheme
@@ -494,12 +498,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                   .override(
                                                                     fontFamily:
                                                                         'Outfit',
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0xFF14181B),
                                                                     fontSize:
-                                                                        24.0,
+                                                                        24,
                                                                     letterSpacing:
-                                                                        0.0,
+                                                                        0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -513,33 +517,32 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            8.0,
-                                                                            0.0),
+                                                                            0,
+                                                                            0,
+                                                                            8,
+                                                                            0),
                                                                 child: Card(
                                                                   clipBehavior:
                                                                       Clip.antiAliasWithSaveLayer,
-                                                                  color: const Color(
+                                                                  color: Color(
                                                                       0x4C4B39EF),
-                                                                  elevation:
-                                                                      0.0,
+                                                                  elevation: 0,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
+                                                                        BorderRadius
+                                                                            .circular(8),
                                                                   ),
                                                                   child:
                                                                       Padding(
-                                                                    padding: const EdgeInsetsDirectional
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            8.0,
-                                                                            4.0,
-                                                                            8.0,
-                                                                            4.0),
+                                                                            8,
+                                                                            4,
+                                                                            8,
+                                                                            4),
                                                                     child: Text(
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
@@ -549,11 +552,11 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             fontFamily:
                                                                                 'Plus Jakarta Sans',
                                                                             color:
-                                                                                const Color(0xFF4B39EF),
+                                                                                Color(0xFF4B39EF),
                                                                             fontSize:
-                                                                                14.0,
+                                                                                14,
                                                                             letterSpacing:
-                                                                                0.0,
+                                                                                0,
                                                                             fontWeight:
                                                                                 FontWeight.normal,
                                                                           ),
@@ -563,12 +566,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
                                                                 child: Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
@@ -577,12 +580,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                       .override(
                                                                         fontFamily:
                                                                             'Plus Jakarta Sans',
-                                                                        color: const Color(
+                                                                        color: Color(
                                                                             0xFF14181B),
                                                                         fontSize:
-                                                                            12.0,
+                                                                            12,
                                                                         letterSpacing:
-                                                                            0.0,
+                                                                            0,
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                       ),
@@ -606,9 +609,10 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                               ),
                             ),
                           ),
+                          //Calendar Container
                           Container(
-                            width: 100.0,
-                            height: 100.0,
+                            width: 100,
+                            height: 100,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
@@ -619,22 +623,22 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       color: Colors.white,
                                       boxShadow: [
                                         BoxShadow(
-                                          blurRadius: 3.0,
+                                          blurRadius: 3,
                                           color: Color(0x33000000),
                                           offset: Offset(
-                                            0.0,
-                                            1.0,
+                                            0,
+                                            1,
                                           ),
                                         )
                                       ],
                                     ),
                                     child: FlutterFlowCalendar(
-                                      color: const Color(0xFF4B39EF),
-                                      iconColor: const Color(0xFF57636C),
+                                      color: Color(0xFF4B39EF),
+                                      iconColor: Color(0xFF57636C),
                                       weekFormat: true,
                                       weekStartsMonday: true,
                                       onChange:
@@ -647,9 +651,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           .titleLarge
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 22.0,
-                                            letterSpacing: 0.0,
+                                            color: Color(0xFF14181B),
+                                            fontSize: 22,
+                                            letterSpacing: 0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                       dayOfWeekStyle:
@@ -657,18 +661,18 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                color: Color(0xFF57636C),
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                       dateStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
+                                            color: Color(0xFF14181B),
+                                            fontSize: 14,
+                                            letterSpacing: 0,
                                             fontWeight: FontWeight.normal,
                                           ),
                                       selectedDateStyle:
@@ -677,8 +681,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
                                                 color: Colors.white,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
+                                                fontSize: 16,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                       inactiveDateStyle:
@@ -686,9 +690,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                color: Color(0xFF57636C),
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                     ),
@@ -699,24 +703,24 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 12.0, 0.0, 0.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 12, 0, 0),
                                         child: Text(
                                           'Coming Up',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                color: Color(0xFF57636C),
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 0.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 12, 0, 0),
                                         child: ListView(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -724,29 +728,27 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           scrollDirection: Axis.vertical,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(16, 0, 16, 12),
                                               child: Container(
-                                                width: 100.0,
+                                                width: 100,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  boxShadow: const [
+                                                  boxShadow: [
                                                     BoxShadow(
-                                                      blurRadius: 3.0,
+                                                      blurRadius: 3,
                                                       color: Color(0x33000000),
                                                       offset: Offset(
-                                                        0.0,
-                                                        1.0,
+                                                        0,
+                                                        1,
                                                       ),
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding: EdgeInsets.all(8),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -766,12 +768,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                             child: Text(
                                                               'Doctors Check In',
                                                               style: FlutterFlowTheme
@@ -780,12 +782,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                   .override(
                                                                     fontFamily:
                                                                         'Outfit',
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0xFF14181B),
                                                                     fontSize:
-                                                                        24.0,
+                                                                        24,
                                                                     letterSpacing:
-                                                                        0.0,
+                                                                        0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -794,44 +796,45 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        0,
+                                                                        4,
+                                                                        0,
+                                                                        0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
                                                               children: [
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
+                                                                          0,
+                                                                          0,
+                                                                          8,
+                                                                          0),
                                                                   child: Card(
                                                                     clipBehavior:
                                                                         Clip.antiAliasWithSaveLayer,
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0x4DEE8B60),
                                                                     elevation:
-                                                                        0.0,
+                                                                        0,
                                                                     shape:
                                                                         RoundedRectangleBorder(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              8.0),
+                                                                              8),
                                                                     ),
                                                                     child:
                                                                         Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          8.0,
-                                                                          4.0),
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              8,
+                                                                              4,
+                                                                              8,
+                                                                              4),
                                                                       child:
                                                                           Text(
                                                                         '2:20pm',
@@ -839,9 +842,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Plus Jakarta Sans',
-                                                                              color: const Color(0xFFEE8B60),
-                                                                              fontSize: 14.0,
-                                                                              letterSpacing: 0.0,
+                                                                              color: Color(0xFFEE8B60),
+                                                                              fontSize: 14,
+                                                                              letterSpacing: 0,
                                                                               fontWeight: FontWeight.normal,
                                                                             ),
                                                                       ),
@@ -856,12 +859,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                       .override(
                                                                         fontFamily:
                                                                             'Plus Jakarta Sans',
-                                                                        color: const Color(
+                                                                        color: Color(
                                                                             0xFF14181B),
                                                                         fontSize:
-                                                                            12.0,
+                                                                            12,
                                                                         letterSpacing:
-                                                                            0.0,
+                                                                            0,
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                       ),
@@ -872,33 +875,32 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         ],
                                                       ),
                                                       Container(
-                                                        width: 50.0,
-                                                        height: 50.0,
+                                                        width: 50,
+                                                        height: 50,
                                                         decoration:
                                                             BoxDecoration(
                                                           color:
-                                                              const Color(0xFFF1F4F8),
+                                                              Color(0xFFF1F4F8),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                                  .circular(8),
                                                           shape: BoxShape
                                                               .rectangle,
                                                           border: Border.all(
-                                                            color: const Color(
+                                                            color: Color(
                                                                 0xFFE0E3E7),
-                                                            width: 1.0,
+                                                            width: 1,
                                                           ),
                                                         ),
                                                         alignment:
-                                                            const AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: const Icon(
+                                                            AlignmentDirectional(
+                                                                0, 0),
+                                                        child: Icon(
                                                           Icons
                                                               .add_photo_alternate_outlined,
                                                           color:
                                                               Color(0xFF14181B),
-                                                          size: 24.0,
+                                                          size: 24,
                                                         ),
                                                       ),
                                                     ],
@@ -910,24 +912,24 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 12.0, 0.0, 0.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 12, 0, 0),
                                         child: Text(
                                           'Past Due',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
+                                                color: Color(0xFF57636C),
+                                                fontSize: 14,
+                                                letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 24.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 12, 0, 24),
                                         child: ListView(
                                           padding: EdgeInsets.zero,
                                           primary: false,
@@ -935,29 +937,27 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           scrollDirection: Axis.vertical,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(16, 0, 16, 12),
                                               child: Container(
-                                                width: 100.0,
+                                                width: 100,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  boxShadow: const [
+                                                  boxShadow: [
                                                     BoxShadow(
-                                                      blurRadius: 3.0,
+                                                      blurRadius: 3,
                                                       color: Color(0x33000000),
                                                       offset: Offset(
-                                                        0.0,
-                                                        1.0,
+                                                        0,
+                                                        1,
                                                       ),
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                      BorderRadius.circular(8),
                                                 ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding: EdgeInsets.all(8),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -977,12 +977,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                             child: Text(
                                                               'Check In',
                                                               style: FlutterFlowTheme
@@ -991,12 +991,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                   .override(
                                                                     fontFamily:
                                                                         'Outfit',
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0xFF14181B),
                                                                     fontSize:
-                                                                        24.0,
+                                                                        24,
                                                                     letterSpacing:
-                                                                        0.0,
+                                                                        0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -1010,33 +1010,32 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            8.0,
-                                                                            0.0),
+                                                                            0,
+                                                                            0,
+                                                                            8,
+                                                                            0),
                                                                 child: Card(
                                                                   clipBehavior:
                                                                       Clip.antiAliasWithSaveLayer,
-                                                                  color: const Color(
+                                                                  color: Color(
                                                                       0x4C4B39EF),
-                                                                  elevation:
-                                                                      0.0,
+                                                                  elevation: 0,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
+                                                                        BorderRadius
+                                                                            .circular(8),
                                                                   ),
                                                                   child:
                                                                       Padding(
-                                                                    padding: const EdgeInsetsDirectional
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            8.0,
-                                                                            4.0,
-                                                                            8.0,
-                                                                            4.0),
+                                                                            8,
+                                                                            4,
+                                                                            8,
+                                                                            4),
                                                                     child: Text(
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
@@ -1046,11 +1045,11 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             fontFamily:
                                                                                 'Plus Jakarta Sans',
                                                                             color:
-                                                                                const Color(0xFF4B39EF),
+                                                                                Color(0xFF4B39EF),
                                                                             fontSize:
-                                                                                14.0,
+                                                                                14,
                                                                             letterSpacing:
-                                                                                0.0,
+                                                                                0,
                                                                             fontWeight:
                                                                                 FontWeight.normal,
                                                                           ),
@@ -1060,12 +1059,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
                                                                 child: Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
@@ -1074,12 +1073,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                       .override(
                                                                         fontFamily:
                                                                             'Plus Jakarta Sans',
-                                                                        color: const Color(
+                                                                        color: Color(
                                                                             0xFF14181B),
                                                                         fontSize:
-                                                                            12.0,
+                                                                            12,
                                                                         letterSpacing:
-                                                                            0.0,
+                                                                            0,
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                       ),
@@ -1089,34 +1088,34 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                           ),
                                                         ],
                                                       ),
+                                                      //Icon Container 3
                                                       Container(
-                                                        width: 50.0,
-                                                        height: 50.0,
+                                                        width: 50,
+                                                        height: 50,
                                                         decoration:
                                                             BoxDecoration(
                                                           color:
-                                                              const Color(0xFFF1F4F8),
+                                                              Color(0xFFF1F4F8),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                                  .circular(8),
                                                           shape: BoxShape
                                                               .rectangle,
                                                           border: Border.all(
-                                                            color: const Color(
+                                                            color: Color(
                                                                 0xFFE0E3E7),
-                                                            width: 1.0,
+                                                            width: 1,
                                                           ),
                                                         ),
                                                         alignment:
-                                                            const AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: const Icon(
+                                                            AlignmentDirectional(
+                                                                0, 0),
+                                                        child: Icon(
                                                           Icons
                                                               .add_photo_alternate_outlined,
                                                           color:
                                                               Color(0xFF14181B),
-                                                          size: 24.0,
+                                                          size: 24,
                                                         ),
                                                       ),
                                                     ],
