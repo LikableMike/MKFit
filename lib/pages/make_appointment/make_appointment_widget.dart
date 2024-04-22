@@ -123,9 +123,11 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                             EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
                         tabs: [
+                          //MONTHLY Tab
                           Tab(
                             text: 'Month',
                           ),
+                          //WEEKLY TAB
                           Tab(
                             text: 'Week',
                           ),
@@ -179,6 +181,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             _model.calendarSelectedDay1 =
                                                 newSelectedDate);
                                       },
+                                      //TITLE Styling
                                       titleStyle: FlutterFlowTheme.of(context)
                                           .titleLarge
                                           .override(
@@ -188,6 +191,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             letterSpacing: 0,
                                             fontWeight: FontWeight.w500,
                                           ),
+                                      //DAY OF WEEK styling    
                                       dayOfWeekStyle:
                                           FlutterFlowTheme.of(context)
                                               .labelMedium
@@ -198,6 +202,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 letterSpacing: 0,
                                                 fontWeight: FontWeight.normal,
                                               ),
+                                      //DATE styling        
                                       dateStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -207,6 +212,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             letterSpacing: 0,
                                             fontWeight: FontWeight.normal,
                                           ),
+                                      //SELECTED DATE styling    
                                       selectedDateStyle:
                                           FlutterFlowTheme.of(context)
                                               .titleSmall
@@ -217,6 +223,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 letterSpacing: 0,
                                                 fontWeight: FontWeight.w500,
                                               ),
+                                      //INACTIVE DATE styling        
                                       inactiveDateStyle:
                                           FlutterFlowTheme.of(context)
                                               .labelMedium
@@ -229,6 +236,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               ),
                                     ),
                                   ),
+                                  //Column styling
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -370,6 +378,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                               8,
                                                                               4),
                                                                       child:
+                                                                      //Connect this time to NEXT SESSION time
+                                                                      //in the database
                                                                           Text(
                                                                         '2:20pm',
                                                                         style: FlutterFlowTheme.of(context)
@@ -385,6 +395,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                     ),
                                                                   ),
                                                                 ),
+                                                                //Connect this date to NEXT SESSION data in the database
+                                                                //when database is available
                                                                 Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
@@ -416,6 +428,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           ],
                                         ),
                                       ),
+                                      //PAYMENT Styling
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             16, 12, 0, 0),
@@ -543,6 +556,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             4,
                                                                             8,
                                                                             4),
+                                                                            //Connect this time to PAYMENT time in
+                                                                            //the database, when database is available
                                                                     child: Text(
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
@@ -572,6 +587,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             0,
                                                                             0,
                                                                             0),
+                                                                            //Connect this date to the PAYMENT?
+                                                                            //date in the database, when available
                                                                 child: Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
@@ -609,7 +626,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                               ),
                             ),
                           ),
-                          //Calendar Container
+                          //Weekly? Calendar Container
                           Container(
                             width: 100,
                             height: 100,
@@ -851,6 +868,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                     ),
                                                                   ),
                                                                 ),
+                                                                //Display date when called from the appropriate
+                                                                //database
+                                                                //This is the check
                                                                 Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
@@ -914,6 +934,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             16, 12, 0, 0),
+                                        //Only display when appropriate
+                                        //This must have some enforcement on its display
+                                        //TBA    
                                         child: Text(
                                           'Past Due',
                                           style: FlutterFlowTheme.of(context)
@@ -1036,6 +1059,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             4,
                                                                             8,
                                                                             4),
+                                                                    //weekly? appointment time, taken
+                                                                    //from the database when appropriate        
                                                                     child: Text(
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
@@ -1065,6 +1090,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             0,
                                                                             0,
                                                                             0),
+                                                                //Weekly? Calendar Date, taken from the
+                                                                //appropriate database            
                                                                 child: Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
