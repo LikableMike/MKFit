@@ -460,7 +460,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                           8.0),
                                                 ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding: const EdgeInsets.all(8),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -482,10 +482,10 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                             padding:
                                                                 const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0),
                                                             child: Text(
                                                               'Next Payment',
                                                               style: FlutterFlowTheme
@@ -497,9 +497,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                     color: const Color(
                                                                         0xFF14181B),
                                                                     fontSize:
-                                                                        24.0,
+                                                                        24,
                                                                     letterSpacing:
-                                                                        0.0,
+                                                                        0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
@@ -515,45 +515,46 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            8.0,
-                                                                            0.0),
+                                                                            0,
+                                                                            0,
+                                                                            8,
+                                                                            0),
                                                                 child: Card(
                                                                   clipBehavior:
                                                                       Clip.antiAliasWithSaveLayer,
                                                                   color: const Color(
                                                                       0x4C4B39EF),
                                                                   elevation:
-                                                                      0.0,
+                                                                      0,
                                                                   shape:
                                                                       RoundedRectangleBorder(
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            8.0),
+                                                                            8),
                                                                   ),
                                                                   child:
                                                                       Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            8.0,
-                                                                            4.0,
-                                                                            8.0,
-                                                                            4.0),
+                                                                            8,
+                                                                            4,
+                                                                            8,
+                                                                            4),
+                                                                    // Displays the the time of the next payment
                                                                     child: Text(
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyMedium
+                                                                          .bodyLarge
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Plus Jakarta Sans',
+                                                                                'Inter',
                                                                             color:
                                                                                 const Color(0xFF4B39EF),
                                                                             fontSize:
-                                                                                14.0,
+                                                                                16,
                                                                             letterSpacing:
-                                                                                0.0,
+                                                                                0,
                                                                             fontWeight:
                                                                                 FontWeight.normal,
                                                                           ),
@@ -565,10 +566,11 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                //Displays the date of the next payment
                                                                 child: Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
@@ -580,9 +582,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                         color: const Color(
                                                                             0xFF14181B),
                                                                         fontSize:
-                                                                            12.0,
+                                                                            18,
                                                                         letterSpacing:
-                                                                            0.0,
+                                                                            0,
                                                                         fontWeight:
                                                                             FontWeight.normal,
                                                                       ),
