@@ -464,32 +464,36 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
               child: FFButtonWidget(
                 onPressed: () async {
+                  //Navigates to the "login" page
                   context.pushNamed('login');
                 },
+                //Displays the "log Out" Button to the user
                 text: 'Log Out',
                 options: FFButtonOptions(
                   height: 40.0,
-                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                   iconPadding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   textStyle: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Inter',
-                        letterSpacing: 0.0,
+                        fontSize: 18,
+                        letterSpacing: 0,
+                    fontWeight: FontWeight.bold,
                       ),
-                  elevation: 0.0,
+                  elevation: 0,
                   borderSide: BorderSide(
                     color: FlutterFlowTheme.of(context).alternate,
-                    width: 1.0,
+                    width: 1,
                   ),
-                  borderRadius: BorderRadius.circular(50.0),
+                  borderRadius: BorderRadius.circular(50),
                 ),
               ),
             ),
-          ].addToEnd(const SizedBox(height: 64.0)),
+          ].addToEnd(const SizedBox(height: 64)),
         ),
       ),
     );
