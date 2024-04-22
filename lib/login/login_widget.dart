@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'login_model.dart';
 export 'login_model.dart';
@@ -54,8 +55,8 @@ class _LoginWidgetState extends State<LoginWidget>
     super.initState();
     _model = createModel(context, () => LoginModel());
 
-    _model.emailAddressController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
+    _model.usernameController ??= TextEditingController();
+    _model.usernameFocusNode ??= FocusNode();
 
     _model.passwordController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
@@ -84,8 +85,8 @@ class _LoginWidgetState extends State<LoginWidget>
               child: Align(
                 alignment: const AlignmentDirectional(0.0, -20.0),
                 child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 0.0, 16.0, 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -113,76 +114,91 @@ class _LoginWidgetState extends State<LoginWidget>
                           ),
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: TextFormField(
-                            controller: _model.emailAddressController,
-                            focusNode: _model.emailAddressFocusNode,
-                            autofocus: true,
-                            autofillHints: const [AutofillHints.username],
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Username',
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
+                      Form(
+                        key: _model.formKey,
+                        autovalidateMode: AutovalidateMode.always,
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 16.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: _model.usernameController,
+                              focusNode: _model.usernameFocusNode,
+                              autofocus: true,
+                              autofillHints: const [AutofillHints.username],
+                              textCapitalization: TextCapitalization.none,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Username',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      letterSpacing: 0.0,
+                                    ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                filled: true,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                contentPadding: const EdgeInsets.all(14.0),
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
                                   .override(
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                        .primaryBackground,
                                     letterSpacing: 0.0,
                                   ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              filled: true,
-                              fillColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              contentPadding: const EdgeInsets.all(14.0),
+                              maxLength: 25,
+                              maxLengthEnforcement:
+                                  MaxLengthEnforcement.enforced,
+                              cursorColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              validator: _model.usernameControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('[a-zA-Z0-9]'))
+                              ],
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  color: FlutterFlowTheme.of(context).primaryBackground,
-                                  letterSpacing: 0.0,
-                                ),
-                            minLines: null,
-                            validator: _model.emailAddressControllerValidator
-                                .asValidator(context),
                           ),
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 16.0),
                         child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
@@ -253,12 +269,19 @@ class _LoginWidgetState extends State<LoginWidget>
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Inter',
-                                  color: FlutterFlowTheme.of(context).primaryBackground,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
                                   letterSpacing: 0.0,
                                 ),
-                            minLines: null,
+                            maxLength: 25,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            keyboardType: TextInputType.visiblePassword,
                             validator: _model.passwordControllerValidator
                                 .asValidator(context),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp('[a-zA-Z0-9]'))
+                            ],
                           ),
                         ),
                       ),
@@ -269,7 +292,11 @@ class _LoginWidgetState extends State<LoginWidget>
                               0.0, 0.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('home');
+                              if (_model.usernameController.text == 'admin1') {
+                                context.pushNamed('admin');
+                              } else {
+                                context.pushNamed('home');
+                              }
                             },
                             text: 'Sign In',
                             options: FFButtonOptions(

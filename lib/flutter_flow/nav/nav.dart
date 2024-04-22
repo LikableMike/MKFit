@@ -78,8 +78,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const LoginWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? const NavBarPage()
+              : const LoginWidget(),
         ),
         FFRoute(
           name: 'login',
@@ -94,8 +95,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'home',
           path: '/home',
-          builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'home') : const HomeWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'home')
+              : const HomeWidget(),
         ),
         FFRoute(
           name: 'ProgressPage',
@@ -157,7 +159,51 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.FFUploadedFile,
             ),
           ),
-        )
+        ),
+        FFRoute(
+          name: 'PARQ',
+          path: '/parq',
+          builder: (context, params) => const ParqWidget(),
+        ),
+        FFRoute(
+          name: 'Waiver',
+          path: '/waiver',
+          builder: (context, params) => const WaiverWidget(),
+        ),
+        FFRoute(
+          name: 'IndividualWorkoutPage',
+          path: '/individualWorkoutPage',
+          builder: (context, params) => const IndividualWorkoutPageWidget(),
+        ),
+        FFRoute(
+          name: 'changeAddress',
+          path: '/changeAddress',
+          builder: (context, params) => const ChangeAddressWidget(),
+        ),
+        FFRoute(
+          name: 'changeNumber',
+          path: '/changeNumber',
+          builder: (context, params) => const ChangeNumberWidget(),
+        ),
+        FFRoute(
+          name: 'homeCopy2',
+          path: '/homeCopy2',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'homeCopy2')
+              : const HomeCopy2Widget(),
+        ),
+        FFRoute(
+          name: 'homeCopy',
+          path: '/homeCopy',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'homeCopy')
+              : const HomeCopyWidget(),
+        ),
+        FFRoute(
+          name: 'admin',
+          path: '/admin',
+          builder: (context, params) => const AdminWidget(),
+        ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -392,7 +438,8 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() =>
+      const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

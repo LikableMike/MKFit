@@ -2,9 +2,12 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'workout_plan_page_model.dart';
+import 'package:m_k_fit/pdf_viewer/pdf_viewer.dart';
+import 'package:m_k_fit/api/pdf_api.dart';
 export 'workout_plan_page_model.dart';
 
 class WorkoutPlanPageWidget extends StatefulWidget {
@@ -178,7 +181,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
                 child: Text(
                   'Your Workouts',
                   style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -201,8 +205,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                 scrollDirection: Axis.vertical,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
@@ -297,14 +301,49 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                               ),
                             ),
                           ),
+                          FFButtonWidget(
+                            onPressed: () async {
+                              const path = 'assets/pdfs/example.pdf';
+                              final file = await PDFLoader.loadAsset(path);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PDFViewerPage(pdfFile: file)),
+                              );
+                            },
+                            text: '',
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 148.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: Colors.transparent,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
                         ],
                       ),
                     ).animateOnPageLoad(
                         animationsMap['containerOnPageLoadAnimation1']!),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
@@ -396,6 +435,41 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                   ),
                                 ].divide(const SizedBox(height: 4.0)),
                               ),
+                            ),
+                          ),
+                          FFButtonWidget(
+                            onPressed: () async {
+                              const path = 'assets/pdfs/example.pdf';
+                              final file = await PDFLoader.loadAsset(path);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PDFViewerPage(pdfFile: file)),
+                              );
+                            },
+                            text: '',
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 148.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: Colors.transparent,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: const BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                         ],

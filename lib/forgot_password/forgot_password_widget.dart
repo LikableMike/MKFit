@@ -213,7 +213,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                           letterSpacing: 0.0,
                         ),
                     maxLines: null,
-                    minLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
                     validator: _model.emailAddressControllerValidator
@@ -282,7 +281,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                           letterSpacing: 0.0,
                         ),
                     maxLines: null,
-                    minLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
                     validator: _model.phoneNumberControllerValidator

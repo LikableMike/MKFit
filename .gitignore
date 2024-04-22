@@ -1,33 +1,76 @@
-# Gradle files
-.gradle/
-build/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Log/OS Files
+# General
 *.log
+*.dart.js
+*.bin
+*.probe
+*.lock
+*.stamp
 
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.apk
-output.json
+# Dart/Flutter
+.dart_tool/
+.packages
+.pub-cache/
+**/doc/api/
 
-# IntelliJ
-*.iml
+# Flutter build artifacts
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Android
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/local.properties
+
+# iOS/MacOS
+**/ios/**/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/GeneratedPluginRegistrant.*
+**/ios/Flutter/podhelper.rb
+**/ios/Flutter/App.framework
+**/ios/Flutter/FlutterPluginRegistrant/
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral/
+**/macos/Pods/
+
+# Web
+/web: build/
+
+# IDEs/Editors
 .idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+*.iml
+*.ipr
+*.iws
+.vscode/
 
-# Keystore files
-*.jks
-*.keystore
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+# General
+.DS_Store
+.idea/
+.vscode/
 
-# Android Profiling
-*.hprof
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+pubspec.lock
+
+# Android
+android/.gradle/
+android/local.properties
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+
+# iOS
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Runner.xcworkspace/xcuserdata/
+ios/Runner.xcworkspace/contents.xcworkspacedata
+ios/.symlinks/

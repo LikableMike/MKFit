@@ -1,8 +1,10 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'weight_setting_model.dart';
 export 'weight_setting_model.dart';
 
@@ -28,7 +30,8 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
     super.initState();
     _model = createModel(context, () => WeightSettingModel());
 
-    _model.textController1 ??= TextEditingController();
+    _model.textController1 ??=
+        TextEditingController(text: currentUserDisplayName);
     _model.textFieldFocusNode1 ??= FocusNode();
 
     _model.textController2 ??= TextEditingController();
@@ -54,16 +57,16 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
+          borderColor: FlutterFlowTheme.of(context).error,
           borderRadius: 30.0,
           buttonSize: 48.0,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.home,
             color: FlutterFlowTheme.of(context).info,
             size: 25.0,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            context.pushNamed('home');
           },
         ),
         title: Text(
@@ -129,8 +132,8 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
-                        child: Image.memory(
-                          widget.currentImage?.bytes ?? Uint8List.fromList([]),
+                        child: Image.asset(
+                          'assets/images/MK_Fit_Logo.png',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -199,7 +202,6 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                              minLines: null,
                               validator: _model.textController1Validator
                                   .asValidator(context),
                             ),
@@ -219,14 +221,14 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                               focusNode: _model.textFieldFocusNode2,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Current Weight',
+                                labelText: 'Current Weight in lbs',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
                                       fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
-                                hintText: 'Current Height',
+                                hintText: 'Current Weight',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -273,7 +275,6 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                     color: const Color(0xFFDBE2E7),
                                     letterSpacing: 0.0,
                                   ),
-                              minLines: null,
                               validator: _model.textController2Validator
                                   .asValidator(context),
                             ),
@@ -300,7 +301,8 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                       fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
-                                hintText: 'Current Height',
+                                hintText:
+                                    'Current Height - ex. if 5\'8, type \"5.8',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -347,7 +349,12 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                     color: const Color(0xFFDBE2E7),
                                     letterSpacing: 0.0,
                                   ),
-                              minLines: null,
+                              maxLength: 4,
+                              maxLengthEnforcement:
+                                  MaxLengthEnforcement.enforced,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      decimal: true),
                               validator: _model.textController3Validator
                                   .asValidator(context),
                             ),
