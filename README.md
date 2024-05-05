@@ -42,6 +42,27 @@ Makayla is an independent personal trainer based out of Woodland California. Her
 
 Creating a tailored mobile app based our clients business model, customer base and challenges they face. This tailored approach ensures that the app addresses the specific problems faced by our client in order to create a positive impact on their business. 
 
+## Prototype
+---
+During the begenning phase of our creating this application, we utilized flutter-flow to create our prototype of what the app will look like and its functions. Below, are the first pages we created based on our clients vision, to showcase what the app would closely look like.   
+
+The following pages were created:
+<ul style="circle">
+   <li>Sign In and Sign Up page</li>
+   <li>Create Account Page</li>
+   <li>Settings Page Page</li>
+   <li>Forgot Password Page</li>
+   <li>Confirm New Password Page</li>
+   <li>Forgot Username Page</li>
+   <li>Confirm New Username Page</li>
+  <li>Calender / Appointment Page</li>
+  <li>Progress Tracking Page</li>
+  <li>Personlized Workout page</li>
+  <li>Chat Option</li>
+  <li>Progress Tracking Page</li>
+  <li>Main Page</li>
+</ul>   
+
 
 ## Getting Started
 
