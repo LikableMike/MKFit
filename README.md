@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="MK Fit Logo.png" />
+</p>   
+
+
+
 # MKFit
 
 A new Flutter project.
@@ -23,7 +29,7 @@ A new Flutter project.
 - [Michael Partridge]
 - [Ramin Selseleh](https://github.com/RaminSel)
 - [Christian Vela Pasillas]
-- [Phillip Avila]
+- [Phillip Avila](https://github.com/APEX226)
 - [Nicholas Gaudet]
 - [Isaiah Samaniego]
 - [Brian Hert]
@@ -39,7 +45,6 @@ Makayla is an independent personal trainer based out of Woodland California. Her
 
 ## Solution
 ---
-
 Creating a tailored mobile app based our clients business model, customer base and challenges they face. This tailored approach ensures that the app addresses the specific problems faced by our client in order to create a positive impact on their business. 
 
 ## Prototype
