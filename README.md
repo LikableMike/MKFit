@@ -64,6 +64,31 @@ The following pages were created:
 </ul>   
 
 
+## Application Demo
+---
+
+   
+## Timeline
+---
+
+
+## Testing
+---
+
+Testing will be added next semester   
+
+
+## Deployment
+---
+
+Deployement instructions will be added next semester   
+
+
+## Developer Instructions
+---
+
+Developer instructions will be added next semester
+
 ## Getting Started
 
 FlutterFlow projects are built to run on the Flutter _stable_ release.
