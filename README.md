@@ -71,6 +71,7 @@ The following pages were created:
 
 ## Application Demo
 ---
+[Screencast from 2024-05-05 12-35-28.webm](https://github.com/LikableMike/MKFit/assets/118847632/f2baf515-b74e-42de-b2a7-b9cb4d40e766)
 
    
 ## Timeline
