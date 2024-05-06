@@ -6,7 +6,7 @@
 
 # MKFit
 This application will facilitate communication between trainers and  clients, simplifying the tracking progress; our goal is not to replace existing apps like MyFitnessPal, but to complement them. 
-By focusing on monitoring BMI, updating progress photos, introducing new workout routines, and maintaining transparency, trainers can easily monitor their clients' exercises, track their progress over time, and make necessary adjustments to their exercise routines. 
+By focusing on monitoring BMI, updating progress photos, introducing new workout routines, and maintaining transparency, trainers can easily monitor their clients' exercises, track their progress over time, and make necessary adjustments to their exercise routines. Through our work, we strive to satisfy and improve the workout experience for trainer and client.  
 
 
 ## Table of Contents
@@ -33,7 +33,7 @@ By focusing on monitoring BMI, updating progress photos, introducing new workout
 - [Phillip Avila](https://github.com/APEX226)
 - [Nicholas Gaudet](https://github.com/ng262)
 - [Isaiah Samaniego](https://github.com/IsaiahSami)
-- [Brian Hert]
+- [Brian Hert] (https://github.com/BrianHert)
 
 
 
