@@ -31,7 +31,7 @@ By focusing on monitoring BMI, updating progress photos, introducing new workout
 - [Ramin Selseleh](https://github.com/RaminSel)
 - [Christian Vela Pasillas]
 - [Phillip Avila](https://github.com/APEX226)
-- [Nicholas Gaudet]
+- [Nicholas Gaudet](https://github.com/ng262)
 - [Isaiah Samaniego]
 - [Brian Hert]
 
@@ -73,6 +73,13 @@ The following pages were created:
 ## Application Demo
 ---
 [Screencast from 2024-05-05 12-35-28.webm](https://github.com/LikableMike/MKFit/assets/118847632/f2baf515-b74e-42de-b2a7-b9cb4d40e766)
+
+
+## ERD
+---
+<p align="left">
+  <img src="assets/images/ERD.png" />
+</p>   
 
    
 ## Timeline
