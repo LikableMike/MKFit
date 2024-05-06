@@ -97,6 +97,7 @@ https://github.com/LikableMike/MKFit/assets/118847632/50e03ad5-39dc-40b0-9c62-50
 Estimation for CSC 191:
 
 <b>Sprint 5</b> (August 26th-September 8th 2024):
+- Complete any tasks unfinished from previous sprints.
 - Begin back end implementaion.
 - Begin database implementation.
   	- This will allow for the eventual completion of calendar and login features, as well as store workout plan PDFs.
@@ -124,7 +125,7 @@ Estimation for CSC 191:
 - Create and implement the Administrator's exercise list and workout database.
 - Complete tasks from any previous Sprints left unfinished and begin testing.
 
-<b>Sprint 9</b>(October 21st-November 3rd 2024):
+<b>Sprint 9</b> (October 21st-November 3rd 2024):
 - Function testing.
 
 
