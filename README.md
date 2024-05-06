@@ -76,15 +76,47 @@ The following pages were created:
    
 ## Timeline
 ---
-Febrary 2024: Charter completion and project confirmation.
-March 2024: Base Flutter demo completion.
-April 2024: Began front end with account creation, login, settings, passwords pages.
-May 2024: Functional front end for users nearing completion. Front page integration, ability to view worksouts as a PDF, calendars.
+<b>Febrary 2024:</b> Charter completion and project confirmation.
+
+<b>March 2024:</b> Base Flutter demo completion.
+
+<b>April 2024:</b> Began front end with account creation, login, passwords pages.
+
+<b>May 2024:</b> Functional front end for users nearing completion. Front page integration, ability to view worksouts as a PDF, calendars.
 
 Estimation for CSC 191:
 
-September 2024: Administrator front end integation, database structure. 
-October 2024: Database integration, chat function implementation. 
+<b>Sprint 5</b> (August 26th-September 8th 2024):
+- Begin back end implementaion.
+- Begin database implementation.
+  	- This will allow for the eventual completion of calendar and login features, as well as store workout plan PDFs.
+- Design and implement Settings page.
+- Begin giving buttons actions on the Account and Appointment pages.
+  	- Account pages allow users to input their BMI, weight, height, username, and post an account picture.
+
+<b>Sprint 6</b> (September 9th-September 22nd 2024):
+- Continue with Account and Appointment implementation.
+  	- Appointment pages link back to calendar implementation.
+- Begin Chat function.
+- Complete "Daily Motivation" tool.
+  	- Admins can use this tool to post messages.
+
+<b>Sprint 7</b> (September 23rd - October 6th 2024):
+- Begin development of admin features.
+	- Administrators can alter workouts, post movies, send messages and payment requests.
+- Begin development of the workout page.
+- Begin giving functionality to the Workout page.
+  	- On this page, users will be able to add in which exercises they are doing and how many reps.
+  	- Administrators have access to this page and can edit it.
+
+<b>Sprint 8</b> (October 7th - October 20th):
+- Continue the implementation of Admin Features.
+- Create and implement the Administrator's exercise list and workout database.
+- Complete tasks from any previous Sprints left unfinished and begin testing.
+
+<b>Sprint 9</b>(October 21st-November 3rd 2024):
+- Function testing.
+
 
 ## Testing
 ---
