@@ -5,8 +5,9 @@
 
 
 # MKFit
+This application will facilitate communication between trainers and  clients, simplifying the tracking progress; our goal is not to replace existing apps like MyFitnessPal, but to complement them. 
+By focusing on monitoring BMI, updating progress photos, introducing new workout routines, and maintaining transparency, trainers can easily monitor their clients' exercises, track their progress over time, and make necessary adjustments to their exercise routines. 
 
-A new Flutter project.
 
 ## Table of Contents
 ---
@@ -137,4 +138,4 @@ Developer instructions will be added next semester
 
 ## Getting Started
 
-FlutterFlow projects are built to run on the Flutter _stable_ release.
+The current build of the app is able to run on an Android Phone Emulator using Flutter. With Android Studio, while an emulator device is running, typing "flutter run" into the terminal should build and run the app as long as flutter is correctly installed.
