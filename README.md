@@ -25,7 +25,7 @@ A new Flutter project.
 
 ## Team Members
 ---
-- [Stephanie Nutter]
+- [Stephanie Nutter](https://github.com/S-nutter)
 - [Michael Partridge]
 - [Ramin Selseleh](https://github.com/RaminSel)
 - [Christian Vela Pasillas]
@@ -76,7 +76,15 @@ The following pages were created:
    
 ## Timeline
 ---
+Febrary 2024: Charter completion and project confirmation.
+March 2024: Base Flutter demo completion.
+April 2024: Began front end with account creation, login, settings, passwords pages.
+May 2024: Functional front end for users nearing completion. Front page integration, ability to view worksouts as a PDF, calendars.
 
+Estimation for CSC 191:
+
+September 2024: Administrator front end integation, database structure. 
+October 2024: Database integration, chat function implementation. 
 
 ## Testing
 ---
