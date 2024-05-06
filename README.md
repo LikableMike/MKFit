@@ -27,7 +27,7 @@ By focusing on monitoring BMI, updating progress photos, introducing new workout
 ## Team Members
 ---
 - [Stephanie Nutter](https://github.com/S-nutter)
-- [Michael Partridge]
+- [Michael Partridge](https://github.com/LikableMike)
 - [Ramin Selseleh](https://github.com/RaminSel)
 - [Christian Vela Pasillas]
 - [Phillip Avila](https://github.com/APEX226)
