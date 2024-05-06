@@ -33,7 +33,7 @@ By focusing on monitoring BMI, updating progress photos, introducing new workout
 - [Phillip Avila](https://github.com/APEX226)
 - [Nicholas Gaudet](https://github.com/ng262)
 - [Isaiah Samaniego](https://github.com/IsaiahSami)
-- [Brian Hert] (https://github.com/BrianHert)
+- [Brian Hert](https://github.com/BrianHert)
 
 
 
