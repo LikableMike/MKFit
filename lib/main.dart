@@ -113,8 +113,8 @@ class _NavBarPageState extends State<NavBarPage> {
       'ProgressPage': const ProgressPageWidget(),
       'makeAppointment': const MakeAppointmentWidget(),
       'workoutPlanPage': const WorkoutPlanPageWidget(),
-      'homeCopy2': const HomeCopy2Widget(),
-      'homeCopy': const HomeCopyWidget(),
+      //'homeCopy2': const HomeCopy2Widget(),
+      //'homeCopy': const HomeCopyWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -165,22 +165,7 @@ class _NavBarPageState extends State<NavBarPage> {
             label: 'Home',
             tooltip: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 40.0,
-            ),
-            label: 'Home',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 40.0,
-            ),
-            label: 'Home',
-            tooltip: '',
-          )
+
         ],
       ),
     );

@@ -211,7 +211,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 ),
                               ),
                               Container(
-                                width: 288.0,
+                                width: 240.0,
                                 height: 100.0,
                                 decoration: const BoxDecoration(),
                                 child: Align(
@@ -222,7 +222,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         .titleLarge
                                         .override(
                                           fontFamily: 'Inter',
-                                          fontSize: 25.0,
+                                          fontSize: 23.0,
                                           letterSpacing: 0.0,
                                         ),
                                   ),

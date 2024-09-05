@@ -381,7 +381,7 @@ class _IndividualWorkoutPageWidgetState
                             ),
                             Container(
                               width: double.infinity,
-                              height: 76.0,
+                              height: 67.0,
                               decoration: const BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -1560,7 +1560,7 @@ class _IndividualWorkoutPageWidgetState
                             ),
                             Container(
                               width: double.infinity,
-                              height: 65.0,
+                              height: 67.0,
                               decoration: const BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,

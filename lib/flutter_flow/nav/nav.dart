@@ -195,6 +195,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/changeNumber',
           builder: (context, params) => const ChangeNumberWidget(),
         ),
+<<<<<<< Updated upstream
         FFRoute(
           name: 'homeCopy2',
           path: '/homeCopy2',
@@ -214,6 +215,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/admin',
           builder: (context, params) => const AdminWidget(),
         ),
+=======
+
+>>>>>>> Stashed changes
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
