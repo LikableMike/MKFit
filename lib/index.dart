@@ -26,11 +26,8 @@ export '/parq/parq_widget.dart' show ParqWidget;
 export '/waiver/waiver_widget.dart' show WaiverWidget;
 export '/change_address/change_address_widget.dart' show ChangeAddressWidget;
 export '/change_number/change_number_widget.dart' show ChangeNumberWidget;
-<<<<<<< Updated upstream
-export '/home_copy2/home_copy2_widget.dart' show HomeCopy2Widget;
-export '/home_copy/home_copy_widget.dart' show HomeCopyWidget;
+
 export '/admin_page/admin_widget.dart' show AdminWidget;
-=======
 //export '/home_copy2/home_copy2_widget.dart' show HomeCopy2Widget;
 //export '/home_copy/home_copy_widget.dart' show HomeCopyWidget;
->>>>>>> Stashed changes
+

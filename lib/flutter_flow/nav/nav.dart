@@ -195,29 +195,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/changeNumber',
           builder: (context, params) => const ChangeNumberWidget(),
         ),
-<<<<<<< Updated upstream
-        FFRoute(
-          name: 'homeCopy2',
-          path: '/homeCopy2',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'homeCopy2')
-              : const HomeCopy2Widget(),
-        ),
-        FFRoute(
-          name: 'homeCopy',
-          path: '/homeCopy',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'homeCopy')
-              : const HomeCopyWidget(),
-        ),
+
+
         FFRoute(
           name: 'admin',
           path: '/admin',
           builder: (context, params) => const AdminWidget(),
         ),
-=======
 
->>>>>>> Stashed changes
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 

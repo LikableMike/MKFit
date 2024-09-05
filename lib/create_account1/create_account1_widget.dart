@@ -835,7 +835,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      _isValid  = _validatePassword(_model.passwordController.text);
+                                      var _isValid  = _validatePassword(_model.passwordController.text);
                                       if(_isValid){
                                         context.pushNamed('PARQ');
                                       }else{
@@ -966,7 +966,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
 
   bool _validatePassword(String password) {
     // Reset error message
-    _errorMessage = '';
+    var _errorMessage = '';
 
     //The password length must be greater than 6
     if (password.length <6) {
