@@ -20,6 +20,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   late MakeAppointmentModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  DateTimeRange? _selectedDateRange;
+  String? _selectedTime;
+  final List<String> _availableTimes = [
+    '9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 AM', '1:00 PM - 2:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM'
+  ];
+
 
   @override
   void initState() {
@@ -29,9 +35,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
-      initialIndex: 0,
-    )
-      ..addListener(() => setState(() {}));
+
+    );
   }
 
   @override
@@ -189,6 +194,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         setState(() =>
                                         _model.calendarSelectedDay1 =
                                             newSelectedDate);
+                                        _selectedDateRange = newSelectedDate;
                                       },
                                       titleStyle: FlutterFlowTheme
                                           .of(context)
@@ -271,8 +277,56 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
+    Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: DropdownButton<String>(
+    value: _selectedTime,
+    hint: Text(_selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',),
+      style: TextStyle(
+        color: Colors.pink,
+        fontSize: 16.0,
+      ),
+      items: _availableTimes.map((String time) {
+        return DropdownMenuItem<String>(
+            value: time,
+            child: Text(
+            time,
+            style: TextStyle(
+            color: Colors.blue, // Set the color for the dropdown items
+            ),
+        ),
+    );
+    }).toList(),
+    onChanged: (String? newValue) {
+    setState(() {
+    _selectedTime = newValue;
+    });
+    },
+    ),
+    ),
+    Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: ElevatedButton(
+    onPressed: () {
+    if (_selectedDateRange != null && _selectedTime != null) {
+    // Handle appointment confirmation here
+    print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
+    } else {
+      print( _selectedDateRange.toString() + " " + _selectedTime.toString());
+
+    // Show error or prompt to select date/time
+    ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('Please select both date and time.')),
+
+    );
+    }
+    },
+    child: Text('Confirm Appointment'),
+    ),
+    ),
+
+Padding(
+    padding: const EdgeInsetsDirectional
                                             .fromSTEB(
                                             0.0, 12.0, 0.0, 0.0),
                                         child: ListView(
@@ -695,6 +749,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         setState(() =>
                                         _model.calendarSelectedDay2 =
                                             newSelectedDate);
+                                        _selectedDateRange = newSelectedDate;
                                       },
                                       titleStyle: FlutterFlowTheme
                                           .of(context)
