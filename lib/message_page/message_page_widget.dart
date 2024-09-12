@@ -1,7 +1,10 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'message_page_model.dart';
 export 'message_page_model.dart';
 
@@ -47,7 +50,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 70.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 40.0,
@@ -64,7 +67,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -75,7 +78,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'Message with trainer',
                   style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -85,13 +88,13 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 1.0, 0.0, 0.0),
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
@@ -105,7 +108,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                             borderRadius: BorderRadius.circular(0.0),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(12.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,15 +117,15 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                   width: 44.0,
                                   height: 44.0,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF103E0C),
+                                    color: Color(0xFF103E0C),
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: const Color(0xFF2B901B),
+                                      color: Color(0xFF2B901B),
                                       width: 2.0,
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
+                                    padding: EdgeInsets.all(2.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(40.0),
                                       child: Image.network(
@@ -136,7 +139,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 0.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
@@ -158,7 +161,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                         ),
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 4.0, 0.0, 0.0),
                                           child: Text(
                                             'Are you free this friday for a workout session?',
@@ -177,7 +180,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
                                                 'Mon. July 3rd - 4:12pm',
@@ -210,17 +213,17 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                         ),
                       ),
                     ),
-                    const Divider(
+                    Divider(
                       height: 1.0,
                       thickness: 1.0,
                       color: Color(0xFF103E0C),
                     ),
-                    const Divider(
+                    Divider(
                       height: 1.0,
                       thickness: 1.0,
                       color: Color(0xFF103E0C),
                     ),
-                    const Divider(
+                    Divider(
                       height: 1.0,
                       thickness: 1.0,
                       color: Color(0xFF2B901B),

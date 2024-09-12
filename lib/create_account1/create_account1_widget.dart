@@ -4,8 +4,12 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'create_account1_model.dart';
 export 'create_account1_model.dart';
 
@@ -75,7 +79,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 70.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 40.0,
@@ -84,7 +88,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
               context.pop();
             },
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -104,12 +108,12 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                         FlutterFlowTheme.of(context).primaryText,
                         FlutterFlowTheme.of(context).primaryText
                       ],
-                      stops: const [0.0, 1.0],
-                      begin: const AlignmentDirectional(0.0, -1.0),
-                      end: const AlignmentDirectional(0, 1.0),
+                      stops: [0.0, 1.0],
+                      begin: AlignmentDirectional(0.0, -1.0),
+                      end: AlignmentDirectional(0, 1.0),
                     ),
                   ),
-                  alignment: const AlignmentDirectional(0.0, -1.0),
+                  alignment: AlignmentDirectional(0.0, -1.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -142,9 +146,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                           ),
                         ),
                         Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
-                            padding: const EdgeInsets.all(32.0),
+                            padding: EdgeInsets.all(32.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,9 +165,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       ),
                                 ),
                                 Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 5.0, 0.0, 24.0),
                                     child: Text(
                                       'Let\'s get started by filling out the form below.',
@@ -180,15 +184,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: _model.fullNameTextController,
                                       focusNode: _model.fullNameFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.name],
+                                      autofillHints: [AutofillHints.name],
                                       textCapitalization:
                                           TextCapitalization.words,
                                       obscureText: false,
@@ -260,16 +264,16 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller:
                                           _model.emailAddressTextController,
                                       focusNode: _model.emailAddressFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: [AutofillHints.email],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Email',
@@ -333,16 +337,16 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller:
                                           _model.phoneNumberTextController,
                                       focusNode: _model.phoneNumberFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [
+                                      autofillHints: [
                                         AutofillHints.telephoneNumber
                                       ],
                                       obscureText: false,
@@ -412,15 +416,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: _model.heightTextController,
                                       focusNode: _model.heightFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: [AutofillHints.email],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Height (Optional)',
@@ -484,15 +488,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: _model.weightTextController,
                                       focusNode: _model.weightFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: [AutofillHints.email],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Weight (Optional)',
@@ -556,15 +560,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: _model.userNameTextController,
                                       focusNode: _model.userNameFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: [AutofillHints.email],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Username',
@@ -634,15 +638,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: _model.passwordTextController,
                                       focusNode: _model.passwordFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.password],
+                                      autofillHints: [AutofillHints.password],
                                       obscureText: !_model.passwordVisibility,
                                       decoration: InputDecoration(
                                         labelText: 'Password',
@@ -721,9 +725,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: SizedBox(
+                                  child: Container(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller:
@@ -731,7 +735,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       focusNode:
                                           _model.passwordConfirmFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.password],
+                                      autofillHints: [AutofillHints.password],
                                       obscureText:
                                           !_model.passwordConfirmVisibility,
                                       decoration: InputDecoration(
@@ -814,7 +818,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
@@ -824,7 +828,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                               .text) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          const SnackBar(
+                                          SnackBar(
                                             content: Text(
                                               'Passwords don\'t match!',
                                             ),
@@ -852,10 +856,10 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     options: FFButtonOptions(
                                       width: 370.0,
                                       height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
                                       color:
                                           FlutterFlowTheme.of(context).primary,
@@ -867,7 +871,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             letterSpacing: 0.0,
                                           ),
                                       elevation: 3.0,
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1.0,
                                       ),
@@ -878,7 +882,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
 
                                 // You will have to add an action on this rich text to go to your login page.
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 12.0, 0.0, 12.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
@@ -893,7 +897,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                           MediaQuery.of(context).textScaler,
                                       text: TextSpan(
                                         children: [
-                                          const TextSpan(
+                                          TextSpan(
                                             text: 'Already have an account? ',
                                             style: TextStyle(),
                                           ),
@@ -942,13 +946,13 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                 Expanded(
                   flex: 6,
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(16.0),
                     child: Container(
                       width: 100.0,
                       height: double.infinity,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
-                        image: const DecorationImage(
+                        image: DecorationImage(
                           fit: BoxFit.cover,
                           image: CachedNetworkImageProvider(
                             'https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1380&q=80',

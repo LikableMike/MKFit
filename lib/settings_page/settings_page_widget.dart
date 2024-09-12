@@ -3,8 +3,12 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'settings_page_model.dart';
 export 'settings_page_model.dart';
 
@@ -73,7 +77,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
           borderRadius: 30.0,
           borderWidth: 1.0,
           buttonSize: 70.0,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_rounded,
             color: Colors.white,
             size: 40.0,
@@ -92,18 +96,18 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                 fontWeight: FontWeight.bold,
               ),
         ),
-        actions: const [],
+        actions: [],
         centerTitle: false,
         elevation: 2.0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(-1.0, -1.0),
+        alignment: AlignmentDirectional(-1.0, -1.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 0.0),
               child: Text(
                 'Please evaluate your options below.',
                 style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -118,7 +122,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
               scrollDirection: Axis.vertical,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -128,7 +132,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                       context.pushNamed(
                         'ConfirmNewUsername',
                         extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
+                          kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.fade,
                           ),
@@ -137,9 +141,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                     },
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,7 +181,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -187,7 +191,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                       context.pushNamed(
                         'changeAddress',
                         extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
+                          kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.bottomToTop,
                           ),
@@ -196,9 +200,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                     },
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,7 +240,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -246,7 +250,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                       context.pushNamed(
                         'ConfirmNewPassword',
                         extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
+                          kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.topToBottom,
                           ),
@@ -255,9 +259,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                     },
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,7 +299,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -305,7 +309,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                       context.pushNamed(
                         'ProgressPage',
                         extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
+                          kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.leftToRight,
                           ),
@@ -314,9 +318,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                     },
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -344,7 +348,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -354,7 +358,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                       context.pushNamed(
                         'changeNumber',
                         extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
+                          kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.scale,
                             alignment: Alignment.bottomCenter,
@@ -364,9 +368,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                     },
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -404,7 +408,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -414,7 +418,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                       context.pushNamed(
                         'Waiver',
                         extra: <String, dynamic>{
-                          kTransitionInfoKey: const TransitionInfo(
+                          kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.fade,
                           ),
@@ -423,9 +427,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                     },
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -453,7 +457,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -464,9 +468,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                     },
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -505,9 +509,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                 ),
               ],
             ),
-            const Spacer(),
+            Spacer(),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
               child: Text(
                 'App Versions',
                 style: FlutterFlowTheme.of(context).titleLarge.override(
@@ -518,7 +522,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 0.0),
               child: Text(
                 'v0.0.1',
                 style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -528,7 +532,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
                   context.pushNamed('login');
@@ -536,9 +540,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                 text: 'Log Out',
                 options: FFButtonOptions(
                   height: 40.0,
-                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   iconPadding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   textStyle: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Inter',
@@ -557,7 +561,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget>
                 animationsMap['buttonOnActionTriggerAnimation']!,
               ),
             ),
-          ].addToEnd(const SizedBox(height: 64.0)),
+          ].addToEnd(SizedBox(height: 64.0)),
         ),
       ),
     );

@@ -3,6 +3,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'change_name_model.dart';
 export 'change_name_model.dart';
 
@@ -47,12 +49,12 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         appBar: AppBar(
-          backgroundColor: const Color(0xFF101518),
+          backgroundColor: Color(0xFF101518),
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderRadius: 30.0,
             buttonSize: 60.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Color(0xFFFBF9F5),
               size: 30.0,
@@ -68,7 +70,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 0.0,
         ),
@@ -79,18 +81,18 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
                 child: Text(
                   'Change Name',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Readex Pro',
-                        color: const Color(0xFFFBF9F5),
+                        color: Color(0xFFFBF9F5),
                         letterSpacing: 0.0,
                       ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 16.0, 10.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 16.0, 10.0),
                 child: TextFormField(
                   controller: _model.textController1,
                   focusNode: _model.textFieldFocusNode1,
@@ -101,7 +103,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                     hintText: 'Enter your first name...',
                     hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Inter',
-                          color: const Color(0xFFFBF9F5),
+                          color: Color(0xFFFBF9F5),
                           letterSpacing: 0.0,
                         ),
                     enabledBorder: OutlineInputBorder(
@@ -112,21 +114,21 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
@@ -135,7 +137,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Color(0xFFFBF9F5),
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -143,7 +145,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 5.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 5.0, 16.0, 0.0),
                 child: TextFormField(
                   controller: _model.textController2,
                   focusNode: _model.textFieldFocusNode2,
@@ -154,7 +156,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                     hintText: 'Enter your last name...',
                     hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Inter',
-                          color: const Color(0xFFFBF9F5),
+                          color: Color(0xFFFBF9F5),
                           letterSpacing: 0.0,
                         ),
                     enabledBorder: OutlineInputBorder(
@@ -165,21 +167,21 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
@@ -188,7 +190,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Color(0xFFFBF9F5),
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -196,7 +198,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
@@ -205,10 +207,10 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 50.0,
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: const Color(0xFFFBF9F5),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: Color(0xFFFBF9F5),
                     textStyle:
                         FlutterFlowTheme.of(context).titleMedium.override(
                               fontFamily: 'Inter',
@@ -221,7 +223,7 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
@@ -230,9 +232,9 @@ class _ChangeNameWidgetState extends State<ChangeNameWidget> {
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 50.0,
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     textStyle:
                         FlutterFlowTheme.of(context).titleMedium.override(

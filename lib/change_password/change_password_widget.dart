@@ -3,6 +3,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'change_password_model.dart';
 export 'change_password_model.dart';
 
@@ -48,14 +50,14 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFF101518),
+        backgroundColor: Color(0xFF101518),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF101518),
+          backgroundColor: Color(0xFF101518),
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderRadius: 30.0,
             buttonSize: 60.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Color(0xFFFBF9F5),
               size: 30.0,
@@ -71,7 +73,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 0.0,
         ),
@@ -82,18 +84,18 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'Change Password',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Readex Pro',
-                        color: const Color(0xFFFBF9F5),
+                        color: Color(0xFFFBF9F5),
                         letterSpacing: 0.0,
                       ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 15.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 15.0, 16.0, 0.0),
                 child: TextFormField(
                   controller: _model.textController1,
                   focusNode: _model.textFieldFocusNode1,
@@ -104,7 +106,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     hintText: 'Enter current password',
                     hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Inter',
-                          color: const Color(0xFFFBF9F5),
+                          color: Color(0xFFFBF9F5),
                           letterSpacing: 0.0,
                         ),
                     enabledBorder: OutlineInputBorder(
@@ -115,21 +117,21 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
@@ -152,7 +154,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Color(0xFFFBF9F5),
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -160,7 +162,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 15.0, 16.0, 15.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 15.0, 16.0, 15.0),
                 child: TextFormField(
                   controller: _model.textController2,
                   focusNode: _model.textFieldFocusNode2,
@@ -171,7 +173,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     hintText: 'Enter new password',
                     hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Inter',
-                          color: const Color(0xFFFBF9F5),
+                          color: Color(0xFFFBF9F5),
                           letterSpacing: 0.0,
                         ),
                     enabledBorder: OutlineInputBorder(
@@ -182,21 +184,21 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
@@ -219,7 +221,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Color(0xFFFBF9F5),
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -227,7 +229,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: TextFormField(
                   controller: _model.textController3,
                   focusNode: _model.textFieldFocusNode3,
@@ -238,7 +240,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     hintText: 'Re-enter new password',
                     hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Inter',
-                          color: const Color(0xFFFBF9F5),
+                          color: Color(0xFFFBF9F5),
                           letterSpacing: 0.0,
                         ),
                     enabledBorder: OutlineInputBorder(
@@ -249,21 +251,21 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 2.0,
                       ),
@@ -286,7 +288,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Color(0xFFFBF9F5),
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -294,7 +296,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 10.0, 24.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(24.0, 10.0, 24.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () {
                     print('Button pressed ...');
@@ -304,10 +306,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     width: 200.0,
                     height: 50.0,
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                     iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: const Color(0xFFFBF9F5),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    color: Color(0xFFFBF9F5),
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Inter',
                           color: FlutterFlowTheme.of(context).primaryText,

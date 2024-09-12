@@ -1,14 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
 import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/lat_lng.dart';
+import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -73,80 +79,80 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const LoginWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const LoginWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : LoginWidget(),
         ),
         FFRoute(
           name: 'login',
           path: '/login',
-          builder: (context, params) => const LoginWidget(),
+          builder: (context, params) => LoginWidget(),
         ),
         FFRoute(
           name: 'CreateAccount1',
           path: '/createAccount1',
-          builder: (context, params) => const CreateAccount1Widget(),
+          builder: (context, params) => CreateAccount1Widget(),
         ),
         FFRoute(
           name: 'home2',
           path: '/home2',
           builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'home2') : const Home2Widget(),
+              params.isEmpty ? NavBarPage(initialPage: 'home2') : Home2Widget(),
         ),
         FFRoute(
           name: 'ProgressPage',
           path: '/progressPage',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'ProgressPage')
-              : const ProgressPageWidget(),
+              ? NavBarPage(initialPage: 'ProgressPage')
+              : ProgressPageWidget(),
         ),
         FFRoute(
           name: 'messagePage',
           path: '/messagePage',
-          builder: (context, params) => const MessagePageWidget(),
+          builder: (context, params) => MessagePageWidget(),
         ),
         FFRoute(
           name: 'SettingsPage',
           path: '/settingsPage',
-          builder: (context, params) => const SettingsPageWidget(),
+          builder: (context, params) => SettingsPageWidget(),
         ),
         FFRoute(
           name: 'makeAppointment',
           path: '/makeAppointment',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'makeAppointment')
-              : const MakeAppointmentWidget(),
+              ? NavBarPage(initialPage: 'makeAppointment')
+              : MakeAppointmentWidget(),
         ),
         FFRoute(
           name: 'forgotUsername',
           path: '/forgotUsername',
-          builder: (context, params) => const ForgotUsernameWidget(),
+          builder: (context, params) => ForgotUsernameWidget(),
         ),
         FFRoute(
           name: 'ConfirmNewPassword',
           path: '/confirmNewPassword',
-          builder: (context, params) => const ConfirmNewPasswordWidget(),
+          builder: (context, params) => ConfirmNewPasswordWidget(),
         ),
         FFRoute(
           name: 'workoutPlanPage',
           path: '/workoutPlanPage',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'workoutPlanPage')
-              : const WorkoutPlanPageWidget(),
+              ? NavBarPage(initialPage: 'workoutPlanPage')
+              : WorkoutPlanPageWidget(),
         ),
         FFRoute(
           name: 'ConfirmNewUsername',
           path: '/confirmNewUsername',
-          builder: (context, params) => const ConfirmNewUsernameWidget(),
+          builder: (context, params) => ConfirmNewUsernameWidget(),
         ),
         FFRoute(
           name: 'forgotPassword',
           path: '/forgotPassword',
-          builder: (context, params) => const ForgotPasswordWidget(),
+          builder: (context, params) => ForgotPasswordWidget(),
         ),
         FFRoute(
           name: 'weightSetting',
@@ -161,68 +167,68 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'PARQ',
           path: '/parq',
-          builder: (context, params) => const ParqWidget(),
+          builder: (context, params) => ParqWidget(),
         ),
         FFRoute(
           name: 'Waiver',
           path: '/waiver',
-          builder: (context, params) => const WaiverWidget(),
+          builder: (context, params) => WaiverWidget(),
         ),
         FFRoute(
           name: 'IndividualWorkoutPage',
           path: '/individualWorkoutPage',
-          builder: (context, params) => const IndividualWorkoutPageWidget(),
+          builder: (context, params) => IndividualWorkoutPageWidget(),
         ),
         FFRoute(
           name: 'changeAddress',
           path: '/changeAddress',
-          builder: (context, params) => const ChangeAddressWidget(),
+          builder: (context, params) => ChangeAddressWidget(),
         ),
         FFRoute(
           name: 'changeNumber',
           path: '/changeNumber',
-          builder: (context, params) => const ChangeNumberWidget(),
+          builder: (context, params) => ChangeNumberWidget(),
         ),
         FFRoute(
           name: 'home',
           path: '/home',
           builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'home') : const HomeWidget(),
+              params.isEmpty ? NavBarPage(initialPage: 'home') : HomeWidget(),
         ),
         FFRoute(
           name: 'CustomerChat',
           path: '/customerChat',
-          builder: (context, params) => const CustomerChatWidget(),
+          builder: (context, params) => CustomerChatWidget(),
         ),
         FFRoute(
           name: 'CreateExcersise',
           path: '/createExcersise',
-          builder: (context, params) => const CreateExcersiseWidget(),
+          builder: (context, params) => CreateExcersiseWidget(),
         ),
         FFRoute(
           name: 'CreateWorkoutPage',
           path: '/createWorkoutPage',
-          builder: (context, params) => const CreateWorkoutPageWidget(),
+          builder: (context, params) => CreateWorkoutPageWidget(),
         ),
         FFRoute(
           name: 'Admin',
           path: '/admin',
-          builder: (context, params) => const AdminWidget(),
+          builder: (context, params) => AdminWidget(),
         ),
         FFRoute(
           name: 'changeName',
           path: '/changeName',
-          builder: (context, params) => const ChangeNameWidget(),
+          builder: (context, params) => ChangeNameWidget(),
         ),
         FFRoute(
           name: 'changePassword',
           path: '/changePassword',
-          builder: (context, params) => const ChangePasswordWidget(),
+          builder: (context, params) => ChangePasswordWidget(),
         ),
         FFRoute(
           name: 'changeHW',
           path: '/changeHW',
-          builder: (context, params) => const ChangeHWWidget(),
+          builder: (context, params) => ChangeHWWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -460,7 +466,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

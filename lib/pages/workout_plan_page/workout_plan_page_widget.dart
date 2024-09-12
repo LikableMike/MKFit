@@ -3,8 +3,13 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'workout_plan_page_model.dart';
 export 'workout_plan_page_model.dart';
 
@@ -44,15 +49,15 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             curve: Curves.easeInOut,
             delay: 200.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.8, 0.8),
-            end: const Offset(1.0, 1.0),
+            begin: Offset(0.8, 0.8),
+            end: Offset(1.0, 1.0),
           ),
           MoveEffect(
             curve: Curves.easeInOut,
             delay: 200.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.0, 40.0),
-            end: const Offset(0.0, 0.0),
+            begin: Offset(0.0, 40.0),
+            end: Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -71,22 +76,22 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             curve: Curves.easeInOut,
             delay: 200.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.8, 0.8),
-            end: const Offset(1.0, 1.0),
+            begin: Offset(0.8, 0.8),
+            end: Offset(1.0, 1.0),
           ),
           TiltEffect(
             curve: Curves.easeInOut,
             delay: 200.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0, 1.396),
-            end: const Offset(0, 0),
+            begin: Offset(0, 1.396),
+            end: Offset(0, 0),
           ),
           MoveEffect(
             curve: Curves.easeInOut,
             delay: 200.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.0, 40.0),
-            end: const Offset(0.0, 0.0),
+            begin: Offset(0.0, 40.0),
+            end: Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -105,22 +110,22 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             curve: Curves.easeInOut,
             delay: 250.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.8, 0.8),
-            end: const Offset(1.0, 1.0),
+            begin: Offset(0.8, 0.8),
+            end: Offset(1.0, 1.0),
           ),
           TiltEffect(
             curve: Curves.easeInOut,
             delay: 250.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0, 1.396),
-            end: const Offset(0, 0),
+            begin: Offset(0, 1.396),
+            end: Offset(0, 0),
           ),
           MoveEffect(
             curve: Curves.easeInOut,
             delay: 250.0.ms,
             duration: 300.0.ms,
-            begin: const Offset(0.0, 40.0),
-            end: const Offset(0.0, 0.0),
+            begin: Offset(0.0, 40.0),
+            end: Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -151,7 +156,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 70.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 40.0,
@@ -170,7 +175,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -181,12 +186,12 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
                 child: Text(
                   'Your Workouts',
                   style: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Outfit',
-                        color: const Color(0xFF606A85),
+                        color: Color(0xFF606A85),
                         fontSize: 14.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.w500,
@@ -194,7 +199,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                 ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation']!),
               ),
               ListView(
-                padding: const EdgeInsets.fromLTRB(
+                padding: EdgeInsets.fromLTRB(
                   0,
                   0,
                   0,
@@ -205,13 +210,13 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF00831B),
-                        boxShadow: const [
+                        color: Color(0xFF00831B),
+                        boxShadow: [
                           BoxShadow(
                             blurRadius: 3.0,
                             color: Color(0x33000000),
@@ -223,14 +228,14 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                         ],
                         borderRadius: BorderRadius.circular(16.0),
                         border: Border.all(
-                          color: const Color(0xFF00831B),
+                          color: Color(0xFF00831B),
                           width: 2.0,
                         ),
                       ),
                       child: Stack(
                         children: [
                           Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12.0),
                               child: Image.network(
@@ -245,11 +250,11 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                             width: double.infinity,
                             height: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color(0x9AFFFFFF),
+                              color: Color(0x9AFFFFFF),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.all(12.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -261,7 +266,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                         .titleLarge
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 22.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -271,7 +276,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                     textScaler:
                                         MediaQuery.of(context).textScaler,
                                     text: TextSpan(
-                                      children: const [
+                                      children: [
                                         TextSpan(
                                           text: '8 Mins',
                                           style: TextStyle(),
@@ -289,14 +294,14 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                     ),
                                   ),
-                                ].divide(const SizedBox(height: 4.0)),
+                                ].divide(SizedBox(height: 4.0)),
                               ),
                             ),
                           ),
@@ -308,9 +313,9 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 148.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: Colors.transparent,
                               textStyle: FlutterFlowTheme.of(context)
@@ -321,7 +326,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
@@ -335,12 +340,12 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
                       decoration: BoxDecoration(
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
                             blurRadius: 3.0,
                             color: Color(0x33000000),
@@ -352,14 +357,14 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                         ],
                         borderRadius: BorderRadius.circular(16.0),
                         border: Border.all(
-                          color: const Color(0xFF00831B),
+                          color: Color(0xFF00831B),
                           width: 2.0,
                         ),
                       ),
                       child: Stack(
                         children: [
                           Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12.0),
                               child: Image.network(
@@ -374,11 +379,11 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                             width: double.infinity,
                             height: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color(0x9AFFFFFF),
+                              color: Color(0x9AFFFFFF),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: EdgeInsets.all(12.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -390,7 +395,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                         .titleLarge
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 22.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -400,7 +405,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                     textScaler:
                                         MediaQuery.of(context).textScaler,
                                     text: TextSpan(
-                                      children: const [
+                                      children: [
                                         TextSpan(
                                           text: '12 Mins',
                                           style: TextStyle(),
@@ -418,14 +423,14 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                     ),
                                   ),
-                                ].divide(const SizedBox(height: 4.0)),
+                                ].divide(SizedBox(height: 4.0)),
                               ),
                             ),
                           ),
@@ -437,9 +442,9 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 148.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: Colors.transparent,
                               textStyle: FlutterFlowTheme.of(context)
@@ -450,7 +455,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
@@ -462,7 +467,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                     ).animateOnPageLoad(
                         animationsMap['containerOnPageLoadAnimation2']!),
                   ),
-                ].divide(const SizedBox(height: 12.0)),
+                ].divide(SizedBox(height: 12.0)),
               ),
             ],
           ),

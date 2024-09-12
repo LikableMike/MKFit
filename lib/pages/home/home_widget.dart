@@ -6,7 +6,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'home_model.dart';
 export 'home_model.dart';
 
@@ -83,13 +85,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                   Divider(
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
-                ].divide(const SizedBox(height: 4.0)),
+                ].divide(SizedBox(height: 4.0)),
               ),
             ],
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 12.0, 12.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 12.0, 12.0),
               child: Container(
                 width: 78.0,
                 height: 78.0,
@@ -108,15 +110,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                           print('Button pressed ...');
                         },
                         text: 'Chat Button',
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.chat,
                           size: 40.0,
                         ),
                         options: FFButtonOptions(
                           height: 78.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primaryText,
                           textStyle:
@@ -127,7 +129,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 3.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
@@ -163,13 +165,13 @@ class _HomeWidgetState extends State<HomeWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 100.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
                         blurRadius: 4.0,
                         color: Color(0x33000000),
@@ -181,7 +183,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ],
                     borderRadius: BorderRadius.circular(16.0),
                     border: Border.all(
-                      color: const Color(0xFF00831B),
+                      color: Color(0xFF00831B),
                     ),
                   ),
                   child: ClipRRect(
@@ -200,13 +202,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 164.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
                         blurRadius: 4.0,
                         color: Color(0x33000000),
@@ -222,27 +224,27 @@ class _HomeWidgetState extends State<HomeWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 0.0, 16.0, 0.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
-                          decoration: const BoxDecoration(),
+                          decoration: BoxDecoration(),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 5.0, 4.0, 0.0),
                                 child: Container(
                                   width: 100.0,
                                   height: 100.0,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF00831B),
+                                    color: Color(0xFF00831B),
                                     borderRadius: BorderRadius.circular(50.0),
                                   ),
                                   child: FlutterFlowIconButton(
-                                    borderColor: const Color(0xFF40DC28),
+                                    borderColor: Color(0xFF40DC28),
                                     borderRadius: 40.0,
                                     borderWidth: 4.0,
                                     buttonSize: 25.0,
@@ -261,9 +263,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                               Container(
                                 width: 223.0,
                                 height: 100.0,
-                                decoration: const BoxDecoration(),
+                                decoration: BoxDecoration(),
                                 child: Align(
-                                  alignment: const AlignmentDirectional(-1.0, 0.0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     'Next Appointment: \nApril 1st, at 1:00 PM',
                                     style: FlutterFlowTheme.of(context)
@@ -283,12 +285,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                       Container(
                         width: double.infinity,
                         height: 60.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   context.pushNamed('makeAppointment');
@@ -296,11 +298,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 text: 'Reschedule/Cancel Appointment',
                                 options: FFButtonOptions(
                                   height: 40.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       24.0, 0.0, 24.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: const Color(0xFF00831B),
+                                  color: Color(0xFF00831B),
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -310,7 +312,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         fontWeight: FontWeight.w500,
                                       ),
                                   elevation: 3.0,
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),
@@ -330,7 +332,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 200.0,
@@ -343,9 +345,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 5.0, 0.0, 0.0),
                           child: Container(
                             width: 300.0,
@@ -355,7 +357,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   .secondaryBackground,
                             ),
                             child: Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Text(
                                 'Todays Progress',
                                 style: FlutterFlowTheme.of(context)
@@ -371,7 +373,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
@@ -380,16 +382,16 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 .secondaryBackground,
                           ),
                           child: Align(
-                            alignment: const AlignmentDirectional(-5.0, 0.0),
+                            alignment: AlignmentDirectional(-5.0, 0.0),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   2.0, 0.0, 2.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 0.0),
                                     child: Container(
                                       width: 110.0,
@@ -400,7 +402,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: CircularPercentIndicator(
                                           percent: 0.5,
                                           radius: 50.0,
@@ -435,9 +437,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           .secondaryBackground,
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           2.0, 0.0, 0.0, 0.0),
-                                      child: SizedBox(
+                                      child: Container(
                                         height: 230.0,
                                         child: FlutterFlowLineChart(
                                           data: [
@@ -458,7 +460,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                         .primary,
                                                 barWidth: 2.0,
                                                 isCurved: true,
-                                                dotData: const FlDotData(show: false),
+                                                dotData: FlDotData(show: false),
                                                 belowBarData: BarAreaData(
                                                   show: true,
                                                   color: FlutterFlowTheme.of(
@@ -474,9 +476,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                     .secondaryBackground,
                                             showBorder: false,
                                           ),
-                                          axisBounds: const AxisBounds(),
-                                          xAxisLabelInfo: const AxisLabelInfo(),
-                                          yAxisLabelInfo: const AxisLabelInfo(),
+                                          axisBounds: AxisBounds(),
+                                          xAxisLabelInfo: AxisLabelInfo(),
+                                          yAxisLabelInfo: AxisLabelInfo(),
                                         ),
                                       ),
                                     ),
@@ -488,7 +490,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                       Align(
-                        alignment: const AlignmentDirectional(0.0, -1.0),
+                        alignment: AlignmentDirectional(0.0, -1.0),
                         child: Container(
                           width: 200.0,
                           height: 40.0,
@@ -497,7 +499,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 .secondaryBackground,
                           ),
                           child: Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () {
                                 print('Button pressed ...');
@@ -505,11 +507,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                               text: 'Visit your Progress',
                               options: FFButtonOptions(
                                 height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
-                                color: const Color(0xFF00831B),
+                                color: Color(0xFF00831B),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -517,7 +519,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 elevation: 3.0,
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
@@ -527,7 +529,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         ),
                       ),
-                    ].divide(const SizedBox(height: 5.0)),
+                    ].divide(SizedBox(height: 5.0)),
                   ),
                 ),
               ),
@@ -536,7 +538,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 151.0,
@@ -559,7 +561,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   5.0, 0.0, 0.0, 0.0),
                               child: Container(
                                 width: 84.0,
@@ -569,7 +571,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       .secondaryBackground,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF00831B),
+                                    color: Color(0xFF00831B),
                                     width: 4.0,
                                   ),
                                 ),
@@ -577,7 +579,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   width: 120.0,
                                   height: 120.0,
                                   clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
                                   child: Image.network(
@@ -588,7 +590,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   5.0, 5.0, 0.0, 0.0),
                               child: Container(
                                 width: 255.0,
@@ -602,7 +604,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   children: [
                                     Align(
                                       alignment:
-                                          const AlignmentDirectional(-1.0, -1.0),
+                                          AlignmentDirectional(-1.0, -1.0),
                                       child: Text(
                                         'MK FIT',
                                         style: FlutterFlowTheme.of(context)
@@ -615,7 +617,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                     Align(
                                       alignment:
-                                          const AlignmentDirectional(-1.0, 0.0),
+                                          AlignmentDirectional(-1.0, 0.0),
                                       child: Text(
                                         'Are you free this friday for a workout session?',
                                         style: FlutterFlowTheme.of(context)
@@ -628,7 +630,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                     Align(
                                       alignment:
-                                          const AlignmentDirectional(-1.0, 1.0),
+                                          AlignmentDirectional(-1.0, 1.0),
                                       child: Text(
                                         'Mon. July 3rd - 4:12pm',
                                         style: FlutterFlowTheme.of(context)
@@ -654,7 +656,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               FlutterFlowTheme.of(context).secondaryBackground,
                         ),
                         child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               context.pushNamed('messagePage');
@@ -662,11 +664,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                             text: 'Messages',
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: const Color(0xFF00831B),
+                              color: Color(0xFF00831B),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -675,7 +677,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),

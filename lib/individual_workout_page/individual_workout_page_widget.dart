@@ -1,7 +1,10 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'individual_workout_page_model.dart';
 export 'individual_workout_page_model.dart';
 
@@ -49,7 +52,7 @@ class _IndividualWorkoutPageWidgetState
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 70.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 40.0,
@@ -66,7 +69,7 @@ class _IndividualWorkoutPageWidgetState
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -79,23 +82,23 @@ class _IndividualWorkoutPageWidgetState
                 Container(
                   width: double.infinity,
                   height: 230.0,
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                         width: double.infinity,
                         height: 60.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
                               width: 300.0,
                               height: 50.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Arnold Press',
@@ -111,19 +114,19 @@ class _IndividualWorkoutPageWidgetState
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Container(
                                 width: 40.0,
                                 height: 40.0,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF97B690),
+                                    color: Color(0xFF97B690),
                                     width: 2.0,
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Text(
                                     '20 lb',
                                     style: FlutterFlowTheme.of(context)
@@ -144,14 +147,14 @@ class _IndividualWorkoutPageWidgetState
                       Container(
                         width: double.infinity,
                         height: 144.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 15.0),
                                 child: Text(
                                   'A Brief Description of the excersise shall go here',
@@ -169,24 +172,24 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 42.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 5.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
                                         height: 40.0,
-                                        decoration: const BoxDecoration(),
+                                        decoration: BoxDecoration(),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 '0/4',
@@ -206,7 +209,7 @@ class _IndividualWorkoutPageWidgetState
                                               ),
                                             ),
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 'Sets',
@@ -229,9 +232,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -246,7 +249,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -266,9 +269,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -283,7 +286,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -303,9 +306,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -320,7 +323,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -340,9 +343,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -357,7 +360,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -382,14 +385,14 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 76.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
                                     width: 60.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -397,7 +400,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.ondemand_video_outlined,
                                             color: Color(0xFF97B690),
                                             size: 35.0,
@@ -426,7 +429,7 @@ class _IndividualWorkoutPageWidgetState
                                   Container(
                                     width: 54.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -434,7 +437,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.assignment_rounded,
                                             color: Color(0xFF97B690),
                                             size: 35.0,
@@ -472,23 +475,23 @@ class _IndividualWorkoutPageWidgetState
                 Container(
                   width: double.infinity,
                   height: 230.0,
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                         width: double.infinity,
                         height: 60.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
                               width: 300.0,
                               height: 50.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Military Press',
@@ -504,19 +507,19 @@ class _IndividualWorkoutPageWidgetState
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Container(
                                 width: 40.0,
                                 height: 40.0,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF97B690),
+                                    color: Color(0xFF97B690),
                                     width: 2.0,
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Text(
                                     '25 lb',
                                     style: FlutterFlowTheme.of(context)
@@ -537,14 +540,14 @@ class _IndividualWorkoutPageWidgetState
                       Container(
                         width: double.infinity,
                         height: 152.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 15.0),
                                 child: Text(
                                   'A Brief Description of the excersise shall go here',
@@ -562,24 +565,24 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 42.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 5.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
                                         height: 40.0,
-                                        decoration: const BoxDecoration(),
+                                        decoration: BoxDecoration(),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 '0/4',
@@ -599,7 +602,7 @@ class _IndividualWorkoutPageWidgetState
                                               ),
                                             ),
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 'Sets',
@@ -622,9 +625,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -639,7 +642,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -659,9 +662,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -676,7 +679,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -696,9 +699,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -713,7 +716,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -733,9 +736,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -750,7 +753,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -775,14 +778,14 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 76.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
                                     width: 60.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -790,7 +793,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.ondemand_video_outlined,
                                             color: Color(0xFF97B690),
                                             size: 35.0,
@@ -819,7 +822,7 @@ class _IndividualWorkoutPageWidgetState
                                   Container(
                                     width: 54.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -827,7 +830,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.assignment_rounded,
                                             color: Color(0xFF97B690),
                                             size: 35.0,
@@ -865,23 +868,23 @@ class _IndividualWorkoutPageWidgetState
                 Container(
                   width: double.infinity,
                   height: 230.0,
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                         width: double.infinity,
                         height: 60.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
                               width: 300.0,
                               height: 50.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Reverse Flys',
@@ -897,19 +900,19 @@ class _IndividualWorkoutPageWidgetState
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Container(
                                 width: 40.0,
                                 height: 40.0,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF97B690),
+                                    color: Color(0xFF97B690),
                                     width: 2.0,
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Text(
                                     '10 lb',
                                     style: FlutterFlowTheme.of(context)
@@ -930,14 +933,14 @@ class _IndividualWorkoutPageWidgetState
                       Container(
                         width: double.infinity,
                         height: 152.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 15.0),
                                 child: Text(
                                   'A Brief Description of the excersise shall go here',
@@ -955,24 +958,24 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 42.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 5.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
                                         height: 40.0,
-                                        decoration: const BoxDecoration(),
+                                        decoration: BoxDecoration(),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 '0/4',
@@ -992,7 +995,7 @@ class _IndividualWorkoutPageWidgetState
                                               ),
                                             ),
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 'Sets',
@@ -1015,9 +1018,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1032,7 +1035,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1052,9 +1055,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1069,7 +1072,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1089,9 +1092,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1106,7 +1109,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1126,9 +1129,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1143,7 +1146,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1168,14 +1171,14 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 76.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
                                     width: 60.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -1183,7 +1186,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.ondemand_video_outlined,
                                             color: Color(0xFF97B690),
                                             size: 35.0,
@@ -1212,7 +1215,7 @@ class _IndividualWorkoutPageWidgetState
                                   Container(
                                     width: 54.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -1220,7 +1223,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.assignment_rounded,
                                             color: Color(0xFF97B690),
                                             size: 35.0,
@@ -1258,23 +1261,23 @@ class _IndividualWorkoutPageWidgetState
                 Container(
                   width: double.infinity,
                   height: 230.0,
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                         width: double.infinity,
                         height: 60.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
                               width: 300.0,
                               height: 50.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Lateral Raises',
@@ -1290,19 +1293,19 @@ class _IndividualWorkoutPageWidgetState
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Container(
                                 width: 40.0,
                                 height: 40.0,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF97B690),
+                                    color: Color(0xFF97B690),
                                     width: 2.0,
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Text(
                                     '15 lb',
                                     style: FlutterFlowTheme.of(context)
@@ -1323,14 +1326,14 @@ class _IndividualWorkoutPageWidgetState
                       Container(
                         width: double.infinity,
                         height: 144.0,
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 15.0),
                                 child: Text(
                                   'A Brief Description of the excersise shall go here',
@@ -1348,24 +1351,24 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 42.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 5.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
                                         height: 40.0,
-                                        decoration: const BoxDecoration(),
+                                        decoration: BoxDecoration(),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 '0/4',
@@ -1385,7 +1388,7 @@ class _IndividualWorkoutPageWidgetState
                                               ),
                                             ),
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Text(
                                                 'Sets',
@@ -1408,9 +1411,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1425,7 +1428,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1445,9 +1448,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1462,7 +1465,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1482,9 +1485,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1499,7 +1502,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1519,9 +1522,9 @@ class _IndividualWorkoutPageWidgetState
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Container(
                                         width: 40.0,
@@ -1536,7 +1539,7 @@ class _IndividualWorkoutPageWidgetState
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             '8',
                                             style: FlutterFlowTheme.of(context)
@@ -1561,14 +1564,14 @@ class _IndividualWorkoutPageWidgetState
                             Container(
                               width: double.infinity,
                               height: 65.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
                                     width: 60.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -1576,7 +1579,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.ondemand_video_outlined,
                                             color: Color(0xFF97B690),
                                             size: 35.0,
@@ -1605,7 +1608,7 @@ class _IndividualWorkoutPageWidgetState
                                   Container(
                                     width: 54.0,
                                     height: 100.0,
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -1613,7 +1616,7 @@ class _IndividualWorkoutPageWidgetState
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 50.0,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.assignment_rounded,
                                             color: Color(0xFF97B690),
                                             size: 35.0,

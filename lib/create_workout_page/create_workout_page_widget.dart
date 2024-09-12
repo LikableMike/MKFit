@@ -6,6 +6,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'create_workout_page_model.dart';
 export 'create_workout_page_model.dart';
 
@@ -71,24 +73,24 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                 'Please fill out the form below to continue.',
                 style: FlutterFlowTheme.of(context).labelMedium.override(
                       fontFamily: 'Outfit',
-                      color: const Color(0xFF606A85),
+                      color: Color(0xFF606A85),
                       fontSize: 14.0,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w500,
                     ),
               ),
-            ].divide(const SizedBox(height: 4.0)),
+            ].divide(SizedBox(height: 4.0)),
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
               child: FlutterFlowIconButton(
-                borderColor: const Color(0xFFE5E7EB),
+                borderColor: Color(0xFFE5E7EB),
                 borderRadius: 12.0,
                 borderWidth: 1.0,
                 buttonSize: 40.0,
                 fillColor: Colors.white,
-                icon: const Icon(
+                icon: Icon(
                   Icons.close_rounded,
                   color: Color(0xFF15161E),
                   size: 24.0,
@@ -117,14 +119,14 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Align(
-                          alignment: const AlignmentDirectional(0.0, -1.0),
+                          alignment: AlignmentDirectional(0.0, -1.0),
                           child: Container(
-                            constraints: const BoxConstraints(
+                            constraints: BoxConstraints(
                               maxWidth: 770.0,
                             ),
-                            decoration: const BoxDecoration(),
+                            decoration: BoxDecoration(),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
@@ -144,7 +146,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                           .headlineMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 24.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -153,7 +155,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -162,13 +164,13 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
+                                            color: Color(0xFFFF5963),
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFE5E7EB),
                                           width: 2.0,
                                         ),
@@ -176,7 +178,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFF6F61EF),
                                           width: 2.0,
                                         ),
@@ -184,7 +186,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -192,7 +194,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -203,17 +205,17 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                       fillColor: (_model.workoutNameFocusNode
                                                   ?.hasFocus ??
                                               false)
-                                          ? const Color(0x4D9489F5)
+                                          ? Color(0x4D9489F5)
                                           : Colors.white,
                                       contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .headlineMedium
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 24.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -226,7 +228,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             required isFocused,
                                             maxLength}) =>
                                         null,
-                                    cursorColor: const Color(0xFF6F61EF),
+                                    cursorColor: Color(0xFF6F61EF),
                                     validator: _model
                                         .workoutNameTextControllerValidator
                                         .asValidator(context),
@@ -237,7 +239,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                         .labelMedium
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF606A85),
+                                          color: Color(0xFF606A85),
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -258,7 +260,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                           .labelLarge
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -268,7 +270,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -277,13 +279,13 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
+                                            color: Color(0xFFFF5963),
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFE5E7EB),
                                           width: 2.0,
                                         ),
@@ -291,7 +293,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFF6F61EF),
                                           width: 2.0,
                                         ),
@@ -299,7 +301,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -307,7 +309,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -318,24 +320,24 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                       fillColor: (_model.descriptionFocusNode
                                                   ?.hasFocus ??
                                               false)
-                                          ? const Color(0x4D9489F5)
+                                          ? Color(0x4D9489F5)
                                           : Colors.white,
                                       contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               16.0, 16.0, 16.0, 16.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyLarge
                                         .override(
                                           fontFamily: 'Figtree',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 16.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                     maxLines: 9,
                                     minLines: 5,
-                                    cursorColor: const Color(0xFF6F61EF),
+                                    cursorColor: Color(0xFF6F61EF),
                                     validator: _model
                                         .descriptionTextControllerValidator
                                         .asValidator(context),
@@ -346,14 +348,14 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                         .labelMedium
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF606A85),
+                                          color: Color(0xFF606A85),
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                         ),
                                   ),
                                   FlutterFlowCheckboxGroup(
-                                    options: const [
+                                    options: [
                                       'Chest Flys',
                                       'Bulgarian Squats',
                                       'Bench Press',
@@ -397,8 +399,8 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                         _model.checkboxGroupValues != null,
                                   ),
                                 ]
-                                    .divide(const SizedBox(height: 12.0))
-                                    .addToEnd(const SizedBox(height: 32.0)),
+                                    .divide(SizedBox(height: 12.0))
+                                    .addToEnd(SizedBox(height: 32.0)),
                               ),
                             ),
                           ),
@@ -408,13 +410,13 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                   ),
                 ),
                 Container(
-                  constraints: const BoxConstraints(
+                  constraints: BoxConstraints(
                     maxWidth: 770.0,
                   ),
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         if (_model.formKey.currentState == null ||
@@ -426,21 +428,21 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 48.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: const Color(0xFF97B690),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: Color(0xFF97B690),
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Figtree',
-                                  color: const Color(0xFF364233),
+                                  color: Color(0xFF364233),
                                   fontSize: 16.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                         elevation: 3.0,
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),

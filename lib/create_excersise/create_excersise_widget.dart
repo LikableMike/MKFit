@@ -6,6 +6,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'create_excersise_model.dart';
 export 'create_excersise_model.dart';
 
@@ -79,24 +82,24 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                 'Please fill out the form below to continue.',
                 style: FlutterFlowTheme.of(context).labelMedium.override(
                       fontFamily: 'Outfit',
-                      color: const Color(0xFF606A85),
+                      color: Color(0xFF606A85),
                       fontSize: 14.0,
                       letterSpacing: 0.0,
                       fontWeight: FontWeight.w500,
                     ),
               ),
-            ].divide(const SizedBox(height: 4.0)),
+            ].divide(SizedBox(height: 4.0)),
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
               child: FlutterFlowIconButton(
-                borderColor: const Color(0xFFE5E7EB),
+                borderColor: Color(0xFFE5E7EB),
                 borderRadius: 12.0,
                 borderWidth: 1.0,
                 buttonSize: 40.0,
                 fillColor: Colors.white,
-                icon: const Icon(
+                icon: Icon(
                   Icons.close_rounded,
                   color: Color(0xFF15161E),
                   size: 24.0,
@@ -125,14 +128,14 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Align(
-                          alignment: const AlignmentDirectional(0.0, -1.0),
+                          alignment: AlignmentDirectional(0.0, -1.0),
                           child: Container(
-                            constraints: const BoxConstraints(
+                            constraints: BoxConstraints(
                               maxWidth: 770.0,
                             ),
-                            decoration: const BoxDecoration(),
+                            decoration: BoxDecoration(),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
@@ -151,7 +154,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .headlineMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 24.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -160,7 +163,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -169,13 +172,13 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
+                                            color: Color(0xFFFF5963),
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFE5E7EB),
                                           width: 2.0,
                                         ),
@@ -183,7 +186,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFF6F61EF),
                                           width: 2.0,
                                         ),
@@ -191,7 +194,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -199,7 +202,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -210,17 +213,17 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                       fillColor:
                                           (_model.fullNameFocusNode?.hasFocus ??
                                                   false)
-                                              ? const Color(0x4D9489F5)
+                                              ? Color(0x4D9489F5)
                                               : Colors.white,
                                       contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .headlineMedium
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 24.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -233,7 +236,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             required isFocused,
                                             maxLength}) =>
                                         null,
-                                    cursorColor: const Color(0xFF6F61EF),
+                                    cursorColor: Color(0xFF6F61EF),
                                     validator: _model
                                         .fullNameTextControllerValidator
                                         .asValidator(context),
@@ -251,7 +254,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelLarge
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -260,7 +263,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -269,13 +272,13 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
+                                            color: Color(0xFFFF5963),
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFE5E7EB),
                                           width: 2.0,
                                         ),
@@ -283,7 +286,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFF6F61EF),
                                           width: 2.0,
                                         ),
@@ -291,7 +294,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -299,7 +302,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -310,23 +313,23 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                       fillColor:
                                           (_model.ageFocusNode?.hasFocus ??
                                                   false)
-                                              ? const Color(0x4D9489F5)
+                                              ? Color(0x4D9489F5)
                                               : Colors.white,
                                       contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyLarge
                                         .override(
                                           fontFamily: 'Figtree',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 16.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                     keyboardType: TextInputType.number,
-                                    cursorColor: const Color(0xFF6F61EF),
+                                    cursorColor: Color(0xFF6F61EF),
                                     validator: _model.ageTextControllerValidator
                                         .asValidator(context),
                                     inputFormatters: [
@@ -348,7 +351,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelLarge
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -357,7 +360,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -366,13 +369,13 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
+                                            color: Color(0xFFFF5963),
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFE5E7EB),
                                           width: 2.0,
                                         ),
@@ -380,7 +383,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFF6F61EF),
                                           width: 2.0,
                                         ),
@@ -388,7 +391,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -396,7 +399,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -407,23 +410,23 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                       fillColor: (_model.phoneNumberFocusNode
                                                   ?.hasFocus ??
                                               false)
-                                          ? const Color(0x4D9489F5)
+                                          ? Color(0x4D9489F5)
                                           : Colors.white,
                                       contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyLarge
                                         .override(
                                           fontFamily: 'Figtree',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 16.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                     keyboardType: TextInputType.number,
-                                    cursorColor: const Color(0xFF6F61EF),
+                                    cursorColor: Color(0xFF6F61EF),
                                     validator: _model
                                         .phoneNumberTextControllerValidator
                                         .asValidator(context),
@@ -438,7 +441,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                         .labelMedium
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF606A85),
+                                          color: Color(0xFF606A85),
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -459,7 +462,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelLarge
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -469,7 +472,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -478,13 +481,13 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
+                                            color: Color(0xFFFF5963),
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFE5E7EB),
                                           width: 2.0,
                                         ),
@@ -492,7 +495,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFF6F61EF),
                                           width: 2.0,
                                         ),
@@ -500,7 +503,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -508,7 +511,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -519,24 +522,24 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                       fillColor: (_model.descriptionFocusNode
                                                   ?.hasFocus ??
                                               false)
-                                          ? const Color(0x4D9489F5)
+                                          ? Color(0x4D9489F5)
                                           : Colors.white,
                                       contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               16.0, 16.0, 16.0, 16.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyLarge
                                         .override(
                                           fontFamily: 'Figtree',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 16.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                     maxLines: 9,
                                     minLines: 5,
-                                    cursorColor: const Color(0xFF6F61EF),
+                                    cursorColor: Color(0xFF6F61EF),
                                     validator: _model
                                         .descriptionTextControllerValidator
                                         .asValidator(context),
@@ -547,7 +550,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                         .labelMedium
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF606A85),
+                                          color: Color(0xFF606A85),
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -566,7 +569,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelLarge
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -575,7 +578,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
+                                            color: Color(0xFF606A85),
                                             fontSize: 14.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
@@ -584,13 +587,13 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           .bodyMedium
                                           .override(
                                             fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
+                                            color: Color(0xFFFF5963),
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFE5E7EB),
                                           width: 2.0,
                                         ),
@@ -598,7 +601,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFF6F61EF),
                                           width: 2.0,
                                         ),
@@ -606,7 +609,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -614,7 +617,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
+                                        borderSide: BorderSide(
                                           color: Color(0xFFFF5963),
                                           width: 2.0,
                                         ),
@@ -625,22 +628,22 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                       fillColor: (_model.videoLinkFocusNode
                                                   ?.hasFocus ??
                                               false)
-                                          ? const Color(0x4D9489F5)
+                                          ? Color(0x4D9489F5)
                                           : Colors.white,
                                       contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyLarge
                                         .override(
                                           fontFamily: 'Figtree',
-                                          color: const Color(0xFF15161E),
+                                          color: Color(0xFF15161E),
                                           fontSize: 16.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
-                                    cursorColor: const Color(0xFF6F61EF),
+                                    cursorColor: Color(0xFF6F61EF),
                                     validator: _model
                                         .videoLinkTextControllerValidator
                                         .asValidator(context),
@@ -652,7 +655,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                         .labelMedium
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: const Color(0xFF606A85),
+                                          color: Color(0xFF606A85),
                                           fontSize: 14.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
@@ -662,7 +665,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                     borderRadius: 20.0,
                                     borderWidth: 1.0,
                                     buttonSize: 40.0,
-                                    fillColor: const Color(0xFF97B690),
+                                    fillColor: Color(0xFF97B690),
                                     icon: Icon(
                                       Icons.upload_sharp,
                                       color: FlutterFlowTheme.of(context)
@@ -721,8 +724,8 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                     },
                                   ),
                                 ]
-                                    .divide(const SizedBox(height: 12.0))
-                                    .addToEnd(const SizedBox(height: 32.0)),
+                                    .divide(SizedBox(height: 12.0))
+                                    .addToEnd(SizedBox(height: 32.0)),
                               ),
                             ),
                           ),
@@ -732,13 +735,13 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                   ),
                 ),
                 Container(
-                  constraints: const BoxConstraints(
+                  constraints: BoxConstraints(
                     maxWidth: 770.0,
                   ),
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         if (_model.formKey.currentState == null ||
@@ -750,21 +753,21 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 48.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: const Color(0xFF97B690),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: Color(0xFF97B690),
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Figtree',
-                                  color: const Color(0xFF364233),
+                                  color: Color(0xFF364233),
                                   fontSize: 16.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                         elevation: 3.0,
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),

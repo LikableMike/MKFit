@@ -4,6 +4,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'forgot_username_model.dart';
 export 'forgot_username_model.dart';
 
@@ -53,7 +55,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
           borderRadius: 30.0,
           borderWidth: 1.0,
           buttonSize: 70.0,
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_rounded,
             color: Colors.white,
             size: 40.0,
@@ -62,15 +64,15 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
             context.safePop();
           },
         ),
-        actions: const [],
+        actions: [],
         centerTitle: false,
         elevation: 2.0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.0, -1.0),
+        alignment: AlignmentDirectional(0.0, -1.0),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
+          constraints: BoxConstraints(
             maxWidth: 570.0,
           ),
           decoration: BoxDecoration(
@@ -79,9 +81,9 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                 FlutterFlowTheme.of(context).primaryText,
                 FlutterFlowTheme.of(context).primaryText
               ],
-              stops: const [0.0, 1.0],
-              begin: const AlignmentDirectional(0.0, -1.0),
-              end: const AlignmentDirectional(0, 1.0),
+              stops: [0.0, 1.0],
+              begin: AlignmentDirectional(0.0, -1.0),
+              end: AlignmentDirectional(0, 1.0),
             ),
           ),
           child: Column(
@@ -95,7 +97,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                 tablet: false,
               ))
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -108,7 +110,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 12.0, 0.0, 12.0),
                           child: Icon(
                             Icons.arrow_back_rounded,
@@ -117,7 +119,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 0.0, 0.0),
                           child: Text(
                             'Back',
@@ -134,7 +136,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                   ),
                 ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'Forgot Username',
                   style: FlutterFlowTheme.of(context).titleMedium.override(
@@ -145,7 +147,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 16.0),
                 child: Text(
                   'We will send you an email with a link to reset your Username please enter the email associated with your account or Phone Number below.',
                   style: FlutterFlowTheme.of(context).titleSmall.override(
@@ -155,13 +157,13 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: Container(
                   width: double.infinity,
                   child: TextFormField(
                     controller: _model.emailAddressTextController,
                     focusNode: _model.emailAddressFocusNode,
-                    autofillHints: const [AutofillHints.email],
+                    autofillHints: [AutofillHints.email],
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Your email address',
@@ -206,7 +208,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                       ),
                       filled: true,
                       fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                      contentPadding: EdgeInsetsDirectional.fromSTEB(
                           24.0, 24.0, 20.0, 24.0),
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -223,13 +225,13 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: Container(
                   width: double.infinity,
                   child: TextFormField(
                     controller: _model.phoneNumberTextController,
                     focusNode: _model.phoneNumberFocusNode,
-                    autofillHints: const [AutofillHints.email],
+                    autofillHints: [AutofillHints.email],
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Your Phone Number',
@@ -274,7 +276,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                       ),
                       filled: true,
                       fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                      contentPadding: EdgeInsetsDirectional.fromSTEB(
                           24.0, 24.0, 20.0, 24.0),
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -291,15 +293,15 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       if (_model.emailAddressTextController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
                               'Email required!',
                             ),
@@ -317,9 +319,9 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                       width: double.infinity,
                       height: 50.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyLarge.override(
@@ -327,7 +329,7 @@ class _ForgotUsernameWidgetState extends State<ForgotUsernameWidget> {
                                 letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),

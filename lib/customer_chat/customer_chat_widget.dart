@@ -4,6 +4,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'customer_chat_model.dart';
 export 'customer_chat_model.dart';
 
@@ -53,8 +55,8 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
           options: FFButtonOptions(
             width: 80.0,
             height: 40.0,
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-            iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+            iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
             color: FlutterFlowTheme.of(context).secondary,
             textStyle: FlutterFlowTheme.of(context).labelMedium.override(
                   fontFamily: 'Plus Jakarta Sans',
@@ -64,7 +66,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                   fontWeight: FontWeight.normal,
                 ),
             elevation: 0.0,
-            borderSide: const BorderSide(
+            borderSide: BorderSide(
               color: Colors.transparent,
               width: 1.0,
             ),
@@ -72,7 +74,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 16.0, 8.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 16.0, 8.0),
             child: FFButtonWidget(
               onPressed: () {
                 print('Button pressed ...');
@@ -81,8 +83,8 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
               options: FFButtonOptions(
                 width: 70.0,
                 height: 32.0,
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: FlutterFlowTheme.of(context).secondary,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Plus Jakarta Sans',
@@ -109,25 +111,25 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Card(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: const Color(0xFF39D2C0),
+                    color: Color(0xFF39D2C0),
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: EdgeInsets.all(2.0),
                       child: Container(
                         width: 50.0,
                         height: 50.0,
                         clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
                         ),
                         child: Image.asset(
@@ -139,7 +141,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -150,7 +152,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                           style:
                               FlutterFlowTheme.of(context).titleLarge.override(
                                     fontFamily: 'Outfit',
-                                    color: const Color(0xFF14181B),
+                                    color: Color(0xFF14181B),
                                     fontSize: 22.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
@@ -161,7 +163,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                           style:
                               FlutterFlowTheme.of(context).titleLarge.override(
                                     fontFamily: 'Outfit',
-                                    color: const Color(0xFF14181B),
+                                    color: Color(0xFF14181B),
                                     fontSize: 22.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
@@ -175,15 +177,15 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
             ),
             Container(
               width: double.infinity,
-              decoration: const BoxDecoration(),
+              decoration: BoxDecoration(),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
                 child: TextFormField(
                   controller: _model.textController,
                   focusNode: _model.textFieldFocusNode,
                   onChanged: (_) => EasyDebounce.debounce(
                     '_model.textController',
-                    const Duration(milliseconds: 2000),
+                    Duration(milliseconds: 2000),
                     () => safeSetState(() {}),
                   ),
                   autofocus: true,
@@ -193,64 +195,64 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                     hintText: 'What\'s happening?',
                     hintStyle: FlutterFlowTheme.of(context).labelLarge.override(
                           fontFamily: 'Plus Jakarta Sans',
-                          color: const Color(0xFF57636C),
+                          color: Color(0xFF57636C),
                           fontSize: 16.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.normal,
                         ),
-                    enabledBorder: const UnderlineInputBorder(
+                    enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: Color(0xFFE0E3E7),
                         width: 2.0,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(4.0),
                         topRight: Radius.circular(4.0),
                       ),
                     ),
-                    focusedBorder: const UnderlineInputBorder(
+                    focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: Color(0xFF4B39EF),
                         width: 2.0,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(4.0),
                         topRight: Radius.circular(4.0),
                       ),
                     ),
-                    errorBorder: const UnderlineInputBorder(
+                    errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: Color(0xFFFF5963),
                         width: 2.0,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(4.0),
                         topRight: Radius.circular(4.0),
                       ),
                     ),
-                    focusedErrorBorder: const UnderlineInputBorder(
+                    focusedErrorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: Color(0xFFFF5963),
                         width: 2.0,
                       ),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(4.0),
                         topRight: Radius.circular(4.0),
                       ),
                     ),
                     contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 12.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 12.0),
                   ),
                   style: FlutterFlowTheme.of(context).bodyLarge.override(
                         fontFamily: 'Plus Jakarta Sans',
-                        color: const Color(0xFF14181B),
+                        color: Color(0xFF14181B),
                         fontSize: 16.0,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.normal,
                       ),
                   textAlign: TextAlign.start,
                   maxLines: 6,
-                  cursorColor: const Color(0xFF4B39EF),
+                  cursorColor: Color(0xFF4B39EF),
                   validator:
                       _model.textControllerValidator.asValidator(context),
                 ),
@@ -266,13 +268,13 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30.0,
@@ -292,7 +294,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                     opacity: 0.0,
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
                       child: FlutterFlowIconButton(
                         borderColor: Colors.transparent,
                         borderRadius: 30.0,
@@ -311,7 +313,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30.0,
@@ -329,7 +331,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30.0,
@@ -347,7 +349,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
                     child: FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30.0,
@@ -367,7 +369,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -376,7 +378,7 @@ class _CustomerChatWidgetState extends State<CustomerChatWidget> {
                     '\"What hurts today makes \nyou stronger tomorrow\" ',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Outfit',
-                          color: const Color(0xFF14181B),
+                          color: Color(0xFF14181B),
                           fontSize: 22.0,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w500,

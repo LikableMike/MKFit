@@ -2,8 +2,11 @@ import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'progress_page_model.dart';
 export 'progress_page_model.dart';
 
@@ -60,7 +63,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
               borderRadius: 30.0,
               borderWidth: 1.0,
               buttonSize: 72.0,
-              icon: const Icon(
+              icon: Icon(
                 Icons.settings_rounded,
                 color: Colors.white,
                 size: 40.0,
@@ -80,12 +83,12 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: const [
+                      boxShadow: [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -101,7 +104,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 32.0, 16.0, 12.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -111,15 +114,15 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 width: 44.0,
                                 height: 44.0,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF2B901B),
+                                  color: Color(0xFF2B901B),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF40DC28),
+                                    color: Color(0xFF40DC28),
                                     width: 2.0,
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
+                                  padding: EdgeInsets.all(2.0),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(44.0),
                                     child: Image.network(
@@ -133,7 +136,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       12.0, 0.0, 0.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -142,7 +145,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 4.0),
                                         child: Text(
                                           'Weight',
@@ -186,8 +189,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: SizedBox(
+                          padding: EdgeInsets.all(16.0),
+                          child: Container(
                             width: double.infinity,
                             height: 200.0,
                             child: FlutterFlowLineChart(
@@ -206,10 +209,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     barWidth: 2.0,
                                     isCurved: true,
                                     preventCurveOverShooting: true,
-                                    dotData: const FlDotData(show: false),
+                                    dotData: FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,
-                                      color: const Color(0x4C4B39EF),
+                                      color: Color(0x4C4B39EF),
                                     ),
                                   ),
                                 )
@@ -220,7 +223,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     .secondaryBackground,
                                 showBorder: false,
                               ),
-                              axisBounds: const AxisBounds(),
+                              axisBounds: AxisBounds(),
                               xAxisLabelInfo: AxisLabelInfo(
                                 title: 'Last 30 Days',
                                 titleTextStyle: FlutterFlowTheme.of(context)
@@ -247,12 +250,12 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: const [
+                      boxShadow: [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
@@ -268,7 +271,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 32.0, 16.0, 12.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -278,15 +281,15 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 width: 44.0,
                                 height: 44.0,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF40DC28),
+                                  color: Color(0xFF40DC28),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF2B901B),
+                                    color: Color(0xFF2B901B),
                                     width: 2.0,
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
+                                  padding: EdgeInsets.all(2.0),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(44.0),
                                     child: Image.network(
@@ -300,7 +303,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       12.0, 0.0, 0.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -309,7 +312,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 4.0),
                                         child: Text(
                                           'BMI',
@@ -353,8 +356,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: SizedBox(
+                          padding: EdgeInsets.all(16.0),
+                          child: Container(
                             width: double.infinity,
                             height: 200.0,
                             child: FlutterFlowLineChart(
@@ -374,10 +377,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     barWidth: 2.0,
                                     isCurved: true,
                                     preventCurveOverShooting: true,
-                                    dotData: const FlDotData(show: false),
+                                    dotData: FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,
-                                      color: const Color(0x3239D2C0),
+                                      color: Color(0x3239D2C0),
                                     ),
                                   ),
                                 )
@@ -388,7 +391,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     .secondaryBackground,
                                 showBorder: false,
                               ),
-                              axisBounds: const AxisBounds(),
+                              axisBounds: AxisBounds(),
                               xAxisLabelInfo: AxisLabelInfo(
                                 title: 'Last 30 Days',
                                 titleTextStyle: FlutterFlowTheme.of(context)
@@ -415,7 +418,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -427,14 +430,14 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               4.0, 4.0, 4.0, 4.0),
                           child: Container(
                             width: 86.0,
                             height: 86.0,
-                            decoration: const BoxDecoration(),
+                            decoration: BoxDecoration(),
                             child: FlutterFlowIconButton(
-                              borderColor: const Color(0xFF00831B),
+                              borderColor: Color(0xFF00831B),
                               borderRadius: 40.0,
                               borderWidth: 3.0,
                               buttonSize: 40.0,
@@ -451,9 +454,9 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                           ),
                         ),
                         Align(
-                          alignment: const AlignmentDirectional(-1.0, 0.0),
+                          alignment: AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 4.0, 0.0, 0.0),
                             child: Container(
                               width: 244.0,
@@ -462,16 +465,16 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                               ),
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Align(
-                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: ListView(
                                   padding: EdgeInsets.zero,
                                   scrollDirection: Axis.vertical,
                                   children: [
                                     Align(
                                       alignment:
-                                          const AlignmentDirectional(-1.0, 0.0),
+                                          AlignmentDirectional(-1.0, 0.0),
                                       child: Text(
                                         'Time for a progress picture?',
                                         style: FlutterFlowTheme.of(context)
