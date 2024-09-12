@@ -23,6 +23,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ProgressPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -35,29 +37,13 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryText,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 70.0,
-            icon: const Icon(
-              Icons.settings_rounded,
-              color: Colors.white,
-              size: 40.0,
-            ),
-            onPressed: () async {
-              context.pop();
-            },
-          ),
           title: Text(
             'Progress',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -68,7 +54,22 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          actions: const [],
+          actions: [
+            FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30.0,
+              borderWidth: 1.0,
+              buttonSize: 72.0,
+              icon: const Icon(
+                Icons.settings_rounded,
+                color: Colors.white,
+                size: 40.0,
+              ),
+              onPressed: () async {
+                context.pop();
+              },
+            ),
+          ],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -193,11 +194,11 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               data: [
                                 FFLineChartData(
                                   xData: List.generate(
-                                      random_data.randomInteger(0, 0),
+                                      random_data.randomInteger(5, 5),
                                       (index) =>
                                           random_data.randomInteger(0, 10)),
                                   yData: List.generate(
-                                      random_data.randomInteger(0, 0),
+                                      random_data.randomInteger(5, 5),
                                       (index) =>
                                           random_data.randomInteger(0, 10)),
                                   settings: LineChartBarData(
@@ -205,7 +206,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     barWidth: 2.0,
                                     isCurved: true,
                                     preventCurveOverShooting: true,
-                                    dotData: FlDotData(show: false),
+                                    dotData: const FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,
                                       color: const Color(0x4C4B39EF),
@@ -360,11 +361,11 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               data: [
                                 FFLineChartData(
                                   xData: List.generate(
-                                      random_data.randomInteger(0, 0),
+                                      random_data.randomInteger(5, 5),
                                       (index) =>
                                           random_data.randomInteger(0, 200)),
                                   yData: List.generate(
-                                      random_data.randomInteger(0, 0),
+                                      random_data.randomInteger(5, 5),
                                       (index) =>
                                           random_data.randomInteger(20, 1000)),
                                   settings: LineChartBarData(
@@ -373,7 +374,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     barWidth: 2.0,
                                     isCurved: true,
                                     preventCurveOverShooting: true,
-                                    dotData: FlDotData(show: false),
+                                    dotData: const FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,
                                       color: const Color(0x3239D2C0),

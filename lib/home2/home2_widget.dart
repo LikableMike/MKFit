@@ -7,25 +7,27 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'home_model.dart';
-export 'home_model.dart';
+import 'home2_model.dart';
+export 'home2_model.dart';
 
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({super.key});
+class Home2Widget extends StatefulWidget {
+  const Home2Widget({super.key});
 
   @override
-  State<HomeWidget> createState() => _HomeWidgetState();
+  State<Home2Widget> createState() => _Home2WidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget> {
-  late HomeModel _model;
+class _Home2WidgetState extends State<Home2Widget> {
+  late Home2Model _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomeModel());
+    _model = createModel(context, () => Home2Model());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -38,9 +40,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -390,12 +390,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             FFLineChartData(
                                               xData: List.generate(
                                                   random_data.randomInteger(
-                                                      0, 0),
+                                                      5, 5),
                                                   (index) => random_data
                                                       .randomInteger(0, 10)),
                                               yData: List.generate(
                                                   random_data.randomInteger(
-                                                      0, 0),
+                                                      5, 5),
                                                   (index) => random_data
                                                       .randomInteger(0, 10)),
                                               settings: LineChartBarData(
@@ -404,7 +404,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                         .primary,
                                                 barWidth: 2.0,
                                                 isCurved: true,
-                                                dotData: FlDotData(show: false),
+                                                dotData: const FlDotData(show: false),
                                                 belowBarData: BarAreaData(
                                                   show: true,
                                                   color: FlutterFlowTheme.of(

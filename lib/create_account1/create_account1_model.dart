@@ -1,45 +1,47 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'create_account1_widget.dart' show CreateAccount1Widget;
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
+  // State field(s) for FullName widget.
+  FocusNode? fullNameFocusNode;
+  TextEditingController? fullNameTextController;
+  String? Function(BuildContext, String?)? fullNameTextControllerValidator;
   // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode1;
-  TextEditingController? emailAddressController1;
-  String? Function(BuildContext, String?)? emailAddressController1Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode2;
-  TextEditingController? emailAddressController2;
-  String? Function(BuildContext, String?)? emailAddressController2Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode3;
-  TextEditingController? emailAddressController3;
-  String? Function(BuildContext, String?)? emailAddressController3Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode4;
-  TextEditingController? emailAddressController4;
-  String? Function(BuildContext, String?)? emailAddressController4Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode5;
-  TextEditingController? emailAddressController5;
-  String? Function(BuildContext, String?)? emailAddressController5Validator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode6;
-  TextEditingController? emailAddressController6;
-  String? Function(BuildContext, String?)? emailAddressController6Validator;
+  FocusNode? emailAddressFocusNode;
+  TextEditingController? emailAddressTextController;
+  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
+  // State field(s) for phoneNumber widget.
+  FocusNode? phoneNumberFocusNode;
+  TextEditingController? phoneNumberTextController;
+  final phoneNumberMask = MaskTextInputFormatter(mask: '(###) ###-####');
+  String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
+  // State field(s) for Height widget.
+  FocusNode? heightFocusNode;
+  TextEditingController? heightTextController;
+  String? Function(BuildContext, String?)? heightTextControllerValidator;
+  // State field(s) for Weight widget.
+  FocusNode? weightFocusNode;
+  TextEditingController? weightTextController;
+  String? Function(BuildContext, String?)? weightTextControllerValidator;
+  // State field(s) for userName widget.
+  FocusNode? userNameFocusNode;
+  TextEditingController? userNameTextController;
+  String? Function(BuildContext, String?)? userNameTextControllerValidator;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
-  TextEditingController? passwordController;
+  TextEditingController? passwordTextController;
   late bool passwordVisibility;
-  String? Function(BuildContext, String?)? passwordControllerValidator;
+  String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for passwordConfirm widget.
   FocusNode? passwordConfirmFocusNode;
-  TextEditingController? passwordConfirmController;
+  TextEditingController? passwordConfirmTextController;
   late bool passwordConfirmVisibility;
-  String? Function(BuildContext, String?)? passwordConfirmControllerValidator;
+  String? Function(BuildContext, String?)?
+      passwordConfirmTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
@@ -49,29 +51,28 @@ class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
-    emailAddressFocusNode1?.dispose();
-    emailAddressController1?.dispose();
+    fullNameFocusNode?.dispose();
+    fullNameTextController?.dispose();
 
-    emailAddressFocusNode2?.dispose();
-    emailAddressController2?.dispose();
+    emailAddressFocusNode?.dispose();
+    emailAddressTextController?.dispose();
 
-    emailAddressFocusNode3?.dispose();
-    emailAddressController3?.dispose();
+    phoneNumberFocusNode?.dispose();
+    phoneNumberTextController?.dispose();
 
-    emailAddressFocusNode4?.dispose();
-    emailAddressController4?.dispose();
+    heightFocusNode?.dispose();
+    heightTextController?.dispose();
 
-    emailAddressFocusNode5?.dispose();
-    emailAddressController5?.dispose();
+    weightFocusNode?.dispose();
+    weightTextController?.dispose();
 
-    emailAddressFocusNode6?.dispose();
-    emailAddressController6?.dispose();
+    userNameFocusNode?.dispose();
+    userNameTextController?.dispose();
 
     passwordFocusNode?.dispose();
-    passwordController?.dispose();
+    passwordTextController?.dispose();
 
     passwordConfirmFocusNode?.dispose();
-    passwordConfirmController?.dispose();
+    passwordConfirmTextController?.dispose();
   }
 }

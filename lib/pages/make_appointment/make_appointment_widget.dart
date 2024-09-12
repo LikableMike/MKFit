@@ -29,7 +29,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
       vsync: this,
       length: 2,
       initialIndex: 0,
-    )..addListener(() => setState(() {}));
+    )..addListener(() => safeSetState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -42,9 +43,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -168,7 +167,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       weekStartsMonday: true,
                                       onChange:
                                           (DateTimeRange? newSelectedDate) {
-                                        setState(() =>
+                                        safeSetState(() =>
                                             _model.calendarSelectedDay1 =
                                                 newSelectedDate);
                                       },
@@ -544,18 +543,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .bodyMedium
+                                                                          .bodyLarge
                                                                           .override(
                                                                             fontFamily:
-                                                                                'Plus Jakarta Sans',
-                                                                            color:
-                                                                                const Color(0xFF4B39EF),
-                                                                            fontSize:
-                                                                                14.0,
+                                                                                'Inter',
                                                                             letterSpacing:
                                                                                 0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
                                                                           ),
                                                                     ),
                                                                   ),
@@ -580,7 +573,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                         color: const Color(
                                                                             0xFF14181B),
                                                                         fontSize:
-                                                                            12.0,
+                                                                            18.0,
                                                                         letterSpacing:
                                                                             0.0,
                                                                         fontWeight:
@@ -639,7 +632,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       weekStartsMonday: true,
                                       onChange:
                                           (DateTimeRange? newSelectedDate) {
-                                        setState(() =>
+                                        safeSetState(() =>
                                             _model.calendarSelectedDay2 =
                                                 newSelectedDate);
                                       },
