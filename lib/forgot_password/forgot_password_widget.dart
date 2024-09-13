@@ -209,9 +209,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       contentPadding: const EdgeInsetsDirectional.fromSTEB(
                           24.0, 24.0, 20.0, 24.0),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    style: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
                           letterSpacing: 0.0,
                         ),
                     maxLines: null,
@@ -279,14 +278,17 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
                           letterSpacing: 0.0,
                         ),
                     maxLines: null,
-                    keyboardType: TextInputType.emailAddress,
+                    maxLength: 14,
+                    keyboardType: TextInputType.number,
                     cursorColor: FlutterFlowTheme.of(context).primary,
                     validator: _model.phoneNumberTextControllerValidator
                         .asValidator(context),
+                    inputFormatters: [_model.phoneNumberMask],
                   ),
                 ),
               ),
