@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -25,30 +26,31 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
     super.initState();
     _model = createModel(context, () => CreateAccount1Model());
 
-//Full Name Field
-    _model.fullNameController ??= TextEditingController();
+    _model.fullNameTextController ??= TextEditingController();
     _model.fullNameFocusNode ??= FocusNode();
-//Email Field
-    _model.emailAddressController ??= TextEditingController();
+
+    _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
-//Phone Number Field
-    _model.phoneNumberController ??= TextEditingController();
+
+    _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
-//Height Field
-    _model.heightController ??= TextEditingController();
+
+    _model.heightTextController ??= TextEditingController();
     _model.heightFocusNode ??= FocusNode();
-//Weight Field
-    _model.weightController ??= TextEditingController();
+
+    _model.weightTextController ??= TextEditingController();
     _model.weightFocusNode ??= FocusNode();
-//Username Field
-    _model.userNameController ??= TextEditingController();
+
+    _model.userNameTextController ??= TextEditingController();
     _model.userNameFocusNode ??= FocusNode();
-//Password Field
-    _model.passwordController ??= TextEditingController();
+
+    _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
 
-    _model.passwordConfirmController ??= TextEditingController();
+    _model.passwordConfirmTextController ??= TextEditingController();
     _model.passwordConfirmFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -61,9 +63,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -179,16 +179,13 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
-                                //Full Name Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-
-
-                                      controller: _model.fullNameController,
+                                      controller: _model.fullNameTextController,
                                       focusNode: _model.fullNameFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.name],
@@ -253,7 +250,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       maxLengthEnforcement:
                                           MaxLengthEnforcement.enforced,
                                       validator: _model
-                                          .fullNameControllerValidator
+                                          .fullNameTextControllerValidator
                                           .asValidator(context),
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(
@@ -262,15 +259,14 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
-                                //Email Address textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-
-                                      controller: _model.emailAddressController,
+                                      controller:
+                                          _model.emailAddressTextController,
                                       focusNode: _model.emailAddressFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
@@ -329,28 +325,26 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      
-                                       //Email Address Validation
-                                      minLines: null,
-
                                       keyboardType: TextInputType.emailAddress,
                                       validator: _model
-                                          .emailAddressControllerValidator
+                                          .emailAddressTextControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
                                 ),
-                                //Phone Number Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller: _model.phoneNumberController,
+                                      controller:
+                                          _model.phoneNumberTextController,
                                       focusNode: _model.phoneNumberFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.telephoneNumber
+                                      ],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Phone Number',
@@ -406,28 +400,24 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-
-                                        //Sets phone number to 10 characters maximum and phone input type  
-                                      minLines: null,
-                                      maxLength: 10,
+                                      maxLength: 14,
                                       maxLengthEnforcement:
                                           MaxLengthEnforcement.enforced,
                                       keyboardType: TextInputType.phone,
                                       validator: _model
-                                          .phoneNumberControllerValidator
+                                          .phoneNumberTextControllerValidator
                                           .asValidator(context),
                                       inputFormatters: [_model.phoneNumberMask],
                                     ),
                                   ),
                                 ),
-                                //Height Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller: _model.heightController,
+                                      controller: _model.heightTextController,
                                       focusNode: _model.heightFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
@@ -488,19 +478,18 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                           ),
                                       keyboardType: TextInputType.emailAddress,
                                       validator: _model
-                                          .heightControllerValidator
+                                          .heightTextControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
                                 ),
-                                //Weight Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller: _model.weightController,
+                                      controller: _model.weightTextController,
                                       focusNode: _model.weightFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
@@ -561,19 +550,18 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                           ),
                                       keyboardType: TextInputType.number,
                                       validator: _model
-                                          .weightControllerValidator
+                                          .weightTextControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
                                 ),
-                                //Username Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller: _model.userNameController,
+                                      controller: _model.userNameTextController,
                                       focusNode: _model.userNameFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.email],
@@ -632,30 +620,26 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      
-                                          //Sets non-null username to 20 characters maximum and only alphanumberics
-                                      minLines: null,
                                       maxLength: 20,
                                       maxLengthEnforcement:
                                           MaxLengthEnforcement.enforced,
                                       validator: _model
-                                          .userNameControllerValidator
+                                          .userNameTextControllerValidator
                                           .asValidator(context),
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(
                                             RegExp('[a-zA-Z0-9]'))
-                                      ]
+                                      ],
                                     ),
                                   ),
                                 ),
-                                //Enter Password Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
-                                      controller: _model.passwordController,
+                                      controller: _model.passwordTextController,
                                       focusNode: _model.passwordFocusNode,
                                       autofocus: true,
                                       autofillHints: const [AutofillHints.password],
@@ -708,7 +692,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                         fillColor: FlutterFlowTheme.of(context)
                                             .primaryBackground,
                                         suffixIcon: InkWell(
-                                          onTap: () => setState(
+                                          onTap: () => safeSetState(
                                             () => _model.passwordVisibility =
                                                 !_model.passwordVisibility,
                                           ),
@@ -731,12 +715,11 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                             letterSpacing: 0.0,
                                           ),
                                       validator: _model
-                                          .passwordControllerValidator
+                                          .passwordTextControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
                                 ),
-                                //Password Confirm Textbox
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -744,7 +727,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     width: 370.0,
                                     child: TextFormField(
                                       controller:
-                                          _model.passwordConfirmController,
+                                          _model.passwordConfirmTextController,
                                       focusNode:
                                           _model.passwordConfirmFocusNode,
                                       autofocus: true,
@@ -799,7 +782,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                         fillColor: FlutterFlowTheme.of(context)
                                             .primaryBackground,
                                         suffixIcon: InkWell(
-                                          onTap: () => setState(
+                                          onTap: () => safeSetState(
                                             () => _model
                                                     .passwordConfirmVisibility =
                                                 !_model
@@ -825,7 +808,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                           ),
                                       minLines: 1,
                                       validator: _model
-                                          .passwordConfirmControllerValidator
+                                          .passwordConfirmTextControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -835,12 +818,35 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      var _isValid  = _validatePassword(_model.passwordController.text);
-                                      if(_isValid){
-                                        context.pushNamed('PARQ');
-                                      }else{
-                                        print(_model.passwordController.text);
+                                      GoRouter.of(context).prepareAuthEvent();
+                                      if (_model.passwordTextController.text !=
+                                          _model.passwordConfirmTextController
+                                              .text) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Passwords don\'t match!',
+                                            ),
+                                          ),
+                                        );
+                                        return;
                                       }
+
+                                      final user = await authManager
+                                          .createAccountWithEmail(
+                                        context,
+                                        _model.emailAddressTextController.text,
+                                        _model.passwordTextController.text,
+                                      );
+                                      if (user == null) {
+                                        return;
+                                      }
+
+                                      await authManager.sendEmailVerification();
+
+                                      context.pushNamedAuth(
+                                          'PARQ', context.mounted);
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
@@ -869,10 +875,6 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                     ),
                                   ),
                                 ),
-
-                              
-
-
 
                                 // You will have to add an action on this rich text to go to your login page.
                                 Padding(
@@ -962,38 +964,5 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
         ),
       ),
     );
-  }
-
-  bool _validatePassword(String password) {
-    // Reset error message
-    var _errorMessage = '';
-
-    //The password length must be greater than 6
-    if (password.length <6) {
-      _errorMessage += 'Password must be longer than 6 characters.\n';
-    }
-
-    //The password must contain at least one uppercase letter
-    if (!password.contains(RegExp(r'[A-Z]'))) {
-      _errorMessage += '• Uppercase letter is missing.\n';
-    }
-
-    //The password must contain at least one lowercase letter
-    if (!password.contains(RegExp(r'[a-z]'))) {
-      _errorMessage += '• Lowercase letter is missing.\n';
-    }
-
-    //The password must contain at least one digit
-    if (!password.contains(RegExp(r'[0-9]'))) {
-      _errorMessage += '• Digit is missing.\n';
-    }
-
-    //The password must contain at least one special character
-    if (!password.contains(RegExp(r'[$_+=~!@#%^&*(),.?":{}|<>]'))) {
-      _errorMessage += '• Special character is missing.\n';
-    }
-
-    // If there are no error messages, the password is valid
-    return _errorMessage.isEmpty;
   }
 }

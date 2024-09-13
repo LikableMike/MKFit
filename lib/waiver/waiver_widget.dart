@@ -21,6 +21,8 @@ class _WaiverWidgetState extends State<WaiverWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => WaiverModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -33,9 +35,7 @@ class _WaiverWidgetState extends State<WaiverWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -119,7 +119,8 @@ class _WaiverWidgetState extends State<WaiverWidget> {
                           child: Checkbox(
                             value: _model.checkboxValue ??= false,
                             onChanged: (newValue) async {
-                              setState(() => _model.checkboxValue = newValue!);
+                              safeSetState(
+                                  () => _model.checkboxValue = newValue!);
                             },
                             side: BorderSide(
                               width: 2,
@@ -144,7 +145,7 @@ class _WaiverWidgetState extends State<WaiverWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      context.pushNamed('home');
+                      context.pushNamed('home2');
                     },
                     text: 'Sign Waiver',
                     options: FFButtonOptions(

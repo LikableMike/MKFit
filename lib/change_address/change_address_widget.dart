@@ -24,13 +24,15 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
     super.initState();
     _model = createModel(context, () => ChangeAddressModel());
 
-    _model.phoneNumberController1 ??=
+    _model.phoneNumberTextController1 ??=
         TextEditingController(text: 'Change Address');
     _model.phoneNumberFocusNode1 ??= FocusNode();
 
-    _model.phoneNumberController2 ??=
+    _model.phoneNumberTextController2 ??=
         TextEditingController(text: 'Confirm Address');
     _model.phoneNumberFocusNode2 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -162,7 +164,7 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                   child: SizedBox(
                     width: double.infinity,
                     child: TextFormField(
-                      controller: _model.phoneNumberController1,
+                      controller: _model.phoneNumberTextController1,
                       focusNode: _model.phoneNumberFocusNode1,
                       autofillHints: const [AutofillHints.addressCity],
                       obscureText: false,
@@ -220,7 +222,7 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                       maxLines: null,
                       keyboardType: TextInputType.streetAddress,
                       cursorColor: FlutterFlowTheme.of(context).primary,
-                      validator: _model.phoneNumberController1Validator
+                      validator: _model.phoneNumberTextController1Validator
                           .asValidator(context),
                     ),
                   ),
@@ -231,7 +233,7 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.phoneNumberController2,
+                    controller: _model.phoneNumberTextController2,
                     focusNode: _model.phoneNumberFocusNode2,
                     autofillHints: const [AutofillHints.addressState],
                     obscureText: false,
@@ -290,7 +292,7 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                     maxLines: null,
                     keyboardType: TextInputType.streetAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberController2Validator
+                    validator: _model.phoneNumberTextController2Validator
                         .asValidator(context),
                   ),
                 ),
@@ -302,7 +304,7 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                       const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.phoneNumberController1.text.isEmpty) {
+                      if (_model.phoneNumberTextController1.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -313,7 +315,7 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                         return;
                       }
                       await authManager.resetPassword(
-                        email: _model.phoneNumberController1.text,
+                        email: _model.phoneNumberTextController1.text,
                         context: context,
                       );
                     },
