@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 class LoginModel extends FlutterFlowModel<LoginWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for Username widget.
   FocusNode? usernameFocusNode;
-  TextEditingController? usernameController;
-  String? Function(BuildContext, String?)? usernameControllerValidator;
-  String? _usernameControllerValidator(BuildContext context, String? val) {
+  TextEditingController? usernameTextController;
+  String? Function(BuildContext, String?)? usernameTextControllerValidator;
+  String? _usernameTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
@@ -30,23 +29,22 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
 
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
-  TextEditingController? passwordController;
+  TextEditingController? passwordTextController;
   late bool passwordVisibility;
-  String? Function(BuildContext, String?)? passwordControllerValidator;
+  String? Function(BuildContext, String?)? passwordTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
-    usernameControllerValidator = _usernameControllerValidator;
+    usernameTextControllerValidator = _usernameTextControllerValidator;
     passwordVisibility = false;
   }
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     usernameFocusNode?.dispose();
-    usernameController?.dispose();
+    usernameTextController?.dispose();
 
     passwordFocusNode?.dispose();
-    passwordController?.dispose();
+    passwordTextController?.dispose();
   }
 }

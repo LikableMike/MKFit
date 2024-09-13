@@ -1,18 +1,3 @@
-/*
-Ramin Selseleh
-Jira Task MA-52. Sub tasks MA - 106, 107, and 108.
-
-For this task, I was in charge of
-making sure that all of the buttons within the settings page have functionalities and they are doing
-what they're supposed to do. To complete task, I had to create pages such as
-change_address and confirm_new_username. The other pages that were already created
-so I only needed to creat these two. Within all of the pages located inside the settings page
-I added a navigate back function, so whe you clikk on thos pages, you can navigate back to teh settings
-page.
- */
-
-
-
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -40,11 +25,13 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
     super.initState();
     _model = createModel(context, () => ConfirmNewUsernameModel());
 
-    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.phoneNumberController ??= TextEditingController();
+    _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -69,11 +56,11 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
           buttonSize: 60.0,
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).secondaryBackground,
+            color: FlutterFlowTheme.of(context).primaryText,
             size: 30.0,
           ),
           onPressed: () async {
-            context.safePop();
+            context.pop();
           },
         ),
         actions: const [],
@@ -148,10 +135,9 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                   ),
                 ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 35.0, 0.0, 10.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'Confirm New Username',
-                  textAlign: TextAlign.start,
                   style: FlutterFlowTheme.of(context).titleMedium.override(
                         fontFamily: 'Inter',
                         fontSize: 20.0,
@@ -174,7 +160,7 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.emailAddressController,
+                    controller: _model.emailAddressTextController,
                     focusNode: _model.emailAddressFocusNode,
                     autofillHints: const [AutofillHints.email],
                     obscureText: false,
@@ -232,7 +218,7 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.emailAddressControllerValidator
+                    validator: _model.emailAddressTextControllerValidator
                         .asValidator(context),
                   ),
                 ),
@@ -242,7 +228,7 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.phoneNumberController,
+                    controller: _model.phoneNumberTextController,
                     focusNode: _model.phoneNumberFocusNode,
                     autofillHints: const [AutofillHints.email],
                     obscureText: false,
@@ -300,7 +286,7 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberControllerValidator
+                    validator: _model.phoneNumberTextControllerValidator
                         .asValidator(context),
                   ),
                 ),
@@ -309,10 +295,10 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 30.0, 16.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.emailAddressController.text.isEmpty) {
+                      if (_model.emailAddressTextController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -323,7 +309,7 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                         return;
                       }
                       await authManager.resetPassword(
-                        email: _model.emailAddressController.text,
+                        email: _model.emailAddressTextController.text,
                         context: context,
                       );
                     },

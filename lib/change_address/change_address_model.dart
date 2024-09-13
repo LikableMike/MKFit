@@ -7,12 +7,12 @@ class ChangeAddressModel extends FlutterFlowModel<ChangeAddressWidget> {
 
   // State field(s) for PhoneNumber widget.
   FocusNode? phoneNumberFocusNode1;
-  TextEditingController? phoneNumberController1;
-  String? Function(BuildContext, String?)? phoneNumberController1Validator;
+  TextEditingController? phoneNumberTextController1;
+  String? Function(BuildContext, String?)? phoneNumberTextController1Validator;
   // State field(s) for PhoneNumber widget.
   FocusNode? phoneNumberFocusNode2;
-  TextEditingController? phoneNumberController2;
-  String? Function(BuildContext, String?)? phoneNumberController2Validator;
+  TextEditingController? phoneNumberTextController2;
+  String? Function(BuildContext, String?)? phoneNumberTextController2Validator;
 
   @override
   void initState(BuildContext context) {}
@@ -20,9 +20,9 @@ class ChangeAddressModel extends FlutterFlowModel<ChangeAddressWidget> {
   @override
   void dispose() {
     phoneNumberFocusNode1?.dispose();
-    phoneNumberController1?.dispose();
+    phoneNumberTextController1?.dispose();
 
     phoneNumberFocusNode2?.dispose();
-    phoneNumberController2?.dispose();
+    phoneNumberTextController2?.dispose();
   }
 }

@@ -21,45 +21,49 @@ class _LoginWidgetState extends State<LoginWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'columnOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 400.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 400.ms,
-          begin: const Offset(0.0, 60.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        TiltEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 400.ms,
-          begin: const Offset(-0.349, 0),
-          end: const Offset(0, 0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => LoginModel());
 
-    _model.usernameController ??= TextEditingController();
+    _model.usernameTextController ??= TextEditingController();
     _model.usernameFocusNode ??= FocusNode();
 
-    _model.passwordController ??= TextEditingController();
+    _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
+
+    animationsMap.addAll({
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 400.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 400.0.ms,
+            begin: const Offset(0.0, 60.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 400.0.ms,
+            begin: const Offset(-0.349, 0),
+            end: const Offset(0, 0),
+          ),
+        ],
+      ),
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -72,9 +76,7 @@ class _LoginWidgetState extends State<LoginWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.black,
@@ -85,8 +87,8 @@ class _LoginWidgetState extends State<LoginWidget>
               child: Align(
                 alignment: const AlignmentDirectional(0.0, -20.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      16.0, 0.0, 16.0, 16.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +125,7 @@ class _LoginWidgetState extends State<LoginWidget>
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
-                              controller: _model.usernameController,
+                              controller: _model.usernameTextController,
                               focusNode: _model.usernameFocusNode,
                               autofocus: true,
                               autofillHints: const [AutofillHints.username],
@@ -186,7 +188,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                   MaxLengthEnforcement.enforced,
                               cursorColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
-                              validator: _model.usernameControllerValidator
+                              validator: _model.usernameTextControllerValidator
                                   .asValidator(context),
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
@@ -197,12 +199,12 @@ class _LoginWidgetState extends State<LoginWidget>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 16.0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                         child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
-                            controller: _model.passwordController,
+                            controller: _model.passwordTextController,
                             focusNode: _model.passwordFocusNode,
                             autofocus: false,
                             autofillHints: const [AutofillHints.password],
@@ -250,7 +252,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                   FlutterFlowTheme.of(context).primaryText,
                               contentPadding: const EdgeInsets.all(14.0),
                               suffixIcon: InkWell(
-                                onTap: () => setState(
+                                onTap: () => safeSetState(
                                   () => _model.passwordVisibility =
                                       !_model.passwordVisibility,
                                 ),
@@ -276,7 +278,7 @@ class _LoginWidgetState extends State<LoginWidget>
                             maxLength: 25,
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             keyboardType: TextInputType.visiblePassword,
-                            validator: _model.passwordControllerValidator
+                            validator: _model.passwordTextControllerValidator
                                 .asValidator(context),
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
@@ -292,10 +294,11 @@ class _LoginWidgetState extends State<LoginWidget>
                               0.0, 0.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              if (_model.usernameController.text == 'admin1') {
-                                context.pushNamed('admin');
-                              } else {
+                              if (_model.usernameTextController.text !=
+                                  'admin1') {
                                 context.pushNamed('home');
+                              } else {
+                                context.pushNamed('Admin');
                               }
                             },
                             text: 'Sign In',

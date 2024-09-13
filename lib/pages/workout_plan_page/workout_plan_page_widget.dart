@@ -6,8 +6,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'workout_plan_page_model.dart';
-import 'package:m_k_fit/pdf_viewer/pdf_viewer.dart';
-import 'package:m_k_fit/api/pdf_api.dart';
 export 'workout_plan_page_model.dart';
 
 class WorkoutPlanPageWidget extends StatefulWidget {
@@ -23,108 +21,112 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'textOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 200.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
-          begin: const Offset(0.8, 0.8),
-          end: const Offset(1.0, 1.0),
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
-          begin: const Offset(0.0, 40.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 200.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
-          begin: const Offset(0.8, 0.8),
-          end: const Offset(1.0, 1.0),
-        ),
-        TiltEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
-          begin: const Offset(0, 1.396),
-          end: const Offset(0, 0),
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
-          begin: const Offset(0.0, 40.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 250.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 250.ms,
-          duration: 300.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 250.ms,
-          duration: 300.ms,
-          begin: const Offset(0.8, 0.8),
-          end: const Offset(1.0, 1.0),
-        ),
-        TiltEffect(
-          curve: Curves.easeInOut,
-          delay: 250.ms,
-          duration: 300.ms,
-          begin: const Offset(0, 1.396),
-          end: const Offset(0, 0),
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 250.ms,
-          duration: 300.ms,
-          begin: const Offset(0.0, 40.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => WorkoutPlanPageModel());
+
+    animationsMap.addAll({
+      'textOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 200.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.8, 0.8),
+            end: const Offset(1.0, 1.0),
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 40.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 200.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.8, 0.8),
+            end: const Offset(1.0, 1.0),
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0, 1.396),
+            end: const Offset(0, 0),
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 40.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 250.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.8, 0.8),
+            end: const Offset(1.0, 1.0),
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0, 1.396),
+            end: const Offset(0, 0),
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 250.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 40.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -137,9 +139,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -181,8 +181,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
                 child: Text(
                   'Your Workouts',
                   style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -205,8 +204,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                 scrollDirection: Axis.vertical,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 16.0, 0.0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
@@ -302,15 +301,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                             ),
                           ),
                           FFButtonWidget(
-                            onPressed: () async {
-                              const path = 'assets/pdfs/example.pdf';
-                              final file = await PDFLoader.loadAsset(path);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PDFViewerPage(pdfFile: file)),
-                              );
+                            onPressed: () {
+                              print('Button pressed ...');
                             },
                             text: '',
                             options: FFButtonOptions(
@@ -342,8 +334,8 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                         animationsMap['containerOnPageLoadAnimation1']!),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 16.0, 0.0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Container(
                       width: 100.0,
                       height: 150.0,
@@ -439,14 +431,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                           ),
                           FFButtonWidget(
                             onPressed: () async {
-                              const path = 'assets/pdfs/example.pdf';
-                              final file = await PDFLoader.loadAsset(path);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        PDFViewerPage(pdfFile: file)),
-                              );
+                              context.pushNamed('IndividualWorkoutPage');
                             },
                             text: '',
                             options: FFButtonOptions(

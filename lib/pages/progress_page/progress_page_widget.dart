@@ -1,27 +1,9 @@
-/*
-Ramin Selseleh
-
-Jira Task MA - 54 - Sub task MA - 109.
-
-For this tasks, we have cretaed a myProgress page, in which teh user using the app
-is able to update the data that they want to keep track of and see how much
-they have progressed. I have added an option for the user to update their weight and height
-once they click on the plus (+) icon on the weight page. At the buttom of the page
-they are now able to upload images from their phone to keep track of their progress.
- */
-
-
-
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'progress_page_model.dart';
 export 'progress_page_model.dart';
 
@@ -41,6 +23,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ProgressPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -53,9 +37,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -65,23 +47,23 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
           title: Text(
             'Progress',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-              fontFamily: 'Readex Pro',
-              color: Colors.white,
-              fontSize: 30,
-              letterSpacing: 0,
-              fontWeight: FontWeight.bold,
-            ),
+                  fontFamily: 'Readex Pro',
+                  color: Colors.white,
+                  fontSize: 30.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           actions: [
             FlutterFlowIconButton(
               borderColor: Colors.transparent,
-              borderRadius: 30,
-              borderWidth: 1,
-              buttonSize: 72,
-              icon: Icon(
+              borderRadius: 30.0,
+              borderWidth: 1.0,
+              buttonSize: 72.0,
+              icon: const Icon(
                 Icons.settings_rounded,
                 color: Colors.white,
-                size: 40,
+                size: 40.0,
               ),
               onPressed: () async {
                 context.pop();
@@ -89,7 +71,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
             ),
           ],
           centerTitle: false,
-          elevation: 2,
+          elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
@@ -98,52 +80,52 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
-                          blurRadius: 4,
+                          blurRadius: 4.0,
                           color: Color(0x33000000),
                           offset: Offset(
-                            0,
-                            2,
+                            0.0,
+                            2.0,
                           ),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding:
-                          EdgeInsetsDirectional.fromSTEB(16, 32, 16, 12),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16.0, 32.0, 16.0, 12.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                width: 44,
-                                height: 44,
+                                width: 44.0,
+                                height: 44.0,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF2B901B),
+                                  color: const Color(0xFF2B901B),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Color(0xFF40DC28),
-                                    width: 2,
+                                    color: const Color(0xFF40DC28),
+                                    width: 2.0,
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(2),
+                                  padding: const EdgeInsets.all(2.0),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(44),
+                                    borderRadius: BorderRadius.circular(44.0),
                                     child: Image.network(
                                       'https://picsum.photos/seed/183/600',
-                                      width: 44,
-                                      height: 44,
+                                      width: 44.0,
+                                      height: 44.0,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -151,25 +133,25 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 0.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 4),
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 4.0),
                                         child: Text(
                                           'Weight',
                                           style: FlutterFlowTheme.of(context)
                                               .headlineMedium
                                               .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
-                                          ),
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
                                         ),
                                       ),
                                       Text(
@@ -177,9 +159,9 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0,
-                                        ),
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -187,189 +169,14 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               ),
                               FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 60,
+                                borderRadius: 30.0,
+                                borderWidth: 1.0,
+                                buttonSize: 60.0,
                                 icon: Icon(
                                   Icons.add_circle_outline_rounded,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
-                                  size: 30,
-                                ),
-                                onPressed: () async {
-                                  context.pushNamed(
-                                    'weightSetting',
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType: PageTransitionType.fade,
-                                      ),
-                                    },
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Container(
-                            width: double.infinity,
-                            height: 200,
-                            child: FlutterFlowLineChart(
-                              data: [
-                                FFLineChartData(
-                                  xData: List.generate(
-                                      random_data.randomInteger(0, 0),
-                                          (index) =>
-                                          random_data.randomInteger(0, 10)),
-                                  yData: List.generate(
-                                      random_data.randomInteger(0, 0),
-                                          (index) =>
-                                          random_data.randomInteger(0, 10)),
-                                  settings: LineChartBarData(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    barWidth: 2,
-                                    isCurved: true,
-                                    preventCurveOverShooting: true,
-                                    dotData: FlDotData(show: false),
-                                    belowBarData: BarAreaData(
-                                      show: true,
-                                      color: Color(0x4C4B39EF),
-                                    ),
-                                  ),
-                                )
-                              ],
-                              chartStylingInfo: ChartStylingInfo(
-                                enableTooltip: true,
-                                backgroundColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                showBorder: false,
-                              ),
-                              axisBounds: AxisBounds(),
-                              xAxisLabelInfo: AxisLabelInfo(
-                                title: 'Last 30 Days',
-                                titleTextStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0,
-                                ),
-                              ),
-                              yAxisLabelInfo: AxisLabelInfo(
-                                title: 'Weight lb.',
-                                titleTextStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: Color(0x33000000),
-                          offset: Offset(
-                            0,
-                            2,
-                          ),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding:
-                          EdgeInsetsDirectional.fromSTEB(16, 32, 16, 12),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 44,
-                                height: 44,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF40DC28),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Color(0xFF2B901B),
-                                    width: 2,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(2),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(44),
-                                    child: Image.network(
-                                      'https://picsum.photos/seed/183/600',
-                                      width: 44,
-                                      height: 44,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 4),
-                                        child: Text(
-                                          'BMI',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineMedium
-                                              .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        'Your recent activity is below.',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 60,
-                                icon: Icon(
-                                  Icons.add_circle_outline_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 30,
+                                  size: 30.0,
                                 ),
                                 onPressed: () {
                                   print('IconButton pressed ...');
@@ -379,31 +186,30 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SizedBox(
                             width: double.infinity,
-                            height: 200,
+                            height: 200.0,
                             child: FlutterFlowLineChart(
                               data: [
                                 FFLineChartData(
                                   xData: List.generate(
-                                      random_data.randomInteger(0, 0),
-                                          (index) =>
-                                          random_data.randomInteger(0, 200)),
+                                      random_data.randomInteger(5, 5),
+                                      (index) =>
+                                          random_data.randomInteger(0, 10)),
                                   yData: List.generate(
-                                      random_data.randomInteger(0, 0),
-                                          (index) =>
-                                          random_data.randomInteger(20, 1000)),
+                                      random_data.randomInteger(5, 5),
+                                      (index) =>
+                                          random_data.randomInteger(0, 10)),
                                   settings: LineChartBarData(
-                                    color:
-                                    FlutterFlowTheme.of(context).secondary,
-                                    barWidth: 2,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    barWidth: 2.0,
                                     isCurved: true,
                                     preventCurveOverShooting: true,
-                                    dotData: FlDotData(show: false),
+                                    dotData: const FlDotData(show: false),
                                     belowBarData: BarAreaData(
                                       show: true,
-                                      color: Color(0x3239D2C0),
+                                      color: const Color(0x4C4B39EF),
                                     ),
                                   ),
                                 )
@@ -414,24 +220,24 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     .secondaryBackground,
                                 showBorder: false,
                               ),
-                              axisBounds: AxisBounds(),
+                              axisBounds: const AxisBounds(),
                               xAxisLabelInfo: AxisLabelInfo(
                                 title: 'Last 30 Days',
                                 titleTextStyle: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0,
-                                ),
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                               yAxisLabelInfo: AxisLabelInfo(
-                                title: 'BMI',
+                                title: 'Weight lb.',
                                 titleTextStyle: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0,
-                                ),
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                             ),
                           ),
@@ -441,66 +247,241 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
-                    height: 100,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 4.0,
+                          color: Color(0x33000000),
+                          offset: Offset(
+                            0.0,
+                            2.0,
+                          ),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16.0, 32.0, 16.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 44.0,
+                                height: 44.0,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF40DC28),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: const Color(0xFF2B901B),
+                                    width: 2.0,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(44.0),
+                                    child: Image.network(
+                                      'https://picsum.photos/seed/183/600',
+                                      width: 44.0,
+                                      height: 44.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 4.0),
+                                        child: Text(
+                                          'BMI',
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Your recent activity is below.',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30.0,
+                                borderWidth: 1.0,
+                                buttonSize: 60.0,
+                                icon: Icon(
+                                  Icons.add_circle_outline_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 30.0,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 200.0,
+                            child: FlutterFlowLineChart(
+                              data: [
+                                FFLineChartData(
+                                  xData: List.generate(
+                                      random_data.randomInteger(5, 5),
+                                      (index) =>
+                                          random_data.randomInteger(0, 200)),
+                                  yData: List.generate(
+                                      random_data.randomInteger(5, 5),
+                                      (index) =>
+                                          random_data.randomInteger(20, 1000)),
+                                  settings: LineChartBarData(
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
+                                    barWidth: 2.0,
+                                    isCurved: true,
+                                    preventCurveOverShooting: true,
+                                    dotData: const FlDotData(show: false),
+                                    belowBarData: BarAreaData(
+                                      show: true,
+                                      color: const Color(0x3239D2C0),
+                                    ),
+                                  ),
+                                )
+                              ],
+                              chartStylingInfo: ChartStylingInfo(
+                                enableTooltip: true,
+                                backgroundColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                showBorder: false,
+                              ),
+                              axisBounds: const AxisBounds(),
+                              xAxisLabelInfo: AxisLabelInfo(
+                                title: 'Last 30 Days',
+                                titleTextStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                              yAxisLabelInfo: AxisLabelInfo(
+                                title: 'BMI',
+                                titleTextStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 100.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              4.0, 4.0, 4.0, 4.0),
                           child: Container(
-                            width: 86,
-                            height: 86,
-                            decoration: BoxDecoration(),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? 'assets/images/MK_Fit_Logo.png'
-                                    : 'assets/images/MK_Fit_Logo.png',
-                                width: 300,
-                                height: 200,
-                                fit: BoxFit.cover,
+                            width: 86.0,
+                            height: 86.0,
+                            decoration: const BoxDecoration(),
+                            child: FlutterFlowIconButton(
+                              borderColor: const Color(0xFF00831B),
+                              borderRadius: 40.0,
+                              borderWidth: 3.0,
+                              buttonSize: 40.0,
+                              icon: Icon(
+                                Icons.camera_alt_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 60.0,
                               ),
+                              onPressed: () {
+                                print('IconButton pressed ...');
+                              },
                             ),
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1, 0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 4.0, 0.0, 0.0),
                             child: Container(
-                              width: 244,
-                              height: 100,
+                              width: 244.0,
+                              height: 100.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                               ),
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
                               child: Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: const AlignmentDirectional(-1.0, 0.0),
                                 child: ListView(
                                   padding: EdgeInsets.zero,
                                   scrollDirection: Axis.vertical,
                                   children: [
                                     Align(
-                                      alignment: AlignmentDirectional(-1, 0),
+                                      alignment:
+                                          const AlignmentDirectional(-1.0, 0.0),
                                       child: Text(
                                         'Time for a progress picture?',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                          fontFamily: 'Inter',
-                                          fontSize: 20,
-                                          letterSpacing: 0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                              fontFamily: 'Inter',
+                                              fontSize: 20.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
                                       ),
                                     ),
                                     Text(
@@ -508,9 +489,9 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Inter',
-                                        letterSpacing: 0,
-                                      ),
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
                                     ),
                                   ],
                                 ),

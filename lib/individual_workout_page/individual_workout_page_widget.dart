@@ -23,6 +23,8 @@ class _IndividualWorkoutPageWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => IndividualWorkoutPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -35,9 +37,7 @@ class _IndividualWorkoutPageWidgetState
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -381,7 +381,7 @@ class _IndividualWorkoutPageWidgetState
                             ),
                             Container(
                               width: double.infinity,
-                              height: 67.0,
+                              height: 76.0,
                               decoration: const BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -1560,7 +1560,7 @@ class _IndividualWorkoutPageWidgetState
                             ),
                             Container(
                               width: double.infinity,
-                              height: 67.0,
+                              height: 65.0,
                               decoration: const BoxDecoration(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
