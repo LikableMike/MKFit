@@ -1,22 +1,3 @@
-/*
-Ramin Selseleh
-
-MA 113 - 114 - 115
-
-For this task I was set up our firebase, whihc is being used for authetication
-of users. Finishing this task allows us to validate accounts
-users get an email once they are signed up with their email. They will recive
-and email that is asking for vertification. If email is already being used
-then it will pop error that email is already being used. If not and they validate
-their email account using the link that is sent to them, their account will
-be up and running. The user can not go to signing waivers page unless the account
-is created. Some prevoius actions button on Signup page, creat account page
-and PARQ page had to be changed to allow vertification before accessing the app.
-And also making the flow of the pages and action buttons better.
- */
-
-
-
 import '/flutter_flow/flutter_flow_util.dart';
 import 'parq_widget.dart' show ParqWidget;
 import 'package:flutter/material.dart';
