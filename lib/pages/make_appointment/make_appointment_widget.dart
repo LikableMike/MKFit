@@ -277,56 +277,73 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           ),
                                         ),
                                       ),
-    Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: DropdownButton<String>(
-    value: _selectedTime,
-    hint: Text(_selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',),
-      style: TextStyle(
-        color: Colors.pink,
-        fontSize: 16.0,
-      ),
-      items: _availableTimes.map((String time) {
-        return DropdownMenuItem<String>(
-            value: time,
-            child: Text(
-            time,
-            style: TextStyle(
-            color: Colors.blue, // Set the color for the dropdown items
-            ),
-        ),
-    );
-    }).toList(),
-    onChanged: (String? newValue) {
-    setState(() {
-    _selectedTime = newValue;
-    });
-    },
-    ),
-    ),
-    Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: ElevatedButton(
-    onPressed: () {
-    if (_selectedDateRange != null && _selectedTime != null) {
-    // Handle appointment confirmation here
-    print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
-    } else {
-      print( _selectedDateRange.toString() + " " + _selectedTime.toString());
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: DropdownButton<String>(
+                                          value: _selectedTime,
+                                          hint: Text(_selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',),
+                                          style: TextStyle(
+                                            color: Colors.pink,
+                                            fontSize: 16.0,
+                                          ),
+                                          items: _availableTimes.map((String time) {
+                                            return DropdownMenuItem<String>(
+                                              value: time,
+                                              child: Text(
+                                                time,
+                                                style: TextStyle(
+                                                  color: Colors.blue, // Set the color for the dropdown items
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              _selectedTime = newValue;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            if (_selectedDateRange != null && _selectedTime != null) {
+                                              // Handle appointment confirmation here
+                                              print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
+                                            } else {
+                                              print( _selectedDateRange.toString() + " " + _selectedTime.toString());
 
-    // Show error or prompt to select date/time
-    ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('Please select both date and time.')),
+                                              // Show error or prompt to select date/time
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(content: Text('Please select both date and time.')),
 
-    );
-    }
-    },
-    child: Text('Confirm Appointment'),
-    ),
-    ),
+                                              );
+                                            }
+                                          },
+                                          child: Text('Confirm Appointment'),
+                                        ),
+                                      ),
+// Cancel Appointment Button
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red, // Red color for the cancel button
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              // Clear the selected date and time to cancel the appointment
+                                              _selectedDateRange = null;
+                                              _selectedTime = null;
+                                            });
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Appointment has been canceled.')),
+                                            );
+                                          },
+                                          child: const Text('Cancel Appointment')
+                                      ),
 
-Padding(
-    padding: const EdgeInsetsDirectional
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
                                             .fromSTEB(
                                             0.0, 12.0, 0.0, 0.0),
                                         child: ListView(
@@ -386,7 +403,9 @@ Padding(
                                                                 0.0,
                                                                 0.0),
                                                             child: Text(
-                                                              'Next Session with Makayla',
+                                                              _selectedDateRange != null && _selectedTime != null
+                                                                  ? 'Next Session with Makayla: ${_selectedDateRange!.start.toString().split(' ')[0]} at $_selectedTime'
+                                                                  : 'Next Session with Makayla',
                                                               style: FlutterFlowTheme
                                                                   .of(context)
                                                                   .headlineSmall
@@ -450,7 +469,7 @@ Padding(
                                                                           4.0),
                                                                       child:
                                                                       Text(
-                                                                        '2:20pm',
+                                                                        _selectedTime ?? 'Select Time',
                                                                         style: FlutterFlowTheme
                                                                             .of(
                                                                             context)
@@ -469,7 +488,9 @@ Padding(
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  'Wed, 03/08/2022',
+                                                                  _selectedDateRange != null
+                                                                      ? _selectedDateRange!.start.toString().split(' ')[0]
+                                                                      : '', // Leave blank if no date is selected
                                                                   style: FlutterFlowTheme
                                                                       .of(
                                                                       context)
