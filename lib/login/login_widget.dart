@@ -1,3 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:m_k_fit/auth/base_auth_user_provider.dart';
+import 'package:m_k_fit/auth/firebase_auth/firebase_auth_manager.dart';
+import 'package:m_k_fit/auth/firebase_auth/firebase_user_provider.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'login_model.dart';
+import '/auth/auth_manager.dart';
 export 'login_model.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -17,6 +23,8 @@ class LoginWidget extends StatefulWidget {
 
 class _LoginWidgetState extends State<LoginWidget>
     with TickerProviderStateMixin {
+
+  final FirebaseAuthManager _auth = FirebaseAuthManager();
   late LoginModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -188,12 +196,10 @@ class _LoginWidgetState extends State<LoginWidget>
                                   MaxLengthEnforcement.enforced,
                               cursorColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
+
                               validator: _model.usernameTextControllerValidator
-                                  .asValidator(context),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp('[a-zA-Z0-9]'))
-                              ],
+                                  .asValidator(context)
+
                             ),
                           ),
                         ),
@@ -294,11 +300,33 @@ class _LoginWidgetState extends State<LoginWidget>
                               0.0, 0.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              if (_model.usernameTextController.text !=
-                                  'admin1') {
-                                context.pushNamed('home');
-                              } else {
-                                context.pushNamed('Admin');
+
+
+
+                              print("Login Attempted");
+
+                              final FirebaseAuth auth = FirebaseAuth.instance;
+                              // if (_model.usernameController.text == 'admin1') {
+                              //   context.pushNamed('admin');
+                              // } else {
+                              //   context.pushNamed('home');
+                              //
+                              try{
+                                var user = await auth.signInWithEmailAndPassword(email:_model.usernameTextController.text , password:_model.passwordTextController.text);
+                                if (user != null){
+                                  var UID = user.user?.uid;
+
+                                  if(UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2"){
+
+                                    context.pushNamed('admin');
+                                  }else {
+                                    context.pushNamed('home');
+                                  }
+                                }
+                              }catch(e){
+                                print(e);
+
+
                               }
                             },
                             text: 'Sign In',

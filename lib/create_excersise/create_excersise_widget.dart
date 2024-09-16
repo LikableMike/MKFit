@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '/backend/firebase_storage/database.dart';
 import 'create_excersise_model.dart';
 export 'create_excersise_model.dart';
 
@@ -741,6 +742,14 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                         const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        try {
+
+                          print("Attempting to create Exercise");
+                          await DatabaseService().createExercise(
+                              _model.fullNameTextController.text, int.parse(_model.ageTextController.text), int.parse(_model.phoneNumberTextController.text), _model.descriptionTextController.text, _model.videoLinkTextController.text);
+                        }catch(e){
+                          print(e);
+                        }
                         if (_model.formKey.currentState == null ||
                             !_model.formKey.currentState!.validate()) {
                           return;
