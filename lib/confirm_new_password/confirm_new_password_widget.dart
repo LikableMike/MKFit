@@ -24,11 +24,13 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
     super.initState();
     _model = createModel(context, () => ConfirmNewPasswordModel());
 
-    _model.phoneNumberController1 ??= TextEditingController();
+    _model.phoneNumberTextController1 ??= TextEditingController();
     _model.phoneNumberFocusNode1 ??= FocusNode();
 
-    _model.phoneNumberController2 ??= TextEditingController();
+    _model.phoneNumberTextController2 ??= TextEditingController();
     _model.phoneNumberFocusNode2 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -53,7 +55,7 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
           buttonSize: 60.0,
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryBackground,
+            color: FlutterFlowTheme.of(context).primaryText,
             size: 30.0,
           ),
           onPressed: () async {
@@ -132,7 +134,7 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
                   ),
                 ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 30.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'Confirm New Password',
                   style: FlutterFlowTheme.of(context).titleMedium.override(
@@ -153,11 +155,11 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 20.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.phoneNumberController1,
+                    controller: _model.phoneNumberTextController1,
                     focusNode: _model.phoneNumberFocusNode1,
                     autofillHints: const [AutofillHints.email],
                     obscureText: false,
@@ -215,7 +217,7 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberController1Validator
+                    validator: _model.phoneNumberTextController1Validator
                         .asValidator(context),
                   ),
                 ),
@@ -225,7 +227,7 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.phoneNumberController2,
+                    controller: _model.phoneNumberTextController2,
                     focusNode: _model.phoneNumberFocusNode2,
                     autofillHints: const [AutofillHints.email],
                     obscureText: false,
@@ -283,7 +285,7 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberController2Validator
+                    validator: _model.phoneNumberTextController2Validator
                         .asValidator(context),
                   ),
                 ),
@@ -294,9 +296,7 @@ class _ConfirmNewPasswordWidgetState extends State<ConfirmNewPasswordWidget> {
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button-Login pressed ...');
-                    },
+                    onPressed: () async {},
                     text: 'Reset',
                     options: FFButtonOptions(
                       width: double.infinity,

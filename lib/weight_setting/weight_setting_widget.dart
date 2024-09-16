@@ -39,6 +39,8 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
 
     _model.textController3 ??= TextEditingController();
     _model.textFieldFocusNode3 ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -66,7 +68,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
             size: 25.0,
           ),
           onPressed: () async {
-            context.pushNamed('home');
+            context.pushNamed('home2');
           },
         ),
         title: Text(
@@ -106,7 +108,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Weight Inofrmation',
+                      'Weight Information',
                       style:
                           FlutterFlowTheme.of(context).headlineMedium.override(
                                 fontFamily: 'Readex Pro',
@@ -370,7 +372,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     context.pushNamed(
-                      'home',
+                      'home2',
                       extra: <String, dynamic>{
                         kTransitionInfoKey: const TransitionInfo(
                           hasTransition: true,

@@ -13,22 +13,22 @@ import 'package:provider/provider.dart';
 import 'createExercisePage_model.dart';
 export 'createExercisePage_model.dart';
 
-class CreateExcersiseWidget extends StatefulWidget {
-  const CreateExcersiseWidget({super.key});
+class CreateExercisePageWidget extends StatefulWidget {
+  const CreateExercisePageWidget({super.key});
 
   @override
-  State<CreateExcersiseWidget> createState() => _CreateExcersiseWidgetState();
+  State<CreateExercisePageWidget> createState() => _CreateExercisePageWidgetState();
 }
 
-class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
-  late CreateExcersiseModel _model;
+class _CreateExercisePageWidgetState extends State<CreateExercisePageWidget> {
+  late CreateExercisePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateExcersiseModel());
+    _model = createModel(context, () => CreateExercisePageModel());
 
     _model.fullNameController ??= TextEditingController();
     _model.fullNameFocusNode ??= FocusNode();

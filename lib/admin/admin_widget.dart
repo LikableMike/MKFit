@@ -4,9 +4,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'admin_model.dart';
 export 'admin_model.dart';
 
@@ -26,6 +23,8 @@ class _AdminWidgetState extends State<AdminWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AdminModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -38,9 +37,7 @@ class _AdminWidgetState extends State<AdminWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
@@ -49,13 +46,13 @@ class _AdminWidgetState extends State<AdminWidget> {
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 70,
-            icon: Icon(
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 70.0,
+            icon: const Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
-              size: 40,
+              size: 40.0,
             ),
             onPressed: () async {
               context.pop();
@@ -66,13 +63,13 @@ class _AdminWidgetState extends State<AdminWidget> {
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Readex Pro',
                   color: Colors.white,
-                  fontSize: 22,
-                  letterSpacing: 0,
+                  fontSize: 22.0,
+                  letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
-          elevation: 2,
+          elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
@@ -86,7 +83,7 @@ class _AdminWidgetState extends State<AdminWidget> {
                     multiFile: false,
                   );
                   if (selectedFiles != null) {
-                    setState(() => _model.isDataUploading = true);
+                    safeSetState(() => _model.isDataUploading = true);
                     var selectedUploadedFiles = <FFUploadedFile>[];
 
                     try {
@@ -100,54 +97,56 @@ class _AdminWidgetState extends State<AdminWidget> {
                       _model.isDataUploading = false;
                     }
                     if (selectedUploadedFiles.length == selectedFiles.length) {
-                      setState(() {
+                      safeSetState(() {
                         _model.uploadedLocalFile = selectedUploadedFiles.first;
                       });
                     } else {
-                      setState(() {});
+                      safeSetState(() {});
                       return;
                     }
                   }
                 },
                 text: 'Upload Workout',
                 options: FFButtonOptions(
-                  height: 40,
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                  iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                  height: 40.0,
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  iconPadding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primaryBackground,
                   textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                         fontFamily: 'Inter',
-                        letterSpacing: 0,
+                        letterSpacing: 0.0,
                       ),
-                  elevation: 3,
-                  borderSide: BorderSide(
+                  elevation: 3.0,
+                  borderSide: const BorderSide(
                     color: Colors.transparent,
-                    width: 1,
+                    width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  context.pushNamed('CreateExcersise');
+                  context.pushNamed('CreateExercisePage');
                 },
                 text: 'Create Exercise',
                 options: FFButtonOptions(
-                  height: 40,
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                  iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                  height: 40.0,
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  iconPadding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                    fontFamily: 'Inter',
-                    color: Colors.white,
-                    letterSpacing: 0,
-                  ),
-                  elevation: 3,
-                  borderSide: BorderSide(
+                        fontFamily: 'Inter',
+                        color: Colors.white,
+                        letterSpacing: 0.0,
+                      ),
+                  elevation: 3.0,
+                  borderSide: const BorderSide(
                     color: Colors.transparent,
-                    width: 1,
+                    width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
               FFButtonWidget(
@@ -156,21 +155,22 @@ class _AdminWidgetState extends State<AdminWidget> {
                 },
                 text: 'Create Workout',
                 options: FFButtonOptions(
-                  height: 40,
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                  iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                  height: 40.0,
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  iconPadding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                    fontFamily: 'Inter',
-                    color: Colors.white,
-                    letterSpacing: 0,
-                  ),
-                  elevation: 3,
-                  borderSide: BorderSide(
+                        fontFamily: 'Inter',
+                        color: Colors.white,
+                        letterSpacing: 0.0,
+                      ),
+                  elevation: 3.0,
+                  borderSide: const BorderSide(
                     color: Colors.transparent,
-                    width: 1,
+                    width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
             ],
@@ -180,4 +180,3 @@ class _AdminWidgetState extends State<AdminWidget> {
     );
   }
 }
-

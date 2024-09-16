@@ -24,11 +24,13 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
     super.initState();
     _model = createModel(context, () => ForgotPasswordModel());
 
-    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.phoneNumberController ??= TextEditingController();
+    _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -157,7 +159,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.emailAddressController,
+                    controller: _model.emailAddressTextController,
                     focusNode: _model.emailAddressFocusNode,
                     autofillHints: const [AutofillHints.email],
                     obscureText: false,
@@ -207,15 +209,14 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       contentPadding: const EdgeInsetsDirectional.fromSTEB(
                           24.0, 24.0, 20.0, 24.0),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    style: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
                           letterSpacing: 0.0,
                         ),
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.emailAddressControllerValidator
+                    validator: _model.emailAddressTextControllerValidator
                         .asValidator(context),
                   ),
                 ),
@@ -225,7 +226,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.phoneNumberController,
+                    controller: _model.phoneNumberTextController,
                     focusNode: _model.phoneNumberFocusNode,
                     autofillHints: const [AutofillHints.email],
                     obscureText: false,
@@ -277,14 +278,17 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
                           letterSpacing: 0.0,
                         ),
                     maxLines: null,
-                    keyboardType: TextInputType.emailAddress,
+                    maxLength: 14,
+                    keyboardType: TextInputType.number,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberControllerValidator
+                    validator: _model.phoneNumberTextControllerValidator
                         .asValidator(context),
+                    inputFormatters: [_model.phoneNumberMask],
                   ),
                 ),
               ),
@@ -295,7 +299,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.emailAddressController.text.isEmpty) {
+                      if (_model.emailAddressTextController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -306,7 +310,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                         return;
                       }
                       await authManager.resetPassword(
-                        email: _model.emailAddressController.text,
+                        email: _model.emailAddressTextController.text,
                         context: context,
                       );
                     },

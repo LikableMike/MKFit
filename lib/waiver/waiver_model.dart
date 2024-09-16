@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class WaiverModel extends FlutterFlowModel<WaiverWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for Checkbox widget.
   bool? checkboxValue;
 
@@ -13,7 +12,5 @@ class WaiverModel extends FlutterFlowModel<WaiverWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

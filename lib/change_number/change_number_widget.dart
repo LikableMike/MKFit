@@ -24,8 +24,10 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
     super.initState();
     _model = createModel(context, () => ChangeNumberModel());
 
-    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -154,7 +156,7 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.emailAddressController,
+                    controller: _model.emailAddressTextController,
                     focusNode: _model.emailAddressFocusNode,
                     autofillHints: const [AutofillHints.email],
                     obscureText: false,
@@ -212,7 +214,7 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.emailAddressControllerValidator
+                    validator: _model.emailAddressTextControllerValidator
                         .asValidator(context),
                   ),
                 ),
@@ -224,7 +226,7 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
                       const EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.emailAddressController.text.isEmpty) {
+                      if (_model.emailAddressTextController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -235,7 +237,7 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
                         return;
                       }
                       await authManager.resetPassword(
-                        email: _model.emailAddressController.text,
+                        email: _model.emailAddressTextController.text,
                         context: context,
                       );
                     },

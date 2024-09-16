@@ -1,23 +1,10 @@
-
-/*
-Ramin Selseleh
-Jira Task MA-52. Sub tasks MA - 106, 107, and 108.
-
-For this task, I was in charge of
-making sure that all of the buttons within the settings page have functionalities and they are doing
-what they're supposed to do. To complete task, I had to create pages such as
-change_address and confirm_new_username. The other pages that were already created
-so I only needed to creat these two. Within all of the pages located inside the settings page
-I added a navigate back function, so whe you clikk on thos pages, you can navigate back to teh settings
-page.
- */
-
-
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'settings_page_model.dart';
 export 'settings_page_model.dart';
 
@@ -28,15 +15,42 @@ class SettingsPageWidget extends StatefulWidget {
   State<SettingsPageWidget> createState() => _SettingsPageWidgetState();
 }
 
-class _SettingsPageWidgetState extends State<SettingsPageWidget> {
+class _SettingsPageWidgetState extends State<SettingsPageWidget>
+    with TickerProviderStateMixin {
   late SettingsPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => SettingsPageModel());
+
+    animationsMap.addAll({
+      'buttonOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+    });
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -141,10 +155,20 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                             ),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('changeName');
+                              },
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
                             ),
                           ],
                         ),
@@ -190,10 +214,20 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                             ),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('changeAddress');
+                              },
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
                             ),
                           ],
                         ),
@@ -239,10 +273,20 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                             ),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('changePassword');
+                              },
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
                             ),
                           ],
                         ),
@@ -338,10 +382,20 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                             ),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('changeNumber');
+                              },
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
                             ),
                           ],
                         ),
@@ -428,10 +482,20 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                             ),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('weightSetting');
+                              },
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
                             ),
                           ],
                         ),
@@ -464,36 +528,36 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  //Navigates to the "login" page
                   context.pushNamed('login');
                 },
-                //Displays the "log Out" Button to the user
                 text: 'Log Out',
                 options: FFButtonOptions(
                   height: 40.0,
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   iconPadding:
-                      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   textStyle: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Inter',
-                        fontSize: 18,
-                        letterSpacing: 0,
-                    fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.bold,
                       ),
-                  elevation: 0,
+                  elevation: 0.0,
                   borderSide: BorderSide(
                     color: FlutterFlowTheme.of(context).alternate,
-                    width: 1,
+                    width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(50.0),
                 ),
+              ).animateOnActionTrigger(
+                animationsMap['buttonOnActionTriggerAnimation']!,
               ),
             ),
-          ].addToEnd(const SizedBox(height: 64)),
+          ].addToEnd(const SizedBox(height: 64.0)),
         ),
       ),
     );
