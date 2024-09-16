@@ -127,7 +127,7 @@ class _AdminWidgetState extends State<AdminWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  context.pushNamed('CreateExcersise');
+                  context.pushNamed('CreateExercisePage');
                 },
                 text: 'Create Exercise',
                 options: FFButtonOptions(
