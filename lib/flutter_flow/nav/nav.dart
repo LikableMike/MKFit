@@ -174,6 +174,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const IndividualWorkoutPageWidget(),
         ),
         FFRoute(
+
+          name: 'CreateWorkoutPage',
+          path: '/create_workout_page',
+          builder: (context, params) => const CreateWorkoutPageWidget(),
+        ),
+
+        FFRoute(
+
           name: 'changeAddress',
           path: '/changeAddress',
           builder: (context, params) => const ChangeAddressWidget(),
@@ -199,11 +207,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/createExcersise',
           builder: (context, params) => const CreateExcersiseWidget(),
         ),
-        FFRoute(
-          name: 'CreateWorkoutPage',
-          path: '/createWorkoutPage',
-          builder: (context, params) => const CreateWorkoutPageWidget(),
-        ),
+
         FFRoute(
           name: 'Admin',
           path: '/admin',
