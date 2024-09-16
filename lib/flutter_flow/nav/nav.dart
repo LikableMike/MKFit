@@ -203,7 +203,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const CustomerChatWidget(),
         ),
         FFRoute(
-          name: 'CreateExcersise',
+          name: 'CreateExercisePage',
           path: '/create_excersise',
           builder: (context, params) => const CreateExcersiseWidget(),
         ),

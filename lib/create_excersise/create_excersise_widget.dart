@@ -746,7 +746,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
 
                           print("Attempting to create Exercise");
                           await DatabaseService().createExercise(
-                              "test", 1, 1, "Test Description", "Test Link");
+                              _model.fullNameTextController.text, int.parse(_model.ageTextController.text), int.parse(_model.phoneNumberTextController.text), _model.descriptionTextController.text, _model.videoLinkTextController.text);
                         }catch(e){
                           print(e);
                         }
