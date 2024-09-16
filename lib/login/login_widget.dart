@@ -294,11 +294,30 @@ class _LoginWidgetState extends State<LoginWidget>
                               0.0, 0.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              if (_model.usernameTextController.text !=
-                                  'admin1') {
-                                context.pushNamed('home');
-                              } else {
-                                context.pushNamed('Admin');
+
+
+                              print("Login Attempted");
+                              final FirebaseAuth auth = FirebaseAuth.instance;
+                              // if (_model.usernameController.text == 'admin1') {
+                              //   context.pushNamed('admin');
+                              // } else {
+                              //   context.pushNamed('home');
+                              //
+                              try{
+                                var user = await auth.signInWithEmailAndPassword(email:_model.usernameTextController.text , password:_model.passwordTextController.text);
+                                if (user != null){
+                                  var UID = user.user?.uid;
+                                  if(UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2"){
+
+                                    context.pushNamed('admin');
+                                  }else {
+                                    context.pushNamed('home');
+                                  }
+                                }
+                              }catch(e){
+                                print(e);
+
+
                               }
                             },
                             text: 'Sign In',

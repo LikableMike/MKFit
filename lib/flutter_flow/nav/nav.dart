@@ -196,7 +196,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'CreateExcersise',
-          path: '/createExcersise',
+          path: '/create_excersise',
           builder: (context, params) => const CreateExcersiseWidget(),
         ),
         FFRoute(
@@ -205,7 +205,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const CreateWorkoutPageWidget(),
         ),
         FFRoute(
-          name: 'Admin',
+          name: 'admin',
           path: '/admin',
           builder: (context, params) => const AdminWidget(),
         ),
