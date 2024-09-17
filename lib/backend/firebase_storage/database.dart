@@ -41,27 +41,10 @@ class DatabaseService {
   }
 
   Future uploadProgress(String input, String value) async {
-    double? weight;
-    double? bmi;
     final valueNum = double.tryParse(value.toString());
-    if (valueNum != null) {
-      if (input == "weight") {
-        weight = valueNum;
-      } else if (input == "bmi") {
-        bmi = valueNum;
-      } else {
-        return;
-      }
-    }
-
     final String uid = await getUID();
-    await progressCollection.doc().set({
-      "date": FieldValue.serverTimestamp(),
-      "weight": weight,
-      "bmi": bmi,
-      "img": null,
-      "uid": uid
-    });
+    await progressCollection.doc().set(
+        {"date": FieldValue.serverTimestamp(), input: valueNum, "uid": uid});
   }
 
   Future uploadImage(FilePickerResult? file) async {
@@ -81,18 +64,54 @@ class DatabaseService {
 
     try {
       UploadTask uploadTask = storageRef.putFile(img);
-      TaskSnapshot snapshot = await uploadTask;
-      String imgUrl = await snapshot.ref.getDownloadURL();
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String imgUrl = await taskSnapshot.ref.getDownloadURL();
 
-      await FirebaseFirestore.instance.collection('progress').doc().set({
-        "date": FieldValue.serverTimestamp(),
-        "weight": null,
-        "bmi": null,
-        "img": imgUrl,
-        "uid": uid
-      });
+      await FirebaseFirestore.instance.collection('progress').doc().set(
+          {"date": FieldValue.serverTimestamp(), "img": imgUrl, "uid": uid});
     } on FirebaseException {
       return;
     }
+  }
+
+  Future getWeightData() async {
+    final String uid = await getUID();
+    QuerySnapshot querySnapshot = await progressCollection
+        .where("uid", isEqualTo: uid)
+        .orderBy("date", descending: false)
+        .get();
+
+    List<Map<String, dynamic>> weightData = querySnapshot.docs
+        .where(
+            (doc) => (doc.data() as Map<String, dynamic>).containsKey('weight'))
+        .map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      return {
+        'date': (data['date'] as Timestamp).toDate(),
+        'weight': data['weight'].toDouble(),
+      };
+    }).toList();
+
+    return weightData;
+  }
+
+  Future getBmiData() async {
+    final String uid = await getUID();
+    QuerySnapshot querySnapshot = await progressCollection
+        .where("uid", isEqualTo: uid)
+        .orderBy("date", descending: false)
+        .get();
+
+    List<Map<String, dynamic>> bmiData = querySnapshot.docs
+        .where((doc) => (doc.data() as Map<String, dynamic>).containsKey('bmi'))
+        .map((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      return {
+        'date': (data['date'] as Timestamp).toDate(),
+        'bmi': data['bmi'].toDouble(),
+      };
+    }).toList();
+
+    return bmiData;
   }
 }

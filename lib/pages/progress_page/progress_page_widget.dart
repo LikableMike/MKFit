@@ -23,12 +23,34 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  List<Map<String, dynamic>> weightData = [];
+  List<Map<String, dynamic>> bmiData = [];
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ProgressPageModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+
+    getWeightData();
+    getBmiData();
+  }
+
+  Future getWeightData() async {
+    final databaseService = DatabaseService();
+    List<Map<String, dynamic>> data = await databaseService.getWeightData();
+    setState(() {
+      weightData = data;
+    });
+  }
+
+  Future getBmiData() async {
+    final databaseService = DatabaseService();
+    List<Map<String, dynamic>> data = await databaseService.getBmiData();
+    setState(() {
+      bmiData = data;
+    });
   }
 
   @override
@@ -214,14 +236,11 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                             child: FlutterFlowLineChart(
                               data: [
                                 FFLineChartData(
-                                  xData: List.generate(
-                                      random_data.randomInteger(5, 5),
-                                      (index) =>
-                                          random_data.randomInteger(0, 10)),
-                                  yData: List.generate(
-                                      random_data.randomInteger(5, 5),
-                                      (index) =>
-                                          random_data.randomInteger(0, 10)),
+                                  xData:
+                                      weightData.map((i) => i['date']).toList(),
+                                  yData: weightData
+                                      .map((i) => i['weight'])
+                                      .toList(),
                                   settings: LineChartBarData(
                                     color: FlutterFlowTheme.of(context).primary,
                                     barWidth: 2,
@@ -398,14 +417,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                             child: FlutterFlowLineChart(
                               data: [
                                 FFLineChartData(
-                                  xData: List.generate(
-                                      random_data.randomInteger(5, 5),
-                                      (index) =>
-                                          random_data.randomInteger(0, 200)),
-                                  yData: List.generate(
-                                      random_data.randomInteger(5, 5),
-                                      (index) =>
-                                          random_data.randomInteger(20, 1000)),
+                                  xData: bmiData.map((i) => i['date']).toList(),
+                                  yData: bmiData.map((i) => i['bmi']).toList(),
                                   settings: LineChartBarData(
                                     color:
                                         FlutterFlowTheme.of(context).secondary,
