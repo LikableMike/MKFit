@@ -1,9 +1,9 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
-import 'package:firebase_auth/firebase_auth.dart';
+import "package:firebase_auth/firebase_auth.dart";
 import "package:sqflite/sqflite.dart";
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
+import "package:firebase_storage/firebase_storage.dart";
+import "dart:io";
 
 class DatabaseService {
   DatabaseService();
@@ -67,14 +67,14 @@ class DatabaseService {
       TaskSnapshot taskSnapshot = await uploadTask;
       String imgUrl = await taskSnapshot.ref.getDownloadURL();
 
-      await FirebaseFirestore.instance.collection('progress').doc().set(
+      await FirebaseFirestore.instance.collection("progress").doc().set(
           {"date": FieldValue.serverTimestamp(), "img": imgUrl, "uid": uid});
     } on FirebaseException {
       return;
     }
   }
 
-  Future getWeightData() async {
+  Future getProgress(String dtype) async {
     final String uid = await getUID();
     QuerySnapshot querySnapshot = await progressCollection
         .where("uid", isEqualTo: uid)
@@ -82,36 +82,15 @@ class DatabaseService {
         .get();
 
     List<Map<String, dynamic>> weightData = querySnapshot.docs
-        .where(
-            (doc) => (doc.data() as Map<String, dynamic>).containsKey('weight'))
+        .where((doc) => (doc.data() as Map<String, dynamic>).containsKey(dtype))
         .map((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       return {
-        'date': (data['date'] as Timestamp).toDate(),
-        'weight': data['weight'].toDouble(),
+        "date": (data["date"] as Timestamp).toDate(),
+        dtype: data[dtype].toDouble(),
       };
     }).toList();
 
     return weightData;
-  }
-
-  Future getBmiData() async {
-    final String uid = await getUID();
-    QuerySnapshot querySnapshot = await progressCollection
-        .where("uid", isEqualTo: uid)
-        .orderBy("date", descending: false)
-        .get();
-
-    List<Map<String, dynamic>> bmiData = querySnapshot.docs
-        .where((doc) => (doc.data() as Map<String, dynamic>).containsKey('bmi'))
-        .map((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return {
-        'date': (data['date'] as Timestamp).toDate(),
-        'bmi': data['bmi'].toDouble(),
-      };
-    }).toList();
-
-    return bmiData;
   }
 }

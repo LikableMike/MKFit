@@ -39,7 +39,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
 
   Future getWeightData() async {
     final databaseService = DatabaseService();
-    List<Map<String, dynamic>> data = await databaseService.getWeightData();
+    List<Map<String, dynamic>> data =
+        await databaseService.getProgress("weight");
     setState(() {
       weightData = data;
     });
@@ -47,7 +48,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
 
   Future getBmiData() async {
     final databaseService = DatabaseService();
-    List<Map<String, dynamic>> data = await databaseService.getBmiData();
+    List<Map<String, dynamic>> data = await databaseService.getProgress("bmi");
     setState(() {
       bmiData = data;
     });
