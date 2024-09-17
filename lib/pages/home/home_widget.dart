@@ -310,13 +310,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 ),
                               ),
                             ),
-                          ],
+
                         ),
+                       ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                 ),
+
+
               Divider(
                 thickness: 5.0,
                 color: FlutterFlowTheme.of(context).primaryText,
@@ -681,6 +682,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
               ),
             ],
+
+
+
           ),
         ),
       ),
