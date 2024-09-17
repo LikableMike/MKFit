@@ -19,6 +19,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   late MakeAppointmentModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  DateTimeRange? _selectedDateRange;
+  String? _selectedTime;
+  final List<String> _availableTimes = [
+    '9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 AM', '1:00 PM - 2:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM'
+  ];
+
 
   @override
   void initState() {
@@ -28,9 +34,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
-      initialIndex: 0,
-    )..addListener(() => safeSetState(() {}));
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+
+    );
+
   }
 
   @override
@@ -167,9 +173,11 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       weekStartsMonday: true,
                                       onChange:
                                           (DateTimeRange? newSelectedDate) {
-                                        safeSetState(() =>
-                                            _model.calendarSelectedDay1 =
-                                                newSelectedDate);
+                                        setState(() =>
+                                        _model.calendarSelectedDay1 =
+                                            newSelectedDate);
+                                        _selectedDateRange = newSelectedDate;
+
                                       },
                                       titleStyle: FlutterFlowTheme.of(context)
                                           .titleLarge
@@ -245,7 +253,74 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: DropdownButton<String>(
+                                          value: _selectedTime,
+                                          hint: Text(_selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',),
+                                          style: TextStyle(
+                                            color: Colors.pink,
+                                            fontSize: 16.0,
+                                          ),
+                                          items: _availableTimes.map((String time) {
+                                            return DropdownMenuItem<String>(
+                                              value: time,
+                                              child: Text(
+                                                time,
+                                                style: TextStyle(
+                                                  color: Colors.blue, // Set the color for the dropdown items
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              _selectedTime = newValue;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            if (_selectedDateRange != null && _selectedTime != null) {
+                                              // Handle appointment confirmation here
+                                              print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
+                                            } else {
+                                              print( _selectedDateRange.toString() + " " + _selectedTime.toString());
+
+                                              // Show error or prompt to select date/time
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(content: Text('Please select both date and time.')),
+
+                                              );
+                                            }
+                                          },
+                                          child: Text('Confirm Appointment'),
+                                        ),
+                                      ),
+// Cancel Appointment Button
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red, // Red color for the cancel button
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              // Clear the selected date and time to cancel the appointment
+                                              _selectedDateRange = null;
+                                              _selectedTime = null;
+                                            });
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Appointment has been canceled.')),
+                                            );
+                                          },
+                                          child: const Text('Cancel Appointment')
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(
+
                                             0.0, 12.0, 0.0, 0.0),
                                         child: ListView(
                                           padding: EdgeInsets.zero,
@@ -303,7 +378,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              'Next Session with Makayla',
+                                                              _selectedDateRange != null && _selectedTime != null
+                                                                  ? 'Next Session with Makayla: ${_selectedDateRange!.start.toString().split(' ')[0]} at $_selectedTime'
+                                                                  : 'Next Session with Makayla',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .headlineSmall
@@ -363,9 +440,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                           8.0,
                                                                           4.0),
                                                                       child:
-                                                                          Text(
-                                                                        '2:20pm',
-                                                                        style: FlutterFlowTheme.of(context)
+                                                                      Text(
+                                                                        _selectedTime ?? 'Select Time',
+                                                                        style: FlutterFlowTheme
+                                                                            .of(
+                                                                            context)
+
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Plus Jakarta Sans',
@@ -379,9 +459,13 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  'Wed, 03/08/2022',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
+                                                                  _selectedDateRange != null
+                                                                      ? _selectedDateRange!.start.toString().split(' ')[0]
+                                                                      : '', // Leave blank if no date is selected
+                                                                  style: FlutterFlowTheme
+                                                                      .of(
+                                                                      context)
+
                                                                       .bodySmall
                                                                       .override(
                                                                         fontFamily:
@@ -632,9 +716,11 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       weekStartsMonday: true,
                                       onChange:
                                           (DateTimeRange? newSelectedDate) {
-                                        safeSetState(() =>
-                                            _model.calendarSelectedDay2 =
-                                                newSelectedDate);
+                                        setState(() =>
+                                        _model.calendarSelectedDay2 =
+                                            newSelectedDate);
+                                        _selectedDateRange = newSelectedDate;
+
                                       },
                                       titleStyle: FlutterFlowTheme.of(context)
                                           .titleLarge

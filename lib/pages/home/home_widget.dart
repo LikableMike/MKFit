@@ -284,47 +284,40 @@ class _HomeWidgetState extends State<HomeWidget> {
                         width: double.infinity,
                         height: 60.0,
                         decoration: const BoxDecoration(),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  context.pushNamed('makeAppointment');
-                                },
-                                text: 'Reschedule/Cancel Appointment',
-                                options: FFButtonOptions(
-                                  height: 40.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      24.0, 0.0, 24.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: const Color(0xFF00831B),
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                  elevation: 3.0,
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
+                        child: Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              context.pushNamed('makeAppointment');
+                            },
+                            text: 'Schedule/Cancel Appointment',
+                            options: FFButtonOptions(
+                              height: 40.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: const Color(0xFF00831B),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
                             ),
-                          ],
+
                         ),
+                       ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                 ),
+
+
               Divider(
                 thickness: 5.0,
                 color: FlutterFlowTheme.of(context).primaryText,
@@ -689,6 +682,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
               ),
             ],
+
+
+
           ),
         ),
       ),
