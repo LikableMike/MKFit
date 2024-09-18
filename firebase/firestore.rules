@@ -9,3 +9,10 @@ service cloud.firestore {
     }
   }
 }
+    match /Admin_Message/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+  }
