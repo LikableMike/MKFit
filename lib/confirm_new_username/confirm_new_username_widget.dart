@@ -1,9 +1,22 @@
+/*
+Ramin Selseleh
+
+Substask: MA-150
+
+The point of this task was to fix the icon image and the fuinctionality of the back button.
+Now, the button is visible and functional. Now when clicked, it will navigate back to previous page.
+
+ */
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'confirm_new_username_model.dart';
 export 'confirm_new_username_model.dart';
 
@@ -49,30 +62,34 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 60.0,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30.0,
+        leading: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 12),
+          child: FlutterFlowIconButton(
+            borderColor: FlutterFlowTheme.of(context).primaryBackground,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 60,
+            fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
         ),
-        actions: const [],
+        actions: [],
         centerTitle: false,
-        elevation: 0.0,
+        elevation: 0,
       ),
       body: Align(
-        alignment: const AlignmentDirectional(0.0, -1.0),
+        alignment: AlignmentDirectional(0, -1),
         child: Container(
           width: double.infinity,
-          constraints: const BoxConstraints(
-            maxWidth: 570.0,
+          constraints: BoxConstraints(
+            maxWidth: 570,
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -80,9 +97,9 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 FlutterFlowTheme.of(context).primaryText,
                 FlutterFlowTheme.of(context).primaryText
               ],
-              stops: const [0.0, 1.0],
-              begin: const AlignmentDirectional(0.0, -1.0),
-              end: const AlignmentDirectional(0, 1.0),
+              stops: [0, 1],
+              begin: AlignmentDirectional(0, -1),
+              end: AlignmentDirectional(0, 1),
             ),
           ),
           child: Column(
@@ -96,7 +113,7 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 tablet: false,
               ))
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -109,25 +126,23 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 12.0, 0.0, 12.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
                           child: Icon(
                             Icons.arrow_back_rounded,
                             color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24.0,
+                            size: 24,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                           child: Text(
                             'Back',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                           ),
                         ),
                       ],
@@ -135,86 +150,86 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                   ),
                 ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                 child: Text(
                   'Confirm New Username',
                   style: FlutterFlowTheme.of(context).titleMedium.override(
-                        fontFamily: 'Inter',
-                        fontSize: 20.0,
-                        letterSpacing: 0.0,
-                      ),
+                    fontFamily: 'Inter',
+                    fontSize: 20,
+                    letterSpacing: 0.0,
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 16),
                 child: Text(
                   'Please confirm your new username by filling out the fields below',
                   style: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
+                    fontFamily: 'Inter',
+                    letterSpacing: 0.0,
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: Container(
                   width: double.infinity,
                   child: TextFormField(
                     controller: _model.emailAddressTextController,
                     focusNode: _model.emailAddressFocusNode,
-                    autofillHints: const [AutofillHints.email],
+                    autofillHints: [AutofillHints.email],
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'New Username',
                       labelStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
+                      FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                       hintText: 'Enter New UserName',
                       hintStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
+                      FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).alternate,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).primary,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       filled: true,
                       fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                          24.0, 24.0, 20.0, 24.0),
+                      contentPadding:
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      letterSpacing: 0.0,
+                    ),
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
@@ -224,65 +239,65 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: SizedBox(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                child: Container(
                   width: double.infinity,
                   child: TextFormField(
                     controller: _model.phoneNumberTextController,
                     focusNode: _model.phoneNumberFocusNode,
-                    autofillHints: const [AutofillHints.email],
+                    autofillHints: [AutofillHints.email],
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Confirm Username',
                       labelStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
+                      FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                       hintText: 'Confirm New Username',
                       hintStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
+                      FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).alternate,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).primary,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       filled: true,
                       fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                          24.0, 24.0, 20.0, 24.0),
+                      contentPadding:
+                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      letterSpacing: 0.0,
+                    ),
                     maxLines: null,
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: FlutterFlowTheme.of(context).primary,
@@ -292,15 +307,14 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0, 0),
                 child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       if (_model.emailAddressTextController.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
                               'Email required!',
                             ),
@@ -316,23 +330,21 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                     text: 'Reset',
                     options: FFButtonOptions(
                       width: double.infinity,
-                      height: 50.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      height: 50,
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       textStyle:
-                          FlutterFlowTheme.of(context).bodyLarge.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                      elevation: 3.0,
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
+                      FlutterFlowTheme.of(context).bodyLarge.override(
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
                       ),
-                      borderRadius: BorderRadius.circular(12.0),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),

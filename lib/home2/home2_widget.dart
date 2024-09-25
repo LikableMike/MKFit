@@ -1,3 +1,13 @@
+/*
+Ramin Selseleh
+
+Substask: Ma-140
+
+The goal for this task was
+the visit your progress” button should redirect to the progress page.
+Same page as the “Graph Lines” button in the nave bar.
+ */
+
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -6,7 +16,10 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+
 import 'home2_model.dart';
 export 'home2_model.dart';
 
@@ -57,46 +70,46 @@ class _Home2WidgetState extends State<Home2Widget> {
                   Text(
                     'Good Morning, Champ!',
                     style: FlutterFlowTheme.of(context).labelSmall.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                   Text(
                     'Time to rise and grind',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Readex Pro',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                   Divider(
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
-                ].divide(const SizedBox(height: 4.0)),
+                ].divide(SizedBox(height: 4)),
               ),
             ],
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 12.0, 12.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 12, 12, 12),
               child: Container(
-                width: 48.0,
-                height: 48.0,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    width: 1.0,
+                    width: 1,
                   ),
                 ),
                 child: FlutterFlowIconButton(
-                  borderRadius: 20.0,
-                  borderWidth: 1.0,
-                  buttonSize: 40.0,
+                  borderRadius: 20,
+                  borderWidth: 1,
+                  buttonSize: 40,
                   icon: FaIcon(
                     FontAwesomeIcons.userCircle,
                     color: FlutterFlowTheme.of(context).primaryBackground,
-                    size: 30.0,
+                    size: 30,
                   ),
                   onPressed: () async {
                     context.pushNamed('SettingsPage');
@@ -106,8 +119,8 @@ class _Home2WidgetState extends State<Home2Widget> {
             ),
           ],
           centerTitle: false,
-          toolbarHeight: 72.0,
-          elevation: 0.0,
+          toolbarHeight: 72,
+          elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -115,94 +128,93 @@ class _Home2WidgetState extends State<Home2Widget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                 child: Container(
                   width: double.infinity,
-                  height: 100.0,
+                  height: 100,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        blurRadius: 4.0,
+                        blurRadius: 4,
                         color: Color(0x33000000),
                         offset: Offset(
-                          0.0,
-                          2.0,
+                          0,
+                          2,
                         ),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: const Color(0xFF00831B),
+                      color: Color(0xFF00831B),
                     ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(16),
                     child: Image.network(
                       'https://picsum.photos/seed/634/600',
-                      width: 300.0,
-                      height: 200.0,
+                      width: 300,
+                      height: 200,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
               Divider(
-                thickness: 5.0,
+                thickness: 5,
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                 child: Container(
                   width: double.infinity,
-                  height: 164.0,
+                  height: 164,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        blurRadius: 4.0,
+                        blurRadius: 4,
                         color: Color(0x33000000),
                         offset: Offset(
-                          0.0,
-                          2.0,
+                          0,
+                          2,
                         ),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                         child: Container(
                           width: double.infinity,
-                          height: 100.0,
-                          decoration: const BoxDecoration(),
+                          height: 100,
+                          decoration: BoxDecoration(),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 5.0, 4.0, 0.0),
+                                padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 5, 4, 0),
                                 child: Container(
-                                  width: 100.0,
-                                  height: 100.0,
+                                  width: 100,
+                                  height: 100,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF00831B),
-                                    borderRadius: BorderRadius.circular(50.0),
+                                    color: Color(0xFF00831B),
+                                    borderRadius: BorderRadius.circular(50),
                                   ),
                                   child: FlutterFlowIconButton(
-                                    borderColor: const Color(0xFF40DC28),
-                                    borderRadius: 40.0,
-                                    borderWidth: 4.0,
-                                    buttonSize: 25.0,
+                                    borderColor: Color(0xFF40DC28),
+                                    borderRadius: 40,
+                                    borderWidth: 4,
+                                    buttonSize: 25,
                                     icon: Icon(
                                       Icons.calendar_today,
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      size: 60.0,
+                                      size: 60,
                                     ),
                                     onPressed: () {
                                       print('IconButton pressed ...');
@@ -211,20 +223,20 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 ),
                               ),
                               Container(
-                                width: 288.0,
-                                height: 100.0,
-                                decoration: const BoxDecoration(),
+                                width: 288,
+                                height: 100,
+                                decoration: BoxDecoration(),
                                 child: Align(
-                                  alignment: const AlignmentDirectional(-1.0, 0.0),
+                                  alignment: AlignmentDirectional(-1, 0),
                                   child: Text(
                                     'Next Appointment: \nApril 1st, at 1:00 PM',
                                     style: FlutterFlowTheme.of(context)
                                         .titleLarge
                                         .override(
-                                          fontFamily: 'Inter',
-                                          fontSize: 25.0,
-                                          letterSpacing: 0.0,
-                                        ),
+                                      fontFamily: 'Inter',
+                                      fontSize: 25,
+                                      letterSpacing: 0.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -234,35 +246,35 @@ class _Home2WidgetState extends State<Home2Widget> {
                       ),
                       Container(
                         width: double.infinity,
-                        height: 60.0,
-                        decoration: const BoxDecoration(),
+                        height: 60,
+                        decoration: BoxDecoration(),
                         child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               context.pushNamed('makeAppointment');
                             },
                             text: 'Reschedule/Cancel Appointment',
                             options: FFButtonOptions(
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: const Color(0xFF00831B),
+                              height: 40,
+                              padding:
+                              EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                              iconPadding:
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              color: Color(0xFF00831B),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                    fontFamily: 'Inter',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                                fontFamily: 'Inter',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              elevation: 3,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
@@ -272,143 +284,140 @@ class _Home2WidgetState extends State<Home2Widget> {
                 ),
               ),
               Divider(
-                thickness: 5.0,
+                thickness: 5,
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                 child: Container(
                   width: double.infinity,
-                  height: 200.0,
+                  height: 200,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 5.0, 0.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                           child: Container(
-                            width: 300.0,
-                            height: 23.0,
+                            width: 300,
+                            height: 23,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
                             ),
                             child: Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0, 0),
                               child: Text(
                                 'Todays Progress',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
                         child: Container(
                           width: double.infinity,
-                          height: 100.0,
+                          height: 100,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                           ),
                           child: Align(
-                            alignment: const AlignmentDirectional(-5.0, 0.0),
+                            alignment: AlignmentDirectional(-5, 0),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  2.0, 0.0, 2.0, 0.0),
+                              padding:
+                              EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        10, 0, 0, 0),
                                     child: Container(
-                                      width: 110.0,
-                                      height: 180.0,
+                                      width: 110,
+                                      height: 180,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
                                       ),
                                       child: Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
+                                        alignment: AlignmentDirectional(0, 0),
                                         child: CircularPercentIndicator(
                                           percent: 0.5,
-                                          radius: 50.0,
-                                          lineWidth: 12.0,
+                                          radius: 50,
+                                          lineWidth: 12,
                                           animation: true,
                                           animateFromLastPercent: true,
                                           progressColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
+                                          FlutterFlowTheme.of(context)
+                                              .primary,
                                           backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .accent4,
+                                          FlutterFlowTheme.of(context)
+                                              .accent4,
                                           center: Text(
                                             '50%',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .headlineSmall
                                                 .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    width: 230.0,
-                                    height: 100.0,
+                                    width: 230,
+                                    height: 100,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          2.0, 0.0, 0.0, 0.0),
-                                      child: SizedBox(
-                                        height: 230.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          2, 0, 0, 0),
+                                      child: Container(
+                                        height: 230,
                                         child: FlutterFlowLineChart(
                                           data: [
                                             FFLineChartData(
                                               xData: List.generate(
                                                   random_data.randomInteger(
                                                       5, 5),
-                                                  (index) => random_data
+                                                      (index) => random_data
                                                       .randomInteger(0, 10)),
                                               yData: List.generate(
                                                   random_data.randomInteger(
                                                       5, 5),
-                                                  (index) => random_data
+                                                      (index) => random_data
                                                       .randomInteger(0, 10)),
                                               settings: LineChartBarData(
                                                 color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                barWidth: 2.0,
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                                barWidth: 2,
                                                 isCurved: true,
-                                                dotData: const FlDotData(show: false),
+                                                dotData: FlDotData(show: false),
                                                 belowBarData: BarAreaData(
                                                   show: true,
                                                   color: FlutterFlowTheme.of(
-                                                          context)
+                                                      context)
                                                       .accent1,
                                                 ),
                                               ),
@@ -416,13 +425,13 @@ class _Home2WidgetState extends State<Home2Widget> {
                                           ],
                                           chartStylingInfo: ChartStylingInfo(
                                             backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
+                                            FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
                                             showBorder: false,
                                           ),
-                                          axisBounds: const AxisBounds(),
-                                          xAxisLabelInfo: const AxisLabelInfo(),
-                                          yAxisLabelInfo: const AxisLabelInfo(),
+                                          axisBounds: AxisBounds(),
+                                          xAxisLabelInfo: AxisLabelInfo(),
+                                          yAxisLabelInfo: AxisLabelInfo(),
                                         ),
                                       ),
                                     ),
@@ -434,96 +443,96 @@ class _Home2WidgetState extends State<Home2Widget> {
                         ),
                       ),
                       Align(
-                        alignment: const AlignmentDirectional(0.0, -1.0),
+                        alignment: AlignmentDirectional(0, -1),
                         child: Container(
-                          width: 200.0,
-                          height: 40.0,
+                          width: 200,
+                          height: 40,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                           ),
                           child: Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            alignment: AlignmentDirectional(0, 0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.pushNamed('ProgressPage');
                               },
                               text: 'Visit your Progress',
                               options: FFButtonOptions(
-                                height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: const Color(0xFF00831B),
+                                height: 40,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 0, 24, 0),
+                                iconPadding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: Color(0xFF00831B),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
+                                elevation: 3,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ].divide(const SizedBox(height: 5.0)),
+                    ].divide(SizedBox(height: 5)),
                   ),
                 ),
               ),
               Divider(
-                thickness: 5.0,
+                thickness: 5,
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                 child: Container(
                   width: double.infinity,
-                  height: 151.0,
+                  height: 151,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 100.0,
+                        height: 100,
                         decoration: BoxDecoration(
                           color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(16.0),
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5.0, 0.0, 0.0, 0.0),
+                              padding:
+                              EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                               child: Container(
-                                width: 84.0,
-                                height: 84.0,
+                                width: 84,
+                                height: 84,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF00831B),
-                                    width: 4.0,
+                                    color: Color(0xFF00831B),
+                                    width: 4,
                                   ),
                                 ),
                                 child: Container(
-                                  width: 120.0,
-                                  height: 120.0,
+                                  width: 120,
+                                  height: 120,
                                   clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
                                   child: Image.network(
@@ -534,11 +543,11 @@ class _Home2WidgetState extends State<Home2Widget> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  5.0, 5.0, 0.0, 0.0),
+                              padding:
+                              EdgeInsetsDirectional.fromSTEB(5, 5, 0, 0),
                               child: Container(
-                                width: 255.0,
-                                height: 100.0,
+                                width: 255,
+                                height: 100,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -547,42 +556,39 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, -1.0),
+                                      alignment: AlignmentDirectional(-1, -1),
                                       child: Text(
                                         'MK FIT',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, 0.0),
+                                      alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
                                         'Are you free this friday for a workout session?',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, 1.0),
+                                      alignment: AlignmentDirectional(-1, 1),
                                       child: Text(
                                         'Mon. July 3rd - 4:12pm',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -593,39 +599,39 @@ class _Home2WidgetState extends State<Home2Widget> {
                         ),
                       ),
                       Container(
-                        width: 150.0,
-                        height: 50.0,
+                        width: 150,
+                        height: 50,
                         decoration: BoxDecoration(
                           color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
+                          FlutterFlowTheme.of(context).secondaryBackground,
                         ),
                         child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               context.pushNamed('messagePage');
                             },
                             text: 'Messages',
                             options: FFButtonOptions(
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: const Color(0xFF00831B),
+                              height: 40,
+                              padding:
+                              EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                              iconPadding:
+                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              color: Color(0xFF00831B),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                    fontFamily: 'Inter',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                                fontFamily: 'Inter',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              elevation: 3,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
