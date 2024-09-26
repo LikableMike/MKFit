@@ -67,7 +67,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
               size: 40.0,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('SettingsPage');
             },
           ),
           title: Text(
@@ -258,7 +258,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           value: _selectedTime,
                                           hint: Text(_selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',),
                                           style: TextStyle(
-                                            color: Colors.pink,
+                                            color: Colors.white,
                                             fontSize: 16.0,
                                           ),
                                           items: _availableTimes.map((String time) {
@@ -449,7 +449,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Plus Jakarta Sans',
-                                                                              color: const Color(0xFFEE8B60),
+                                                                              color: const Color(
+                                                                                  0xFF150903),
                                                                               fontSize: 14.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.normal,
