@@ -242,7 +242,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                             onPressed: () async {
                               context.pushNamed('makeAppointment');
                             },
-                            text: 'Reschedule/Cancel Appointment',
+                            text: 'Schedule/Cancel Appointment',
                             options: FFButtonOptions(
                               height: 40.0,
                               padding: const EdgeInsetsDirectional.fromSTEB(

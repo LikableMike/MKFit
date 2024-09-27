@@ -56,31 +56,32 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryText,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 70.0,
-            icon: const Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 40.0,
-            ),
-            onPressed: () async {
-              context.pushNamed('SettingsPage');
-            },
-          ),
           title: Text(
             'Calendar',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Outfit',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 30.0,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              fontFamily: 'Outfit',
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              fontSize: 30.0,
+              letterSpacing: 0.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          actions: const [],
+          actions: [
+            FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30.0,
+              borderWidth: 1.0,
+              buttonSize: 70.0,
+              icon: const Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 40.0,
+              ),
+              onPressed: () async {
+                context.pushNamed('SettingsPage');
+              },
+            ),
+          ],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -300,6 +301,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         ),
                                       ),
 // Cancel Appointment Button
+ if (_selectedDateRange != null && _selectedTime != null)
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.red, // Red color for the cancel button
