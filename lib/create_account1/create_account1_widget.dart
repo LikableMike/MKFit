@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m_k_fit/backend/firebase_storage/database.dart';
 import 'create_account1_model.dart';
 export 'create_account1_model.dart';
 
@@ -161,10 +162,12 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       ),
                                 ),
                                 Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 5.0, 0.0, 24.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 5.0, 0.0, 24.0),
                                     child: Text(
                                       'Let\'s get started by filling out the form below.',
                                       style: FlutterFlowTheme.of(context)
@@ -269,7 +272,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                           _model.emailAddressTextController,
                                       focusNode: _model.emailAddressFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email
+                                      ],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Email',
@@ -420,7 +425,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       controller: _model.heightTextController,
                                       focusNode: _model.heightFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email
+                                      ],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Height (Optional)',
@@ -492,7 +499,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       controller: _model.weightTextController,
                                       focusNode: _model.weightFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email
+                                      ],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Weight (Optional)',
@@ -564,7 +573,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       controller: _model.userNameTextController,
                                       focusNode: _model.userNameFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email
+                                      ],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Username',
@@ -642,7 +653,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       controller: _model.passwordTextController,
                                       focusNode: _model.passwordFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.password],
+                                      autofillHints: const [
+                                        AutofillHints.password
+                                      ],
                                       obscureText: !_model.passwordVisibility,
                                       decoration: InputDecoration(
                                         labelText: 'Password',
@@ -731,7 +744,9 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       focusNode:
                                           _model.passwordConfirmFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.password],
+                                      autofillHints: const [
+                                        AutofillHints.password
+                                      ],
                                       obscureText:
                                           !_model.passwordConfirmVisibility,
                                       decoration: InputDecoration(
@@ -847,13 +862,19 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
 
                                       context.pushNamedAuth(
                                           'PARQ', context.mounted);
+
+                                      final databaseService = DatabaseService();
+                                      await databaseService.createUser(
+                                          _model.fullNameTextController.text,
+                                          _model.userNameTextController.text);
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
                                       width: 370.0,
                                       height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),

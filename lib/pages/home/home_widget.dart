@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -72,13 +73,51 @@ class _HomeWidgetState extends State<HomeWidget> {
                           letterSpacing: 0.0,
                         ),
                   ),
-                  Text(
-                    'It\'s Time to rise \nand grind !!!',
-                    style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          letterSpacing: 0.0,
+                  StreamBuilder<List<AdminMessageRecord>>(
+                    stream: queryAdminMessageRecord(
+                      singleRecord: true,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      List<AdminMessageRecord> textAdminMessageRecordList =
+                          snapshot.data!;
+                      // Return an empty Container when the item does not exist.
+                      if (snapshot.data!.isEmpty) {
+                        return Container();
+                      }
+                      final textAdminMessageRecord =
+                          textAdminMessageRecordList.isNotEmpty
+                              ? textAdminMessageRecordList.first
+                              : null;
+
+                      return Text(
+                        valueOrDefault<String>(
+                          textAdminMessageRecord?.hasMessage().toString(),
+                          'Time to rise and shine!',
                         ),
+                        style: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .override(
+                              fontFamily: 'Readex Pro',
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              letterSpacing: 0.0,
+                            ),
+                      );
+                    },
                   ),
                   Divider(
                     color: FlutterFlowTheme.of(context).primaryText,
@@ -284,40 +323,47 @@ class _HomeWidgetState extends State<HomeWidget> {
                         width: double.infinity,
                         height: 60.0,
                         decoration: const BoxDecoration(),
-                        child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              context.pushNamed('makeAppointment');
-                            },
-                            text: 'Schedule/Cancel Appointment',
-                            options: FFButtonOptions(
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: const Color(0xFF00831B),
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  context.pushNamed('makeAppointment');
+                                },
+                                text: 'Reschedule/Cancel Appointment',
+                                options: FFButtonOptions(
+                                  height: 40.0,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 0.0, 24.0, 0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: const Color(0xFF00831B),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: const BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
                             ),
-
+                          ],
                         ),
-                       ],
                       ),
-                    ),
-                 ),
-
-
+                    ],
+                  ),
+                ),
+              ),
               Divider(
                 thickness: 5.0,
                 color: FlutterFlowTheme.of(context).primaryText,
@@ -682,9 +728,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
               ),
             ],
-
-
-
           ),
         ),
       ),

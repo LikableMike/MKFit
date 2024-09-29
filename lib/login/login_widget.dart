@@ -3,6 +3,7 @@ import 'package:m_k_fit/auth/base_auth_user_provider.dart';
 import 'package:m_k_fit/auth/firebase_auth/firebase_auth_manager.dart';
 import 'package:m_k_fit/auth/firebase_auth/firebase_user_provider.dart';
 
+import '/backend/firebase_storage/globals.dart' as globals;
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -321,7 +322,10 @@ class _LoginWidgetState extends State<LoginWidget>
                                     context.pushNamed('admin');
                                   }else {
                                     context.pushNamed('home');
+
                                   }
+                                  globals.UID = UID;
+                                  print("UID SET TO: " + globals.UID.toString());
                                 }
                               }catch(e){
                                 print(e);
