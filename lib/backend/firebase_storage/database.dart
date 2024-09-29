@@ -4,11 +4,13 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:sqflite/sqflite.dart";
 import "package:firebase_storage/firebase_storage.dart";
 import "dart:io";
+import "/backend/firebase_storage/globals.dart" as globals;
 
 class DatabaseService {
   DatabaseService();
+
   final CollectionReference exerciseCollection =
-      FirebaseFirestore.instance.collection("exercises");
+  FirebaseFirestore.instance.collection("exercises");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
 
@@ -60,7 +62,9 @@ class DatabaseService {
     File img = File(filePath);
     final storageRef = FirebaseStorage.instance
         .ref()
-        .child("images/$uid/${DateTime.now().millisecondsSinceEpoch}.jpg");
+        .child("images/$uid/${DateTime
+        .now()
+        .millisecondsSinceEpoch}.jpg");
 
     try {
       UploadTask uploadTask = storageRef.putFile(img);
@@ -92,5 +96,20 @@ class DatabaseService {
     }).toList();
 
     return weightData;
+  }
+  Future<bool> checkAppointment(String date) async{
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var appointments = snapshot.get("appointments");
+    for(int i = 0; i < appointments.length; i++){
+      if(appointments[i]["date"] != null && appointments[i]["date"].contains(date)){
+        return true;
+      }
+    }
+    return false;
+
+}
+  Future cancelAppointment(String date, String time) async{
+    return await usersCollection.doc(globals.UID).update({"appointments" : FieldValue.arrayRemove([{"date" : date, "time" : time}])});
+
   }
 }

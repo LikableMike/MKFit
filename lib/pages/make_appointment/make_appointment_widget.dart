@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'make_appointment_model.dart';
 export 'make_appointment_model.dart';
+import '/backend/firebase_storage/database.dart';
 
 class MakeAppointmentWidget extends StatefulWidget {
   const MakeAppointmentWidget({super.key});
@@ -307,23 +308,57 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         ),
                                       ),
                                       // Cancel Appointment Button
-                                      if (_selectedDateRange != null && _selectedTime != null)
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red, // Red color for the cancel button
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              // Clear the selected date and time to cancel the appointment
-                                              _selectedDateRange = null;
-                                              _selectedTime = null;
-                                            });
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(content: Text('Appointment has been canceled.')),
+                                      FutureBuilder<bool>(
+                                        future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString()??"null"),
+                                        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                                          if (snapshot.connectionState == ConnectionState.waiting) {
+                                            // While the future is still loading, show a loading indicator or nothing
+                                            return CircularProgressIndicator();
+                                          } else if (snapshot.hasError) {
+                                            // Handle any errors from the future
+                                            return Text('Error: ${snapshot.error}');
+                                          } else if (snapshot.hasData && snapshot.data == true) {
+                                            // If the data is true, show the Cancel Appointment button
+                                            return ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red, // Red color for the cancel button
+                                              ),
+                                              onPressed: () async {
+                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
+                                                setState(() {
+                                                  // Clear the selected date and time to cancel the appointment
+                                                  _selectedDateRange = null;
+                                                  _selectedTime = null;
+                                                });
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('Appointment has been canceled.')),
+                                                );
+                                              },
+                                              child: const Text('Cancel Appointment'),
                                             );
-                                          },
-                                          child: const Text('Cancel Appointment')
+                                          } else {
+                                            // If no appointment exists, return an empty container or something else
+                                            return Container();
+                                          }
+                                        },
                                       ),
+
+                                      // ElevatedButton(
+                                      //     style: ElevatedButton.styleFrom(
+                                      //       backgroundColor: Colors.red, // Red color for the cancel button
+                                      //     ),
+                                      //     onPressed: () {
+                                      //       setState(() {
+                                      //         // Clear the selected date and time to cancel the appointment
+                                      //         _selectedDateRange = null;
+                                      //         _selectedTime = null;
+                                      //       });
+                                      //       ScaffoldMessenger.of(context).showSnackBar(
+                                      //         const SnackBar(content: Text('Appointment has been canceled.')),
+                                      //       );
+                                      //     },
+                                      //     child: const Text('Cancel Appointment')
+                                      // ),
 
                                       Padding(
                                         padding: const EdgeInsetsDirectional
