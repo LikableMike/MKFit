@@ -257,9 +257,15 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         padding: const EdgeInsets.all(16.0),
                                         child: DropdownButton<String>(
                                           value: _selectedTime,
-                                          hint: Text(_selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',),
+                                          hint: Text(
+                                            _selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',
+                                            style: TextStyle(
+                                              color: Colors.white, // Set the color for "Select time" text
+                                              fontSize: 16.0,
+                                            ),
+                                          ),
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.white, // This applies to the selected item
                                             fontSize: 16.0,
                                           ),
                                           items: _availableTimes.map((String time) {
@@ -300,8 +306,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           child: Text('Confirm Appointment'),
                                         ),
                                       ),
-// Cancel Appointment Button
- if (_selectedDateRange != null && _selectedTime != null)
+                                      // Cancel Appointment Button
+                                      if (_selectedDateRange != null && _selectedTime != null)
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.red, // Red color for the cancel button
