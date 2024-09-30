@@ -143,8 +143,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                   children: [
                     Flexible(
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          context.pushNamed('CustomerChatPage');  // Navigate to Customer Chat Page
                         },
                         text: 'Chat Button',
                         icon: const Icon(
@@ -153,18 +153,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                         options: FFButtonOptions(
                           height: 78.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primaryText,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Inter',
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                            fontFamily: 'Inter',
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            letterSpacing: 0.0,
+                          ),
                           elevation: 3.0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,

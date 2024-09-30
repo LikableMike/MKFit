@@ -455,28 +455,30 @@ class _Home2WidgetState extends State<Home2Widget> {
                             alignment: AlignmentDirectional(0, 0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                context.pushNamed('ProgressPage');
+                                context.pushNamed('CustomerChat'); // Navigate to CustomerChat when button is pressed
                               },
-                              text: 'Visit your Progress',
+                              text: 'Chat Button',
+                              icon: const Icon(
+                                Icons.chat,
+                                size: 40.0,
+                              ),
                               options: FFButtonOptions(
-                                height: 40,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24, 0, 24, 0),
-                                iconPadding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                color: Color(0xFF00831B),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
+                                height: 78.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
+                                  color: Colors.white,
+                                  fontSize: 20.0,
                                   letterSpacing: 0.0,
                                 ),
-                                elevation: 3,
-                                borderSide: BorderSide(
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
-                                  width: 1,
+                                  width: 1.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(6.0),
                               ),
                             ),
                           ),

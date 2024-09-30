@@ -227,7 +227,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'changeHW',
           path: '/changeHW',
           builder: (context, params) => const ChangeHWWidget(),
-        )
+        ),
+
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
