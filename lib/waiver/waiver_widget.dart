@@ -19,6 +19,10 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import "/backend/firebase_storage/globals.dart" as globals;
+import 'package:m_k_fit/auth/firebase_auth/firebase_auth_manager.dart';
+import 'package:m_k_fit/auth/firebase_auth/firebase_user_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'waiver_model.dart';
 export 'waiver_model.dart';
@@ -162,9 +166,11 @@ class _WaiverWidgetState extends State<WaiverWidget> {
                   child: FFButtonWidget(
                     onPressed: () async {
                       if (_model.checkboxValue == true) {
+                        final FirebaseAuth auth = FirebaseAuth.instance;
+                        var user = auth.currentUser;
+                        globals.UID = user?.uid;
+                        print(globals.UID);
                         context.pushNamed('home2');
-                      } else {
-                        context.pushNamed('Waiver');
                       }
                     },
                     text: 'Sign Waiver',

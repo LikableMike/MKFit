@@ -304,11 +304,6 @@ class _LoginWidgetState extends State<LoginWidget>
                               print("Login Attempted");
 
                               final FirebaseAuth auth = FirebaseAuth.instance;
-                              // if (_model.usernameController.text == 'admin1') {
-                              //   context.pushNamed('admin');
-                              // } else {
-                              //   context.pushNamed('home');
-                              //
                               try{
                                 var user = await auth.signInWithEmailAndPassword(email:_model.usernameTextController.text , password:_model.passwordTextController.text);
                                 if (user != null){
