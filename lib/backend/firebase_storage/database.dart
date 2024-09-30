@@ -114,6 +114,7 @@ class DatabaseService {
 
 
   Future<bool> checkAppointment(String date) async{
+
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     var appointments = snapshot.get("appointments");
     for(int i = 0; i < appointments.length; i++){
@@ -121,11 +122,21 @@ class DatabaseService {
         return true;
       }
     }
+
     return false;
 
 }
-  Future cancelAppointment(String date, String time) async{
-    return await usersCollection.doc(globals.UID).update({"appointments" : FieldValue.arrayRemove([{"date" : date, "time" : time}])});
+  Future cancelAppointment(String date) async{
+
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var appointments = snapshot.get("appointments");
+    for(int i = 0; i < appointments.length; i++){
+      if(appointments[i]["date"] != null && appointments[i]["date"].contains(date)){
+        print("Date Found");
+        return await usersCollection.doc(globals.UID).update({"appointments" : FieldValue.arrayRemove([{"date" : appointments[i]["date"], "time" : appointments[i]["time"]}])});
+      }
+    }
+
 
   }
 

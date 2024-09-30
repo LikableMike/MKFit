@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '/backend/firebase_storage/database.dart';
 
 DateTime kFirstDay = DateTime(1970, 1, 1);
 DateTime kLastDay = DateTime(2100, 1, 1);
@@ -62,11 +63,8 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
     DateTime.now()
   ];
 
-  bool isHighlighted(DateTime date) {
-    return highlightedDates.any((highlightedDate) =>
-    highlightedDate.year == date.year &&
-        highlightedDate.month == date.month &&
-        highlightedDate.day == date.day);
+  Future<bool> isHighlighted(DateTime date) {
+    return DatabaseService().checkAppointment(date.toString().split(" ")[0]??"null");
   }
 
   @override
@@ -183,21 +181,54 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
             ),
             calendarBuilders : CalendarBuilders(
               defaultBuilder: (context, date, _) {
-                // This is where individual day widgets are built
-                return Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isHighlighted(date) ? Colors.blue : Colors.transparent,
-                ),
-                child: Center(
-                  child: Text(
-                    '${date.day}',
-                    style: TextStyle(
-                      color: isHighlighted(date) ? Colors.white : Colors.black,
-                      fontWeight: isHighlighted(date) ? FontWeight.bold : FontWeight.normal,
-                    ),
-                ),
-                ),
+                return FutureBuilder<bool>(
+                  future: isHighlighted(date),
+                  builder: (context, snapshot){
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.transparent,  // Color while waiting for the Future to complete
+                        ),
+                        width: 5,
+                        height: 5,
+                      );
+                    } else if (snapshot.hasData && snapshot.data!) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue.withOpacity(0.5),
+                          // Highlighted color
+                        ),
+                        height: 40,
+
+                        child: Center(
+                          child: Text(
+                            '${date.day}',
+                            style: const TextStyle(
+                              color: Colors.white,  // Text color for highlighted date
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.transparent,  // Non-highlighted color
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${date.day}',
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  },
                 );
                 },
             ),

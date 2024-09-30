@@ -338,7 +338,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 backgroundColor: Colors.red, // Red color for the cancel button
                                               ),
                                               onPressed: () async {
-                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
+                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString());
                                                 setState(() {
                                                   // Clear the selected date and time to cancel the appointment
                                                   _selectedDateRange = null;
