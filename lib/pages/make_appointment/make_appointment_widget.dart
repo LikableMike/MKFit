@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'make_appointment_model.dart';
 export 'make_appointment_model.dart';
 import '/backend/firebase_storage/database.dart';
+
 import "/backend/firebase_storage/globals.dart" as globals;
+
 
 class MakeAppointmentWidget extends StatefulWidget {
   const MakeAppointmentWidget({super.key});
@@ -58,31 +60,32 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryText,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 70.0,
-            icon: const Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 40.0,
-            ),
-            onPressed: () async {
-              context.pop();
-            },
-          ),
           title: Text(
             'Calendar',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Outfit',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 30.0,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              fontFamily: 'Outfit',
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              fontSize: 30.0,
+              letterSpacing: 0.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          actions: const [],
+          actions: [
+            FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30.0,
+              borderWidth: 1.0,
+              buttonSize: 70.0,
+              icon: const Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 40.0,
+              ),
+              onPressed: () async {
+                context.pushNamed('SettingsPage');
+              },
+            ),
+          ],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -258,9 +261,15 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         padding: const EdgeInsets.all(16.0),
                                         child: DropdownButton<String>(
                                           value: _selectedTime,
-                                          hint: Text(_selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',),
+                                          hint: Text(
+                                            _selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',
+                                            style: TextStyle(
+                                              color: Colors.white, // Set the color for "Select time" text
+                                              fontSize: 16.0,
+                                            ),
+                                          ),
                                           style: TextStyle(
-                                            color: Colors.pink,
+                                            color: Colors.white, // This applies to the selected item
                                             fontSize: 16.0,
                                           ),
                                           items: _availableTimes.map((String time) {
@@ -311,25 +320,59 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           child: Text('Confirm Appointment'),
                                         ),
                                       ),
-// Cancel Appointment Button
 
-                                      
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red, // Red color for the cancel button
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              // Clear the selected date and time to cancel the appointment
-                                              _selectedDateRange = null;
-                                              _selectedTime = null;
-                                            });
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(content: Text('Appointment has been canceled.')),
+                                      // Cancel Appointment Button
+                                      FutureBuilder<bool>(
+                                        future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString()??"null"),
+                                        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                                          if (snapshot.connectionState == ConnectionState.waiting) {
+                                            // While the future is still loading, show a loading indicator or nothing
+                                            return CircularProgressIndicator();
+                                          } else if (snapshot.hasError) {
+                                            // Handle any errors from the future
+                                            return Text('Error: ${snapshot.error}');
+                                          } else if (snapshot.hasData && snapshot.data == true) {
+                                            // If the data is true, show the Cancel Appointment button
+                                            return ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red, // Red color for the cancel button
+                                              ),
+                                              onPressed: () async {
+                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
+                                                setState(() {
+                                                  // Clear the selected date and time to cancel the appointment
+                                                  _selectedDateRange = null;
+                                                  _selectedTime = null;
+                                                });
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('Appointment has been canceled.')),
+                                                );
+                                              },
+                                              child: const Text('Cancel Appointment'),
                                             );
-                                          },
-                                          child: const Text('Cancel Appointment')
+                                          } else {
+                                            // If no appointment exists, return an empty container or something else
+                                            return Container();
+                                          }
+                                        },
                                       ),
+
+                                      // ElevatedButton(
+                                      //     style: ElevatedButton.styleFrom(
+                                      //       backgroundColor: Colors.red, // Red color for the cancel button
+                                      //     ),
+                                      //     onPressed: () {
+                                      //       setState(() {
+                                      //         // Clear the selected date and time to cancel the appointment
+                                      //         _selectedDateRange = null;
+                                      //         _selectedTime = null;
+                                      //       });
+                                      //       ScaffoldMessenger.of(context).showSnackBar(
+                                      //         const SnackBar(content: Text('Appointment has been canceled.')),
+                                      //       );
+                                      //     },
+                                      //     child: const Text('Cancel Appointment')
+                                      // ),
 
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -463,7 +506,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: 'Plus Jakarta Sans',
-                                                                              color: const Color(0xFFEE8B60),
+                                                                              color: const Color(
+                                                                                  0xFF150903),
                                                                               fontSize: 14.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FontWeight.normal,
