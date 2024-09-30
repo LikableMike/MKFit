@@ -29,6 +29,8 @@ class FlutterFlowCalendar extends StatefulWidget {
     this.titleStyle,
     this.rowHeight,
     this.locale,
+    this.outsideBuilder,
+
   });
 
   final bool weekFormat;
@@ -45,6 +47,7 @@ class FlutterFlowCalendar extends StatefulWidget {
   final TextStyle? titleStyle;
   final double? rowHeight;
   final String? locale;
+  final FocusedDayBuilder? outsideBuilder;
 
   @override
   State<StatefulWidget> createState() => _FlutterFlowCalendarState();
@@ -54,6 +57,17 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
   late DateTime focusedDay;
   late DateTime selectedDay;
   late DateTimeRange selectedRange;
+
+  final List<DateTime> highlightedDates = [
+    DateTime.now()
+  ];
+
+  bool isHighlighted(DateTime date) {
+    return highlightedDates.any((highlightedDate) =>
+    highlightedDate.year == date.year &&
+        highlightedDate.month == date.month &&
+        highlightedDate.day == date.day);
+  }
 
   @override
   void initState() {
@@ -125,6 +139,7 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
             twoRowHeader: widget.twoRowHeader,
           ),
           TableCalendar(
+
             focusedDay: focusedDay,
             selectedDayPredicate: (date) => isSameDay(selectedDay, date),
             firstDay: kFirstDay,
@@ -133,6 +148,9 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
             headerVisible: false,
             locale: widget.locale,
             rowHeight: widget.rowHeight ?? MediaQuery.sizeOf(context).width / 7,
+
+
+
             calendarStyle: CalendarStyle(
               defaultTextStyle:
                   widget.dateStyle ?? const TextStyle(color: Color(0xFF5A5A5A)),
@@ -163,8 +181,31 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
               markersMaxCount: 3,
               canMarkersOverflow: true,
             ),
+            calendarBuilders : CalendarBuilders(
+              defaultBuilder: (context, date, _) {
+                // This is where individual day widgets are built
+                return Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isHighlighted(date) ? Colors.blue : Colors.transparent,
+                ),
+                child: Center(
+                  child: Text(
+                    '${date.day}',
+                    style: TextStyle(
+                      color: isHighlighted(date) ? Colors.white : Colors.black,
+                      fontWeight: isHighlighted(date) ? FontWeight.bold : FontWeight.normal,
+                    ),
+                ),
+                ),
+                );
+                },
+            ),
+
             availableGestures: AvailableGestures.horizontalSwipe,
             startingDayOfWeek: startingDayOfWeek,
+
+
             daysOfWeekStyle: DaysOfWeekStyle(
               weekdayStyle: const TextStyle(color: Color(0xFF616161))
                   .merge(widget.dayOfWeekStyle),
@@ -240,9 +281,11 @@ class CalendarHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           const SizedBox(width: 16),
+
           _buildDateWidget(),
           ..._buildCustomIconButtons(),
         ],
+
       );
 
   Widget _buildDateWidget() => Expanded(

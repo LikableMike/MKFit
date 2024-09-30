@@ -286,11 +286,8 @@ class _LoginWidgetState extends State<LoginWidget>
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             keyboardType: TextInputType.visiblePassword,
                             validator: _model.passwordTextControllerValidator
-                                .asValidator(context),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp('[a-zA-Z0-9]'))
-                            ],
+                                .asValidator(context)
+
                           ),
                         ),
                       ),

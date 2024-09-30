@@ -4,6 +4,7 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:sqflite/sqflite.dart";
 import "package:firebase_storage/firebase_storage.dart";
 import "dart:io";
+import "/backend/firebase_storage/globals.dart" as globals;
 
 class DatabaseService {
   DatabaseService();
@@ -11,6 +12,7 @@ class DatabaseService {
       FirebaseFirestore.instance.collection("exercises");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
+
 
   Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
@@ -36,7 +38,13 @@ class DatabaseService {
     await usersCollection.doc(uid).set({
       "name": name,
       "username": username,
-      "createdAt": FieldValue.serverTimestamp()
+      "createdAt": FieldValue.serverTimestamp(),
+      "address" : "",
+      "appointments" : [{}],
+      "bmi" : "",
+      "firstName" : "",
+      "lastName" : "",
+      "weight" : 0
     });
   }
 
@@ -93,4 +101,11 @@ class DatabaseService {
 
     return weightData;
   }
+
+  Future makeAppointment(String date, String time) async{
+    return await usersCollection.doc(globals.UID).update({"appointments" : FieldValue.arrayUnion([{"date" : date, "time" : time}])});
+
+  }
+
+
 }
