@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '/backend/firebase_storage/database.dart';
 
 DateTime kFirstDay = DateTime(1970, 1, 1);
 DateTime kLastDay = DateTime(2100, 1, 1);
@@ -29,6 +30,8 @@ class FlutterFlowCalendar extends StatefulWidget {
     this.titleStyle,
     this.rowHeight,
     this.locale,
+    this.outsideBuilder,
+
   });
 
   final bool weekFormat;
@@ -45,6 +48,7 @@ class FlutterFlowCalendar extends StatefulWidget {
   final TextStyle? titleStyle;
   final double? rowHeight;
   final String? locale;
+  final FocusedDayBuilder? outsideBuilder;
 
   @override
   State<StatefulWidget> createState() => _FlutterFlowCalendarState();
@@ -54,6 +58,14 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
   late DateTime focusedDay;
   late DateTime selectedDay;
   late DateTimeRange selectedRange;
+
+  final List<DateTime> highlightedDates = [
+    DateTime.now()
+  ];
+
+  Future<bool> isHighlighted(DateTime date) {
+    return DatabaseService().checkAppointment(date.toString().split(" ")[0]??"null");
+  }
 
   @override
   void initState() {
@@ -125,6 +137,7 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
             twoRowHeader: widget.twoRowHeader,
           ),
           TableCalendar(
+
             focusedDay: focusedDay,
             selectedDayPredicate: (date) => isSameDay(selectedDay, date),
             firstDay: kFirstDay,
@@ -133,6 +146,9 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
             headerVisible: false,
             locale: widget.locale,
             rowHeight: widget.rowHeight ?? MediaQuery.sizeOf(context).width / 7,
+
+
+
             calendarStyle: CalendarStyle(
               defaultTextStyle:
                   widget.dateStyle ?? const TextStyle(color: Color(0xFF5A5A5A)),
@@ -163,8 +179,64 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
               markersMaxCount: 3,
               canMarkersOverflow: true,
             ),
+            calendarBuilders : CalendarBuilders(
+              defaultBuilder: (context, date, _) {
+                return FutureBuilder<bool>(
+                  future: isHighlighted(date),
+                  builder: (context, snapshot){
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.transparent,  // Color while waiting for the Future to complete
+                        ),
+                        width: 5,
+                        height: 5,
+                      );
+                    } else if (snapshot.hasData && snapshot.data!) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue.withOpacity(0.5),
+                          // Highlighted color
+                        ),
+                        height: 40,
+
+                        child: Center(
+                          child: Text(
+                            '${date.day}',
+                            style: const TextStyle(
+                              color: Colors.white,  // Text color for highlighted date
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.transparent,  // Non-highlighted color
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${date.day}',
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                );
+                },
+            ),
+
             availableGestures: AvailableGestures.horizontalSwipe,
             startingDayOfWeek: startingDayOfWeek,
+
+
             daysOfWeekStyle: DaysOfWeekStyle(
               weekdayStyle: const TextStyle(color: Color(0xFF616161))
                   .merge(widget.dayOfWeekStyle),
@@ -240,9 +312,11 @@ class CalendarHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           const SizedBox(width: 16),
+
           _buildDateWidget(),
           ..._buildCustomIconButtons(),
         ],
+
       );
 
   Widget _buildDateWidget() => Expanded(

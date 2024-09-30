@@ -228,11 +228,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/changeHW',
           builder: (context, params) => const ChangeHWWidget(),
         ),
-        FFRoute(
-         name: 'CustomerChat',
-         path: '/customerChat',
-         builder: (context, params) => const CustomerChatWidget(),
-        ),        
+
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 

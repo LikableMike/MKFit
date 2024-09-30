@@ -8,6 +8,9 @@ import 'make_appointment_model.dart';
 export 'make_appointment_model.dart';
 import '/backend/firebase_storage/database.dart';
 
+import "/backend/firebase_storage/globals.dart" as globals;
+
+
 class MakeAppointmentWidget extends StatefulWidget {
   const MakeAppointmentWidget({super.key});
 
@@ -290,10 +293,20 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
                                         child: ElevatedButton(
-                                          onPressed: () {
+                                          onPressed: () async{
                                             if (_selectedDateRange != null && _selectedTime != null) {
                                               // Handle appointment confirmation here
-                                              print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
+                                              try{
+                                                print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
+
+                                                await DatabaseService().makeAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
+                                                print( _selectedDateRange.toString() + " " + _selectedTime.toString());
+                                                print(globals.UID);
+
+                                              }catch(e){
+                                                print(e);
+                                              }
+
                                             } else {
                                               print( _selectedDateRange.toString() + " " + _selectedTime.toString());
 
@@ -307,6 +320,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           child: Text('Confirm Appointment'),
                                         ),
                                       ),
+
                                       // Cancel Appointment Button
                                       FutureBuilder<bool>(
                                         future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString()??"null"),
@@ -324,7 +338,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 backgroundColor: Colors.red, // Red color for the cancel button
                                               ),
                                               onPressed: () async {
-                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
+                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString());
                                                 setState(() {
                                                   // Clear the selected date and time to cancel the appointment
                                                   _selectedDateRange = null;

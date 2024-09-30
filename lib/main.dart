@@ -9,8 +9,13 @@ import 'backend/firebase/firebase_config.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'index.dart';
+import "/backend/firebase_storage/globals.dart" as globals;
+import 'package:m_k_fit/auth/firebase_auth/firebase_auth_manager.dart';
+import 'package:m_k_fit/auth/firebase_auth/firebase_user_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
@@ -19,6 +24,10 @@ void main() async {
   await FlutterFlowTheme.initialize();
 
   runApp(const MyApp());
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  var user = auth.currentUser;
+  globals.UID = user?.uid;
+  print(globals.UID);
 }
 
 class MyApp extends StatefulWidget {
@@ -42,6 +51,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+
     super.initState();
 
     _appStateNotifier = AppStateNotifier.instance;
@@ -110,6 +120,7 @@ class _NavBarPageState extends State<NavBarPage> {
 
   @override
   Widget build(BuildContext context) {
+
     final tabs = {
       'home2': const Home2Widget(),
       'ProgressPage': const ProgressPageWidget(),
