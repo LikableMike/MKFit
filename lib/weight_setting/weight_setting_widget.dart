@@ -6,7 +6,7 @@ This task was for fixing the color scheme of the weight page and also fixing the
 lable and functionality. Now the color scheme matches the apps theme, and the home button is a
 navigate back button instead.
  */
-
+import '../backend/firebase_storage/database.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -34,25 +34,52 @@ class WeightSettingWidget extends StatefulWidget {
 
 class _WeightSettingWidgetState extends State<WeightSettingWidget> {
   late WeightSettingModel _model;
-
+  late String userName = '';
+  late String userWeight = '';
+  late String userHeight = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => WeightSettingModel());
-
     _model.textController1 ??=
         TextEditingController(text: currentUserDisplayName);
+    _fetchUserName();
+    _fetchUserWeight();
+    _fetchUserHeight();
     _model.textFieldFocusNode1 ??= FocusNode();
-
     _model.textController2 ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
-
     _model.textController3 ??= TextEditingController();
     _model.textFieldFocusNode3 ??= FocusNode();
+  }
+  Future<void> _fetchUserName() async {
+    final dbService = DatabaseService();
+    final String? name = await dbService.getUserName();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    setState(() {
+        userName = name ?? 'Guest';
+        _model.textController1 = TextEditingController(text: userName);
+    });
+  }
+  Future<void> _fetchUserWeight() async {
+      final dbService = DatabaseService();
+      final String? weight = await dbService.getUserWeight();
+
+      setState(() {
+          userWeight = weight ?? 'Guest';
+          _model.textController2 = TextEditingController(text: userWeight);
+      });
+  }
+  Future<void> _fetchUserHeight() async {
+      final dbService = DatabaseService();
+      final String? height = await dbService.getUserHeight();
+
+      setState(() {
+          userHeight = height ?? 'Guest';
+          _model.textController3 = TextEditingController(text: userHeight);
+      });
   }
 
   @override
