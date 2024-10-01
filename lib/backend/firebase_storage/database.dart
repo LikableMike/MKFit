@@ -168,4 +168,55 @@ class DatabaseService {
       return null;
     }
   }
+  Future<String?> getUserName() async {
+      try{
+          final String uid = await getUID();
+          DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+          if(snapshot.exists) {
+              return snapshot.get("name");
+          }
+          else{
+              print("User document does not exist");
+              return null;
+          }
+      }
+      catch(e) {
+          print("Error fetching user name: $e");
+          return null;
+      }
+    }
+    Future<String?> getUserHeight() async {
+        try{
+            final String uid = await getUID();
+            DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+            if(snapshot.exists) {
+                return snapshot.get("height");
+            }
+            else{
+                print("User document does not exist");
+                return null;
+            }
+        }
+        catch(e) {
+            print("Error fetching user height: $e");
+            return null;
+        }
+    }
+    Future<String?> getUserWeight() async {
+          try{
+              final String uid = await getUID();
+              DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+              if(snapshot.exists) {
+                  return snapshot.get("weight");
+              }
+              else{
+                  print("User document does not exist");
+                  return null;
+              }
+          }
+          catch(e) {
+              print("Error fetching user weight: $e");
+              return null;
+          }
+  }
 }
