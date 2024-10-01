@@ -24,7 +24,6 @@ class LoginWidget extends StatefulWidget {
 
 class _LoginWidgetState extends State<LoginWidget>
     with TickerProviderStateMixin {
-
   final FirebaseAuthManager _auth = FirebaseAuthManager();
   late LoginModel _model;
 
@@ -96,8 +95,8 @@ class _LoginWidgetState extends State<LoginWidget>
               child: Align(
                 alignment: const AlignmentDirectional(0.0, -20.0),
                 child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 0.0, 16.0, 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -134,20 +133,95 @@ class _LoginWidgetState extends State<LoginWidget>
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
-                              controller: _model.usernameTextController,
-                              focusNode: _model.usernameFocusNode,
-                              autofocus: true,
-                              autofillHints: const [AutofillHints.username],
-                              textCapitalization: TextCapitalization.none,
-                              obscureText: false,
+                                controller: _model.usernameTextController,
+                                focusNode: _model.usernameFocusNode,
+                                autofocus: true,
+                                autofillHints: const [AutofillHints.username],
+                                textCapitalization: TextCapitalization.none,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Username',
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  filled: true,
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  contentPadding: const EdgeInsets.all(14.0),
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      letterSpacing: 0.0,
+                                    ),
+                                maxLength: 25,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                cursorColor: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                validator: _model
+                                    .usernameTextControllerValidator
+                                    .asValidator(context)),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 16.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: TextFormField(
+                              controller: _model.passwordTextController,
+                              focusNode: _model.passwordFocusNode,
+                              autofocus: false,
+                              autofillHints: const [AutofillHints.password],
+                              obscureText: !_model.passwordVisibility,
                               decoration: InputDecoration(
-                                labelText: 'Username',
+                                labelText: 'Password',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
                                       fontFamily: 'Inter',
                                       color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                          .primaryBackground,
                                       letterSpacing: 0.0,
                                     ),
                                 enabledBorder: OutlineInputBorder(
@@ -183,6 +257,21 @@ class _LoginWidgetState extends State<LoginWidget>
                                 fillColor:
                                     FlutterFlowTheme.of(context).primaryText,
                                 contentPadding: const EdgeInsets.all(14.0),
+                                suffixIcon: InkWell(
+                                  onTap: () => safeSetState(
+                                    () => _model.passwordVisibility =
+                                        !_model.passwordVisibility,
+                                  ),
+                                  focusNode: FocusNode(skipTraversal: true),
+                                  child: Icon(
+                                    _model.passwordVisibility
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 24.0,
+                                  ),
+                                ),
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -195,100 +284,9 @@ class _LoginWidgetState extends State<LoginWidget>
                               maxLength: 25,
                               maxLengthEnforcement:
                                   MaxLengthEnforcement.enforced,
-                              cursorColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-
-                              validator: _model.usernameTextControllerValidator
-                                  .asValidator(context)
-
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: TextFormField(
-                            controller: _model.passwordTextController,
-                            focusNode: _model.passwordFocusNode,
-                            autofocus: false,
-                            autofillHints: const [AutofillHints.password],
-                            obscureText: !_model.passwordVisibility,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    letterSpacing: 0.0,
-                                  ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              filled: true,
-                              fillColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              contentPadding: const EdgeInsets.all(14.0),
-                              suffixIcon: InkWell(
-                                onTap: () => safeSetState(
-                                  () => _model.passwordVisibility =
-                                      !_model.passwordVisibility,
-                                ),
-                                focusNode: FocusNode(skipTraversal: true),
-                                child: Icon(
-                                  _model.passwordVisibility
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 24.0,
-                                ),
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  letterSpacing: 0.0,
-                                ),
-                            maxLength: 25,
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            keyboardType: TextInputType.visiblePassword,
-                            validator: _model.passwordTextControllerValidator
-                                .asValidator(context)
-
-                          ),
+                              keyboardType: TextInputType.visiblePassword,
+                              validator: _model.passwordTextControllerValidator
+                                  .asValidator(context)),
                         ),
                       ),
                       Align(
@@ -298,31 +296,31 @@ class _LoginWidgetState extends State<LoginWidget>
                               0.0, 0.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-
-
-
                               print("Login Attempted");
 
                               final FirebaseAuth auth = FirebaseAuth.instance;
-                              try{
-                                var user = await auth.signInWithEmailAndPassword(email:_model.usernameTextController.text , password:_model.passwordTextController.text);
-                                if (user != null){
+                              try {
+                                var user =
+                                    await auth.signInWithEmailAndPassword(
+                                        email:
+                                            _model.usernameTextController.text,
+                                        password:
+                                            _model.passwordTextController.text);
+                                if (user != null) {
                                   var UID = user.user?.uid;
 
-                                  if(UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2"){
-
+                                  if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
+                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin');
-                                  }else {
+                                  } else {
                                     context.pushNamed('home');
-
                                   }
                                   globals.UID = UID;
-                                  print("UID SET TO: " + globals.UID.toString());
+                                  print(
+                                      "UID SET TO: " + globals.UID.toString());
                                 }
-                              }catch(e){
+                              } catch (e) {
                                 print(e);
-
-
                               }
                             },
                             text: 'Sign In',
@@ -470,4 +468,3 @@ class _LoginWidgetState extends State<LoginWidget>
     );
   }
 }
-

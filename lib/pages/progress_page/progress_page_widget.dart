@@ -7,6 +7,7 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:m_k_fit/backend/firebase_storage/database.dart';
+import "package:firebase_storage/firebase_storage.dart";
 
 import 'progress_page_model.dart';
 export 'progress_page_model.dart';
@@ -20,11 +21,11 @@ class ProgressPageWidget extends StatefulWidget {
 
 class _ProgressPageWidgetState extends State<ProgressPageWidget> {
   late ProgressPageModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  List<Map<String, dynamic>> weightData = [];
-  List<Map<String, dynamic>> bmiData = [];
+  Map<String, Map<String, List>> graphData = {
+    "weight": {"x": [], "y": []},
+    "bmi": {"x": [], "y": []}
+  };
 
   @override
   void initState() {
@@ -33,24 +34,14 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
 
-    getWeightData();
-    getBmiData();
+    getGraphData();
   }
 
-  Future getWeightData() async {
+  Future getGraphData() async {
     final databaseService = DatabaseService();
-    List<Map<String, dynamic>> data =
-        await databaseService.getProgress("weight");
+    var data = await databaseService.getGraphData(["weight", "bmi"]);
     setState(() {
-      weightData = data;
-    });
-  }
-
-  Future getBmiData() async {
-    final databaseService = DatabaseService();
-    List<Map<String, dynamic>> data = await databaseService.getProgress("bmi");
-    setState(() {
-      bmiData = data;
+      graphData = data;
     });
   }
 
@@ -237,11 +228,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                             child: FlutterFlowLineChart(
                               data: [
                                 FFLineChartData(
-                                  xData:
-                                      weightData.map((i) => i['date']).toList(),
-                                  yData: weightData
-                                      .map((i) => i['weight'])
-                                      .toList(),
+                                  xData: graphData["weight"]!["x"]!,
+                                  yData: graphData["weight"]!["y"]!,
                                   settings: LineChartBarData(
                                     color: FlutterFlowTheme.of(context).primary,
                                     barWidth: 2,
@@ -418,8 +406,8 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                             child: FlutterFlowLineChart(
                               data: [
                                 FFLineChartData(
-                                  xData: bmiData.map((i) => i['date']).toList(),
-                                  yData: bmiData.map((i) => i['bmi']).toList(),
+                                  xData: graphData["bmi"]!["x"]!,
+                                  yData: graphData["bmi"]!["y"]!,
                                   settings: LineChartBarData(
                                     color:
                                         FlutterFlowTheme.of(context).secondary,
@@ -496,11 +484,23 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 size: 60,
                               ),
                               onPressed: () async {
+                                final databaseService = DatabaseService();
+
                                 FilePickerResult? file = await FilePicker
                                     .platform
                                     .pickFiles(type: FileType.image);
-                                final databaseService = DatabaseService();
-                                await databaseService.uploadImage(file);
+                                String uid = await databaseService.getUID();
+                                String destination =
+                                    "images/$uid/${DateTime.now().millisecondsSinceEpoch}.jpg";
+
+                                UploadTask? uploadTask = await databaseService
+                                    .uploadFile(file, destination);
+                                if (uploadTask != null) {
+                                  TaskSnapshot taskSnapshot = await uploadTask;
+                                  String url =
+                                      await taskSnapshot.ref.getDownloadURL();
+                                  databaseService.uploadProgress("img", url);
+                                }
                               },
                             ),
                           ),
