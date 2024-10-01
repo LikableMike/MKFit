@@ -10,10 +10,11 @@ class DatabaseService {
   DatabaseService();
 
   final CollectionReference exerciseCollection =
-  FirebaseFirestore.instance.collection("exercises");
+      FirebaseFirestore.instance.collection("exercises");
+  final CollectionReference exerciseTestCollection =
+      FirebaseFirestore.instance.collection("exercises_test");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
-
 
   Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
@@ -26,118 +27,145 @@ class DatabaseService {
     });
   }
 
-  Future getUID() async {
+  Future<String> getUID() async {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      throw Exception("Cannot create user document: currentUser is null.");
+      throw Exception("Cannot get UID: no user logged in");
     }
     return user.uid;
   }
 
-  Future createUser(String name, String username) async {
-    final String uid = await getUID();
-    await usersCollection.doc(uid).set({
-      "name": name,
-      "username": username,
-      "createdAt": FieldValue.serverTimestamp(),
-      "address" : "",
-      "appointments" : [{}],
-      "bmi" : "",
-      "firstName" : "",
-      "lastName" : "",
-      "weight" : 0
-    });
+  Future<void> createUser(String name, String username) async {
+    try {
+      final String uid = await getUID();
+      await usersCollection.doc(uid).set({
+        "name": name,
+        "username": username,
+        "createdAt": DateTime.now().millisecondsSinceEpoch.toString()
+      });
+    } catch (e) {
+      print("Error creating user: $e");
+    }
   }
 
-  Future uploadProgress(String input, String value) async {
-    final valueNum = double.tryParse(value.toString());
-    final String uid = await getUID();
-    await progressCollection.doc().set(
-        {"date": FieldValue.serverTimestamp(), input: valueNum, "uid": uid});
+  Future<void> uploadProgress(String input, String value) async {
+    try {
+      final String uid = await getUID();
+      await progressCollection.doc().set({
+        "date": DateTime.now().millisecondsSinceEpoch.toString(),
+        input: value,
+        "uid": uid
+      });
+    } catch (e) {
+      print("Error uploading progress: $e");
+    }
   }
 
-  Future uploadImage(FilePickerResult? file) async {
+  Future<UploadTask?> uploadFile(
+      FilePickerResult? file, String destination) async {
     if (file == null) {
-      return;
+      print("Cannot upload file: file is null");
+      return null;
     }
     String? filePath = file.files.single.path;
     if (filePath == null) {
-      return;
+      print("Cannot upload file: local file path is null");
+      return null;
     }
 
-    final String uid = await getUID();
-    File img = File(filePath);
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child("images/$uid/${DateTime
-        .now()
-        .millisecondsSinceEpoch}.jpg");
+    File f = File(filePath);
+    final fileRef = FirebaseStorage.instance.ref().child(destination);
 
     try {
-      UploadTask uploadTask = storageRef.putFile(img);
-      TaskSnapshot taskSnapshot = await uploadTask;
-      String imgUrl = await taskSnapshot.ref.getDownloadURL();
-
-      await FirebaseFirestore.instance.collection("progress").doc().set(
-          {"date": FieldValue.serverTimestamp(), "img": imgUrl, "uid": uid});
-    } on FirebaseException {
-      return;
+      UploadTask uploadTask = fileRef.putFile(f);
+      return uploadTask;
+    } on FirebaseException catch (e) {
+      print("Error uploading file: $e");
+      return null;
     }
   }
 
-  Future getProgress(String dtype) async {
+  Future<Map<String, Map<String, List>>> getGraphData(
+      List<String> attrs) async {
     final String uid = await getUID();
-    QuerySnapshot querySnapshot = await progressCollection
+
+    Map<String, Map<String, List>> graphData = {
+      for (var attr in attrs) attr: {"x": [], "y": []}
+    };
+
+    await progressCollection
         .where("uid", isEqualTo: uid)
         .orderBy("date", descending: false)
-        .get();
-
-    List<Map<String, dynamic>> weightData = querySnapshot.docs
-        .where((doc) => (doc.data() as Map<String, dynamic>).containsKey(dtype))
-        .map((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return {
-        "date": (data["date"] as Timestamp).toDate(),
-        dtype: data[dtype].toDouble(),
-      };
-    }).toList();
-
-    return weightData;
+        .get()
+        .then(
+      (querySnapshot) {
+        for (var docSnapshot in querySnapshot.docs) {
+          var doc = docSnapshot.data();
+          for (var attr in attrs) {
+            DateTime date =
+                DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
+            double? val = double.tryParse(doc[attr].toString());
+            if (val != null) {
+              graphData[attr]!["x"]!.add(date);
+              graphData[attr]!["y"]!.add(val);
+            }
+          }
+        }
+      },
+      onError: (e) => print("Error getting graph data: $e"),
+    );
+    return graphData;
   }
 
-
-  Future makeAppointment(String date, String time) async{
-    return await usersCollection.doc(globals.UID).update({"appointments" : FieldValue.arrayUnion([{"date" : date, "time" : time}])});
-
+  Future makeAppointment(String date, String time) async {
+    return await usersCollection.doc(globals.UID).update({
+      "appointments": FieldValue.arrayUnion([
+        {"date": date, "time": time}
+      ])
+    });
   }
 
-
-
-  Future<bool> checkAppointment(String date) async{
-
+  Future<bool> checkAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     var appointments = snapshot.get("appointments");
-    for(int i = 0; i < appointments.length; i++){
-      if(appointments[i]["date"] != null && appointments[i]["date"].contains(date)){
+    for (int i = 0; i < appointments.length; i++) {
+      if (appointments[i]["date"] != null &&
+          appointments[i]["date"].contains(date)) {
         return true;
       }
     }
 
     return false;
-
-}
-  Future cancelAppointment(String date) async{
-
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    var appointments = snapshot.get("appointments");
-    for(int i = 0; i < appointments.length; i++){
-      if(appointments[i]["date"] != null && appointments[i]["date"].contains(date)){
-        print("Date Found");
-        return await usersCollection.doc(globals.UID).update({"appointments" : FieldValue.arrayRemove([{"date" : appointments[i]["date"], "time" : appointments[i]["time"]}])});
-      }
-    }
-
-
   }
 
+  Future cancelAppointment(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var appointments = snapshot.get("appointments");
+    for (int i = 0; i < appointments.length; i++) {
+      if (appointments[i]["date"] != null &&
+          appointments[i]["date"].contains(date)) {
+        print("Date Found");
+        return await usersCollection.doc(globals.UID).update({
+          "appointments": FieldValue.arrayRemove([
+            {"date": appointments[i]["date"], "time": appointments[i]["time"]}
+          ])
+        });
+      }
+    }
+  }
+
+  Future<void> updateExercise(String attr, String doc, String val) async {
+    await exerciseTestCollection.doc(doc).update({attr: val});
+  }
+
+  Future<String?> getExerciseVideo(String exercise) async {
+    DocumentSnapshot snapshot =
+        await exerciseTestCollection.doc(exercise).get();
+    if (snapshot.exists) {
+      return snapshot.get("video_sample");
+    } else {
+      print("Document does not exist");
+      return null;
+    }
+  }
 }
