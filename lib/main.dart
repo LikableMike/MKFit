@@ -24,10 +24,7 @@ void main() async {
   await FlutterFlowTheme.initialize();
 
   runApp(const MyApp());
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  var user = auth.currentUser;
-  globals.UID = user?.uid;
-  print(globals.UID);
+  
 }
 
 class MyApp extends StatefulWidget {
