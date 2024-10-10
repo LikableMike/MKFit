@@ -1,12 +1,23 @@
 /*
 Ramin Selseleh
 
+Subtask: 139
+
+Fixed the overflow issue widget within the home page.
+ */
+
+
+
+/*
+Ramin Selseleh
+
 Substask: Ma-140
 
 The goal for this task was
 the visit your progress” button should redirect to the progress page.
 Same page as the “Graph Lines” button in the nave bar.
  */
+
 
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -222,20 +233,21 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 288,
-                                height: 100,
-                                decoration: BoxDecoration(),
-                                child: Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Text(
-                                    'Next Appointment: \nApril 1st, at 1:00 PM',
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleLarge
-                                        .override(
-                                      fontFamily: 'Inter',
-                                      fontSize: 25,
-                                      letterSpacing: 0.0,
+                              Expanded( // << Replace Container with Expanded to make the layout adaptive
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(),
+                                  child: Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Text(
+                                      'Next Appointment: \nApril 1st, at 1:00 PM',
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleLarge
+                                          .override(
+                                        fontFamily: 'Inter',
+                                        fontSize: 25,
+                                        letterSpacing: 0.0,
+                                      ),
                                     ),
                                   ),
                                 ),

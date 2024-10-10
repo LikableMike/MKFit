@@ -1,3 +1,12 @@
+/*
+Ramin Selseleh
+MA-136
+
+Fixed the issue regarding having two homepages. We now only have one homepage
+button at the bottom left.
+ */
+
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -177,14 +186,14 @@ class _NavBarPageState extends State<NavBarPage> {
             label: 'Home',
             tooltip: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 40.0,
-            ),
-            label: 'Home',
-            tooltip: '',
-          )
+          //BottomNavigationBarItem(
+            //icon: Icon(
+              //Icons.home_outlined,
+              //size: 40.0,
+            //),
+            //label: 'Home',
+            //tooltip: '',
+          //)
         ],
       ),
     );
