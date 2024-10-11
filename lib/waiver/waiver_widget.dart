@@ -170,7 +170,7 @@ class _WaiverWidgetState extends State<WaiverWidget> {
                         var user = auth.currentUser;
                         globals.UID = user?.uid;
                         print(globals.UID);
-                        context.pushNamed('home2');
+                        context.pushNamed('home');
                       }
                     },
                     text: 'Sign Waiver',
