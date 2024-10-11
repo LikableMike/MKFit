@@ -91,12 +91,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/createAccount1',
           builder: (context, params) => const CreateAccount1Widget(),
         ),
-        FFRoute(
-          name: 'home2',
-          path: '/home2',
-          builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'home2') : const Home2Widget(),
-        ),
+
         FFRoute(
           name: 'ProgressPage',
           path: '/progressPage',

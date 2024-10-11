@@ -131,7 +131,6 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
 
     final tabs = {
-      'home2': const Home2Widget(),
       'ProgressPage': const ProgressPageWidget(),
       'makeAppointment': const MakeAppointmentWidget(),
       'workoutPlanPage': const WorkoutPlanPageWidget(),
@@ -185,7 +184,7 @@ class _NavBarPageState extends State<NavBarPage> {
             ),
             label: 'Home',
             tooltip: '',
-          ),
+          )
           //BottomNavigationBarItem(
             //icon: Icon(
               //Icons.home_outlined,
