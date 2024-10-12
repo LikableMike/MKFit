@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'make_appointment_model.dart';
 export 'make_appointment_model.dart';
 import '/backend/firebase_storage/database.dart';
+import 'package:intl/intl.dart';
+
 
 import "/backend/firebase_storage/globals.dart" as globals;
 
@@ -290,74 +292,126 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           },
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: ElevatedButton(
-                                          onPressed: () async{
-                                            if (_selectedDateRange != null && _selectedTime != null) {
-                                              // Handle appointment confirmation here
-                                              try{
-                                                print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (_selectedDateRange != null && _selectedTime != null) {
 
-                                                await DatabaseService().makeAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
-                                                print( _selectedDateRange.toString() + " " + _selectedTime.toString());
-                                                print(globals.UID);
+                                  String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
 
-                                              }catch(e){
-                                                print(e);
-                                              }
+                                  // Handle appointment confirmation here
+                                  try {
+                                    print('Appointment scheduled for $formattedDate at $_selectedTime');
 
-                                            } else {
-                                              print( _selectedDateRange.toString() + " " + _selectedTime.toString());
+                                    await DatabaseService().makeAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
+                                    print(_selectedDateRange.toString() + " " + _selectedTime.toString());
+                                    print(globals.UID);
 
-                                              // Show error or prompt to select date/time
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(content: Text('Please select both date and time.')),
-
-                                              );
-                                            }
-                                          },
-                                          child: Text('Confirm Appointment'),
-                                        ),
-                                      ),
-
-                                      // Cancel Appointment Button
-                                      FutureBuilder<bool>(
-                                        future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString()??"null"),
-                                        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.waiting) {
-                                            // While the future is still loading, show a loading indicator or nothing
-                                            return CircularProgressIndicator();
-                                          } else if (snapshot.hasError) {
-                                            // Handle any errors from the future
-                                            return Text('Error: ${snapshot.error}');
-                                          } else if (snapshot.hasData && snapshot.data == true) {
-                                            // If the data is true, show the Cancel Appointment button
-                                            return ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.red, // Red color for the cancel button
-                                              ),
-                                              onPressed: () async {
-                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString());
-                                                setState(() {
-                                                  // Clear the selected date and time to cancel the appointment
-                                                  _selectedDateRange = null;
-                                                  _selectedTime = null;
-                                                });
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                  const SnackBar(content: Text('Appointment has been canceled.')),
-                                                );
+                                    // Show a dialog asking if the user wants to set the meeting to recurring
+                                    bool? shouldSetRecurring = await showDialog<bool>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Set Recurring Meeting'),
+                                          content: Text('Would you like to set this meeting to recurring?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(true); // Return 'true' when "Yes" is tapped
                                               },
-                                              child: const Text('Cancel Appointment'),
-                                            );
-                                          } else {
-                                            // If no appointment exists, return an empty container or something else
-                                            return Container();
-                                          }
-                                        },
-                                      ),
+                                              child: Text('Yes'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(false); // Return 'false' when "No" is tapped
+                                              },
+                                              child: Text('No'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
 
-                                      // ElevatedButton(
+                                    if (shouldSetRecurring != null && shouldSetRecurring) {
+                                      // This handles setting the appointment as recurring
+                                      print('Recurring appointment set for $formattedDate at $_selectedTime');
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Recurring appointment set for $formattedDate at $_selectedTime')),
+                                      );
+                                      // Add your recurring appointment logic here
+                                    } else {
+                                      print('One-time appointment confirmed for $formattedDate at $_selectedTime');
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Appointment confirmed for $formattedDate at $_selectedTime')),
+                                      );
+                                    }
+
+                                  } catch (e) {
+                                    print(e);
+                                  }
+
+                                } else {
+                                  print(_selectedDateRange.toString() + " " + _selectedTime.toString());
+
+                                  // Show error or prompt to select date/time
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Please select both date and time.')),
+                                  );
+                                }
+                              },
+                              child: Text('Confirm Appointment'),
+                            ),
+                          ),
+
+
+
+
+                          // Cancel Appointment Button
+                          FutureBuilder<bool>(
+                            future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString() ?? "null"),
+                            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                // While the future is still loading, show a loading indicator
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                // Handle any errors from the future
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.hasData && snapshot.data == true) {
+                                // If the data is true, show the Cancel Appointment button
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red, // Red color for the cancel button
+                                  ),
+                                  onPressed: () async {
+
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
+
+                                    // Cancel the appointment
+                                    await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString());
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('Appointment on $formattedDate at $_selectedTime has been canceled.')),
+                                    );
+
+                                    setState(() {
+                                      // Clear the selected date and time after canceling the appointment
+                                      _selectedDateRange = null;
+                                      _selectedTime = null;
+                                    });
+                                  },
+                                  child: const Text('Cancel Appointment'),
+                                );
+                              } else {
+                                // If no appointment exists, return an empty container or something else
+                                return Container();
+                              }
+                            },
+                          ),
+
+
+
+                          // ElevatedButton(
                                       //     style: ElevatedButton.styleFrom(
                                       //       backgroundColor: Colors.red, // Red color for the cancel button
                                       //     ),
