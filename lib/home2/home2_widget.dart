@@ -16,9 +16,15 @@ Substask: Ma-140
 The goal for this task was
 the visit your progress” button should redirect to the progress page.
 Same page as the “Graph Lines” button in the nave bar.
+
+Stephanie Nutter
+MA - 134
+Admin Message displays, called from Admin_Message.message
+
  */
 
 
+import '../backend/backend.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -83,16 +89,56 @@ class _Home2WidgetState extends State<Home2Widget> {
                     style: FlutterFlowTheme.of(context).labelSmall.override(
                       fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
                       letterSpacing: 0.0,
                     ),
                   ),
-                  Text(
-                    'Time to rise and grind',
-                    style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Readex Pro',
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      letterSpacing: 0.0,
+                  StreamBuilder<List<AdminMessageRecord>>(
+                    stream: queryAdminMessageRecord(
+                      singleRecord: true,
                     ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      List<AdminMessageRecord> textAdminMessageRecordList = snapshot.data!;
+
+                      // Return an empty Container if there are no records
+                      if (textAdminMessageRecordList.isEmpty) {
+                        return Container();
+                      }
+
+                      final textAdminMessageRecord = textAdminMessageRecordList.first;
+
+                      // Access the string message field directly
+                      String message = textAdminMessageRecord.message;
+
+                      return Text(
+                        valueOrDefault<String>(
+                          message,
+                          'Time to rise and shine!',
+                        ),
+                        style: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .override(
+                          fontFamily: 'Readex Pro',
+                          color: FlutterFlowTheme.of(context)
+                              .primaryBackground,
+                          letterSpacing: 0.0,
+                        ),
+                      );
+                    },
                   ),
                   Divider(
                     color: FlutterFlowTheme.of(context).primaryText,
