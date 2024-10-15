@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'admin_model.dart';
 export 'admin_model.dart';
@@ -18,8 +19,8 @@ class AdminWidget extends StatefulWidget {
 
 class _AdminWidgetState extends State<AdminWidget> {
   late AdminModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _messageController = TextEditingController();
 
   @override
   void initState() {
@@ -34,6 +35,29 @@ class _AdminWidgetState extends State<AdminWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  //Needs admin function testing.
+  //Also test the ffbutton widget for this
+  Future<void> _updateMessage() async {
+    String newMessage = _messageController.text.trim();
+    if (newMessage.isNotEmpty) {
+      try {
+        //Update database message
+        await FirebaseFirestore.instance.collection('Admin_Message').doc('message').update({
+          'message': newMessage,
+        });
+        //Clear after updating
+        _messageController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Message updated successfully!')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update message: $e')),
+        );
+      }
+    }
   }
 
   @override
@@ -209,6 +233,52 @@ class _AdminWidgetState extends State<AdminWidget> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+        // New button added here
+        FFButtonWidget(
+          onPressed: () async {
+            // Define the action for the "Set Daily Message" button
+            context.pushNamed('SetDailyMessage'); // Adjust as needed
+          },
+          text: 'Set the Daily Message:',
+          options: FFButtonOptions(
+            height: 40,
+            padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+            iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            color: FlutterFlowTheme.of(context).primary,
+            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+              fontFamily: 'Inter',
+              color: Colors.white,
+              letterSpacing: 0.0,
+            ),
+            elevation: 3,
+            borderSide: BorderSide(
+              color: Colors.transparent,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          )
+        ),
+        FFButtonWidget(
+        onPressed: _updateMessage, // Call update method
+        text: 'Update Message',
+        options: FFButtonOptions(
+          height: 40,
+          padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+          iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+          color: FlutterFlowTheme.of(context).primary,
+          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+            fontFamily: 'Inter',
+            color: Colors.white,
+            letterSpacing: 0.0,
+          ),
+          elevation: 3,
+          borderSide: BorderSide(
+            color: Colors.transparent,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        ),
             ],
           ),
         ),
