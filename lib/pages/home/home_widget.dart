@@ -92,20 +92,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         );
                       }
-                      List<AdminMessageRecord> textAdminMessageRecordList =
-                          snapshot.data!;
-                      // Return an empty Container when the item does not exist.
-                      if (snapshot.data!.isEmpty) {
+                      List<AdminMessageRecord> textAdminMessageRecordList = snapshot.data!;
+
+                      // Return an empty Container if there are no records
+                      if (textAdminMessageRecordList.isEmpty) {
                         return Container();
                       }
-                      final textAdminMessageRecord =
-                          textAdminMessageRecordList.isNotEmpty
-                              ? textAdminMessageRecordList.first
-                              : null;
+
+                      final textAdminMessageRecord = textAdminMessageRecordList.first;
+
+                      // Access the string message field directly
+                      String message = textAdminMessageRecord.message;
 
                       return Text(
                         valueOrDefault<String>(
-                          textAdminMessageRecord?.hasMessage().toString(),
+                          message,
                           'Time to rise and shine!',
                         ),
                         style: FlutterFlowTheme.of(context)
