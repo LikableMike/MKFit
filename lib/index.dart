@@ -7,6 +7,7 @@ export '/message_page/message_page_widget.dart' show MessagePageWidget;
 export '/settings_page/settings_page_widget.dart' show SettingsPageWidget;
 export '/pages/make_appointment/make_appointment_widget.dart'
     show MakeAppointmentWidget;
+export '/AdminCalendar/AdminCalendar_Widget.dart' show AdminCalendarWidget;
 export '/forgot_username/forgot_username_widget.dart' show ForgotUsernameWidget;
 export '/confirm_new_password/confirm_new_password_widget.dart'
     show ConfirmNewPasswordWidget;

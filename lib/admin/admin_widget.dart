@@ -233,6 +233,31 @@ class _AdminWidgetState extends State<AdminWidget> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+
+              FFButtonWidget(
+                onPressed: () async {
+                  context.pushNamed('adminCalendar');
+                },
+                text: 'Calendar',
+                options: FFButtonOptions(
+                  height: 40,
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                  iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                    fontFamily: 'Inter',
+                    color: Colors.white,
+                    letterSpacing: 0.0,
+                  ),
+                  elevation: 4,
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+
         // New button added here
         FFButtonWidget(
           onPressed: () async {
@@ -279,6 +304,7 @@ class _AdminWidgetState extends State<AdminWidget> {
           borderRadius: BorderRadius.circular(8),
         ),
         ),
+
             ],
           ),
         ),

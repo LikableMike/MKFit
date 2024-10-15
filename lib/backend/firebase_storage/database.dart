@@ -138,6 +138,48 @@ class DatabaseService {
     return false;
   }
 
+  Future<bool> checkAdminAppointments(String date) async {
+    QuerySnapshot snapshot = await usersCollection.get();
+    var queryDocs = snapshot.docs;
+      for(int i = 0; i < queryDocs.length; i++) {
+
+          var userAppointments = queryDocs.elementAt(i).get("appointments");
+          if(userAppointments != null){
+              for(int j = 0; j < userAppointments.length; j++) {
+                if (userAppointments[j]["date"] != null &&
+                userAppointments[j]["date"].contains(date)) {
+                return true;
+                }
+              }
+           }
+      }
+    return false;
+  }
+
+  Future<String> checkAdminDay(String date) async {
+    QuerySnapshot snapshot = await usersCollection.get();
+    var queryDocs = snapshot.docs;
+    var dayAppointments = "\n";
+    for(int i = 0; i < queryDocs.length; i++) {
+
+      var userAppointments = queryDocs.elementAt(i).get("appointments");
+      if(userAppointments != null){
+        for(int j = 0; j < userAppointments.length; j++) {
+
+          if (userAppointments[j]["date"] != null &&
+              userAppointments[j]["date"].contains(date)) {
+            print(queryDocs.elementAt(i).get("name") + " at " + userAppointments[j]["time"]);
+            dayAppointments += (queryDocs.elementAt(i).get("name") + " at:\n " + userAppointments[j]["time"] + "\n\n");
+          }
+        }
+      }
+    }
+    if (dayAppointments.trim().isEmpty){
+      dayAppointments = "No Appointments on:\n" + date;
+    }
+    return dayAppointments;
+  }
+
   Future cancelAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     var appointments = snapshot.get("appointments");
