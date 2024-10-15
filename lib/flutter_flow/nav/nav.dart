@@ -117,6 +117,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const MakeAppointmentWidget(),
         ),
         FFRoute(
+            name: "adminCalendar",
+            path: '/adminCalendar',
+            builder: (context, params) => const AdminCalendarWidget(),
+        ),
+        FFRoute(
           name: 'forgotUsername',
           path: '/forgotUsername',
           builder: (context, params) => const ForgotUsernameWidget(),
