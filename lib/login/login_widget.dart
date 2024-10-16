@@ -310,7 +310,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                   var UID = user.user?.uid;
 
                                   if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
-                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
+                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1" ||
+                                      UID == "T57ubMi12pNKEAVNMIQBFETvKcy1") {
                                     context.pushNamed('admin');
                                   } else {
                                     context.pushNamed('home');
