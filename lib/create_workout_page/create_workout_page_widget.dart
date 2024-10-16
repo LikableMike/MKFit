@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
+import '../backend/firebase_storage/database.dart';
 import 'package:flutter/services.dart';
 import 'create_workout_page_model.dart';
 export 'create_workout_page_model.dart';
@@ -19,8 +20,19 @@ class CreateWorkoutPageWidget extends StatefulWidget {
 
 class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
   late CreateWorkoutPageModel _model;
+  List<String> selectedWorkouts = [];
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void onWorkoutSelected(String workoutName){
+    setState((){
+        if(selectedWorkouts.contains(workoutName)){
+            selectedWorkouts.remove(workoutName);
+        } else{
+            selectedWorkouts.add(workoutName);
+        }
+    });
+  }
 
   @override
   void initState() {
@@ -45,6 +57,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseService databaseService = DatabaseService();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -417,9 +430,31 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                         const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (_model.formKey.currentState == null ||
-                            !_model.formKey.currentState!.validate()) {
-                          return;
+                        String workoutName = _model.workoutNameTextController!.text.trim();
+                        String workoutDescription = _model.descriptionTextController!.text.trim();
+                        List<String>? selectedWorkouts = _model.checkboxGroupValues;
+
+                        if(workoutName.isEmpty || workoutDescription.isEmpty){
+                            print('Workout name and description are required.');
+                            return;
+                        }
+                        if(selectedWorkouts == null || selectedWorkouts.isEmpty){
+                            print('No workouts selected');
+                            return;
+                        }
+                        print('Workout Name: $workoutName');
+                        print('Workout Description: $workoutDescription');
+                        print('Selected Workouts: $selectedWorkouts');
+
+                        try{
+                            await databaseService.saveWorkout({
+                                'name': workoutName,
+                                'description': workoutDescription,
+                                'exercises': selectedWorkouts,
+                            });
+                            print('Workout saved successfully!');
+                        }catch(e){
+                            print('Error saving workout: $e');
                         }
                       },
                       text: 'Create Workout',

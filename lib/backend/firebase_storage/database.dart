@@ -10,6 +10,7 @@ import "/backend/firebase_storage/globals.dart" as globals;
 
 class DatabaseService {
   DatabaseService();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final CollectionReference exerciseCollection =
       FirebaseFirestore.instance.collection("exercises");
@@ -27,6 +28,56 @@ class DatabaseService {
       "description": description,
       "videoLink": link
     });
+  }
+
+  Future<List<Map<String, dynamic>>> getExerciseReferences(List<String> selectedWorkouts) async{
+    List<Map<String, dynamic>> exerciseData = [];
+
+    for(String workoutName in selectedWorkouts){
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('exercises')
+            .where('name', isEqualTo: workoutName)
+            .limit(1)
+            .get();
+
+        if(querySnapshot.docs.isNotEmpty){
+            exerciseData.add({
+                'reference': querySnapshot.docs.first.reference,
+                'name':workoutName,
+            });
+        } else{
+            print('No exercise found for $workoutName');
+        }
+    }
+    return exerciseData;
+  }
+
+  Future<void> saveWorkout(Map<String, dynamic> workoutData) async {
+    try {
+      String workoutName = workoutData['name'];
+      List<String> selectedWorkouts = workoutData['exercises'];
+
+      List<Map<String, dynamic>> exerciseData = await getExerciseReferences(selectedWorkouts);
+
+      List<Map<String, dynamic>> exercisesToSave = exerciseData.map((data) {
+        return {
+          'name': data['name'],
+          'reference': data['reference'],
+        };
+      }).toList();
+
+      await FirebaseFirestore.instance
+          .collection('workouts')
+          .doc(workoutName)
+          .set({
+        'description': workoutData['description'],
+        'exercises': exercisesToSave,
+      });
+
+      print('Workout saved successfully with exercise names and references!');
+    } catch (e) {
+      print('Error saving workout: $e');
+    }
   }
 
   Future<String> getUID() async {
