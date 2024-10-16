@@ -2,8 +2,10 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:sqflite/sqflite.dart";
+import 'dart:convert';
 import "package:firebase_storage/firebase_storage.dart";
 import "dart:io";
+import 'package:http/http.dart' as http;
 import "/backend/firebase_storage/globals.dart" as globals;
 
 class DatabaseService {
@@ -141,18 +143,17 @@ class DatabaseService {
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
     var queryDocs = snapshot.docs;
-      for(int i = 0; i < queryDocs.length; i++) {
-
-          var userAppointments = queryDocs.elementAt(i).get("appointments");
-          if(userAppointments != null){
-              for(int j = 0; j < userAppointments.length; j++) {
-                if (userAppointments[j]["date"] != null &&
-                userAppointments[j]["date"].contains(date)) {
-                return true;
-                }
-              }
-           }
+    for (int i = 0; i < queryDocs.length; i++) {
+      var userAppointments = queryDocs.elementAt(i).get("appointments");
+      if (userAppointments != null) {
+        for (int j = 0; j < userAppointments.length; j++) {
+          if (userAppointments[j]["date"] != null &&
+              userAppointments[j]["date"].contains(date)) {
+            return true;
+          }
+        }
       }
+    }
     return false;
   }
 
@@ -160,21 +161,24 @@ class DatabaseService {
     QuerySnapshot snapshot = await usersCollection.get();
     var queryDocs = snapshot.docs;
     var dayAppointments = "\n";
-    for(int i = 0; i < queryDocs.length; i++) {
-
+    for (int i = 0; i < queryDocs.length; i++) {
       var userAppointments = queryDocs.elementAt(i).get("appointments");
-      if(userAppointments != null){
-        for(int j = 0; j < userAppointments.length; j++) {
-
+      if (userAppointments != null) {
+        for (int j = 0; j < userAppointments.length; j++) {
           if (userAppointments[j]["date"] != null &&
               userAppointments[j]["date"].contains(date)) {
-            print(queryDocs.elementAt(i).get("name") + " at " + userAppointments[j]["time"]);
-            dayAppointments += (queryDocs.elementAt(i).get("name") + " at:\n " + userAppointments[j]["time"] + "\n\n");
+            print(queryDocs.elementAt(i).get("name") +
+                " at " +
+                userAppointments[j]["time"]);
+            dayAppointments += (queryDocs.elementAt(i).get("name") +
+                " at:\n " +
+                userAppointments[j]["time"] +
+                "\n\n");
           }
         }
       }
     }
-    if (dayAppointments.trim().isEmpty){
+    if (dayAppointments.trim().isEmpty) {
       dayAppointments = "No Appointments on:\n" + date;
     }
     return dayAppointments;
@@ -210,55 +214,83 @@ class DatabaseService {
       return null;
     }
   }
+
   Future<String?> getUserName() async {
-      try{
-          final String uid = await getUID();
-          DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
-          if(snapshot.exists) {
-              return snapshot.get("name");
-          }
-          else{
-              print("User document does not exist");
-              return null;
-          }
+    try {
+      final String uid = await getUID();
+      DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.get("name");
+      } else {
+        print("User document does not exist");
+        return null;
       }
-      catch(e) {
-          print("Error fetching user name: $e");
-          return null;
+    } catch (e) {
+      print("Error fetching user name: $e");
+      return null;
+    }
+  }
+
+  Future<String?> getUserHeight() async {
+    try {
+      final String uid = await getUID();
+      DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.get("height");
+      } else {
+        print("User document does not exist");
+        return null;
       }
+    } catch (e) {
+      print("Error fetching user height: $e");
+      return null;
     }
-    Future<String?> getUserHeight() async {
-        try{
-            final String uid = await getUID();
-            DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
-            if(snapshot.exists) {
-                return snapshot.get("height");
-            }
-            else{
-                print("User document does not exist");
-                return null;
-            }
-        }
-        catch(e) {
-            print("Error fetching user height: $e");
-            return null;
-        }
+  }
+
+  Future<String?> getUserWeight() async {
+    try {
+      final String uid = await getUID();
+      DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.get("weight");
+      } else {
+        print("User document does not exist");
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching user weight: $e");
+      return null;
     }
-    Future<String?> getUserWeight() async {
-          try{
-              final String uid = await getUID();
-              DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
-              if(snapshot.exists) {
-                  return snapshot.get("weight");
-              }
-              else{
-                  print("User document does not exist");
-                  return null;
-              }
-          }
-          catch(e) {
-              print("Error fetching user weight: $e");
-              return null;
-          }
+  }
+
+  Future<void> sendEmail(Map<String, String> from, List<Map<String, String>> to,
+      String subject, String message) async {
+    var apiUrl = Uri.https('api.sendgrid.com', 'v3/mail/send');
+    final headers = {
+      "Authorization": "Bearer <<YOUR_API_KEY>>",
+      "Content-Type": "application/json"
+    };
+    final data = {
+      "personalizations": [
+        {"to": to, "subject": subject}
+      ],
+      "content": [
+        {"type": "text/plain", "value": message}
+      ],
+      "from": from,
+    };
+
+    try {
+      final response =
+          await http.post(apiUrl, body: jsonEncode(data), headers: headers);
+      if (response.statusCode != 202) {
+        print(
+            'Failed to send email. Received status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error sending email: $e');
+      return;
+    }
+    return;
   }
 }
