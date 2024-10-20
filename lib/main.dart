@@ -130,9 +130,8 @@ class _NavBarPageState extends State<NavBarPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final tabs = {
-      'home': const HomeWidget(),
+      'home': const Home2Widget(),
       'ProgressPage': const ProgressPageWidget(),
       'makeAppointment': const MakeAppointmentWidget(),
       'workoutPlanPage': const WorkoutPlanPageWidget(),
@@ -144,13 +143,18 @@ class _NavBarPageState extends State<NavBarPage> {
       body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (i) => safeSetState(() {
-          _currentPage = null;
-          _currentPageName = tabs.keys.toList()[i];
-        }),
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        onTap: (i) =>
+            safeSetState(() {
+              _currentPage = null;
+              _currentPageName = tabs.keys.toList()[i];
+            }),
+        backgroundColor: FlutterFlowTheme
+            .of(context)
+            .primaryText,
         selectedItemColor: const Color(0xFF40DC28),
-        unselectedItemColor: FlutterFlowTheme.of(context).primaryBackground,
+        unselectedItemColor: FlutterFlowTheme
+            .of(context)
+            .primaryBackground,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
@@ -186,10 +190,10 @@ class _NavBarPageState extends State<NavBarPage> {
             ),
             label: 'Home',
             tooltip: '',
-          )
-          //BottomNavigationBarItem(
-            //icon: Icon(
-              //Icons.home_outlined,
+          ),
+         // BottomNavigationBarItem(
+           // icon: Icon(
+             // Icons.home_outlined,
               //size: 40.0,
             //),
             //label: 'Home',

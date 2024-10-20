@@ -6,8 +6,6 @@ Subtask: 139
 Fixed the overflow issue widget within the home page.
  */
 
-
-
 /*
 Ramin Selseleh
 
@@ -20,9 +18,7 @@ Same page as the “Graph Lines” button in the nave bar.
 Stephanie Nutter
 MA - 134
 Admin Message displays, called from Admin_Message.message
-
  */
-
 
 import '../backend/backend.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
@@ -36,6 +32,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:m_k_fit/pages/progress_page/progress_page_widget.dart';
+import 'package:m_k_fit/pages/progress_page/progress_page_model.dart';
+
+
 
 import 'home2_model.dart';
 export 'home2_model.dart';
@@ -274,12 +274,12 @@ class _Home2WidgetState extends State<Home2Widget> {
                                       size: 60,
                                     ),
                                     onPressed: () {
-                                      print('IconButton pressed ...');
+                                      print('IconButton pressed ....');
                                     },
                                   ),
                                 ),
                               ),
-                              Expanded( // << Replace Container with Expanded to make the layout adaptive
+                              Expanded(
                                 child: Container(
                                   height: 100,
                                   decoration: BoxDecoration(),
@@ -513,30 +513,28 @@ class _Home2WidgetState extends State<Home2Widget> {
                             alignment: AlignmentDirectional(0, 0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                context.pushNamed('CustomerChat'); // Navigate to CustomerChat when button is pressed
+                                context.pushNamed('ProgressPage');
                               },
-                              text: 'Chat Button',
-                              icon: const Icon(
-                                Icons.chat,
-                                size: 40.0,
-                              ),
+                              text: 'Visit your Progress',
                               options: FFButtonOptions(
-                                height: 78.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                height: 40,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 0, 24, 0),
+                                iconPadding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: Color(0xFF00831B),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
                                   fontFamily: 'Inter',
-                                  color: Colors.white,
-                                  fontSize: 20.0,
                                   letterSpacing: 0.0,
                                 ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
+                                elevation: 3,
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
-                                  width: 1.0,
+                                  width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(6.0),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
