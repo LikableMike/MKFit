@@ -108,7 +108,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
             size: 25,
           ),
           onPressed: () async {
-            context.pushNamed('home2');
+            context.pushNamed('home');
           },
         ),
         title: Text(
