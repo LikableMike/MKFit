@@ -337,7 +337,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 onPressed: () async {
                                   context.pushNamed('makeAppointment');
                                 },
-                                text: 'Schedule/Cancel Appointment',
+                                text: 'Schedule/Cancel Appointmenttt',
                                 options: FFButtonOptions(
                                   height: 40.0,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
