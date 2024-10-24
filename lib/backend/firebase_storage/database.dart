@@ -21,13 +21,21 @@ class DatabaseService {
 
   Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
-    return await exerciseCollection.doc(name).set({
+    await exerciseCollection.doc(name).set({
       "name": name,
       "numSets": numSets,
       "numReps": numReps,
       "description": description,
       "videoLink": link
     });
+    var uid = name.toLowerCase().replaceAll(" ", "_");
+    await exerciseTestCollection.doc(uid).set({
+      "exercise_name" : name,
+      "exercise_description" : description,
+      "video_sample" : link
+
+    });
+    return;
   }
 
   Future<List<Map<String, dynamic>>> getExerciseReferences(List<String> selectedWorkouts) async{
@@ -343,5 +351,42 @@ class DatabaseService {
       return;
     }
     return;
+  }
+
+  Future<bool> getWorkouts() async {
+    globals.userWorkouts.clear();
+    globals.testWorkouts.clear();
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var userWorkouts = snapshot.get("workouts");
+    final allWorkouts = FirebaseFirestore.instance.collection("workouts");
+    final allExercises = FirebaseFirestore.instance.collection("exercises_test");
+    for (int i = 0; i < userWorkouts.length; i++) {
+      if (userWorkouts[i]["uid"] != null) {
+        DocumentSnapshot WorkoutSnap = await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+        var workoutName = WorkoutSnap.get("name");
+        List workoutExercises = userWorkouts[i]["exercises"];
+        print(workoutExercises.toString());
+        globals.testWorkouts[workoutName] = [];
+        for(int j = 0; j < workoutExercises.length; j++){
+          DocumentSnapshot exerciseSnap = await allExercises.doc(workoutExercises[j]["uid"]).get();
+          globals.testWorkouts[workoutName].add({
+            "uid" : workoutExercises[j]["uid"],
+            "reps" : workoutExercises[j]["reps"],
+            "sets" : workoutExercises[j]["sets"],
+            "weight" : workoutExercises[j]["weight"],
+            "name" : exerciseSnap["exercise_name"],
+            "description" : exerciseSnap["exercise_description"]
+
+          });
+
+        }
+        globals.userWorkouts.add(workoutName);
+        print(globals.userWorkouts.toString());
+        print(globals.testWorkouts.toString());
+
+      }
+    }
+
+    return false;
   }
 }
