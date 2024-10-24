@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_k_fit/auth/base_auth_user_provider.dart';
 import 'package:m_k_fit/auth/firebase_auth/firebase_auth_manager.dart';
 import 'package:m_k_fit/auth/firebase_auth/firebase_user_provider.dart';
+import 'package:m_k_fit/backend/firebase_storage/database.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '/backend/firebase_storage/globals.dart' as globals;
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -316,6 +318,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                     context.pushNamed('home');
                                   }
                                   globals.UID = UID;
+                                  DatabaseService().getWorkouts();
                                   print(
                                       "UID SET TO: " + globals.UID.toString());
                                 }
