@@ -16,6 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 
 import 'weight_setting_model.dart';
 export 'weight_setting_model.dart';
@@ -28,6 +31,8 @@ class WeightSettingWidget extends StatefulWidget {
 
   final FFUploadedFile? currentImage;
 
+
+
   @override
   State<WeightSettingWidget> createState() => _WeightSettingWidgetState();
 }
@@ -38,10 +43,15 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
   late String userWeight = '';
   late String userHeight = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  late final MaskTextInputFormatter heightInputFormatter;
 
   @override
   void initState() {
     super.initState();
+    heightInputFormatter = MaskTextInputFormatter(
+      mask: '#.##',
+      filter: {"#": RegExp(r'[0-9]')},  // Only allow numeric input
+    );
     _model = createModel(context, () => WeightSettingModel());
     _model.textController1 ??=
         TextEditingController(text: currentUserDisplayName);
@@ -97,25 +107,33 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primary,
         automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: FlutterFlowTheme.of(context).alternate,
-          borderRadius: 30,
-          buttonSize: 48,
-          fillColor: FlutterFlowTheme.of(context).primaryBackground,
-          icon: Icon(
-            Icons.arrow_back,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 25,
+        leading: Align(
+          alignment: AlignmentDirectional(-1, 0),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+            child: FlutterFlowIconButton(
+              borderRadius: 30,
+              buttonSize: 48,
+              icon: Icon(
+                Icons.arrow_back,
+                color: FlutterFlowTheme.of(context).alternate,
+                size: 40,
+              ),
+              onPressed: () async {
+                context.safePop();
+              },
+            ),
           ),
-          onPressed: () async {
-            context.pushNamed('home');
-          },
         ),
-        title: Text(
-          'Work Out Profile',
-          style: FlutterFlowTheme.of(context).titleSmall.override(
-            fontFamily: 'Inter',
-            letterSpacing: 0.0,
+        title: Align(
+          alignment: AlignmentDirectional(-0.3, 0),
+          child: Text(
+            'Work Out Profile',
+            textAlign: TextAlign.start,
+            style: FlutterFlowTheme.of(context).titleSmall.override(
+              fontFamily: 'Inter',
+              letterSpacing: 0.0,
+            ),
           ),
         ),
         actions: [],
@@ -194,7 +212,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                               focusNode: _model.textFieldFocusNode1,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Name From backend',
+                                labelText: 'Name',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -345,8 +363,9 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                               controller: _model.textController3,
                               focusNode: _model.textFieldFocusNode3,
                               obscureText: false,
+                              inputFormatters: [heightInputFormatter],  // Access heightInputFormatter here
                               decoration: InputDecoration(
-                                labelText: 'Current Height',
+                                labelText: 'Enter height',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
