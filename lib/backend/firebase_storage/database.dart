@@ -13,9 +13,9 @@ class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final CollectionReference exerciseCollection =
-      FirebaseFirestore.instance.collection("exercises");
+  FirebaseFirestore.instance.collection("exercises");
   final CollectionReference exerciseTestCollection =
-      FirebaseFirestore.instance.collection("exercises_test");
+  FirebaseFirestore.instance.collection("exercises_test");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
 
@@ -42,20 +42,20 @@ class DatabaseService {
     List<Map<String, dynamic>> exerciseData = [];
 
     for(String workoutName in selectedWorkouts){
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('exercises')
-            .where('name', isEqualTo: workoutName)
-            .limit(1)
-            .get();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('exercises')
+          .where('name', isEqualTo: workoutName)
+          .limit(1)
+          .get();
 
-        if(querySnapshot.docs.isNotEmpty){
-            exerciseData.add({
-                'reference': querySnapshot.docs.first.reference,
-                'name':workoutName,
-            });
-        } else{
-            print('No exercise found for $workoutName');
-        }
+      if(querySnapshot.docs.isNotEmpty){
+        exerciseData.add({
+          'reference': querySnapshot.docs.first.reference,
+          'name':workoutName,
+        });
+      } else{
+        print('No exercise found for $workoutName');
+      }
     }
     return exerciseData;
   }
@@ -159,12 +159,12 @@ class DatabaseService {
         .orderBy("date", descending: false)
         .get()
         .then(
-      (querySnapshot) {
+          (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
           var doc = docSnapshot.data();
           for (var attr in attrs) {
             DateTime date =
-                DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
+            DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
             double? val = double.tryParse(doc[attr].toString());
             if (val != null) {
               graphData[attr]!["x"]!.add(date);
@@ -177,7 +177,6 @@ class DatabaseService {
     );
     return graphData;
   }
-
   Future makeAppointment(String date, String time) async {
     return await usersCollection.doc(globals.UID).update({
       "appointments": FieldValue.arrayUnion([
@@ -243,7 +242,28 @@ class DatabaseService {
     return dayAppointments;
   }
 
-  Future cancelAppointment(String date) async {
+
+
+  Future cancelAppointment(List<String> dates) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var appointments = snapshot.get("appointments");
+
+    for (String date in dates) {
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["date"] != null &&
+            appointments[i]["date"].contains(date)) {
+          print("Date Found: $date");
+          await usersCollection.doc(globals.UID).update({
+            "appointments": FieldValue.arrayRemove([
+              {"date": appointments[i]["date"], "time": appointments[i]["time"]}
+            ])
+          });
+        }
+      }
+    }
+  }
+
+  /*Future cancelAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     var appointments = snapshot.get("appointments");
     for (int i = 0; i < appointments.length; i++) {
@@ -258,14 +278,14 @@ class DatabaseService {
       }
     }
   }
-
+*/
   Future<void> updateExercise(String attr, String doc, String val) async {
     await exerciseTestCollection.doc(doc).update({attr: val});
   }
 
   Future<String?> getExerciseVideo(String exercise) async {
     DocumentSnapshot snapshot =
-        await exerciseTestCollection.doc(exercise).get();
+    await exerciseTestCollection.doc(exercise).get();
     if (snapshot.exists) {
       return snapshot.get("video_sample");
     } else {
@@ -341,7 +361,7 @@ class DatabaseService {
 
     try {
       final response =
-          await http.post(apiUrl, body: jsonEncode(data), headers: headers);
+      await http.post(apiUrl, body: jsonEncode(data), headers: headers);
       if (response.statusCode != 202) {
         print(
             'Failed to send email. Received status code: ${response.statusCode}');
