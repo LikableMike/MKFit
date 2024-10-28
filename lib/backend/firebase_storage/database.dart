@@ -1,3 +1,4 @@
+//database code 10/26
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -250,8 +251,7 @@ class DatabaseService {
 
     for (String date in dates) {
       for (int i = 0; i < appointments.length; i++) {
-        if (appointments[i]["date"] != null &&
-            appointments[i]["date"].contains(date)) {
+        if (appointments[i]["date"] != null && appointments[i]["date"].contains(date)) {
           print("Date Found: $date");
           await usersCollection.doc(globals.UID).update({
             "appointments": FieldValue.arrayRemove([
@@ -262,6 +262,28 @@ class DatabaseService {
       }
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /*Future cancelAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();

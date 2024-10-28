@@ -301,137 +301,40 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           },
                                         ),
                                       ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (_selectedDateRange != null && _selectedTime != null) {
-                                  String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            if (_selectedDateRange != null && _selectedTime != null) {
+                                              String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
 
-                                  // Handle appointment confirmation here
-                                  try {
-                                    print('Appointment scheduled for $formattedDate at $_selectedTime');
+                                              // Handle appointment confirmation here
+                                              try {
+                                                print('Appointment scheduled for $formattedDate at $_selectedTime');
 
-                                    // Create the initial appointment
-                                    await DatabaseService().makeAppointment(_selectedDateRange!.start.toString(), _selectedTime!);
+                                                // Create the initial appointment
+                                                await DatabaseService().makeAppointment(_selectedDateRange!.start.toString(), _selectedTime!);
 
-                                    print(_selectedDateRange.toString() + " " + _selectedTime.toString());
-                                    print(globals.UID);
+                                                print(_selectedDateRange.toString() + " " + _selectedTime.toString());
+                                                print(globals.UID);
 
-                                    // Show a dialog asking if the user wants to set the meeting to recurring
-                                    bool? shouldSetRecurring = await showDialog<bool>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Set Recurring Meeting'),
-                                          content: Text('Would you like to set this meeting to recurring?'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(true); // Return 'true' when "Yes" is tapped
-                                              },
-                                              child: Text('Yes'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(false); // Return 'false' when "No" is tapped
-                                              },
-                                              child: Text('No'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-
-                                    if (shouldSetRecurring != null && shouldSetRecurring) {
-                                      // Allow the user to choose an end date for the recurring appointment
-                                      DateTimeRange? recurringDateRange = await showDateRangePicker(
-                                        context: context,
-                                        firstDate: DateTime.now(),
-                                        lastDate: DateTime(2100),
-                                        initialDateRange: _selectedDateRange,
-                                      );
-
-                                      if (recurringDateRange != null) {
-                                        // Generate recurring dates (e.g., every week on the same day)
-                                        List<DateTime> recurringDates = generateRecurringDates(
-                                          _selectedDateRange!.start,
-                                          recurringDateRange.end,
-                                        );
-
-                                        // Loop through each generated date and make an appointment
-                                        for (DateTime date in recurringDates) {
-                                          String recurringDateStr = DateFormat('yyyy-MM-dd').format(date);
-                                          await DatabaseService().makeAppointment(recurringDateStr, _selectedTime!);
-                                        }
-
-                                        // Display confirmation message including the time
-                                        String firstDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.start);
-                                        String endDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.end);
-
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text('Recurring appointments set from $firstDate to $endDate at $_selectedTime')),
-                                        );
-                                      }
-                                    } else {
-                                      // Display confirmation message including the time
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text('Appointment confirmed for $formattedDate at $_selectedTime')),
-                                      );
-                                    }
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                } else {
-                                  print(_selectedDateRange.toString() + " " + _selectedTime.toString());
-
-                                  // Show error or prompt to select date/time
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Please select both date and time.')),
-                                  );
-                                }
-                              },
-                              child: Text('Confirm Appointment'),
-                            ),
-                          ),
-
-
-
-
-
-                                      // Cancel Appointment Button
-                                      FutureBuilder<bool>(
-                                        future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString() ?? "null"),
-                                        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.waiting) {
-                                            return CircularProgressIndicator();
-                                          } else if (snapshot.hasError) {
-                                            return Text('Error: ${snapshot.error}');
-                                          } else if (snapshot.hasData && snapshot.data == true) {
-                                            return ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.red,
-                                              ),
-                                              onPressed: () async {
-                                                String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
-
-                                                // Show a dialog to confirm if the user wants to cancel all recurring appointments
-                                                bool? shouldCancelRecurring = await showDialog<bool>(
+                                                // Show a dialog asking if the user wants to set the meeting to recurring
+                                                bool? shouldSetRecurring = await showDialog<bool>(
                                                   context: context,
                                                   builder: (BuildContext context) {
                                                     return AlertDialog(
-                                                      title: Text('Cancel Recurring Appointment'),
-                                                      content: Text('Would you like to cancel all recurring appointments as well?'),
+                                                      title: Text('Set Recurring Meeting'),
+                                                      content: Text('Would you like to set this meeting to recurring?'),
                                                       actions: <Widget>[
                                                         TextButton(
                                                           onPressed: () {
-                                                            Navigator.of(context).pop(true);
+                                                            Navigator.of(context).pop(true); // Return 'true' when "Yes" is tapped
                                                           },
                                                           child: Text('Yes'),
                                                         ),
                                                         TextButton(
                                                           onPressed: () {
-                                                            Navigator.of(context).pop(false);
+                                                            Navigator.of(context).pop(false); // Return 'false' when "No" is tapped
                                                           },
                                                           child: Text('No'),
                                                         ),
@@ -440,7 +343,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                   },
                                                 );
 
-                                                if (shouldCancelRecurring != null && shouldCancelRecurring) {
+                                                if (shouldSetRecurring != null && shouldSetRecurring) {
+                                                  // Allow the user to choose an end date for the recurring appointment
                                                   DateTimeRange? recurringDateRange = await showDateRangePicker(
                                                     context: context,
                                                     firstDate: DateTime.now(),
@@ -449,48 +353,161 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                   );
 
                                                   if (recurringDateRange != null) {
+                                                    // Generate recurring dates (e.g., every week on the same day)
                                                     List<DateTime> recurringDates = generateRecurringDates(
                                                       _selectedDateRange!.start,
                                                       recurringDateRange.end,
                                                     );
 
-                                                    List<String> formattedDates = recurringDates.map((date) => DateFormat('yyyy-MM-dd').format(date)).toList();
+                                                    // Loop through each generated date and make an appointment
+                                                    for (DateTime date in recurringDates) {
+                                                      String recurringDateStr = DateFormat('yyyy-MM-dd').format(date);
+                                                      await DatabaseService().makeAppointment(recurringDateStr, _selectedTime!);
+                                                    }
 
-                                                    await DatabaseService().cancelAppointment(formattedDates);
+                                                    // Display confirmation message including the time
+                                                    String firstDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.start);
+                                                    String endDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.end);
 
                                                     ScaffoldMessenger.of(context).showSnackBar(
-                                                      SnackBar(content: Text('Recurring appointments have been canceled.')),
+                                                      SnackBar(content: Text('Recurring appointments set from $firstDate to $endDate at $_selectedTime')),
                                                     );
                                                   }
                                                 } else {
-                                                  await DatabaseService().cancelAppointment([formattedDate]);
-
+                                                  // Display confirmation message including the time
                                                   ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(content: Text('Appointment on $formattedDate at $_selectedTime has been canceled.')),
+                                                    SnackBar(content: Text('Appointment confirmed for $formattedDate at $_selectedTime')),
                                                   );
                                                 }
+                                              } catch (e) {
+                                                print(e);
+                                              }
+                                            } else {
+                                              print(_selectedDateRange.toString() + " " + _selectedTime.toString());
 
-                                                setState(() {
-                                                  _selectedDateRange = null;
-                                                  _selectedTime = null;
-                                                });
-                                              },
-                                              child: const Text('Cancel Appointment'),
-                                            );
-                                          } else {
-                                            return Container();
-                                          }
-                                        },
+                                              // Show error or prompt to select date/time
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(content: Text('Please select both date and time.')),
+                                              );
+                                            }
+                                          },
+                                          child: Text('Confirm Appointment'),
+                                        ),
                                       ),
 
 
 
 
 
+                          // Cancel Appointment Button
+                          FutureBuilder<bool>(
+                            future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString() ?? "null"),
+                            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.hasData && snapshot.data == true) {
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                  ),
+                                  onPressed: () async {
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
+
+                                    // Show a dialog to confirm if the user wants to cancel all recurring appointments
+                                    bool? shouldCancelRecurring = await showDialog<bool>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Cancel Appointment'),
+                                          content: Text('Would you like to cancel all recurring appointments, or just this one?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(true); // Yes, cancel all recurring
+                                              },
+                                              child: Text('All Recurring'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(false); // No, just this one
+                                              },
+                                              child: Text('Just This One'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+
+                                    if (shouldCancelRecurring != null && shouldCancelRecurring) {
+                                      // If the user chooses to cancel all recurring, gather all dates
+                                      List<DateTime> recurringDates = generateRecurringDates(
+                                        _selectedDateRange!.start,
+                                        _selectedDateRange!.end, // Adjust as needed
+                                      );
+
+                                      List<String> formattedDates = recurringDates
+                                          .map((date) => DateFormat('yyyy-MM-dd').format(date))
+                                          .toList();
+
+                                      await DatabaseService().cancelAppointment(formattedDates);
+
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('All recurring appointments have been canceled.')),
+                                      );
+                                    } else {
+                                      // Cancel only the selected appointment
+                                      await DatabaseService().cancelAppointment([formattedDate]);
+
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Appointment on $formattedDate at $_selectedTime has been canceled.')),
+                                      );
+                                    }
+
+                                    setState(() {
+                                      _selectedDateRange = null;
+                                      _selectedTime = null;
+                                    });
+                                  },
+                                  child: const Text('Cancel Appointment'),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
 
 
 
-                                      // ElevatedButton(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          // ElevatedButton(
                                       //     style: ElevatedButton.styleFrom(
                                       //       backgroundColor: Colors.red, // Red color for the cancel button
                                       //     ),
