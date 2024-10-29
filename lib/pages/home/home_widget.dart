@@ -54,8 +54,21 @@ class _HomeWidgetState extends State<HomeWidget> {
     super.dispose();
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
+    // Get the current hour
+    int currentHour = DateTime.now().hour;
+    String greeting;
+
+    // Determine the appropriate greeting based on the time of day
+    if (currentHour < 12) {
+      greeting = 'Good morning!';
+    } else if (currentHour < 18) {
+      greeting = 'Good afternoon!';
+    } else {
+      greeting = 'Good evening!';
+    }
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -72,29 +85,29 @@ class _HomeWidgetState extends State<HomeWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '.',
+                    '.', //Can be removed, it's a placeholder
                     style: FlutterFlowTheme.of(context).labelSmall.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                   Text(
-                    'Good Morning, Champ!',
+                    greeting, // Dynamic greeting based on time of day
                     style: FlutterFlowTheme.of(context).labelSmall.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                   StreamBuilder<List<AdminMessageRecord>>(
                     stream: queryAdminMessageRecord(
                       singleRecord: true,
                     ),
                     builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
+                      // Customize loading state
                       if (!snapshot.hasData) {
                         return Center(
                           child: SizedBox(
@@ -108,20 +121,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         );
                       }
-                      List<AdminMessageRecord> textAdminMessageRecordList =
-                          snapshot.data!;
+                      List<AdminMessageRecord> textAdminMessageRecordList = snapshot.data!;
 
                       // Return an empty Container if there are no records
                       if (textAdminMessageRecordList.isEmpty) {
                         return Container();
                       }
 
-                      final rand = Random();
-                      final randIndex =
-                          rand.nextInt(textAdminMessageRecordList.length);
-
-                      final textAdminMessageRecord =
-                          textAdminMessageRecordList[randIndex];
+                      final textAdminMessageRecord = textAdminMessageRecordList.first;
 
                       // Access the string message field directly
                       String message = textAdminMessageRecord.message;
@@ -134,11 +141,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                         style: FlutterFlowTheme.of(context)
                             .headlineMedium
                             .override(
-                              fontFamily: 'Readex Pro',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Readex Pro',
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          letterSpacing: 0.0,
+                        ),
                       );
                     },
                   ),
