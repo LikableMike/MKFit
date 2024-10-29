@@ -18,6 +18,9 @@ Same page as the “Graph Lines” button in the nave bar.
 Stephanie Nutter
 MA - 134
 Admin Message displays, called from Admin_Message.message
+MA - 192
+Displays greeting based upon time of day.
+
  */
 
 import '../backend/backend.dart';
@@ -67,8 +70,21 @@ class _Home2WidgetState extends State<Home2Widget> {
     super.dispose();
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
+    // Get the current hour
+    int currentHour = DateTime.now().hour;
+    String greeting;
+
+    // Determine the appropriate greeting based on the time of day
+    if (currentHour < 12) {
+      greeting = 'Good morning!';
+    } else if (currentHour < 18) {
+      greeting = 'Good afternoon!';
+    } else {
+      greeting = 'Good evening!';
+    }
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -85,7 +101,16 @@ class _Home2WidgetState extends State<Home2Widget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Good Morning, Champ!',
+                    '.', // Placeholder or can be removed
+                    style: FlutterFlowTheme.of(context).labelSmall.override(
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                    ),
+                  ),
+                  Text(
+                    greeting, // Dynamic greeting based on time of day
                     style: FlutterFlowTheme.of(context).labelSmall.override(
                       fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).primaryBackground,
@@ -98,7 +123,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                       singleRecord: true,
                     ),
                     builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
+                      // Customize loading state
                       if (!snapshot.hasData) {
                         return Center(
                           child: SizedBox(
@@ -112,6 +137,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                           ),
                         );
                       }
+
                       List<AdminMessageRecord> textAdminMessageRecordList = snapshot.data!;
 
                       // Return an empty Container if there are no records
@@ -133,8 +159,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                             .headlineMedium
                             .override(
                           fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context)
-                              .primaryBackground,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
                           letterSpacing: 0.0,
                         ),
                       );
@@ -143,7 +168,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                   Divider(
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
-                ].divide(SizedBox(height: 4)),
+                ].divide(const SizedBox(height: 4.0)),
               ),
             ],
           ),
