@@ -7,7 +7,7 @@ class MessagePageWidget extends StatefulWidget {
   const MessagePageWidget({super.key});
 
   @override
-  State<MessagePageWidget> createState() => _MessagePageWidgetState();
+  _MessagePageWidgetState createState() => _MessagePageWidgetState();
 }
 
 class _MessagePageWidgetState extends State<MessagePageWidget> {
@@ -20,10 +20,14 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
     _model = createModel(context, () => MessagePageModel());
   }
 
+  T createModel<T>(BuildContext context, T Function() modelBuilder) {
+    return modelBuilder();
+  }
   @override
   void dispose() {
     _model.dispose();
     super.dispose();
+
   }
 
   @override
@@ -63,7 +67,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
         buttonSize: 70.0,
         icon: const Icon(Icons.arrow_back_rounded, color: Colors.white, size: 40.0),
         onPressed: () async {
-          context.pop();
+          Navigator.pop(context);
         },
       ),
       title: Text(

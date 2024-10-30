@@ -6,14 +6,14 @@ class MessagePageModel extends FlutterFlowModel<MessagePageWidget> {
   
   @override
   void initState(BuildContext context) {
-    super.initState();
+    //super.initState();
 
   }
 
   @override
   void dispose() {
 
-    super.dispose();
+   // super.dispose();
   }
 
 }
