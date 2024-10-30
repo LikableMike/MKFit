@@ -28,6 +28,10 @@ class _LoginWidgetState extends State<LoginWidget>
   late LoginModel _model;
 
   final List<String> adminUIDs = [
+      "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3",
+      "nOlIEy4WKkddkikrMPhQNLEjT9y1",
+      // Add more UIDs as needed
+  ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};

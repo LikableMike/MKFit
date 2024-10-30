@@ -21,13 +21,11 @@ class MakeAppointmentWidget extends StatefulWidget {
 class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
     with TickerProviderStateMixin {
   late MakeAppointmentModel _model;
-
+  late DatabaseService dbService;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   DateTimeRange? _selectedDateRange;
-  String? _selectedTime;
-  final List<String> _availableTimes = [
-    '9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 AM', '1:00 PM - 2:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM'
-  ];
+  TimeOfDay? _selectedTime;
+
 
 
   @override
@@ -319,35 +317,65 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
-                                        child: DropdownButton<String>(
-                                          value: _selectedTime,
-                                          hint: Text(
-                                            _selectedTime == null ? 'Select time' : 'Time Selected: $_selectedTime',
-                                            style: TextStyle(
-                                              color: Colors.white, // Set the color for "Select time" text
-                                              fontSize: 16.0,
+                                        child: Column(
+                                          children: [
+                                            // Print statements to debug time format
+                                            Text(
+                                              'Appointment Ends One Hour After Start Time',
+                                              style: TextStyle(color: Colors.white),
                                             ),
-                                          ),
-                                          style: TextStyle(
-                                            color: Colors.white, // This applies to the selected item
-                                            fontSize: 16.0,
-                                          ),
-                                          items: _availableTimes.map((String time) {
-                                            return DropdownMenuItem<String>(
-                                              value: time,
-                                              child: Text(
-                                                time,
+                                            Text(
+                                              'Select Start Time:',
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+
+                                            // Your DropdownButton
+                                            DropdownButton<String>(
+                                              value: _selectedTime != null ? _selectedTime!.format(context) : null,
+                                              hint: Text(
+                                                _selectedTime == null ? 'Select time' : 'Time Selected: ${_selectedTime!.format(context)}',
                                                 style: TextStyle(
-                                                  color: Colors.blue, // Set the color for the dropdown items
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
                                                 ),
                                               ),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              _selectedTime = newValue;
-                                            });
-                                          },
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                              ),
+                                              items: _availableTimes.map((String time) {
+                                                return DropdownMenuItem<String>(
+                                                  value: time,
+                                                  child: Text(
+                                                    time,
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (String? newValue) {
+                                                if (newValue != null) {
+                                                  // Parse the new value back into a TimeOfDay object
+                                                  final timeParts = newValue.split(" ");
+                                                  final period = timeParts[1];
+                                                  final hourMinute = timeParts[0].split(":");
+                                                  int hour = int.parse(hourMinute[0]);
+                                                  int minute = int.parse(hourMinute[1]);
+
+                                                  if (period == "PM" && hour != 12) {
+                                                    hour += 12;
+                                                  } else if (period == "AM" && hour == 12) {
+                                                    hour = 0;
+                                                  }
+
+                                                  setState(() {
+                                                    _selectedTime = TimeOfDay(hour: hour, minute: minute);
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Padding(
@@ -667,7 +695,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                           4.0),
                                                                       child:
                                                                       Text(
-                                                                        _selectedTime ?? 'Select Time',
+                                                                        _selectedTime != null ? _selectedTime!.format(context) : 'Select Time',
                                                                         style: FlutterFlowTheme
                                                                             .of(
                                                                             context)
