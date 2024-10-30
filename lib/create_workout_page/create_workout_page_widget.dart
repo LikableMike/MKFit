@@ -21,8 +21,9 @@ class CreateWorkoutPageWidget extends StatefulWidget {
 class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
   late CreateWorkoutPageModel _model;
   List<String> selectedWorkouts = [];
-
+  List<String> exercises = [];
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final DatabaseService _databaseService = DatabaseService();
 
   void onWorkoutSelected(String workoutName){
     setState((){
@@ -46,12 +47,47 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
     _model.descriptionFocusNode ??= FocusNode();
     _model.descriptionFocusNode!.addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    fetchExercises();
+  }
+
+  Future<void> fetchExercises() async {
+    try {
+      // Fetch documents from the 'exercises_test' collection
+      final snapshot = await FirebaseFirestore.instance.collection('exercises_test').get();
+      List<String> exerciseNames = [];
+
+      // Check if there are no documents
+      if (snapshot.docs.isEmpty) {
+        print('No exercises found');
+      } else {
+        // Map through the documents and extract the desired field
+        exerciseNames = snapshot.docs.map((doc) {
+          // Ensure to handle the absence of the field safely
+          if (doc.data().containsKey('exercise_name')) {
+            return doc['exercise_name'].toString();
+          }
+          else {
+            print('Document ${doc.id} does not contain exercise_name');
+            // Return null for documents without the field
+            return null;
+          }
+        }).where((name) => name != null).cast<String>().toList();
+
+        print('Fetched exercises: $exerciseNames');
+      }
+
+      // Update the state to reflect the fetched exercises
+      setState(() {
+        exercises = exerciseNames;
+      });
+    } catch (e) {
+      print('Error fetching exercises: $e');
+    }
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -355,59 +391,31 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                   ),
                                   Text(
                                     'Add Exercises:',
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: const Color(0xFF606A85),
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
-                                  FlutterFlowCheckboxGroup(
-                                    options: const [
-                                      'Chest Flys',
-                                      'Bulgarian Squats',
-                                      'Bench Press',
-                                      'Chest Press',
-                                      'Shoulder Press',
-                                      'Romanian Deadlifts',
-                                      'Lateral Raises',
-                                      'Overhead Press',
-                                      'Incline Press',
-                                      'Hammer Curls',
-                                      'Bicep Curls',
-                                      'Tricep Pull-Downs',
-                                      'Lat Pull Downs',
-                                      'Incline Rows'
-                                    ],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.checkboxGroupValues = val),
-                                    controller:
-                                        _model.checkboxGroupValueController ??=
-                                            FormFieldController<List<String>>(
-                                      [],
+                                    style: FlutterFlowTheme.of(context).labelMedium.override(
+                                      fontFamily: 'Outfit',
+                                      color: const Color(0xFF606A85),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    activeColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    checkColor:
-                                        FlutterFlowTheme.of(context).info,
-                                    checkboxBorderColor:
-                                        FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryBackground,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    checkboxBorderRadius:
-                                        BorderRadius.circular(4.0),
-                                    initialized:
-                                        _model.checkboxGroupValues != null,
+                                  ),
+                                FlutterFlowCheckboxGroup(
+                                    options: exercises, // Use the dynamic list
+                                    onChanged: (val) => safeSetState(
+                                          () => _model.checkboxGroupValues = val,
+                                    ),
+                                    controller: _model.checkboxGroupValueController ??=
+                                        FormFieldController<List<String>>([]),
+                                    activeColor: FlutterFlowTheme.of(context).primary,
+                                    checkColor: FlutterFlowTheme.of(context).info,
+                                    checkboxBorderColor: FlutterFlowTheme.of(context).secondaryText,
+                                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                                      fontFamily: 'Inter',
+                                      color: FlutterFlowTheme.of(context).primaryBackground,
+                                      letterSpacing: 0.0,
+                                    ),
+                                    checkboxBorderRadius: BorderRadius.circular(4.0),
+                                    initialized: _model.checkboxGroupValues != null,
                                   ),
                                 ]
                                     .divide(const SizedBox(height: 12.0))
