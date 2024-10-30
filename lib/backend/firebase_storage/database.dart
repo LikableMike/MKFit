@@ -1,9 +1,12 @@
+//database code 10/26
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:sqflite/sqflite.dart";
+import 'dart:convert';
 import "package:firebase_storage/firebase_storage.dart";
 import "dart:io";
+import 'package:http/http.dart' as http;
 import "/backend/firebase_storage/globals.dart" as globals;
 
 class DatabaseService {
@@ -78,33 +81,41 @@ class DatabaseService {
   }
   Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
-    return await exerciseCollection.doc(name).set({
+    await exerciseCollection.doc(name).set({
       "name": name,
       "numSets": numSets,
       "numReps": numReps,
       "description": description,
       "videoLink": link
     });
+    var uid = name.toLowerCase().replaceAll(" ", "_");
+    await exerciseTestCollection.doc(uid).set({
+      "exercise_name": name,
+      "exercise_description": description,
+      "video_sample": link
+    });
+    return;
   }
 
-  Future<List<Map<String, dynamic>>> getExerciseReferences(List<String> selectedWorkouts) async{
+  Future<List<Map<String, dynamic>>> getExerciseReferences(
+      List<String> selectedWorkouts) async {
     List<Map<String, dynamic>> exerciseData = [];
 
-    for(String workoutName in selectedWorkouts){
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('exercises')
-            .where('name', isEqualTo: workoutName)
-            .limit(1)
-            .get();
+    for (String workoutName in selectedWorkouts) {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('exercises')
+          .where('name', isEqualTo: workoutName)
+          .limit(1)
+          .get();
 
-        if(querySnapshot.docs.isNotEmpty){
-            exerciseData.add({
-                'reference': querySnapshot.docs.first.reference,
-                'name':workoutName,
-            });
-        } else{
-            print('No exercise found for $workoutName');
-        }
+      if (querySnapshot.docs.isNotEmpty) {
+        exerciseData.add({
+          'reference': querySnapshot.docs.first.reference,
+          'name': workoutName,
+        });
+      } else {
+        print('No exercise found for $workoutName');
+      }
     }
     return exerciseData;
   }
@@ -114,7 +125,8 @@ class DatabaseService {
       String workoutName = workoutData['name'];
       List<String> selectedWorkouts = workoutData['exercises'];
 
-      List<Map<String, dynamic>> exerciseData = await getExerciseReferences(selectedWorkouts);
+      List<Map<String, dynamic>> exerciseData =
+          await getExerciseReferences(selectedWorkouts);
 
       List<Map<String, dynamic>> exercisesToSave = exerciseData.map((data) {
         return {
@@ -248,7 +260,70 @@ class DatabaseService {
     return false;
   }
 
-  Future cancelAppointment(String date) async {
+  Future<bool> checkAdminAppointments(String date) async {
+    QuerySnapshot snapshot = await usersCollection.get();
+    var queryDocs = snapshot.docs;
+    for (int i = 0; i < queryDocs.length; i++) {
+      var userAppointments = queryDocs.elementAt(i).get("appointments");
+      if (userAppointments != null) {
+        for (int j = 0; j < userAppointments.length; j++) {
+          if (userAppointments[j]["date"] != null &&
+              userAppointments[j]["date"].contains(date)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  Future<String> checkAdminDay(String date) async {
+    QuerySnapshot snapshot = await usersCollection.get();
+    var queryDocs = snapshot.docs;
+    var dayAppointments = "\n";
+    for (int i = 0; i < queryDocs.length; i++) {
+      var userAppointments = queryDocs.elementAt(i).get("appointments");
+      if (userAppointments != null) {
+        for (int j = 0; j < userAppointments.length; j++) {
+          if (userAppointments[j]["date"] != null &&
+              userAppointments[j]["date"].contains(date)) {
+            print(queryDocs.elementAt(i).get("name") +
+                " at " +
+                userAppointments[j]["time"]);
+            dayAppointments += (queryDocs.elementAt(i).get("name") +
+                " at:\n " +
+                userAppointments[j]["time"] +
+                "\n\n");
+          }
+        }
+      }
+    }
+    if (dayAppointments.trim().isEmpty) {
+      dayAppointments = "No Appointments on:\n" + date;
+    }
+    return dayAppointments;
+  }
+
+  Future cancelAppointment(List<String> dates) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var appointments = snapshot.get("appointments");
+
+    for (String date in dates) {
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["date"] != null &&
+            appointments[i]["date"].contains(date)) {
+          print("Date Found: $date");
+          await usersCollection.doc(globals.UID).update({
+            "appointments": FieldValue.arrayRemove([
+              {"date": appointments[i]["date"], "time": appointments[i]["time"]}
+            ])
+          });
+        }
+      }
+    }
+  }
+
+  /*Future cancelAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     var appointments = snapshot.get("appointments");
     for (int i = 0; i < appointments.length; i++) {
@@ -263,7 +338,7 @@ class DatabaseService {
       }
     }
   }
-
+*/
   Future<void> updateExercise(String attr, String doc, String val) async {
     await exerciseTestCollection.doc(doc).update({attr: val});
   }
@@ -278,55 +353,156 @@ class DatabaseService {
       return null;
     }
   }
+
   Future<String?> getUserName() async {
-      try{
-          final String uid = await getUID();
-          DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
-          if(snapshot.exists) {
-              return snapshot.get("name");
-          }
-          else{
-              print("User document does not exist");
-              return null;
-          }
+    try {
+      final String uid = await getUID();
+      DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.get("name");
+      } else {
+        print("User document does not exist");
+        return null;
       }
-      catch(e) {
-          print("Error fetching user name: $e");
-          return null;
-      }
+    } catch (e) {
+      print("Error fetching user name: $e");
+      return null;
     }
-    Future<String?> getUserHeight() async {
-        try{
-            final String uid = await getUID();
-            DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
-            if(snapshot.exists) {
-                return snapshot.get("height");
-            }
-            else{
-                print("User document does not exist");
-                return null;
-            }
-        }
-        catch(e) {
-            print("Error fetching user height: $e");
-            return null;
-        }
-    }
-    Future<String?> getUserWeight() async {
-          try{
-              final String uid = await getUID();
-              DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
-              if(snapshot.exists) {
-                  return snapshot.get("weight");
-              }
-              else{
-                  print("User document does not exist");
-                  return null;
-              }
-          }
-          catch(e) {
-              print("Error fetching user weight: $e");
-              return null;
-          }
   }
+
+  Future<String?> getUserHeight() async {
+    try {
+      final String uid = await getUID();
+      DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.get("height");
+      } else {
+        print("User document does not exist");
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching user height: $e");
+      return null;
+    }
+  }
+
+  Future<String?> getUserWeight() async {
+    try {
+      final String uid = await getUID();
+      DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.get("weight");
+      } else {
+        print("User document does not exist");
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching user weight: $e");
+      return null;
+    }
+  }
+
+  Future<void> sendEmail(Map<String, String> from, List<Map<String, String>> to,
+      String subject, String message) async {
+    var apiUrl = Uri.https('api.sendgrid.com', 'v3/mail/send');
+    final headers = {
+      "Authorization": "Bearer <<YOUR_API_KEY>>",
+      "Content-Type": "application/json"
+    };
+    final data = {
+      "personalizations": [
+        {"to": to, "subject": subject}
+      ],
+      "content": [
+        {"type": "text/plain", "value": message}
+      ],
+      "from": from,
+    };
+
+    try {
+      final response =
+          await http.post(apiUrl, body: jsonEncode(data), headers: headers);
+      if (response.statusCode != 202) {
+        print(
+            'Failed to send email. Received status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error sending email: $e');
+      return;
+    }
+    return;
+  }
+
+  Future<bool> getWorkouts() async {
+    globals.userWorkouts.clear();
+    globals.testWorkouts.clear();
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var userWorkouts = snapshot.get("workouts");
+    final allWorkouts = FirebaseFirestore.instance.collection("workouts");
+    final allExercises =
+        FirebaseFirestore.instance.collection("exercises_test");
+    for (int i = 0; i < userWorkouts.length; i++) {
+      if (userWorkouts[i]["uid"] != null) {
+        DocumentSnapshot WorkoutSnap =
+            await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+        var workoutName = WorkoutSnap.get("name");
+        List workoutExercises = userWorkouts[i]["exercises"];
+        print(workoutExercises.toString());
+        globals.testWorkouts[workoutName] = [];
+        for (int j = 0; j < workoutExercises.length; j++) {
+          DocumentSnapshot exerciseSnap =
+              await allExercises.doc(workoutExercises[j]["uid"]).get();
+          globals.testWorkouts[workoutName].add({
+            "uid": workoutExercises[j]["uid"],
+            "reps": workoutExercises[j]["reps"],
+            "sets": workoutExercises[j]["sets"],
+            "weight": workoutExercises[j]["weight"],
+            "name": exerciseSnap["exercise_name"],
+            "description": exerciseSnap["exercise_description"]
+          });
+        }
+        globals.userWorkouts.add(workoutName);
+        print(globals.userWorkouts.toString());
+        print(globals.testWorkouts.toString());
+      }
+    }
+
+    return false;
+  }
+
+  //Workout Page Widget
+  //Dynamically calls exercise_names 
+ Future<List<String>> fetchExercises() async {
+    try {
+      // Fetch the main collection 'exercises'
+      final snapshot = await _firestore.collection('exercises').get();
+      List<String> exerciseNames = [];
+
+      // Iterate through each document in the main collection
+      for (var doc in snapshot.docs) {
+      //Prints each document ID
+        print('Document ID: ${doc.id}');
+
+        // Fetch the subcollection 'exercises' under each document
+        final subcollectionSnapshot = await doc.reference.collection('exercises').get();
+
+        // Iterate through each document in the subcollection
+        for (var subDoc in subcollectionSnapshot.docs) {
+          print('Sub Document ID: ${subDoc.id}, Data: ${subDoc.data()}');
+
+          // Ensure the key 'exercise_name' exists before accessing it
+          if (subDoc.data().containsKey('exercise_name')) {
+            exerciseNames.add(subDoc['exercise_name'].toString());
+          }
+        }
+      }
+      // Print the final list
+      print('Fetched Exercises: $exerciseNames');
+      return exerciseNames;
+    } catch (e) {
+      print('Error fetching exercises: $e');
+      return [];
+    }
+  }
+
 }

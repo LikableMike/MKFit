@@ -78,8 +78,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const LoginWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? const NavBarPage()
+              : const LoginWidget(),
         ),
         FFRoute(
           name: 'login',
@@ -92,23 +93,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const CreateAccount1Widget(),
         ),
         FFRoute(
-          name: 'home2',
-          path: '/home2',
-          builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'home2') : const Home2Widget(),
-        ),
-        FFRoute(
           name: 'ProgressPage',
           path: '/progressPage',
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'ProgressPage')
               : const ProgressPageWidget(),
         ),
+        /*
         FFRoute(
           name: 'messagePage',
           path: '/messagePage',
           builder: (context, params) => const MessagePageWidget(),
         ),
+        */
         FFRoute(
           name: 'SettingsPage',
           path: '/settingsPage',
@@ -120,6 +117,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'makeAppointment')
               : const MakeAppointmentWidget(),
+        ),
+        FFRoute(
+          name: "adminCalendar",
+          path: '/adminCalendar',
+          builder: (context, params) => const AdminCalendarWidget(),
         ),
         FFRoute(
           name: 'forgotUsername',
@@ -174,14 +176,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const IndividualWorkoutPageWidget(),
         ),
         FFRoute(
-
           name: 'CreateWorkoutPage',
           path: '/create_workout_page',
           builder: (context, params) => const CreateWorkoutPageWidget(),
         ),
-
         FFRoute(
-
           name: 'changeAddress',
           path: '/changeAddress',
           builder: (context, params) => const ChangeAddressWidget(),
@@ -194,8 +193,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'home',
           path: '/home',
-          builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'home') : const HomeWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'home')
+              : const HomeWidget(),
         ),
         FFRoute(
           name: 'CustomerChat',
@@ -207,11 +207,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/create_excersise',
           builder: (context, params) => const CreateExcersiseWidget(),
         ),
-
         FFRoute(
           name: 'admin',
           path: '/admin',
           builder: (context, params) => const AdminWidget(),
+        ),
+        FFRoute(
+          name: 'admin_new',
+          path: '/admin_new',
+          builder: (context, params) => const AdminNewWidget(),
         ),
         FFRoute(
           name: 'changeName',
@@ -228,7 +232,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/changeHW',
           builder: (context, params) => const ChangeHWWidget(),
         ),
-
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -465,7 +468,8 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() =>
+      const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

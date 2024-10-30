@@ -1,13 +1,29 @@
 /*
 Ramin Selseleh
 
+Subtask: 139
+
+Fixed the overflow issue widget within the home page.
+ */
+
+/*
+Ramin Selseleh
+
 Substask: Ma-140
 
 The goal for this task was
 the visit your progress” button should redirect to the progress page.
 Same page as the “Graph Lines” button in the nave bar.
+
+Stephanie Nutter
+MA - 134
+Admin Message displays, called from Admin_Message.message
+MA - 192
+Displays greeting based upon time of day.
+
  */
 
+import '../backend/backend.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -19,6 +35,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:m_k_fit/pages/progress_page/progress_page_widget.dart';
+import 'package:m_k_fit/pages/progress_page/progress_page_model.dart';
+
+
 
 import 'home2_model.dart';
 export 'home2_model.dart';
@@ -50,8 +70,21 @@ class _Home2WidgetState extends State<Home2Widget> {
     super.dispose();
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
+    // Get the current hour
+    int currentHour = DateTime.now().hour;
+    String greeting;
+
+    // Determine the appropriate greeting based on the time of day
+    if (currentHour < 12) {
+      greeting = 'Good morning!';
+    } else if (currentHour < 18) {
+      greeting = 'Good afternoon!';
+    } else {
+      greeting = 'Good evening!';
+    }
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -68,25 +101,74 @@ class _Home2WidgetState extends State<Home2Widget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Good Morning, Champ!',
+                    '.', // Placeholder or can be removed
                     style: FlutterFlowTheme.of(context).labelSmall.override(
                       fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
                       letterSpacing: 0.0,
                     ),
                   ),
                   Text(
-                    'Time to rise and grind',
-                    style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Readex Pro',
+                    greeting, // Dynamic greeting based on time of day
+                    style: FlutterFlowTheme.of(context).labelSmall.override(
+                      fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
                       letterSpacing: 0.0,
                     ),
+                  ),
+                  StreamBuilder<List<AdminMessageRecord>>(
+                    stream: queryAdminMessageRecord(
+                      singleRecord: true,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize loading state
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+
+                      List<AdminMessageRecord> textAdminMessageRecordList = snapshot.data!;
+
+                      // Return an empty Container if there are no records
+                      if (textAdminMessageRecordList.isEmpty) {
+                        return Container();
+                      }
+
+                      final textAdminMessageRecord = textAdminMessageRecordList.first;
+
+                      // Access the string message field directly
+                      String message = textAdminMessageRecord.message;
+
+                      return Text(
+                        valueOrDefault<String>(
+                          message,
+                          'Time to rise and shine!',
+                        ),
+                        style: FlutterFlowTheme.of(context)
+                            .headlineMedium
+                            .override(
+                          fontFamily: 'Readex Pro',
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          letterSpacing: 0.0,
+                        ),
+                      );
+                    },
                   ),
                   Divider(
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
-                ].divide(SizedBox(height: 4)),
+                ].divide(const SizedBox(height: 4.0)),
               ),
             ],
           ),
@@ -217,25 +299,26 @@ class _Home2WidgetState extends State<Home2Widget> {
                                       size: 60,
                                     ),
                                     onPressed: () {
-                                      print('IconButton pressed ...');
+                                      print('IconButton pressed ....');
                                     },
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 288,
-                                height: 100,
-                                decoration: BoxDecoration(),
-                                child: Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Text(
-                                    'Next Appointment: \nApril 1st, at 1:00 PM',
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleLarge
-                                        .override(
-                                      fontFamily: 'Inter',
-                                      fontSize: 25,
-                                      letterSpacing: 0.0,
+                              Expanded(
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(),
+                                  child: Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Text(
+                                      'Next Appointment: \nApril 1st, at 1:00 PM',
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleLarge
+                                          .override(
+                                        fontFamily: 'Inter',
+                                        fontSize: 25,
+                                        letterSpacing: 0.0,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -455,30 +538,28 @@ class _Home2WidgetState extends State<Home2Widget> {
                             alignment: AlignmentDirectional(0, 0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                context.pushNamed('CustomerChat'); // Navigate to CustomerChat when button is pressed
+                                context.pushNamed('ProgressPage');
                               },
-                              text: 'Chat Button',
-                              icon: const Icon(
-                                Icons.chat,
-                                size: 40.0,
-                              ),
+                              text: 'Visit your Progress',
                               options: FFButtonOptions(
-                                height: 78.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                height: 40,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    24, 0, 24, 0),
+                                iconPadding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: Color(0xFF00831B),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
                                   fontFamily: 'Inter',
-                                  color: Colors.white,
-                                  fontSize: 20.0,
                                   letterSpacing: 0.0,
                                 ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
+                                elevation: 3,
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
-                                  width: 1.0,
+                                  width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(6.0),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),

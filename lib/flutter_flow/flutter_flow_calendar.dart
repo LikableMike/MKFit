@@ -31,9 +31,11 @@ class FlutterFlowCalendar extends StatefulWidget {
     this.rowHeight,
     this.locale,
     this.outsideBuilder,
+    this.adminAccess = false,
 
   });
 
+  final bool adminAccess;
   final bool weekFormat;
   final bool weekStartsMonday;
   final bool twoRowHeader;
@@ -63,8 +65,15 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
     DateTime.now()
   ];
 
-  Future<bool> isHighlighted(DateTime date) {
-    return DatabaseService().checkAppointment(date.toString().split(" ")[0]??"null");
+  Future<bool> isHighlighted(DateTime date) async{
+    if(this.widget.adminAccess){
+        return await DatabaseService().checkAdminAppointments(
+            date.toString().split(" ")[0] ?? "null");
+
+    }else {
+      return DatabaseService().checkAppointment(
+          date.toString().split(" ")[0] ?? "null");
+    }
   }
 
   @override

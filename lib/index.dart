@@ -7,6 +7,7 @@ export '/message_page/message_page_widget.dart' show MessagePageWidget;
 export '/settings_page/settings_page_widget.dart' show SettingsPageWidget;
 export '/pages/make_appointment/make_appointment_widget.dart'
     show MakeAppointmentWidget;
+export '/AdminCalendar/AdminCalendar_Widget.dart' show AdminCalendarWidget;
 export '/forgot_username/forgot_username_widget.dart' show ForgotUsernameWidget;
 export '/confirm_new_password/confirm_new_password_widget.dart'
     show ConfirmNewPasswordWidget;
@@ -29,6 +30,7 @@ export '/create_excersise/create_excersise_widget.dart'
 export '/create_workout_page/create_workout_page_widget.dart'
     show CreateWorkoutPageWidget;
 export '/admin/admin_widget.dart' show AdminWidget;
+export '/admin_new/admin_new_widget.dart' show AdminNewWidget;
 export '/change_name/change_name_widget.dart' show ChangeNameWidget;
 export '/change_password/change_password_widget.dart' show ChangePasswordWidget;
 export '/change_h_w/change_h_w_widget.dart' show ChangeHWWidget;

@@ -1,7 +1,17 @@
+/*
+Ramin Selseleh
+MA-136
+
+Fixed the issue regarding having two homepages. We now only have one homepage
+button at the bottom left.
+ */
+
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:m_k_fit/AdminCalendar/AdminCalendar_Widget.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
@@ -108,7 +118,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'home2';
+  String _currentPageName = 'home';
   late Widget? _currentPage;
 
   @override
@@ -120,13 +130,12 @@ class _NavBarPageState extends State<NavBarPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final tabs = {
-      'home2': const Home2Widget(),
+      'home': const Home2Widget(),
       'ProgressPage': const ProgressPageWidget(),
       'makeAppointment': const MakeAppointmentWidget(),
       'workoutPlanPage': const WorkoutPlanPageWidget(),
-      'home': const HomeWidget(),
+
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -134,13 +143,18 @@ class _NavBarPageState extends State<NavBarPage> {
       body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (i) => safeSetState(() {
-          _currentPage = null;
-          _currentPageName = tabs.keys.toList()[i];
-        }),
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        onTap: (i) =>
+            safeSetState(() {
+              _currentPage = null;
+              _currentPageName = tabs.keys.toList()[i];
+            }),
+        backgroundColor: FlutterFlowTheme
+            .of(context)
+            .primaryText,
         selectedItemColor: const Color(0xFF40DC28),
-        unselectedItemColor: FlutterFlowTheme.of(context).primaryBackground,
+        unselectedItemColor: FlutterFlowTheme
+            .of(context)
+            .primaryBackground,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
@@ -177,16 +191,20 @@ class _NavBarPageState extends State<NavBarPage> {
             label: 'Home',
             tooltip: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 40.0,
-            ),
-            label: 'Home',
-            tooltip: '',
-          )
+         // BottomNavigationBarItem(
+           // icon: Icon(
+             // Icons.home_outlined,
+              //size: 40.0,
+            //),
+            //label: 'Home',
+            //tooltip: '',
+          //)
         ],
       ),
     );
   }
 }
+
+
+
+

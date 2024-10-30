@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_k_fit/auth/base_auth_user_provider.dart';
 import 'package:m_k_fit/auth/firebase_auth/firebase_auth_manager.dart';
 import 'package:m_k_fit/auth/firebase_auth/firebase_user_provider.dart';
+import 'package:m_k_fit/backend/firebase_storage/database.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '/backend/firebase_storage/globals.dart' as globals;
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -315,11 +317,15 @@ class _LoginWidgetState extends State<LoginWidget>
                                   var UID = user.user?.uid;
 
 
+
                                   if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
                                       UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin');
                                   if (adminUIDs.contains(UID)) {
                                     context.pushNamed('admin'); // Redirect to admin page
+                                  if (UID == "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3" ||
+                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
+                                    context.pushNamed('admin');
                                   } else if (UID ==
                                       "YIq1kNSHImdljlk1RKIULH22o2F3") {
                                     context.pushNamed('admin_new');
@@ -327,6 +333,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                     context.pushNamed('home');
                                   }
                                   globals.UID = UID;
+                                  DatabaseService().getWorkouts();
                                   print(
                                       "UID SET TO: " + globals.UID.toString());
                                 }

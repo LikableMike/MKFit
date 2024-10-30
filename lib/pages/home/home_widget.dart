@@ -8,6 +8,8 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:m_k_fit/backend/firebase_storage/database.dart';
+import 'dart:math';
 import 'home_model.dart';
 export 'home_model.dart';
 
@@ -23,12 +25,26 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Map<String, Map<String, List>> graphData = {
+    "weight": {"x": [], "y": []},
+  };
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+
+    getGraphData();
+  }
+
+  Future getGraphData() async {
+    final databaseService = DatabaseService();
+    var data = await databaseService.getGraphData(["weight"]);
+    setState(() {
+      graphData = data;
+    });
   }
 
   @override
@@ -38,8 +54,21 @@ class _HomeWidgetState extends State<HomeWidget> {
     super.dispose();
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
+    // Get the current hour
+    int currentHour = DateTime.now().hour;
+    String greeting;
+
+    // Determine the appropriate greeting based on the time of day
+    if (currentHour < 12) {
+      greeting = 'Good morning!';
+    } else if (currentHour < 18) {
+      greeting = 'Good afternoon!';
+    } else {
+      greeting = 'Good evening!';
+    }
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -56,29 +85,29 @@ class _HomeWidgetState extends State<HomeWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '.',
+                    '.', //Can be removed, it's a placeholder
                     style: FlutterFlowTheme.of(context).labelSmall.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                   Text(
-                    'Good Morning, Champ!',
+                    greeting, // Dynamic greeting based on time of day
                     style: FlutterFlowTheme.of(context).labelSmall.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                   StreamBuilder<List<AdminMessageRecord>>(
                     stream: queryAdminMessageRecord(
                       singleRecord: true,
                     ),
                     builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
+                      // Customize loading state
                       if (!snapshot.hasData) {
                         return Center(
                           child: SizedBox(
@@ -92,30 +121,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         );
                       }
-                      List<AdminMessageRecord> textAdminMessageRecordList =
-                          snapshot.data!;
-                      // Return an empty Container when the item does not exist.
-                      if (snapshot.data!.isEmpty) {
+                      List<AdminMessageRecord> textAdminMessageRecordList = snapshot.data!;
+
+                      // Return an empty Container if there are no records
+                      if (textAdminMessageRecordList.isEmpty) {
                         return Container();
                       }
-                      final textAdminMessageRecord =
-                          textAdminMessageRecordList.isNotEmpty
-                              ? textAdminMessageRecordList.first
-                              : null;
+
+                      final textAdminMessageRecord = textAdminMessageRecordList.first;
+
+                      // Access the string message field directly
+                      String message = textAdminMessageRecord.message;
 
                       return Text(
                         valueOrDefault<String>(
-                          textAdminMessageRecord?.hasMessage().toString(),
+                          message,
                           'Time to rise and shine!',
                         ),
                         style: FlutterFlowTheme.of(context)
                             .headlineMedium
                             .override(
-                              fontFamily: 'Readex Pro',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Readex Pro',
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          letterSpacing: 0.0,
+                        ),
                       );
                     },
                   ),
@@ -128,62 +157,44 @@ class _HomeWidgetState extends State<HomeWidget> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 12.0, 12.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 12.0, 12.0),
               child: Container(
-                width: 78.0,
+                width: 83.0,
                 height: 78.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 1.0,
-                  ),
-                ),
-                child: Column(
+                child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Flexible(
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          context.pushNamed('CustomerChatPage');  // Navigate to Customer Chat Page
-                        },
-                        text: 'Chat Button',
-                        icon: const Icon(
+                      child: FlutterFlowIconButton(
+                        borderRadius: 20.0,
+                        borderWidth: 1.0,
+                        buttonSize: 40.0,
+                        icon: Icon(
                           Icons.chat,
-                          size: 40.0,
+                          size: 30.0,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
                         ),
-                        options: FFButtonOptions(
-                          height: 78.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                            fontFamily: 'Inter',
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            letterSpacing: 0.0,
-                          ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(6.0),
-                        ),
+                        onPressed: () async {
+                          context.pushNamed('CustomerChatPage');
+                        },
                       ),
                     ),
-                    FlutterFlowIconButton(
-                      borderRadius: 20.0,
-                      borderWidth: 1.0,
-                      buttonSize: 40.0,
-                      icon: FaIcon(
-                        FontAwesomeIcons.userCircle,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        size: 30.0,
+                    Flexible(
+                      child: FlutterFlowIconButton(
+                        borderRadius: 20.0,
+                        borderWidth: 1.0,
+                        buttonSize: 40.0,
+                        icon: FaIcon(
+                          FontAwesomeIcons.circleUser,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          size: 30.0,
+                        ),
+                        onPressed: () async {
+                          context.pushNamed('SettingsPage');
+                        },
                       ),
-                      onPressed: () async {
-                        context.pushNamed('SettingsPage');
-                      },
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -199,7 +210,8 @@ class _HomeWidgetState extends State<HomeWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 100.0,
@@ -236,7 +248,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 164.0,
@@ -299,7 +312,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 height: 100.0,
                                 decoration: const BoxDecoration(),
                                 child: Align(
-                                  alignment: const AlignmentDirectional(-1.0, 0.0),
+                                  alignment:
+                                      const AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     'Next Appointment: \nApril 1st, at 1:00 PM',
                                     style: FlutterFlowTheme.of(context)
@@ -329,13 +343,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 onPressed: () async {
                                   context.pushNamed('makeAppointment');
                                 },
-                                text: 'Reschedule/Cancel Appointment',
+                                text: 'Schedule/Cancel Appointmenttt',
                                 options: FFButtonOptions(
                                   height: 40.0,
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       24.0, 0.0, 24.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
                                   color: const Color(0xFF00831B),
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
@@ -366,7 +381,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 200.0,
@@ -406,8 +422,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            2.0, 0.0, 2.0, 0.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
@@ -425,8 +441,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 0.0, 0.0, 0.0),
                                     child: Container(
                                       width: 110.0,
                                       height: 180.0,
@@ -435,8 +452,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             .secondaryBackground,
                                       ),
                                       child: Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
+                                        alignment: const AlignmentDirectional(
+                                            0.0, 0.0),
                                         child: CircularPercentIndicator(
                                           percent: 0.5,
                                           radius: 50.0,
@@ -471,30 +488,24 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           .secondaryBackground,
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          2.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              2.0, 0.0, 0.0, 0.0),
                                       child: SizedBox(
                                         height: 230.0,
                                         child: FlutterFlowLineChart(
                                           data: [
                                             FFLineChartData(
-                                              xData: List.generate(
-                                                  random_data.randomInteger(
-                                                      5, 5),
-                                                  (index) => random_data
-                                                      .randomInteger(0, 10)),
-                                              yData: List.generate(
-                                                  random_data.randomInteger(
-                                                      5, 5),
-                                                  (index) => random_data
-                                                      .randomInteger(0, 10)),
+                                              xData: graphData["weight"]!["x"]!,
+                                              yData: graphData["weight"]!["y"]!,
                                               settings: LineChartBarData(
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primary,
                                                 barWidth: 2.0,
                                                 isCurved: true,
-                                                dotData: const FlDotData(show: false),
+                                                dotData: const FlDotData(
+                                                    show: false),
                                                 belowBarData: BarAreaData(
                                                   show: true,
                                                   color: FlutterFlowTheme.of(
@@ -543,8 +554,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 height: 40.0,
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                 color: const Color(0xFF00831B),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
@@ -572,7 +584,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   height: 151.0,
@@ -637,8 +650,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Align(
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, -1.0),
+                                      alignment: const AlignmentDirectional(
+                                          -1.0, -1.0),
                                       child: Text(
                                         'MK FIT',
                                         style: FlutterFlowTheme.of(context)

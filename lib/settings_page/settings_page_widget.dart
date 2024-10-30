@@ -103,8 +103,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
                     'https://picsum.photos/seed/823/600',
-                    width: 138.0,
-                    height: 123.0,
+                    width: 180.0,  // Increase the width to make the image larger
+                    height: 150.0,  // Adjust height accordingly
                     fit: BoxFit.cover,
                   ),
                 ),

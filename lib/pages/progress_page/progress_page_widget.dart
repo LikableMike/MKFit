@@ -73,20 +73,21 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                 ),
           ),
           actions: [
-            FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30,
-              borderWidth: 1,
-              buttonSize: 72,
-              icon: Icon(
-                Icons.settings_rounded,
-                color: Colors.white,
-                size: 40,
-              ),
-              onPressed: () async {
-                context.pop();
-              },
-            ),
+          FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 72,
+          icon: Icon(
+            Icons.settings_rounded,
+            color: Colors.white,
+            size: 40,
+          ),
+          onPressed: () async {
+            context.pushNamed('SettingsPage');
+          },
+        )
+            //),
           ],
           centerTitle: false,
           elevation: 2,

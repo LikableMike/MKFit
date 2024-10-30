@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'make_appointment_model.dart';
 export 'make_appointment_model.dart';
 import '/backend/firebase_storage/database.dart';
+import 'package:intl/intl.dart';
+
 
 import "/backend/firebase_storage/globals.dart" as globals;
 
@@ -27,6 +29,15 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   TimeOfDay? _selectedTime;
 
 
+  List<DateTime> generateRecurringDates(DateTime start, DateTime end) {
+    List<DateTime> dates = [];
+    DateTime current = start;
+    while (current.isBefore(end) || current.isAtSameMomentAs(end)) {
+      dates.add(current);
+      current = current.add(Duration(days: 7)); // Assuming weekly recurrence
+    }
+    return dates;
+  }
 
   @override
   void initState() {
@@ -162,17 +173,17 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                         useToggleButtonStyle: true,
                         isScrollable: true,
                         labelStyle:
-                            FlutterFlowTheme.of(context).titleMedium.override(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                        FlutterFlowTheme.of(context).titleMedium.override(
+                          fontFamily: 'Plus Jakarta Sans',
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.normal,
+                        ),
                         unselectedLabelStyle: const TextStyle(),
                         labelColor: const Color(0xFF14181B),
                         unselectedLabelColor:
-                            FlutterFlowTheme.of(context).primaryText,
+                        FlutterFlowTheme.of(context).primaryText,
                         backgroundColor: Colors.white,
                         unselectedBackgroundColor: const Color(0xFFE0E3E7),
                         borderColor: const Color(0xFFE0E3E7),
@@ -245,57 +256,57 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       titleStyle: FlutterFlowTheme.of(context)
                                           .titleLarge
                                           .override(
-                                            fontFamily: 'Outfit',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 22.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                        fontFamily: 'Outfit',
+                                        color: const Color(0xFF14181B),
+                                        fontSize: 22.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                       dayOfWeekStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .labelMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                      FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: const Color(0xFF57636C),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                       dateStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: const Color(0xFF14181B),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                       selectedDateStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .titleSmall
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: Colors.white,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                      FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                       inactiveDateStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .labelMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                      FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: const Color(0xFF57636C),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                     ),
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -305,14 +316,14 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -381,19 +392,19 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
                                         child: ElevatedButton(
-                                          onPressed: () async{
+                                          onPressed: () async {
                                             if (_selectedDateRange != null && _selectedTime != null) {
-<<<<<<< Updated upstream
+                                              String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
                                               // Handle appointment confirmation here
-                                              try{
-                                                print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
+                                              try {
+                                                print('Appointment scheduled for $formattedDate at $_selectedTime');
 
-                                                await DatabaseService().makeAppointment(_selectedDateRange!.start.toString(), _selectedTime.toString());
-                                                print( _selectedDateRange.toString() + " " + _selectedTime.toString());
+                                                // Create the initial appointment
+                                                await DatabaseService().makeAppointment(_selectedDateRange!.start.toString(), _selectedTime!);
+
+                                                print(_selectedDateRange.toString() + " " + _selectedTime.toString());
                                                 print(globals.UID);
-
                                               }catch(e){
-=======
                                               // Extract date and time
                                               DateTime selectedDate = _selectedDateRange!.start;   // The selected start date
                                               TimeOfDay selectedTime = _selectedTime!;             // The selected time
@@ -496,21 +507,78 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                   );
                                                 }
                                               } catch (e) {
->>>>>>> Stashed changes
+                                                // Show a dialog asking if the user wants to set the meeting to recurring
+                                                bool? shouldSetRecurring = await showDialog<bool>(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text('Set Recurring Meeting'),
+                                                      content: Text('Would you like to set this meeting to recurring?'),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop(true); // Return 'true' when "Yes" is tapped
+                                                          },
+                                                          child: Text('Yes'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop(false); // Return 'false' when "No" is tapped
+                                                          },
+                                                          child: Text('No'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+
+                                                if (shouldSetRecurring != null && shouldSetRecurring) {
+                                                  // Allow the user to choose an end date for the recurring appointment
+                                                  DateTimeRange? recurringDateRange = await showDateRangePicker(
+                                                    context: context,
+                                                    firstDate: DateTime.now(),
+                                                    lastDate: DateTime(2100),
+                                                    initialDateRange: _selectedDateRange,
+                                                  );
+
+                                                  if (recurringDateRange != null) {
+                                                    // Generate recurring dates (e.g., every week on the same day)
+                                                    List<DateTime> recurringDates = generateRecurringDates(
+                                                      _selectedDateRange!.start,
+                                                      recurringDateRange.end,
+                                                    );
+
+                                                    // Loop through each generated date and make an appointment
+                                                    for (DateTime date in recurringDates) {
+                                                      String recurringDateStr = DateFormat('yyyy-MM-dd').format(date);
+                                                      await DatabaseService().makeAppointment(recurringDateStr, _selectedTime!);
+                                                    }
+
+                                                    // Display confirmation message including the time
+                                                    String firstDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.start);
+                                                    String endDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.end);
+
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(content: Text('Recurring appointments set from $firstDate to $endDate at $_selectedTime')),
+                                                    );
+                                                  }
+                                                } else {
+                                                  // Display confirmation message including the time
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(content: Text('Appointment confirmed for $formattedDate at $_selectedTime')),
+                                                  );
+                                                }
+                                              } catch (e) {
                                                 print(e);
                                               }
-
                                             } else {
-<<<<<<< Updated upstream
                                               print( _selectedDateRange.toString() + " " + _selectedTime.toString());
+                                              print(_selectedDateRange.toString() + " " + _selectedTime.toString());
 
                                               // Show error or prompt to select date/time
-=======
                                               // Show error if date or time is not selected
->>>>>>> Stashed changes
                                               ScaffoldMessenger.of(context).showSnackBar(
                                                 SnackBar(content: Text('Please select both date and time.')),
-
                                               );
                                             }
                                           },
@@ -518,43 +586,119 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         ),
                                       ),
 
-                                      // Cancel Appointment Button
-                                      FutureBuilder<bool>(
-                                        future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString()??"null"),
-                                        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.waiting) {
-                                            // While the future is still loading, show a loading indicator or nothing
-                                            return CircularProgressIndicator();
-                                          } else if (snapshot.hasError) {
-                                            // Handle any errors from the future
-                                            return Text('Error: ${snapshot.error}');
-                                          } else if (snapshot.hasData && snapshot.data == true) {
-                                            // If the data is true, show the Cancel Appointment button
-                                            return ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.red, // Red color for the cancel button
-                                              ),
-                                              onPressed: () async {
-                                            await DatabaseService().cancelAppointment(_selectedDateRange!.start.toString());
-                                                setState(() {
-                                                  // Clear the selected date and time to cancel the appointment
-                                                  _selectedDateRange = null;
-                                                  _selectedTime = null;
-                                                });
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                  const SnackBar(content: Text('Appointment has been canceled.')),
-                                                );
-                                              },
-                                              child: const Text('Cancel Appointment'),
-                                            );
-                                          } else {
-                                            // If no appointment exists, return an empty container or something else
-                                            return Container();
-                                          }
-                                        },
-                                      ),
 
-                                      // ElevatedButton(
+
+
+
+                          // Cancel Appointment Button
+                          FutureBuilder<bool>(
+                            future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString() ?? "null"),
+                            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (snapshot.hasData && snapshot.data == true) {
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                  ),
+                                  onPressed: () async {
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
+
+                                    // Show a dialog to confirm if the user wants to cancel all recurring appointments
+                                    bool? shouldCancelRecurring = await showDialog<bool>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('Cancel Appointment'),
+                                          content: Text('Would you like to cancel all recurring appointments, or just this one?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(true); // Yes, cancel all recurring
+                                              },
+                                              child: Text('All Recurring'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(false); // No, just this one
+                                              },
+                                              child: Text('Just This One'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+
+                                    if (shouldCancelRecurring != null && shouldCancelRecurring) {
+                                      // If the user chooses to cancel all recurring, gather all dates
+                                      List<DateTime> recurringDates = generateRecurringDates(
+                                        _selectedDateRange!.start,
+                                        _selectedDateRange!.end, // Adjust as needed
+                                      );
+
+                                      List<String> formattedDates = recurringDates
+                                          .map((date) => DateFormat('yyyy-MM-dd').format(date))
+                                          .toList();
+
+                                      await DatabaseService().cancelAppointment(formattedDates);
+
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('All recurring appointments have been canceled.')),
+                                      );
+                                    } else {
+                                      // Cancel only the selected appointment
+                                      await DatabaseService().cancelAppointment([formattedDate]);
+
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Appointment on $formattedDate at $_selectedTime has been canceled.')),
+                                      );
+                                    }
+
+                                    setState(() {
+                                      _selectedDateRange = null;
+                                      _selectedTime = null;
+                                    });
+                                  },
+                                  child: const Text('Cancel Appointment'),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          // ElevatedButton(
                                       //     style: ElevatedButton.styleFrom(
                                       //       backgroundColor: Colors.red, // Red color for the cancel button
                                       //     ),
@@ -585,7 +729,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             Padding(
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                                  16.0, 0.0, 16.0, 12.0),
                                               child: Container(
                                                 width: 100.0,
                                                 decoration: BoxDecoration(
@@ -601,93 +745,93 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  BorderRadius.circular(
+                                                      8.0),
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Row(
                                                     mainAxisSize:
-                                                        MainAxisSize.max,
+                                                    MainAxisSize.max,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                     children: [
                                                       Column(
                                                         mainAxisSize:
-                                                            MainAxisSize.max,
+                                                        MainAxisSize.max,
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                4.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0),
                                                             child: Text(
                                                               _selectedDateRange != null && _selectedTime != null
                                                                   ? 'Next Session with Makayla: ${_selectedDateRange!.start.toString().split(' ')[0]} at $_selectedTime'
                                                                   : 'Next Session with Makayla',
                                                               style: FlutterFlowTheme
-                                                                      .of(context)
+                                                                  .of(context)
                                                                   .headlineSmall
                                                                   .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    color: const Color(
-                                                                        0xFF14181B),
-                                                                    fontSize:
-                                                                        24.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: const Color(
+                                                                    0xFF14181B),
+                                                                fontSize:
+                                                                24.0,
+                                                                letterSpacing:
+                                                                0.0,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w500,
+                                                              ),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0.0,
+                                                                4.0,
+                                                                0.0,
+                                                                0.0),
                                                             child: Row(
                                                               mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
+                                                              MainAxisSize
+                                                                  .max,
                                                               children: [
                                                                 Padding(
                                                                   padding: const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                      8.0,
+                                                                      0.0),
                                                                   child: Card(
                                                                     clipBehavior:
-                                                                        Clip.antiAliasWithSaveLayer,
+                                                                    Clip.antiAliasWithSaveLayer,
                                                                     color: const Color(
                                                                         0x4DEE8B60),
                                                                     elevation:
-                                                                        0.0,
+                                                                    0.0,
                                                                     shape:
-                                                                        RoundedRectangleBorder(
+                                                                    RoundedRectangleBorder(
                                                                       borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8.0),
+                                                                      BorderRadius.circular(
+                                                                          8.0),
                                                                     ),
                                                                     child:
-                                                                        Padding(
+                                                                    Padding(
                                                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                                                           8.0,
                                                                           4.0,
@@ -702,13 +846,13 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
                                                                             .bodyMedium
                                                                             .override(
-                                                                              fontFamily: 'Plus Jakarta Sans',
-                                                                              color: const Color(
-                                                                                  0xFF150903),
-                                                                              fontSize: 14.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.normal,
-                                                                            ),
+                                                                          fontFamily: 'Plus Jakarta Sans',
+                                                                          color: const Color(
+                                                                              0xFF150903),
+                                                                          fontSize: 14.0,
+                                                                          letterSpacing: 0.0,
+                                                                          fontWeight: FontWeight.normal,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -723,17 +867,17 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
                                                                       .bodySmall
                                                                       .override(
-                                                                        fontFamily:
-                                                                            'Plus Jakarta Sans',
-                                                                        color: const Color(
-                                                                            0xFF14181B),
-                                                                        fontSize:
-                                                                            12.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
+                                                                    fontFamily:
+                                                                    'Plus Jakarta Sans',
+                                                                    color: const Color(
+                                                                        0xFF14181B),
+                                                                    fontSize:
+                                                                    12.0,
+                                                                    letterSpacing:
+                                                                    0.0,
+                                                                    fontWeight:
+                                                                    FontWeight.normal,
+                                                                  ),
                                                                 ),
                                                               ],
                                                             ),
@@ -756,14 +900,14 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -778,7 +922,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             Padding(
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                                  16.0, 0.0, 16.0, 12.0),
                                               child: Container(
                                                 width: 100.0,
                                                 decoration: BoxDecoration(
@@ -794,130 +938,130 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  BorderRadius.circular(
+                                                      8.0),
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Row(
                                                     mainAxisSize:
-                                                        MainAxisSize.max,
+                                                    MainAxisSize.max,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                     children: [
                                                       Column(
                                                         mainAxisSize:
-                                                            MainAxisSize.max,
+                                                        MainAxisSize.max,
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                4.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0),
                                                             child: Text(
                                                               'Next Payment',
                                                               style: FlutterFlowTheme
-                                                                      .of(context)
+                                                                  .of(context)
                                                                   .headlineSmall
                                                                   .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    color: const Color(
-                                                                        0xFF14181B),
-                                                                    fontSize:
-                                                                        24.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: const Color(
+                                                                    0xFF14181B),
+                                                                fontSize:
+                                                                24.0,
+                                                                letterSpacing:
+                                                                0.0,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w500,
+                                                              ),
                                                             ),
                                                           ),
                                                           Row(
                                                             mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
+                                                            MainAxisSize
+                                                                .max,
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            8.0,
-                                                                            0.0),
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    8.0,
+                                                                    0.0),
                                                                 child: Card(
                                                                   clipBehavior:
-                                                                      Clip.antiAliasWithSaveLayer,
+                                                                  Clip.antiAliasWithSaveLayer,
                                                                   color: const Color(
                                                                       0x4C4B39EF),
                                                                   elevation:
-                                                                      0.0,
+                                                                  0.0,
                                                                   shape:
-                                                                      RoundedRectangleBorder(
+                                                                  RoundedRectangleBorder(
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
+                                                                    BorderRadius.circular(
+                                                                        8.0),
                                                                   ),
                                                                   child:
-                                                                      Padding(
+                                                                  Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            8.0,
-                                                                            4.0,
-                                                                            8.0,
-                                                                            4.0),
+                                                                        8.0,
+                                                                        4.0,
+                                                                        8.0,
+                                                                        4.0),
                                                                     child: Text(
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
-                                                                              context)
+                                                                          context)
                                                                           .bodyLarge
                                                                           .override(
-                                                                            fontFamily:
-                                                                                'Inter',
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                          ),
+                                                                        fontFamily:
+                                                                        'Inter',
+                                                                        letterSpacing:
+                                                                        0.0,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    4.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                                 child: Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
-                                                                          context)
+                                                                      context)
                                                                       .bodySmall
                                                                       .override(
-                                                                        fontFamily:
-                                                                            'Plus Jakarta Sans',
-                                                                        color: const Color(
-                                                                            0xFF14181B),
-                                                                        fontSize:
-                                                                            18.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
+                                                                    fontFamily:
+                                                                    'Plus Jakarta Sans',
+                                                                    color: const Color(
+                                                                        0xFF14181B),
+                                                                    fontSize:
+                                                                    18.0,
+                                                                    letterSpacing:
+                                                                    0.0,
+                                                                    fontWeight:
+                                                                    FontWeight.normal,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],
@@ -980,57 +1124,57 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       titleStyle: FlutterFlowTheme.of(context)
                                           .titleLarge
                                           .override(
-                                            fontFamily: 'Outfit',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 22.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                        fontFamily: 'Outfit',
+                                        color: const Color(0xFF14181B),
+                                        fontSize: 22.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                       dayOfWeekStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .labelMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                      FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: const Color(0xFF57636C),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                       dateStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF14181B),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: const Color(0xFF14181B),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                       selectedDateStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .titleSmall
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: Colors.white,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                      FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                       inactiveDateStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .labelMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                      FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: const Color(0xFF57636C),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                     ),
                                   ),
                                   Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -1040,12 +1184,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: const Color(0xFF57636C),
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -1060,7 +1204,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             Padding(
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                                  16.0, 0.0, 16.0, 12.0),
                                               child: Container(
                                                 width: 100.0,
                                                 decoration: BoxDecoration(
@@ -1076,108 +1220,108 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  BorderRadius.circular(
+                                                      8.0),
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Row(
                                                     mainAxisSize:
-                                                        MainAxisSize.max,
+                                                    MainAxisSize.max,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                     children: [
                                                       Column(
                                                         mainAxisSize:
-                                                            MainAxisSize.max,
+                                                        MainAxisSize.max,
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                4.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0),
                                                             child: Text(
                                                               'Doctors Check In',
                                                               style: FlutterFlowTheme
-                                                                      .of(context)
+                                                                  .of(context)
                                                                   .headlineSmall
                                                                   .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    color: const Color(
-                                                                        0xFF14181B),
-                                                                    fontSize:
-                                                                        24.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: const Color(
+                                                                    0xFF14181B),
+                                                                fontSize:
+                                                                24.0,
+                                                                letterSpacing:
+                                                                0.0,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w500,
+                                                              ),
                                                             ),
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0.0,
+                                                                4.0,
+                                                                0.0,
+                                                                0.0),
                                                             child: Row(
                                                               mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
+                                                              MainAxisSize
+                                                                  .max,
                                                               children: [
                                                                 Padding(
                                                                   padding: const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                      8.0,
+                                                                      0.0),
                                                                   child: Card(
                                                                     clipBehavior:
-                                                                        Clip.antiAliasWithSaveLayer,
+                                                                    Clip.antiAliasWithSaveLayer,
                                                                     color: const Color(
                                                                         0x4DEE8B60),
                                                                     elevation:
-                                                                        0.0,
+                                                                    0.0,
                                                                     shape:
-                                                                        RoundedRectangleBorder(
+                                                                    RoundedRectangleBorder(
                                                                       borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8.0),
+                                                                      BorderRadius.circular(
+                                                                          8.0),
                                                                     ),
                                                                     child:
-                                                                        Padding(
+                                                                    Padding(
                                                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                                                           8.0,
                                                                           4.0,
                                                                           8.0,
                                                                           4.0),
                                                                       child:
-                                                                          Text(
+                                                                      Text(
                                                                         '2:20pm',
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
-                                                                              fontFamily: 'Plus Jakarta Sans',
-                                                                              color: const Color(0xFFEE8B60),
-                                                                              fontSize: 14.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.normal,
-                                                                            ),
+                                                                          fontFamily: 'Plus Jakarta Sans',
+                                                                          color: const Color(0xFFEE8B60),
+                                                                          fontSize: 14.0,
+                                                                          letterSpacing: 0.0,
+                                                                          fontWeight: FontWeight.normal,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1185,20 +1329,20 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                                 Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
-                                                                          context)
+                                                                      context)
                                                                       .bodySmall
                                                                       .override(
-                                                                        fontFamily:
-                                                                            'Plus Jakarta Sans',
-                                                                        color: const Color(
-                                                                            0xFF14181B),
-                                                                        fontSize:
-                                                                            12.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
+                                                                    fontFamily:
+                                                                    'Plus Jakarta Sans',
+                                                                    color: const Color(
+                                                                        0xFF14181B),
+                                                                    fontSize:
+                                                                    12.0,
+                                                                    letterSpacing:
+                                                                    0.0,
+                                                                    fontWeight:
+                                                                    FontWeight.normal,
+                                                                  ),
                                                                 ),
                                                               ],
                                                             ),
@@ -1209,13 +1353,13 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         width: 50.0,
                                                         height: 50.0,
                                                         decoration:
-                                                            BoxDecoration(
+                                                        BoxDecoration(
                                                           color:
-                                                              const Color(0xFFF1F4F8),
+                                                          const Color(0xFFF1F4F8),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                          BorderRadius
+                                                              .circular(
+                                                              8.0),
                                                           shape: BoxShape
                                                               .rectangle,
                                                           border: Border.all(
@@ -1225,13 +1369,13 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                           ),
                                                         ),
                                                         alignment:
-                                                            const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                        const AlignmentDirectional(
+                                                            0.0, 0.0),
                                                         child: const Icon(
                                                           Icons
                                                               .add_photo_alternate_outlined,
                                                           color:
-                                                              Color(0xFF14181B),
+                                                          Color(0xFF14181B),
                                                           size: 24.0,
                                                         ),
                                                       ),
@@ -1251,12 +1395,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF57636C),
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: const Color(0xFF57636C),
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -1271,7 +1415,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             Padding(
                                               padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      16.0, 0.0, 16.0, 12.0),
+                                                  16.0, 0.0, 16.0, 12.0),
                                               child: Container(
                                                 width: 100.0,
                                                 decoration: BoxDecoration(
@@ -1287,136 +1431,136 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     )
                                                   ],
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  BorderRadius.circular(
+                                                      8.0),
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Row(
                                                     mainAxisSize:
-                                                        MainAxisSize.max,
+                                                    MainAxisSize.max,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                     children: [
                                                       Column(
                                                         mainAxisSize:
-                                                            MainAxisSize.max,
+                                                        MainAxisSize.max,
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                4.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0),
                                                             child: Text(
                                                               'Check In',
                                                               style: FlutterFlowTheme
-                                                                      .of(context)
+                                                                  .of(context)
                                                                   .headlineSmall
                                                                   .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    color: const Color(
-                                                                        0xFF14181B),
-                                                                    fontSize:
-                                                                        24.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: const Color(
+                                                                    0xFF14181B),
+                                                                fontSize:
+                                                                24.0,
+                                                                letterSpacing:
+                                                                0.0,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w500,
+                                                              ),
                                                             ),
                                                           ),
                                                           Row(
                                                             mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
+                                                            MainAxisSize
+                                                                .max,
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            8.0,
-                                                                            0.0),
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    8.0,
+                                                                    0.0),
                                                                 child: Card(
                                                                   clipBehavior:
-                                                                      Clip.antiAliasWithSaveLayer,
+                                                                  Clip.antiAliasWithSaveLayer,
                                                                   color: const Color(
                                                                       0x4C4B39EF),
                                                                   elevation:
-                                                                      0.0,
+                                                                  0.0,
                                                                   shape:
-                                                                      RoundedRectangleBorder(
+                                                                  RoundedRectangleBorder(
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
+                                                                    BorderRadius.circular(
+                                                                        8.0),
                                                                   ),
                                                                   child:
-                                                                      Padding(
+                                                                  Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            8.0,
-                                                                            4.0,
-                                                                            8.0,
-                                                                            4.0),
+                                                                        8.0,
+                                                                        4.0,
+                                                                        8.0,
+                                                                        4.0),
                                                                     child: Text(
                                                                       '2:20pm',
                                                                       style: FlutterFlowTheme.of(
-                                                                              context)
+                                                                          context)
                                                                           .bodyMedium
                                                                           .override(
-                                                                            fontFamily:
-                                                                                'Plus Jakarta Sans',
-                                                                            color:
-                                                                                const Color(0xFF4B39EF),
-                                                                            fontSize:
-                                                                                14.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.normal,
-                                                                          ),
+                                                                        fontFamily:
+                                                                        'Plus Jakarta Sans',
+                                                                        color:
+                                                                        const Color(0xFF4B39EF),
+                                                                        fontSize:
+                                                                        14.0,
+                                                                        letterSpacing:
+                                                                        0.0,
+                                                                        fontWeight:
+                                                                        FontWeight.normal,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    4.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                                 child: Text(
                                                                   'Wed, 03/08/2022',
                                                                   style: FlutterFlowTheme.of(
-                                                                          context)
+                                                                      context)
                                                                       .bodySmall
                                                                       .override(
-                                                                        fontFamily:
-                                                                            'Plus Jakarta Sans',
-                                                                        color: const Color(
-                                                                            0xFF14181B),
-                                                                        fontSize:
-                                                                            12.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
+                                                                    fontFamily:
+                                                                    'Plus Jakarta Sans',
+                                                                    color: const Color(
+                                                                        0xFF14181B),
+                                                                    fontSize:
+                                                                    12.0,
+                                                                    letterSpacing:
+                                                                    0.0,
+                                                                    fontWeight:
+                                                                    FontWeight.normal,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],
@@ -1427,13 +1571,13 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         width: 50.0,
                                                         height: 50.0,
                                                         decoration:
-                                                            BoxDecoration(
+                                                        BoxDecoration(
                                                           color:
-                                                              const Color(0xFFF1F4F8),
+                                                          const Color(0xFFF1F4F8),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
+                                                          BorderRadius
+                                                              .circular(
+                                                              8.0),
                                                           shape: BoxShape
                                                               .rectangle,
                                                           border: Border.all(
@@ -1443,13 +1587,13 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                           ),
                                                         ),
                                                         alignment:
-                                                            const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                        const AlignmentDirectional(
+                                                            0.0, 0.0),
                                                         child: const Icon(
                                                           Icons
                                                               .add_photo_alternate_outlined,
                                                           color:
-                                                              Color(0xFF14181B),
+                                                          Color(0xFF14181B),
                                                           size: 24.0,
                                                         ),
                                                       ),
