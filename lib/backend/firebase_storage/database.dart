@@ -19,7 +19,66 @@ class DatabaseService {
       FirebaseFirestore.instance.collection("exercises_test");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
+  final List<String> adminUIDs = [
+    "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3",
+    "nOlIEy4WKkddkikrMPhQNLEjT9y1",
+    // Add more UIDs as needed
+  ];
+  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+    try {
+      String userId = await getUID();
+      DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
 
+      if (userSnapshot.exists) {
+        List<dynamic> appointments = userSnapshot['appointments'] ?? [];
+
+        for (var appointment in appointments) {
+          // Check if the 'startTime' and 'endTime' exist and are not null
+          if (appointment['startTime'] != null && appointment['endTime'] != null) {
+            DateTime existingAppointmentStart = (appointment['startTime'] as Timestamp).toDate();
+            DateTime existingAppointmentEnd = (appointment['endTime'] as Timestamp).toDate();
+
+            // Check for overlap
+            if (newAppointmentStart.isBefore(existingAppointmentEnd) && newAppointmentEnd.isAfter(existingAppointmentStart)) {
+              return false;  // Overlap found, appointment not available
+            }
+          }
+        }
+      }
+
+      return true;  // No overlap found, appointment available
+    } catch (e) {
+      print("Error checking appointment availability: $e");
+      return false;
+    }
+  }
+  Future<String> addAppointment(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+    // Check if the time range is available
+    bool isAvailable = await isAppointmentAvailable(newAppointmentStart, newAppointmentEnd);
+
+    if (isAvailable) {
+      try {
+        String userId = await getUID();
+
+        // Update the user's document with the new appointment range
+        await usersCollection.doc(userId).update({
+          'appointments': FieldValue.arrayUnion([
+            {
+              'startTime': Timestamp.fromDate(newAppointmentStart),
+              'endTime': Timestamp.fromDate(newAppointmentEnd)
+            }
+          ]),
+        });
+
+        return 'Appointment successfully added!';
+      } catch (e) {
+        print("Error adding appointment: $e");
+        return 'Error adding appointment. Please try again.';
+      }
+    } else {
+      return 'This time slot is already taken. Please choose another.';
+    }
+  }
   Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
     await exerciseCollection.doc(name).set({
