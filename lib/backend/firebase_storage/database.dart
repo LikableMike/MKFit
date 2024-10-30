@@ -410,4 +410,40 @@ class DatabaseService {
 
     return false;
   }
+
+  //Workout Page Widget
+  //Dynamically calls exercise_names 
+ Future<List<String>> fetchExercises() async {
+    try {
+      // Fetch the main collection 'exercises'
+      final snapshot = await _firestore.collection('exercises').get();
+      List<String> exerciseNames = [];
+
+      // Iterate through each document in the main collection
+      for (var doc in snapshot.docs) {
+      //Prints each document ID
+        print('Document ID: ${doc.id}');
+
+        // Fetch the subcollection 'exercises' under each document
+        final subcollectionSnapshot = await doc.reference.collection('exercises').get();
+
+        // Iterate through each document in the subcollection
+        for (var subDoc in subcollectionSnapshot.docs) {
+          print('Sub Document ID: ${subDoc.id}, Data: ${subDoc.data()}');
+
+          // Ensure the key 'exercise_name' exists before accessing it
+          if (subDoc.data().containsKey('exercise_name')) {
+            exerciseNames.add(subDoc['exercise_name'].toString());
+          }
+        }
+      }
+      // Print the final list
+      print('Fetched Exercises: $exerciseNames');
+      return exerciseNames;
+    } catch (e) {
+      print('Error fetching exercises: $e');
+      return [];
+    }
+  }
+
 }
