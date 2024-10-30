@@ -27,6 +27,7 @@ class _LoginWidgetState extends State<LoginWidget>
   final FirebaseAuthManager _auth = FirebaseAuthManager();
   late LoginModel _model;
 
+  final List<String> adminUIDs = [
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};
@@ -309,9 +310,15 @@ class _LoginWidgetState extends State<LoginWidget>
                                 if (user != null) {
                                   var UID = user.user?.uid;
 
+
                                   if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
                                       UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin');
+                                  if (adminUIDs.contains(UID)) {
+                                    context.pushNamed('admin'); // Redirect to admin page
+                                  } else if (UID ==
+                                      "YIq1kNSHImdljlk1RKIULH22o2F3") {
+                                    context.pushNamed('admin_new');
                                   } else {
                                     context.pushNamed('home');
                                   }

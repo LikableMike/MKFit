@@ -33,6 +33,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   @override
   void initState() {
     super.initState();
+    dbService = DatabaseService();
     _model = createModel(context, () => MakeAppointmentModel());
 
     _model.tabBarController = TabController(
@@ -49,9 +50,68 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
     super.dispose();
   }
+  List<String> getAvailableTimes(BuildContext context) {
+    return [
+      TimeOfDay(hour: 10, minute: 0).format(context),
+      TimeOfDay(hour: 11, minute: 0).format(context),
+      TimeOfDay(hour: 12, minute: 0).format(context),
+      TimeOfDay(hour: 13, minute: 0).format(context),
+      TimeOfDay(hour: 14, minute: 0).format(context),
+      TimeOfDay(hour: 15, minute: 0).format(context),
+      TimeOfDay(hour: 16, minute: 0).format(context),
+    ];
+  }
+  void _updateSelectedTime(String? newValue) {
+    // Parse the string to a TimeOfDay
+    if (newValue != null) {
+      final timeParts = newValue.split(" "); // Splits "9:00 AM" to ["9:00", "AM"]
+      final hourMinute = timeParts[0].split(":"); // ["9", "00"]
+      int hour = int.parse(hourMinute[0]);
+      int minute = int.parse(hourMinute[1]);
 
+      // Adjust for AM/PM if necessary
+      if (timeParts[1] == "PM" && hour != 12) {
+        hour += 12;
+      } else if (timeParts[1] == "AM" && hour == 12) {
+        hour = 0;
+      }
+
+      setState(() {
+        _selectedTime = TimeOfDay(hour: hour, minute: minute);
+      });
+    } else {
+      setState(() {
+        _selectedTime = null;
+      });
+    }
+  }
+  Future<void> attemptToBookAppointment(DateTime startTime, DateTime endTime) async {
+    try {
+      // Check for appointment availability
+      bool isAvailable = await dbService.isAppointmentAvailable(startTime, endTime);
+
+      if (isAvailable) {
+        // If available, proceed with adding the appointment
+        String resultMessage = await dbService.addAppointment(startTime, endTime);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(resultMessage)),
+        );
+      } else {
+        // If not available, inform the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('This time slot is already taken. Please choose another.')),
+        );
+      }
+    } catch (e) {
+      print("Error in booking appointment: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred while booking the appointment. Please try again.')),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
+  final List<String> _availableTimes = getAvailableTimes(context);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -295,6 +355,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                         child: ElevatedButton(
                                           onPressed: () async{
                                             if (_selectedDateRange != null && _selectedTime != null) {
+<<<<<<< Updated upstream
                                               // Handle appointment confirmation here
                                               try{
                                                 print('Appointment scheduled for ${_selectedDateRange!.start} at $_selectedTime');
@@ -304,13 +365,121 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 print(globals.UID);
 
                                               }catch(e){
+=======
+                                              // Extract date and time
+                                              DateTime selectedDate = _selectedDateRange!.start;   // The selected start date
+                                              TimeOfDay selectedTime = _selectedTime!;             // The selected time
+
+                                              // Combine date and time into DateTime objects for start and end
+                                              DateTime startTime = DateTime(
+                                                selectedDate.year,
+                                                selectedDate.month,
+                                                selectedDate.day,
+                                                selectedTime.hour,
+                                                selectedTime.minute,
+                                              );
+
+                                              // Define an end time, e.g., for a 1-hour appointment
+                                              DateTime endTime = startTime.add(Duration(hours: 1));
+
+                                              try {
+                                                // Check for availability and schedule if available
+                                                bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime, endTime);
+
+                                                if (isAvailable) {
+                                                  // Print confirmation message with date and time
+                                                  print('Appointment scheduled for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}');
+
+                                                  // Add appointment to the database with both date and time
+                                                  String resultMessage = await DatabaseService().addAppointment(startTime, endTime);
+
+                                                  print(resultMessage);
+
+                                                  // Show dialog for recurring option
+                                                  bool? shouldSetRecurring = await showDialog<bool>(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('Set Recurring Meeting'),
+                                                        content: Text('Would you like to set this meeting to recurring?'),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop(true); // Return 'true' for "Yes"
+                                                            },
+                                                            child: Text('Yes'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop(false); // Return 'false' for "No"
+                                                            },
+                                                            child: Text('No'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+
+                                                  if (shouldSetRecurring != null && shouldSetRecurring) {
+                                                    // Prompt for end date of recurring appointments
+                                                    DateTimeRange? recurringDateRange = await showDateRangePicker(
+                                                      context: context,
+                                                      firstDate: DateTime.now(),
+                                                      lastDate: DateTime(2100),
+                                                      initialDateRange: _selectedDateRange,
+                                                    );
+
+                                                    if (recurringDateRange != null) {
+                                                      // Generate recurring dates and save them
+                                                      List<DateTime> recurringDates = generateRecurringDates(
+                                                        _selectedDateRange!.start,
+                                                        recurringDateRange.end,
+                                                      );
+
+                                                      for (DateTime date in recurringDates) {
+                                                        DateTime recurringStartTime = DateTime(
+                                                          date.year,
+                                                          date.month,
+                                                          date.day,
+                                                          selectedTime.hour,
+                                                          selectedTime.minute,
+                                                        );
+                                                        DateTime recurringEndTime = recurringStartTime.add(Duration(hours: 1));
+
+                                                        await DatabaseService().addAppointment(recurringStartTime, recurringEndTime);
+                                                      }
+
+                                                      String firstDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.start);
+                                                      String endDate = DateFormat('yyyy-MM-dd').format(recurringDateRange.end);
+
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        SnackBar(content: Text('Recurring appointments set from $firstDate to $endDate at ${_selectedTime!.format(context)}')),
+                                                      );
+                                                    }
+                                                  } else {
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(content: Text('Appointment confirmed for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}')),
+                                                    );
+                                                  }
+                                                } else {
+                                                  // Notify user if the selected time slot is unavailable
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(content: Text('This time slot is already taken. Please choose another.')),
+                                                  );
+                                                }
+                                              } catch (e) {
+>>>>>>> Stashed changes
                                                 print(e);
                                               }
 
                                             } else {
+<<<<<<< Updated upstream
                                               print( _selectedDateRange.toString() + " " + _selectedTime.toString());
 
                                               // Show error or prompt to select date/time
+=======
+                                              // Show error if date or time is not selected
+>>>>>>> Stashed changes
                                               ScaffoldMessenger.of(context).showSnackBar(
                                                 SnackBar(content: Text('Please select both date and time.')),
 
