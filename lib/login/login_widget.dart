@@ -314,6 +314,9 @@ class _LoginWidgetState extends State<LoginWidget>
                                   if (UID == "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3" ||
                                       UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin');
+                                  } else if (UID ==
+                                      "YIq1kNSHImdljlk1RKIULH22o2F3") {
+                                    context.pushNamed('admin_new');
                                   } else {
                                     context.pushNamed('home');
                                   }
