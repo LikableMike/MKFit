@@ -29,11 +29,6 @@ class _LoginWidgetState extends State<LoginWidget>
   final FirebaseAuthManager _auth = FirebaseAuthManager();
   late LoginModel _model;
 
-  final List<String> adminUIDs = [
-      "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3",
-      "nOlIEy4WKkddkikrMPhQNLEjT9y1",
-      // Add more UIDs as needed
-  ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};
@@ -318,14 +313,14 @@ class _LoginWidgetState extends State<LoginWidget>
 
 
 
-                                  if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
-                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
+                                  if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" || UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin');
-                                  if (adminUIDs.contains(UID)) {
-                                    context.pushNamed('admin'); // Redirect to admin page
+                                    }
+
                                   if (UID == "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3" ||
                                       UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin');
+
                                   } else if (UID ==
                                       "YIq1kNSHImdljlk1RKIULH22o2F3") {
                                     context.pushNamed('admin_new');
@@ -341,6 +336,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                 print(e);
                               }
                             },
+
                             text: 'Sign In',
                             options: FFButtonOptions(
                               width: 230.0,
