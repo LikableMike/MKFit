@@ -6,18 +6,16 @@ Substask: MA-150
 The point of this task was to fix the icon image and the fuinctionality of the back button.
 Now, the button is visible and functional. Now when clicked, it will navigate back to previous page.
 
+Stephanie Nutter:
+MA - 229:
+Change username function now works and is completely validated.
+
  */
-
-import '/auth/firebase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-import 'confirm_new_username_model.dart';
 export 'confirm_new_username_model.dart';
 
 class ConfirmNewUsernameWidget extends StatefulWidget {
@@ -29,330 +27,214 @@ class ConfirmNewUsernameWidget extends StatefulWidget {
 }
 
 class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
-  late ConfirmNewUsernameModel _model;
-
+  late TextEditingController newUsernameController;
+  late TextEditingController confirmUsernameController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ConfirmNewUsernameModel());
-
-    _model.emailAddressTextController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
-
-    _model.phoneNumberTextController ??= TextEditingController();
-    _model.phoneNumberFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+    newUsernameController = TextEditingController();
+    confirmUsernameController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _model.dispose();
-
+    newUsernameController.dispose();
+    confirmUsernameController.dispose();
     super.dispose();
+  }
+
+  //Username validation
+  String? validateUsername(String? value) {
+    //Username cannot be null
+    if (value == null || value.isEmpty) {
+      return 'Username cannot be empty.';
+    }
+    //Username must be greater than 8 characters
+    if (value.length < 8) {
+      return 'Username must be at least 8 characters.';
+    }
+    final RegExp alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
+    //Username must be alphanumeric
+    if (!alphanumeric.hasMatch(value)) {
+      return 'Only alphanumeric values are allowed.';
+    }
+    return null;
+  }
+
+  Future<void> updateUsername() async {
+    final newUsername = newUsernameController.text.trim();
+    final confirmedUsername = confirmUsernameController.text.trim();
+
+    // Basic validation for empty fields
+    if (newUsername.isEmpty || confirmedUsername.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please fill in both fields.")),
+      );
+      return;
+    }
+
+    // Validate the new username
+    String? validationMessage = validateUsername(newUsername);
+    if (validationMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(validationMessage)),
+      );
+      return;
+    }
+
+    // Check if the usernames match
+    if (newUsername != confirmedUsername) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Usernames do not match.")),
+      );
+      return;
+    }
+
+    //TESTING PURPOSES: Check is user exists
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("User not authenticated.")),
+      );
+      return;
+    }
+
+    try {
+      final docRef = FirebaseFirestore.instance.collection('users').doc(userId);
+      await docRef.update({'username': newUsername});
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Username updated successfully.")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error updating username: $e")),
+      );
+      print("Error updating username: $e");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryText,
+      key: GlobalKey<ScaffoldState>(),
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 12),
-          child: FlutterFlowIconButton(
-            borderColor: FlutterFlowTheme.of(context).primaryBackground,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 60,
-            fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30,
-            ),
-            onPressed: () async {
-              context.pop();
-            },
-          ),
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 0,
+        backgroundColor: Colors.black,
       ),
-      body: Align(
-        alignment: AlignmentDirectional(0, -1),
-        child: Container(
-          width: double.infinity,
-          constraints: BoxConstraints(
-            maxWidth: 570,
-          ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                FlutterFlowTheme.of(context).primaryText,
-                FlutterFlowTheme.of(context).primaryText
-              ],
-              stops: [0, 1],
-              begin: AlignmentDirectional(0, -1),
-              end: AlignmentDirectional(0, 1),
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //Title
+            Text(
+              'Change Username',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            //Description
+            Text(
+              'Please confirm your new Username by filling out the fields below.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 4),
+            //Alphanumeric warning
+            Text(
+              'Alphanumeric (A, a, B, b, 1, 2, 3, etc) values only.',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+              ),
+            ),
+            SizedBox(height: 20),
+            // New Username Field
+            TextFormField(
+                controller: newUsernameController,
+                decoration: InputDecoration(
+                  labelText: 'New Username',
+                  labelStyle: TextStyle(color: Colors.white),
+                  hintText: 'Enter New Username',
+                  hintStyle: TextStyle(color: Colors.white54),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.black,
+                  contentPadding: EdgeInsets.all(16),
+                ),
+                style: TextStyle(color: Colors.white),
+                validator: validateUsername
+            ),
+            SizedBox(height: 16),
+        // Confirm Username Field
+            TextFormField(
+              controller: confirmUsernameController,
+              decoration: InputDecoration(
+                labelText: 'Confirm Username',
+                labelStyle: TextStyle(color: Colors.white),
+                hintText: 'Confirm New Username',
+                hintStyle: TextStyle(color: Colors.white54),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white, width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white, width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.black,
+                contentPadding: EdgeInsets.all(16),
+              ),
+              style: TextStyle(color: Colors.white),
+              validator: validateUsername,
+            ),
+            SizedBox(height: 20),
+            // Submit Button
+        ElevatedButton(
+          onPressed: updateUsername,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.black,
+            padding: EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // This row exists for when the "app bar" is hidden on desktop, having a way back for the user can work well.
-              if (responsiveVisibility(
-                context: context,
-                phone: false,
-                tablet: false,
-              ))
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.safePop();
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: Icon(
-                            Icons.arrow_back_rounded,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                          child: Text(
-                            'Back',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                              fontFamily: 'Inter',
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                child: Text(
-                  'Confirm New Username',
-                  style: FlutterFlowTheme.of(context).titleMedium.override(
-                    fontFamily: 'Inter',
-                    fontSize: 20,
-                    letterSpacing: 0.0,
-                  ),
-                ),
+          child: Container(
+            width: double.infinity,
+            child: Text(
+              'Submit',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 16),
-                child: Text(
-                  'Please confirm your new username by filling out the fields below',
-                  style: FlutterFlowTheme.of(context).titleSmall.override(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: Container(
-                  width: double.infinity,
-                  child: TextFormField(
-                    controller: _model.emailAddressTextController,
-                    focusNode: _model.emailAddressFocusNode,
-                    autofillHints: [AutofillHints.email],
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'New Username',
-                      labelStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                      hintText: 'Enter New UserName',
-                      hintStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primary,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Inter',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      letterSpacing: 0.0,
-                    ),
-                    maxLines: null,
-                    keyboardType: TextInputType.emailAddress,
-                    cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.emailAddressTextControllerValidator
-                        .asValidator(context),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: Container(
-                  width: double.infinity,
-                  child: TextFormField(
-                    controller: _model.phoneNumberTextController,
-                    focusNode: _model.phoneNumberFocusNode,
-                    autofillHints: [AutofillHints.email],
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Confirm Username',
-                      labelStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                      hintText: 'Confirm New Username',
-                      hintStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primary,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Inter',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      letterSpacing: 0.0,
-                    ),
-                    maxLines: null,
-                    keyboardType: TextInputType.emailAddress,
-                    cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberTextControllerValidator
-                        .asValidator(context),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      if (_model.emailAddressTextController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Email required!',
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-                      await authManager.resetPassword(
-                        email: _model.emailAddressTextController.text,
-                        context: context,
-                      );
-                    },
-                    text: 'Reset',
-                    options: FFButtonOptions(
-                      width: double.infinity,
-                      height: 50,
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      textStyle:
-                      FlutterFlowTheme.of(context).bodyLarge.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                      elevation: 3,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            )
         ),
-      ),
+       ],
+     ),
+    )
     );
   }
 }
