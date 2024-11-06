@@ -6,6 +6,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'change_address_model.dart';
 export 'change_address_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../backend/firebase_storage/database.dart';
 
 class ChangeAddressWidget extends StatefulWidget {
   const ChangeAddressWidget({super.key});
@@ -24,13 +26,8 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
     super.initState();
     _model = createModel(context, () => ChangeAddressModel());
 
-    _model.phoneNumberTextController1 ??=
-        TextEditingController(text: 'Change Address');
-    _model.phoneNumberFocusNode1 ??= FocusNode();
-
-    _model.phoneNumberTextController2 ??=
-        TextEditingController(text: 'Confirm Address');
-    _model.phoneNumberFocusNode2 ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -164,21 +161,21 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                   child: SizedBox(
                     width: double.infinity,
                     child: TextFormField(
-                      controller: _model.phoneNumberTextController1,
-                      focusNode: _model.phoneNumberFocusNode1,
+                      controller: _model.emailTextController,
+                      focusNode: _model.emailFocusNode,
                       autofillHints: const [AutofillHints.addressCity],
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Change Address',
-                        labelStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
+                        labelStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Inter',
+                          color: Colors.white, // Set label color to white
+                          letterSpacing: 0.0,
                                 ),
-                        hintStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
+                        hintStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                          fontFamily: 'Inter',
+                          color: Colors.white, // Set hint text color to white
+                          letterSpacing: 0.0,
                                 ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -214,89 +211,21 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                             24.0, 24.0, 20.0, 24.0),
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Inter',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            letterSpacing: 0.0,
-                            lineHeight: 4.0,
-                          ),
+                        fontFamily: 'Inter',
+                        color: Colors.white, // Set text color to white
+                        letterSpacing: 0.0,
+                        lineHeight: 4.0,
+                      ),
                       maxLines: null,
                       keyboardType: TextInputType.streetAddress,
                       cursorColor: FlutterFlowTheme.of(context).primary,
-                      validator: _model.phoneNumberTextController1Validator
-                          .asValidator(context),
+                      validator: _model.emailTextControllerValidator
+                          ?.asValidator(context),
                     ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 15.0, 16.0, 0.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: TextFormField(
-                    controller: _model.phoneNumberTextController2,
-                    focusNode: _model.phoneNumberFocusNode2,
-                    autofillHints: const [AutofillHints.addressState],
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Confirm Address',
-                      labelStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                      hintText: 'Confirm Address',
-                      hintStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primary,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                          24.0, 24.0, 20.0, 24.0),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          letterSpacing: 0.0,
-                          lineHeight: 4.0,
-                        ),
-                    maxLines: null,
-                    keyboardType: TextInputType.streetAddress,
-                    cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberTextController2Validator
-                        .asValidator(context),
-                  ),
-                ),
-              ),
+
               Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
@@ -304,35 +233,49 @@ class _ChangeAddressWidgetState extends State<ChangeAddressWidget> {
                       const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.phoneNumberTextController1.text.isEmpty) {
+                      final newEmail = _model.emailTextController?.text.trim();
+
+                      if (newEmail == null || newEmail.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Email required!',
-                            ),
-                          ),
+                          SnackBar(content: Text('Email field is required!')),
                         );
                         return;
                       }
-                      await authManager.resetPassword(
-                        email: _model.phoneNumberTextController1.text,
-                        context: context,
-                      );
+
+                      try {
+                        // Update email in Firebase authentication
+                        final user = FirebaseAuth.instance.currentUser;
+                        if (user != null) {
+                          await user.updateEmail(newEmail);
+                          await DatabaseService().updateEmail(newEmail); // Update email in Firestore
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Email updated successfully!')),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('No user is logged in.')),
+                          );
+                        }
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error updating email: $e')),
+                        );
+                      }
                     },
-                    text: 'Reset',
+                    text: 'Update Email',
                     options: FFButtonOptions(
                       width: double.infinity,
                       height: 50.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       textStyle:
-                          FlutterFlowTheme.of(context).bodyLarge.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
+                      FlutterFlowTheme.of(context).bodyLarge.override(
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                       elevation: 3.0,
                       borderSide: const BorderSide(
                         color: Colors.transparent,

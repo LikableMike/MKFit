@@ -163,7 +163,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Change Name',
+                              'Change Username',
                               style: FlutterFlowTheme.of(context)
                                   .titleLarge
                                   .override(
