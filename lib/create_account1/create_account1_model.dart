@@ -43,10 +43,27 @@ class CreateAccount1Model extends FlutterFlowModel<CreateAccount1Widget> {
   String? Function(BuildContext, String?)?
       passwordConfirmTextControllerValidator;
 
+  String? _usernameTextControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Username is required';
+    }
+    if (val.length < 6) {
+      return 'Username must be at least 6 characters';
+    }
+    if (val.length > 25) {
+      return 'Username cannot exceed 25 characters';
+    }
+    return null;
+  }
+
+
   @override
   void initState(BuildContext context) {
     passwordVisibility = false;
     passwordConfirmVisibility = false;
+
+    // Assign the username validator
+    userNameTextControllerValidator = _usernameTextControllerValidator;
   }
 
   @override

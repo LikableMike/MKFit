@@ -52,6 +52,19 @@ class DatabaseService {
       return false;
     }
   }
+
+  Future<void> updateUsername(String newUsername) async {
+    try {
+      final String uid = await getUID(); // Retrieve the current user's UID
+      await usersCollection.doc(uid).update({
+        "username": newUsername, // Update the "username" field with the new value
+      });
+      print("Username updated successfully.");
+    } catch (e) {
+      print("Error updating username: $e");
+    }
+  }
+
   Future<String> addAppointment(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     // Check if the time range is available
     bool isAvailable = await isAppointmentAvailable(newAppointmentStart, newAppointmentEnd);
@@ -157,16 +170,32 @@ class DatabaseService {
     return user.uid;
   }
 
-  Future<void> createUser(String name, String username) async {
+  Future<void> createUser(String name, String username, String height, String weight, String email) async {
     try {
       final String uid = await getUID();
       await usersCollection.doc(uid).set({
         "name": name,
         "username": username,
+        "height": height,
+        "weight": weight,
+        "email": email, // Add email here
         "createdAt": DateTime.now().millisecondsSinceEpoch.toString()
       });
+      print("User created successfully with email.");
     } catch (e) {
       print("Error creating user: $e");
+    }
+  }
+
+  Future<void> updateEmail(String newEmail) async {
+    try {
+      final String uid = await getUID();
+      await usersCollection.doc(uid).update({
+        "email": newEmail,
+      });
+      print("Email updated successfully in Firestore.");
+    } catch (e) {
+      print("Error updating email in Firestore: $e");
     }
   }
 
@@ -320,6 +349,19 @@ class DatabaseService {
           });
         }
       }
+    }
+  }
+
+  Future<void> updateUserWeightAndHeight(String weight, String height) async {
+    try {
+      final String uid = await getUID(); // Get the user's UID
+      await usersCollection.doc(uid).update({
+        "weight": weight,
+        "height": height,
+      });
+      print("User weight and height updated successfully.");
+    } catch (e) {
+      print("Error updating weight and height: $e");
     }
   }
 

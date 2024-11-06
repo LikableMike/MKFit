@@ -428,43 +428,34 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       controller: _model.userNameTextController,
                                       focusNode: _model.userNameFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [
-                                        AutofillHints.email
-                                      ],
+                                      autofillHints: const [AutofillHints.username],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Username',
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                        hintText: 'Must be at least 6 characters', // Add this line for hint text
+                                        labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
                                         enabledBorder: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         errorBorder: InputBorder.none,
                                         focusedErrorBorder: InputBorder.none,
                                         filled: true,
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
+                                        fillColor: FlutterFlowTheme.of(context).primaryBackground,
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      maxLength: 20,
-                                      maxLengthEnforcement:
-                                          MaxLengthEnforcement.enforced,
-                                      validator: _model
-                                          .userNameTextControllerValidator
-                                          .asValidator(context),
+                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
+                                      maxLength: 25,
+                                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                                      validator: _model.userNameTextControllerValidator?.asValidator(context), // Ensure validator is set here
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp('[a-zA-Z0-9]'))
+                                        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]'))
                                       ],
                                     ),
+
                                   ),
                                 ),
                                 Padding(
@@ -624,8 +615,12 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
 
                                       final databaseService = DatabaseService();
                                       await databaseService.createUser(
-                                          _model.fullNameTextController.text,
-                                          _model.userNameTextController.text);
+                                        _model.fullNameTextController.text,
+                                        _model.userNameTextController.text,
+                                        _model.heightTextController.text,
+                                        _model.weightTextController.text,
+                                        _model.emailAddressTextController.text, // Add email argument here
+                                      );
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
