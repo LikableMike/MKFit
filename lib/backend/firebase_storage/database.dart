@@ -170,7 +170,7 @@ class DatabaseService {
     return user.uid;
   }
 
-  Future<void> createUser(String name, String username, String height, String weight, String email) async {
+  Future<void> createUser(String name, String username, String height, String weight, String email, String phoneNumber) async {
     try {
       final String uid = await getUID();
       await usersCollection.doc(uid).set({
@@ -178,12 +178,25 @@ class DatabaseService {
         "username": username,
         "height": height,
         "weight": weight,
-        "email": email, // Add email here
+        "email": email,
+        "phoneNumber": phoneNumber, // Add phone number here
         "createdAt": DateTime.now().millisecondsSinceEpoch.toString()
       });
-      print("User created successfully with email.");
+      print("User created successfully with phone number.");
     } catch (e) {
       print("Error creating user: $e");
+    }
+  }
+
+  Future<void> updatePhoneNumber(String newPhoneNumber) async {
+    try {
+      final String uid = await getUID();
+      await usersCollection.doc(uid).update({
+        "phoneNumber": newPhoneNumber, // Update the phone number
+      });
+      print("Phone number updated successfully.");
+    } catch (e) {
+      print("Error updating phone number: $e");
     }
   }
 
