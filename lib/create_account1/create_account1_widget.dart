@@ -620,6 +620,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                         _model.heightTextController.text,
                                         _model.weightTextController.text,
                                         _model.emailAddressTextController.text, // Add email argument here
+                                        _model.phoneNumberTextController.text, // Pass phone number here
                                       );
                                     },
                                     text: 'Create Account',
