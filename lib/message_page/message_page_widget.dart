@@ -1,3 +1,4 @@
+/*
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,8 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
                 _buildHeader(context),
                 const SizedBox(height: 8.0),
                 _buildMessageCard(context),
-                const Divider(height: 1.0, thickness: 1.0, color: Color(0xFF103E0C)),
+                const Divider(
+                    height: 1.0, thickness: 1.0, color: Color(0xFF103E0C)),
               ],
             ),
           ),
@@ -65,7 +67,8 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
         borderColor: Colors.transparent,
         borderRadius: 30.0,
         buttonSize: 70.0,
-        icon: const Icon(Icons.arrow_back_rounded, color: Colors.white, size: 40.0),
+        icon: const Icon(Icons.arrow_back_rounded,
+            color: Colors.white, size: 40.0),
         onPressed: () async {
           Navigator.pop(context);
         },
@@ -185,3 +188,4 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
     );
   }
 }
+*/

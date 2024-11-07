@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'change_number_model.dart';
 export 'change_number_model.dart';
+import '/backend/firebase_storage/database.dart';
 
 class ChangeNumberWidget extends StatefulWidget {
   const ChangeNumberWidget({super.key});
@@ -24,8 +25,8 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
     super.initState();
     _model = createModel(context, () => ChangeNumberModel());
 
-    _model.emailAddressTextController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
+    _model.phoneNumberTextController ??= TextEditingController();
+    _model.phoneNumberFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -156,23 +157,15 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.emailAddressTextController,
-                    focusNode: _model.emailAddressFocusNode,
-                    autofillHints: const [AutofillHints.email],
+                    controller: _model.phoneNumberTextController, // Use phone number controller here
+                    focusNode: _model.phoneNumberFocusNode,
+                    autofillHints: const [AutofillHints.telephoneNumber],
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'New Phone Number',
-                      labelStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
+                      labelStyle: TextStyle(color: Colors.white), // Set label text color to white
                       hintText: 'New Phone Number',
-                      hintStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                letterSpacing: 0.0,
-                              ),
+                      hintStyle: TextStyle(color: Colors.white70), // Set hint text color to a lighter white
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).alternate,
@@ -187,35 +180,14 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
                         ),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                          24.0, 24.0, 20.0, 24.0),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          letterSpacing: 0.0,
-                        ),
-                    maxLines: null,
-                    keyboardType: TextInputType.emailAddress,
-                    cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.emailAddressTextControllerValidator
-                        .asValidator(context),
+                    style: TextStyle(
+                      color: Colors.white, // Set input text color to white
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
+                    keyboardType: TextInputType.phone,
+                    validator: _model.phoneNumberTextControllerValidator.asValidator(context),
                   ),
                 ),
               ),
@@ -226,19 +198,22 @@ class _ChangeNumberWidgetState extends State<ChangeNumberWidget> {
                       const EdgeInsetsDirectional.fromSTEB(16.0, 80.0, 16.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.emailAddressTextController.text.isEmpty) {
+                      if (_model.phoneNumberTextController?.text.isEmpty ?? true) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text(
-                              'Email required!',
-                            ),
+                            content: Text('Phone number is required!'),
                           ),
                         );
                         return;
                       }
-                      await authManager.resetPassword(
-                        email: _model.emailAddressTextController.text,
-                        context: context,
+
+                      final databaseService = DatabaseService();
+                      await databaseService.updatePhoneNumber(_model.phoneNumberTextController!.text);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Phone number updated successfully!'),
+                        ),
                       );
                     },
                     text: 'Update',
