@@ -97,7 +97,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   Future<void> attemptToBookAppointment(DateTime startTime, DateTime endTime) async {
     try {
       // Check for appointment availability
-      bool isAvailable = await dbService.isAppointmentAvailable(startTime, endTime);
+      bool isAvailable = await dbService.isAppointmentAvailable(startTime);
 
       if (isAvailable) {
         // If available, proceed with adding the appointment
@@ -411,7 +411,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
                                             try {
                                               // Check for availability and schedule if available
-                                              bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime, endTime);
+                                              bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime);
 
                                               if (isAvailable) {
                                                 print('Appointment scheduled for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}');
