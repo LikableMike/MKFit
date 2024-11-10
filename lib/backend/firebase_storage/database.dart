@@ -24,29 +24,21 @@ class DatabaseService {
     "nOlIEy4WKkddkikrMPhQNLEjT9y1",
     // Add more UIDs as needed
   ];
-  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart) async {
     try {
-      String userId = await getUID();
-      DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
+      DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+      DocumentSnapshot snapshot = await startTimeDoc.get();
 
-      if (userSnapshot.exists) {
-        List<dynamic> appointments = userSnapshot['appointments'] ?? [];
-
-        for (var appointment in appointments) {
-          // Check if the 'startTime' and 'endTime' exist and are not null
-          if (appointment['startTime'] != null && appointment['endTime'] != null) {
-            DateTime existingAppointmentStart = (appointment['startTime'] as Timestamp).toDate();
-            DateTime existingAppointmentEnd = (appointment['endTime'] as Timestamp).toDate();
-
-            // Check for overlap
-            if (newAppointmentStart.isBefore(existingAppointmentEnd) && newAppointmentEnd.isAfter(existingAppointmentStart)) {
-              return false;  // Overlap found, appointment not available
-            }
+      if (snapshot.exists && snapshot.data() != null) {
+        List<dynamic> startTimes = snapshot['startTimes'] ?? [];
+        for (var startTime in startTimes) {
+          DateTime existingAppointmentStart = (startTime as Timestamp).toDate();
+          if (existingAppointmentStart.isAtSameMomentAs(newAppointmentStart)) {
+            return false;
           }
         }
       }
-
-      return true;  // No overlap found, appointment available
+      return true;
     } catch (e) {
       print("Error checking appointment availability: $e");
       return false;
@@ -54,7 +46,7 @@ class DatabaseService {
   }
   Future<String> addAppointment(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     // Check if the time range is available
-    bool isAvailable = await isAppointmentAvailable(newAppointmentStart, newAppointmentEnd);
+    bool isAvailable = await isAppointmentAvailable(newAppointmentStart);
 
     if (isAvailable) {
       try {
@@ -69,6 +61,12 @@ class DatabaseService {
             }
           ]),
         });
+
+        DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+
+        await startTimeDoc.set({
+            'startTimes':FieldValue.arrayUnion([Timestamp.fromDate(newAppointmentStart)])
+        }, SetOptions(merge: true));
 
         return 'Appointment successfully added!';
       } catch (e) {
