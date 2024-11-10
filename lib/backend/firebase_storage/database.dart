@@ -7,6 +7,7 @@ import 'dart:convert';
 import "package:firebase_storage/firebase_storage.dart";
 import "dart:io";
 import 'package:http/http.dart' as http;
+import "../../flutter_flow/flutter_flow_util.dart";
 import "/backend/firebase_storage/globals.dart" as globals;
 
 class DatabaseService {
@@ -289,16 +290,24 @@ class DatabaseService {
 
   Future<bool> checkAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    var appointments = snapshot.get("appointments");
-    for (int i = 0; i < appointments.length; i++) {
-      if (appointments[i]["date"] != null &&
-          appointments[i]["date"].contains(date)) {
-        return true;
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          // Convert the timestamp to DateTime
+          DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+
+          // Format it to match the provided date
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return true;
+          }
+        }
       }
     }
-
     return false;
   }
+
 
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -343,6 +352,7 @@ class DatabaseService {
     }
     return dayAppointments;
   }
+
 
   Future cancelAppointment(List<String> dates) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
