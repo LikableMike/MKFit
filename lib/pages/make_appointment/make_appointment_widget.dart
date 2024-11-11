@@ -585,183 +585,143 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       ),
 
 
+                                      // This displays "Next session with Makayla and also notifies the client if their are no appointments scheduled
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                                        child: FutureBuilder(
+                                          future: DatabaseService().getNextAppointment(),
+                                          builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text('Error: \${snapshot.error}');
+                                            } else if (snapshot.hasData && snapshot.data != null) {
+                                              // Extracting data
+                                              DateTime appointmentDate = snapshot.data!['date'];
+                                              TimeOfDay appointmentTime = snapshot.data!['time'];
 
-                                            0.0, 12.0, 0.0, 0.0),
-                                        child: ListView(
-                                          padding: EdgeInsets.zero,
-                                          primary: false,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                  16.0, 0.0, 16.0, 12.0),
-                                              child: Container(
-                                                width: 100.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      blurRadius: 3.0,
-                                                      color: Color(0x33000000),
-                                                      offset: Offset(
-                                                        0.0,
-                                                        1.0,
-                                                      ),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      8.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                    MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        mainAxisSize:
-                                                        MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                4.0,
-                                                                0.0,
-                                                                0.0,
-                                                                0.0),
-                                                            child: Text(
-                                                              _selectedDateRange != null && _selectedTime != null
-                                                                  ? 'Next Session with Makayla: ${_selectedDateRange!.start.toString().split(' ')[0]} at $_selectedTime'
-                                                                  : 'Next Session with Makayla',
-                                                              style: FlutterFlowTheme
-                                                                  .of(context)
-                                                                  .headlineSmall
-                                                                  .override(
-                                                                fontFamily:
-                                                                'Outfit',
-                                                                color: const Color(
-                                                                    0xFF14181B),
-                                                                fontSize:
-                                                                24.0,
-                                                                letterSpacing:
-                                                                0.0,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w500,
+                                              String formattedDate = DateFormat('MM-dd-yyyy').format(appointmentDate);
+                                              String timeString = appointmentTime.format(context);
+
+                                              return Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        blurRadius: 3.0,
+                                                        color: Color(0x33000000),
+                                                        offset: Offset(0.0, 1.0),
+                                                      )
+                                                    ],
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          'Next Session with Makayla:',
+                                                          style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                            fontFamily: 'Outfit',
+                                                            color: const Color(0xFF14181B),
+                                                            fontSize: 20.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(height: 4.0),
+                                                        Row(
+                                                          mainAxisSize: MainAxisSize.max,
+                                                          children: [
+                                                            Padding(
+                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                                                              child: Card(
+                                                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                                color: const Color(0x4CFFA726), // Light orange color
+                                                                elevation: 0.0,
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 4.0),
+                                                                  child: Text(
+                                                                    timeString,
+                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                      fontFamily: 'Outfit',
+                                                                      color: const Color(0xFF14181B),
+                                                                      fontSize: 16.0,
+                                                                      letterSpacing: 0.0,
+                                                                      fontWeight: FontWeight.normal,
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0.0,
-                                                                4.0,
-                                                                0.0,
-                                                                0.0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                              MainAxisSize
-                                                                  .max,
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                                  child: Card(
-                                                                    clipBehavior:
-                                                                    Clip.antiAliasWithSaveLayer,
-                                                                    color: const Color(
-                                                                        0x4DEE8B60),
-                                                                    elevation:
-                                                                    0.0,
-                                                                    shape:
-                                                                    RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          8.0),
-                                                                    ),
-                                                                    child:
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          8.0,
-                                                                          4.0),
-                                                                      child:
-                                                                      Text(
-                                                                        _selectedTime != null ? _selectedTime!.format(context) : 'Select Time',
-                                                                        style: FlutterFlowTheme
-                                                                            .of(
-                                                                            context)
-
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                          fontFamily: 'Plus Jakarta Sans',
-                                                                          color: const Color(
-                                                                              0xFF150903),
-                                                                          fontSize: 14.0,
-                                                                          letterSpacing: 0.0,
-                                                                          fontWeight: FontWeight.normal,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  _selectedDateRange != null
-                                                                      ? _selectedDateRange!.start.toString().split(' ')[0]
-                                                                      : '', // Leave blank if no date is selected
-                                                                  style: FlutterFlowTheme
-                                                                      .of(
-                                                                      context)
-
-                                                                      .bodySmall
-                                                                      .override(
-                                                                    fontFamily:
-                                                                    'Plus Jakarta Sans',
-                                                                    color: const Color(
-                                                                        0xFF14181B),
-                                                                    fontSize:
-                                                                    12.0,
-                                                                    letterSpacing:
-                                                                    0.0,
-                                                                    fontWeight:
-                                                                    FontWeight.normal,
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                            Text(
+                                                              formattedDate,
+                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                fontFamily: 'Outfit',
+                                                                color: const Color(0xFF14181B),
+                                                                fontSize: 16.0,
+                                                                letterSpacing: 0.0,
+                                                                fontWeight: FontWeight.normal,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
+                                              );
+                                            } else {
+                                              return Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        blurRadius: 3.0,
+                                                        color: Color(0x33000000),
+                                                        offset: Offset(0.0, 1.0),
+                                                      )
+                                                    ],
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Row(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        Text(
+                                                          'No Appointments Currently Scheduled',
+                                                          style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                            fontFamily: 'Outfit',
+                                                            color: const Color(0xFF14181B),
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
                                         ),
                                       ),
+
                                       Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             16.0, 12.0, 0.0, 0.0),

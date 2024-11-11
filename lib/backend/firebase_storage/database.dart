@@ -2,6 +2,7 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
 import "package:sqflite/sqflite.dart";
 import 'dart:convert';
 import "package:firebase_storage/firebase_storage.dart";
@@ -320,6 +321,35 @@ class DatabaseService {
       }
     }
     return null; // Return null if no appointment is found for the given date
+  }
+  Future<Map<String, dynamic>?> getNextAppointment() async {
+    try {
+      DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+      if (snapshot.exists && snapshot.data() != null) {
+        List<dynamic> appointments = snapshot.get("appointments");
+
+        if (appointments.isEmpty) {
+          return null;
+        }
+
+        // Sort appointments by date
+        appointments.sort((a, b) {
+          DateTime aDate = (a['startTime'] as Timestamp).toDate();
+          DateTime bDate = (b['startTime'] as Timestamp).toDate();
+          return aDate.compareTo(bDate);
+        });
+
+        // Get the earliest appointment
+        Map<String, dynamic> nextAppointment = appointments.first;
+        DateTime appointmentDate = (nextAppointment['startTime'] as Timestamp).toDate();
+        TimeOfDay appointmentTime = TimeOfDay.fromDateTime(appointmentDate);
+
+        return {'date': appointmentDate, 'time': appointmentTime};
+      }
+    } catch (e) {
+      print("Error fetching next appointment: $e");
+    }
+    return null;
   }
 
 
