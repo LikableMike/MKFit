@@ -142,7 +142,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                 textCapitalization: TextCapitalization.none,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Username',
+                                  labelText: 'Email',
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .labelMedium
                                       .override(
