@@ -1,4 +1,4 @@
-//database code 10/26
+
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -294,10 +294,7 @@ class DatabaseService {
       var appointments = snapshot.get("appointments");
       for (int i = 0; i < appointments.length; i++) {
         if (appointments[i]["startTime"] != null) {
-          // Convert the timestamp to DateTime
           DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
-
-          // Format it to match the provided date
           String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
           if (storedDate == date) {
             return true;
@@ -306,6 +303,23 @@ class DatabaseService {
       }
     }
     return false;
+  }
+
+  Future<String?> getAppointmentTime(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return DateFormat('hh:mm a').format(startTime);
+          }
+        }
+      }
+    }
+    return null; // Return null if no appointment is found for the given date
   }
 
 
@@ -354,24 +368,43 @@ class DatabaseService {
   }
 
 
-  Future cancelAppointment(List<String> dates) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    var appointments = snapshot.get("appointments");
+  Future<void> cancelAppointment(List<String> dates) async {
+    try {
+      DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+      if (snapshot.exists && snapshot.data() != null) {
+        var appointments = snapshot.get("appointments");
 
-    for (String date in dates) {
-      for (int i = 0; i < appointments.length; i++) {
-        if (appointments[i]["date"] != null &&
-            appointments[i]["date"].contains(date)) {
-          print("Date Found: $date");
+        List<Map<String, dynamic>> appointmentsToRemove = [];
+
+        for (String date in dates) {
+          for (int i = 0; i < appointments.length; i++) {
+            if (appointments[i]["startTime"] != null) {
+              DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+              String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+
+              if (storedDate == date) {
+                // Collect the appointment to remove
+                appointmentsToRemove.add(appointments[i]);
+              }
+            }
+          }
+        }
+
+        if (appointmentsToRemove.isNotEmpty) {
           await usersCollection.doc(globals.UID).update({
-            "appointments": FieldValue.arrayRemove([
-              {"date": appointments[i]["date"], "time": appointments[i]["time"]}
-            ])
+            "appointments": FieldValue.arrayRemove(appointmentsToRemove),
           });
+          print("Appointments removed successfully.");
+        } else {
+          print("No matching appointments found to remove.");
         }
       }
+    } catch (e) {
+      print("Error canceling appointment: $e");
     }
   }
+
+
 
   Future<void> updateUserWeightAndHeight(String weight, String height) async {
     try {

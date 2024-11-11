@@ -500,130 +500,90 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
 
 
-                          // Cancel Appointment Button
-                          FutureBuilder<bool>(
-                            future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString() ?? "null"),
-                            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (snapshot.hasData && snapshot.data == true) {
-                                return ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red,
-                                  ),
-                                  onPressed: () async {
-                                    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
+                                      // Cancel Appointment Button
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjusted padding to align parallel with Confirm Appointment button
+                                        child: FutureBuilder<bool>(
+                                          future: DatabaseService().checkAppointment(
+                                              DateFormat('yyyy-MM-dd').format(_selectedDateRange?.start ?? DateTime.now())),
+                                          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text('Error: \${snapshot.error}');
+                                            } else if (snapshot.hasData && snapshot.data == true) {
+                                              return FutureBuilder<String?>(
+                                                future: DatabaseService().getAppointmentTime(
+                                                    DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start)),
+                                                builder: (BuildContext context, AsyncSnapshot<String?> timeSnapshot) {
+                                                  if (timeSnapshot.connectionState == ConnectionState.waiting) {
+                                                    return CircularProgressIndicator();
+                                                  } else if (timeSnapshot.hasError) {
+                                                    return Text('Error: \${timeSnapshot.error}');
+                                                  } else {
+                                                    String formattedDate = DateFormat('MM-dd-yyyy').format(_selectedDateRange!.start);
+                                                    String timeString = timeSnapshot.data != null ? ' at ${timeSnapshot.data}' : '';
 
-                                    // Show a dialog to confirm if the user wants to cancel all recurring appointments
-                                    bool? shouldCancelRecurring = await showDialog<bool>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Cancel Appointment'),
-                                          content: Text('Would you like to cancel all recurring appointments, or just this one?'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(true); // Yes, cancel all recurring
-                                              },
-                                              child: Text('All Recurring'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(false); // No, just this one
-                                              },
-                                              child: Text('Just This One'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
+                                                    return ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors.red,
+                                                      ),
+                                                      onPressed: () async {
+                                                        // Show a dialog to confirm if the user wants to cancel the appointment
+                                                        bool? shouldCancelAppointment = await showDialog<bool>(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialog(
+                                                              title: Text('Cancel Appointment'),
+                                                              content: Text('Do you wish to cancel your appointment on $formattedDate$timeString?'),
+                                                              actions: <Widget>[
+                                                                TextButton(
+                                                                  onPressed: () {
+                                                                    Navigator.of(context).pop(true); // Yes, cancel the appointment
+                                                                  },
+                                                                  child: Text('Yes'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () {
+                                                                    Navigator.of(context).pop(false); // No, keep the appointment
+                                                                  },
+                                                                  child: Text('No'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
 
-                                    if (shouldCancelRecurring != null && shouldCancelRecurring) {
-                                      // If the user chooses to cancel all recurring, gather all dates
-                                      List<DateTime> recurringDates = generateRecurringDates(
-                                        _selectedDateRange!.start,
-                                        _selectedDateRange!.end, // Adjust as needed
-                                      );
+                                                        if (shouldCancelAppointment != null && shouldCancelAppointment) {
+                                                          // Cancel only the selected appointment
+                                                          await DatabaseService().cancelAppointment([DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start)]);
 
-                                      List<String> formattedDates = recurringDates
-                                          .map((date) => DateFormat('yyyy-MM-dd').format(date))
-                                          .toList();
+                                                          ScaffoldMessenger.of(context).showSnackBar(
+                                                            SnackBar(content: Text('Appointment on $formattedDate$timeString has been canceled.')),
+                                                          );
 
-                                      await DatabaseService().cancelAppointment(formattedDates);
+                                                          // Refresh UI
+                                                          setState(() {
+                                                            _selectedDateRange = null;
+                                                            _selectedTime = null;
+                                                          });
 
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text('All recurring appointments have been canceled.')),
-                                      );
-                                    } else {
-                                      // Cancel only the selected appointment
-                                      await DatabaseService().cancelAppointment([formattedDate]);
+                                                          // Trigger a re-fetch of appointments
+                                                          setState(() {});
+                                                        }
+                                                      },
+                                                      child: const Text('Cancel Appointment'),
+                                                    );
+                                                  }
+                                                },
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          },
+                                        ),
+                                      ),
 
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text('Appointment on $formattedDate at $_selectedTime has been canceled.')),
-                                      );
-                                    }
-
-                                    setState(() {
-                                      _selectedDateRange = null;
-                                      _selectedTime = null;
-                                    });
-                                  },
-                                  child: const Text('Cancel Appointment'),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                          // ElevatedButton(
-                                      //     style: ElevatedButton.styleFrom(
-                                      //       backgroundColor: Colors.red, // Red color for the cancel button
-                                      //     ),
-                                      //     onPressed: () {
-                                      //       setState(() {
-                                      //         // Clear the selected date and time to cancel the appointment
-                                      //         _selectedDateRange = null;
-                                      //         _selectedTime = null;
-                                      //       });
-                                      //       ScaffoldMessenger.of(context).showSnackBar(
-                                      //         const SnackBar(content: Text('Appointment has been canceled.')),
-                                      //       );
-                                      //     },
-                                      //     child: const Text('Cancel Appointment')
-                                      // ),
 
                                       Padding(
                                         padding: const EdgeInsetsDirectional
