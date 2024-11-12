@@ -88,7 +88,7 @@ class _ClientAppointmentsPageWidgetState extends State<ClientAppointmentsPageWid
                     );
                   } else {
                     // Handle the case where there is no data
-                    return Text('No client name found');
+                    return Text('No Appointments found');
                   }
                 },
               ),
@@ -120,7 +120,8 @@ class _ClientAppointmentsPageWidgetState extends State<ClientAppointmentsPageWid
         ),
         body: SafeArea(
           top: true,
-          child: FutureBuilder<List>(
+          child: Column(
+            children: [FutureBuilder<List>(
             future: DatabaseService().fetchAppointments(globals.selectedClient),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -131,7 +132,7 @@ class _ClientAppointmentsPageWidgetState extends State<ClientAppointmentsPageWid
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 // Show a message if the list is empty
-                return Center(child: Text('No clients found.'));
+                return Center(child: Text('No appointments found.',));
               }
 
               // If data is loaded successfully, use it
@@ -140,7 +141,11 @@ class _ClientAppointmentsPageWidgetState extends State<ClientAppointmentsPageWid
             },
           ),
 
+        ]
+          )
+
         ),
+
       ),
     );
   }
@@ -216,7 +221,7 @@ class DateWidget extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(180.0, 8.0, 0.0, 8.0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(100.0, 8.0, 0.0, 8.0),
 
                         ),
                         Column(
@@ -228,8 +233,43 @@ class DateWidget extends StatelessWidget {
                               color: Color(0xFF7EB687),
                               size: 50,
                             ),
-                            onPressed: () {
-                              print("Delete Appointment");
+                            onPressed: () async {
+                              // Show a dialog to confirm if the user wants to cancel the appointment
+                              bool? shouldCancelAppointment = await showDialog<bool>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Cancel Appointment'),
+                                    content: Text('Do you wish to cancel the appointment on ' + date),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(true); // Yes, cancel the appointment
+                                        },
+                                        child: Text('Yes'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(false); // No, keep the appointment
+                                        },
+                                        child: Text('No'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                              if (shouldCancelAppointment != null && shouldCancelAppointment) {
+                                // Cancel only the selected appointment
+                                print(date);
+                                await DatabaseService().cancelClientAppointment(date);
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Appointment on date has been canceled.')),
+                                );
+
+
+                              }
                             },
                           ),
                           ]
@@ -281,24 +321,22 @@ List fixDates(dates){
   var newDates = [];
   var finalDates = [];
   for(int i = 0; i < dates.length; i++){
-    newDates.add(dates[i]["date"].toString().split(" ")[0]);
+    newDates.add(dates[i]["startTime"].toDate().toString());
   }
   for(int i = 0; i < (newDates.length); i++){
-    var currDate = newDates[i].split("-");
+    var currDate = newDates[i].split(" ")[0].split("-");
     var todaysDate = DateTime.now().toString().split(" ")[0].split("-");
       print(todaysDate.toString() + "  " + currDate.toString() + " Index:" +
           i.toString());
       if (int.parse(currDate[0]) >= int.parse(todaysDate[0])) {
         if (int.parse(currDate[1]) > int.parse(todaysDate[1])) {
           finalDates.add(
-              currDate[0].toString() + "-" + currDate[1].toString() + "-" +
-                  currDate[2].toString());
+              newDates[i].split(".")[0]);
         }
         else if (int.parse(currDate[1]) == int.parse(todaysDate[1]) &&
             int.parse(currDate[2]) >= int.parse(todaysDate[2])) {
           finalDates.add(
-              currDate[0].toString() + "-" + currDate[1].toString() + "-" +
-                  currDate[2].toString());
+              newDates[i].split(".")[0]);
         }
       }
 

@@ -201,7 +201,9 @@ class DatabaseService {
         "weight": weight,
         "email": email,
         "phoneNumber": phoneNumber, // Add phone number here
-        "createdAt": DateTime.now().millisecondsSinceEpoch.toString()
+        "createdAt": DateTime.now().millisecondsSinceEpoch.toString(),
+        "appointments" : [],
+        "workouts" : [],
       });
       print("User created successfully with phone number.");
     } catch (e) {
@@ -487,22 +489,25 @@ class DatabaseService {
     }
   }
 
-  /*Future cancelAppointment(String date) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+  Future cancelClientAppointment(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.selectedClient).get();
     var appointments = snapshot.get("appointments");
+
     for (int i = 0; i < appointments.length; i++) {
-      if (appointments[i]["date"] != null &&
-          appointments[i]["date"].contains(date)) {
+      print(appointments[i]["startTime"].toDate().toString());
+      print(date.split(" ")[0]);
+      if (appointments[i]["startTime"] != null &&
+          appointments[i]["startTime"].toDate().toString().contains(date.split(" ")[0])) {
         print("Date Found");
-        return await usersCollection.doc(globals.UID).update({
+        return await usersCollection.doc(globals.selectedClient).update({
           "appointments": FieldValue.arrayRemove([
-            {"date": appointments[i]["date"], "time": appointments[i]["time"]}
+            {"startTime": appointments[i]["startTime"], "endTime" : appointments[i]["endTime"]}
           ])
         });
       }
     }
   }
-*/
+
   Future<void> updateExercise(String attr, String doc, String val) async {
     await exerciseTestCollection.doc(doc).update({attr: val});
   }

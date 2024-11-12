@@ -120,8 +120,8 @@ class _ClientWorkoutsPageWidgetState extends State<ClientWorkoutsPageWidget> {
         ),
         body: SafeArea(
           top: true,
-          child:
-
+          child: Column(
+              children: [
 
             FutureBuilder<List>(
             future: DatabaseService().getClientWorkouts(globals.selectedClient),
@@ -141,6 +141,68 @@ class _ClientWorkoutsPageWidgetState extends State<ClientWorkoutsPageWidget> {
               List workouts = snapshot.data!;
               return BuildWorkouts(Workouts: workouts);
             },
+          ),
+
+
+          Padding(
+              padding:
+              const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+              child: Container(
+                width: 350.0,
+                height: 80.0,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF00831B),
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 3.0,
+                      color: Color(0x33000000),
+                      offset: Offset(
+                        0.0,
+                        1.0,
+                      ),
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(
+                    color: const Color(0xFF00831B),
+                    width: 2.0,
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: ColoredBox(color: Colors.transparent)
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: const Color(0x9AFFFFFF),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: FlutterFlowIconButton(
+                        buttonSize: 60,
+                        icon: Icon(
+                          Icons.add,
+                          color: Color(0xFF7EB687),
+                          size: 50,
+                        ),
+                        onPressed: () async {
+                          // Show a dialog to confirm if the user wants to cancel the appointment
+
+                        },
+                      ),
+                    ),
+
+                  ],
+                ),
+              )
+          ),
+        ]
           ),
 
         ),

@@ -79,11 +79,11 @@ class _ClientInfoPageWidgetState extends State<ClientInfoPageWidget> {
                     return Text(
                       snapshot.data!,
                       style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        fontFamily: 'Outfit',
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        fontSize: 24.0,
+                        fontFamily: 'Readex Pro',
+                        color: Colors.white,
+                        fontSize: 34,
                         letterSpacing: 0.0,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                       ),
                     );
                   } else {
