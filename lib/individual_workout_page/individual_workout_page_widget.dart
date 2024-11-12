@@ -146,7 +146,7 @@ class WorkoutSection extends StatelessWidget{
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xFF97B690),
+                        color: const Color(0xFF86BD92),
                         width: 2.0,
                       ),
                     ),
@@ -285,7 +285,7 @@ class WorkoutSection extends StatelessWidget{
                               buttonSize: 44.0,
                               icon: const Icon(
                                 Icons.ondemand_video_outlined,
-                                color: Color(0xFF97B690),
+                                color: Color(0xFF86BD92),
                                 size: 35.0,
                               ),
                               onPressed: () async {
@@ -339,7 +339,7 @@ class WorkoutSection extends StatelessWidget{
                               buttonSize: 44.0,
                               icon: const Icon(
                                 Icons.assignment_rounded,
-                                color: Color(0xFF97B690),
+                                color: Color(0xFF86BD92),
                                 size: 35.0,
                               ),
                               onPressed: () {

@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:m_k_fit/AdminClientList/admin_client_list_widget.dart';
+import 'package:m_k_fit/ClientInfoPage/client_info_page_widget.dart';
 import 'package:provider/provider.dart';
-
+import '/backend/firebase_storage/globals.dart' as globals;
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
@@ -73,14 +75,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const LoginWidget(),
+          appStateNotifier.loggedIn ?  globals.findInitialState() : const LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? const NavBarPage()
-              : const LoginWidget(),
+          builder: (context, _) => const LoginWidget(),
         ),
         FFRoute(
           name: 'login',
@@ -206,6 +206,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CreateExercisePage',
           path: '/create_excersise',
           builder: (context, params) => const CreateExcersiseWidget(),
+        ),
+        FFRoute(
+          name: 'AdminClientList',
+          path: '/AdminClientList',
+          builder: (context, params) => const AdminClientListWidget(),
+        ),
+        FFRoute(
+          name: 'ClientInfoPage',
+          path: '/ClientInfoPage',
+          builder: (context, params) => const ClientInfoPageWidget(),
+        ),
+        FFRoute(
+          name: 'ClientAppointmentsPage',
+          path: '/ClientAppointmentsPage',
+          builder: (context, params) => const ClientAppointmentsPageWidget(),
+        ),
+        FFRoute(
+          name: 'ClientWorkoutsPage',
+          path: '/ClientsWorkoutsPage',
+          builder: (context, params) => const ClientWorkoutsPageWidget(),
         ),
         FFRoute(
           name: 'admin',

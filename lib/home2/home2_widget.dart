@@ -228,7 +228,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                     ],
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Color(0xFF00831B),
+                      color: Color(0xFF99C0A2),
                     ),
                   ),
                   child: ClipRRect(
@@ -284,11 +284,11 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   width: 100,
                                   height: 100,
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF00831B),
+                                    color: Color(0xFF7EB687),
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                   child: FlutterFlowIconButton(
-                                    borderColor: Color(0xFF40DC28),
+                                    borderColor: Color(0xFf1c502d),
                                     borderRadius: 40,
                                     borderWidth: 4,
                                     buttonSize: 25,
@@ -344,7 +344,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                               EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
                               EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                              color: Color(0xFF00831B),
+                              color: Color(0xFF86BD92),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -547,7 +547,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                                     24, 0, 24, 0),
                                 iconPadding:
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                color: Color(0xFF00831B),
+                                color: Color(0xFF86BD92),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -607,7 +607,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                                       .secondaryBackground,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Color(0xFF00831B),
+                                    color: Color(0xFF86BD92),
                                     width: 4,
                                   ),
                                 ),
@@ -701,13 +701,14 @@ class _Home2WidgetState extends State<Home2Widget> {
                               EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
                               EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                              color: Color(0xFF00831B),
+                              color: Color(0xFF86BD92),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
                                 fontFamily: 'Inter',
                                 color: Colors.white,
                                 letterSpacing: 0.0,
+
                               ),
                               elevation: 3,
                               borderSide: BorderSide(

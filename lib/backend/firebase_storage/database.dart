@@ -53,6 +53,27 @@ class DatabaseService {
     }
   }
 
+  Future<List> fetchAppointments(String UID) async {
+    try {
+      DocumentSnapshot userSnapshot = await usersCollection.doc(UID).get();
+
+      if (userSnapshot.exists) {
+        List<dynamic> appointments = userSnapshot['appointments'] ?? [];
+        for(int i = 0; i < appointments.length; i++){
+
+
+          List<String> dateSplit = appointments[i]["date"].toString().split(" ")[0].split("-");
+
+        }
+        return appointments;
+      }
+      return [];
+    } catch (e) {
+      print("ERROR FINDING APPOINTMENTS: $e");
+      return [];
+    }
+  }
+
   Future<void> updateUsername(String newUsername) async {
     try {
       final String uid = await getUID(); // Retrieve the current user's UID
@@ -365,6 +386,25 @@ class DatabaseService {
     }
   }
 
+  Future<String> findClientName(String uid) async{
+    DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+    var name = snapshot.get("name");
+    print(name);
+    return name;
+  }
+
+  Future<List> getClients() async{
+    QuerySnapshot snapshot = await usersCollection.get();
+    List clientsHold = [];
+    for (var doc in snapshot.docs){
+      clientsHold.add(doc.id);
+    }
+    globals.clientUIDS = clientsHold;
+    print(globals.clientUIDS.length);
+    return globals.clientUIDS;
+
+  }
+
   Future<void> updateUserWeightAndHeight(String weight, String height) async {
     try {
       final String uid = await getUID(); // Get the user's UID
@@ -525,6 +565,45 @@ class DatabaseService {
     return false;
   }
 
+  Future<List> getClientWorkouts(UID) async {
+    globals.userWorkouts.clear();
+    globals.testWorkouts.clear();
+    DocumentSnapshot snapshot = await usersCollection.doc(UID).get();
+    var userWorkouts = snapshot.get("workouts");
+    final allWorkouts = FirebaseFirestore.instance.collection("workouts");
+    final allExercises =
+    FirebaseFirestore.instance.collection("exercises_test");
+    var workoutUIDS = [];
+    for (int i = 0; i < userWorkouts.length; i++) {
+      if (userWorkouts[i]["uid"] != null) {
+
+        DocumentSnapshot WorkoutSnap =
+        await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+        var workoutName = WorkoutSnap.get("name");
+        List workoutExercises = userWorkouts[i]["exercises"];
+        print(workoutExercises.toString());
+        globals.testWorkouts[workoutName] = [];
+        for (int j = 0; j < workoutExercises.length; j++) {
+          DocumentSnapshot exerciseSnap =
+          await allExercises.doc(workoutExercises[j]["uid"]).get();
+          globals.testWorkouts[workoutName].add({
+            "uid": workoutExercises[j]["uid"],
+            "reps": workoutExercises[j]["reps"],
+            "sets": workoutExercises[j]["sets"],
+            "weight": workoutExercises[j]["weight"],
+            "name": exerciseSnap["exercise_name"],
+            "description": exerciseSnap["exercise_description"]
+          });
+        }
+        globals.userWorkouts.add(workoutName);
+        workoutUIDS.add(workoutName);
+        print(globals.userWorkouts.toString());
+        print(globals.testWorkouts.toString());
+      }
+    }
+
+    return workoutUIDS;
+  }
   //Workout Page Widget
   //Dynamically calls exercise_names 
  Future<List<String>> fetchExercises() async {

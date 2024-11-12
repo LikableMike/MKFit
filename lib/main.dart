@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:m_k_fit/AdminCalendar/AdminCalendar_Widget.dart';
+import 'package:m_k_fit/backend/firebase_storage/database.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
@@ -63,7 +64,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
 
     super.initState();
-
+    globals.futureUID = DatabaseService().getUID();
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
     userStream = mKFitFirebaseUserStream()
@@ -151,7 +152,7 @@ class _NavBarPageState extends State<NavBarPage> {
         backgroundColor: FlutterFlowTheme
             .of(context)
             .primaryText,
-        selectedItemColor: const Color(0xFF40DC28),
+        selectedItemColor: const Color(0xFF87A88E),
         unselectedItemColor: FlutterFlowTheme
             .of(context)
             .primaryBackground,
