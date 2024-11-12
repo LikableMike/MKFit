@@ -473,12 +473,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     }
 
                                                     ScaffoldMessenger.of(context).showSnackBar(
-                                                      SnackBar(content: Text('Recurring appointments set from ${DateFormat('yyyy-MM-dd').format(recurringDateRange.start)} to ${DateFormat('yyyy-MM-dd').format(recurringDateRange.end)} at ${_selectedTime!.format(context)}')),
+                                                      SnackBar(content: Text('Recurring appointments set from ${DateFormat('MM-dd-yyyy').format(recurringDateRange.start)} to ${DateFormat('MM-dd-yyyy').format(recurringDateRange.end)} at ${_selectedTime!.format(context)}')),
                                                     );
                                                   }
                                                 } else {
                                                   ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}')),
+                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('MM-dd-yyyy').format(startTime)} at ${_selectedTime!.format(context)}')),
                                                   );
                                                 }
                                               } else {
