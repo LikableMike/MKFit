@@ -26,20 +26,6 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   TextEditingController? usernameTextController;
   String? Function(BuildContext, String?)? usernameTextControllerValidator;
   String? _usernameTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Field is required';
-    }
-
-    if (val.length < 6) {
-      return 'Needs to be More then 6 characters';
-    }
-    if (val.length > 25) {
-      return 'Needs to be less then 25 characters';
-    }
-    if (!RegExp(kTextValidatorUsernameRegex).hasMatch(val)) {
-      return 'Between 6 - 25 characters';
-    }
-    return null;
   }
 
   // State field(s) for password widget.

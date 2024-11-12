@@ -1,12 +1,14 @@
-//database code 10/26
+
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter/material.dart";
 import "package:sqflite/sqflite.dart";
 import 'dart:convert';
 import "package:firebase_storage/firebase_storage.dart";
 import "dart:io";
 import 'package:http/http.dart' as http;
+import "../../flutter_flow/flutter_flow_util.dart";
 import "/backend/firebase_storage/globals.dart" as globals;
 
 class DatabaseService {
@@ -24,29 +26,21 @@ class DatabaseService {
     "nOlIEy4WKkddkikrMPhQNLEjT9y1",
     // Add more UIDs as needed
   ];
-  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart) async {
     try {
-      String userId = await getUID();
-      DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
+      DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+      DocumentSnapshot snapshot = await startTimeDoc.get();
 
-      if (userSnapshot.exists) {
-        List<dynamic> appointments = userSnapshot['appointments'] ?? [];
-
-        for (var appointment in appointments) {
-          // Check if the 'startTime' and 'endTime' exist and are not null
-          if (appointment['startTime'] != null && appointment['endTime'] != null) {
-            DateTime existingAppointmentStart = (appointment['startTime'] as Timestamp).toDate();
-            DateTime existingAppointmentEnd = (appointment['endTime'] as Timestamp).toDate();
-
-            // Check for overlap
-            if (newAppointmentStart.isBefore(existingAppointmentEnd) && newAppointmentEnd.isAfter(existingAppointmentStart)) {
-              return false;  // Overlap found, appointment not available
-            }
+      if (snapshot.exists && snapshot.data() != null) {
+        List<dynamic> startTimes = snapshot['startTimes'] ?? [];
+        for (var startTime in startTimes) {
+          DateTime existingAppointmentStart = (startTime as Timestamp).toDate();
+          if (existingAppointmentStart.isAtSameMomentAs(newAppointmentStart)) {
+            return false;
           }
         }
       }
-
-      return true;  // No overlap found, appointment available
+      return true;
     } catch (e) {
       print("Error checking appointment availability: $e");
       return false;
@@ -88,7 +82,7 @@ class DatabaseService {
 
   Future<String> addAppointment(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     // Check if the time range is available
-    bool isAvailable = await isAppointmentAvailable(newAppointmentStart, newAppointmentEnd);
+    bool isAvailable = await isAppointmentAvailable(newAppointmentStart);
 
     if (isAvailable) {
       try {
@@ -103,6 +97,12 @@ class DatabaseService {
             }
           ]),
         });
+
+        DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+
+        await startTimeDoc.set({
+            'startTimes':FieldValue.arrayUnion([Timestamp.fromDate(newAppointmentStart)])
+        }, SetOptions(merge: true));
 
         return 'Appointment successfully added!';
       } catch (e) {
@@ -312,16 +312,67 @@ class DatabaseService {
 
   Future<bool> checkAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    var appointments = snapshot.get("appointments");
-    for (int i = 0; i < appointments.length; i++) {
-      if (appointments[i]["date"] != null &&
-          appointments[i]["date"].contains(date)) {
-        return true;
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return true;
+          }
+        }
       }
     }
-
     return false;
   }
+
+  Future<String?> getAppointmentTime(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return DateFormat('hh:mm a').format(startTime);
+          }
+        }
+      }
+    }
+    return null; // Return null if no appointment is found for the given date
+  }
+  Future<Map<String, dynamic>?> getNextAppointment() async {
+    try {
+      DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+      if (snapshot.exists && snapshot.data() != null) {
+        List<dynamic> appointments = snapshot.get("appointments");
+
+        if (appointments.isEmpty) {
+          return null;
+        }
+
+        // Sort appointments by date
+        appointments.sort((a, b) {
+          DateTime aDate = (a['startTime'] as Timestamp).toDate();
+          DateTime bDate = (b['startTime'] as Timestamp).toDate();
+          return aDate.compareTo(bDate);
+        });
+
+        // Get the earliest appointment
+        Map<String, dynamic> nextAppointment = appointments.first;
+        DateTime appointmentDate = (nextAppointment['startTime'] as Timestamp).toDate();
+        TimeOfDay appointmentTime = TimeOfDay.fromDateTime(appointmentDate);
+
+        return {'date': appointmentDate, 'time': appointmentTime};
+      }
+    } catch (e) {
+      print("Error fetching next appointment: $e");
+    }
+    return null;
+  }
+
 
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -367,22 +418,40 @@ class DatabaseService {
     return dayAppointments;
   }
 
-  Future cancelAppointment(List<String> dates) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    var appointments = snapshot.get("appointments");
 
-    for (String date in dates) {
-      for (int i = 0; i < appointments.length; i++) {
-        if (appointments[i]["date"] != null &&
-            appointments[i]["date"].contains(date)) {
-          print("Date Found: $date");
+  Future<void> cancelAppointment(List<String> dates) async {
+    try {
+      DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+      if (snapshot.exists && snapshot.data() != null) {
+        var appointments = snapshot.get("appointments");
+
+        List<Map<String, dynamic>> appointmentsToRemove = [];
+
+        for (String date in dates) {
+          for (int i = 0; i < appointments.length; i++) {
+            if (appointments[i]["startTime"] != null) {
+              DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+              String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+
+              if (storedDate == date) {
+                // Collect the appointment to remove
+                appointmentsToRemove.add(appointments[i]);
+              }
+            }
+          }
+        }
+
+        if (appointmentsToRemove.isNotEmpty) {
           await usersCollection.doc(globals.UID).update({
-            "appointments": FieldValue.arrayRemove([
-              {"date": appointments[i]["date"], "time": appointments[i]["time"]}
-            ])
+            "appointments": FieldValue.arrayRemove(appointmentsToRemove),
           });
+          print("Appointments removed successfully.");
+        } else {
+          print("No matching appointments found to remove.");
         }
       }
+    } catch (e) {
+      print("Error canceling appointment: $e");
     }
   }
 
