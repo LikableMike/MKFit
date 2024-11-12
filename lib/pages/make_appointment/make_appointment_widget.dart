@@ -420,13 +420,28 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 String resultMessage = await DatabaseService().addAppointment(startTime, endTime);
                                                 print(resultMessage);
 
-                                                // Show dialog for recurring option
+                                                // Prompt the user to set recurring appointments
                                                 bool? shouldSetRecurring = await showDialog<bool>(
                                                   context: context,
                                                   builder: (BuildContext context) {
                                                     return AlertDialog(
                                                       title: Text('Set Recurring Meeting'),
-                                                      content: Text('Would you like to set this meeting to recurring?'),
+                                                      content: Text.rich(
+                                                        TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text: 'Would you like to set this meeting to recur weekly on the selected day and time until a chosen end date?\n\n',
+                                                            ),
+                                                            TextSpan(
+                                                              text: 'If you select "Yes," you will be prompted to choose an end date.\n\n',
+                                                            ),
+                                                            TextSpan(
+                                                              text: 'By selecting "No," only the selected date will be scheduled as a single appointment.',
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        style: TextStyle(height: 1.5), // Adjusts the line spacing
+                                                      ),
                                                       actions: <Widget>[
                                                         TextButton(
                                                           onPressed: () {
@@ -446,26 +461,37 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                 );
 
                                                 if (shouldSetRecurring != null && shouldSetRecurring) {
-                                                  DateTimeRange? recurringDateRange = await showDateRangePicker(
+                                                  // Determine the day of the week for the selected start date (e.g., Friday)
+                                                  int recurringDay = _selectedDateRange!.start.weekday;
+
+                                                  // Show date picker with only dates on or after the start date and matching the recurring day
+                                                  DateTime? endDate = await showDatePicker(
                                                     context: context,
-                                                    firstDate: DateTime.now(),
-                                                    lastDate: DateTime(2100),
-                                                    initialDateRange: _selectedDateRange,
+                                                    firstDate: _selectedDateRange!.start, // Only allow selections from the start date onward
+                                                    lastDate: DateTime(2100),  // Latest selectable date
+                                                    initialDate: _selectedDateRange!.start, // Default to the selected start date
+                                                    helpText: "Select an end date for the recurring appointments",
+
+                                                    // Restrict selection to the same day of the week as the start date
+                                                    selectableDayPredicate: (DateTime date) {
+                                                      return date.weekday == recurringDay; // Only enable dates with the same weekday
+                                                    },
                                                   );
 
-                                                  if (recurringDateRange != null) {
+                                                  if (endDate != null) {
                                                     List<DateTime> recurringDates = generateRecurringDates(
                                                       _selectedDateRange!.start,
-                                                      recurringDateRange.end,
+                                                      endDate,
                                                     );
 
+                                                    // Schedule each recurring appointment
                                                     for (DateTime date in recurringDates) {
                                                       DateTime recurringStartTime = DateTime(
                                                         date.year,
                                                         date.month,
                                                         date.day,
-                                                        selectedTime.hour,
-                                                        selectedTime.minute,
+                                                        _selectedTime!.hour,
+                                                        _selectedTime!.minute,
                                                       );
                                                       DateTime recurringEndTime = recurringStartTime.add(Duration(hours: 1));
 
@@ -473,12 +499,15 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     }
 
                                                     ScaffoldMessenger.of(context).showSnackBar(
-                                                      SnackBar(content: Text('Recurring appointments set from ${DateFormat('yyyy-MM-dd').format(recurringDateRange.start)} to ${DateFormat('yyyy-MM-dd').format(recurringDateRange.end)} at ${_selectedTime!.format(context)}')),
+                                                      SnackBar(content: Text('Recurring appointments set every ${DateFormat('EEEE').format(_selectedDateRange!.start)} at ${_selectedTime!.format(context)} until ${DateFormat('MM-dd-yyyy').format(endDate)}')),
                                                     );
                                                   }
-                                                } else {
+                                                }
+
+
+                                                else {
                                                   ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}')),
+                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('MM-dd-yyyy').format(startTime)} at ${_selectedTime!.format(context)}')),
                                                   );
                                                 }
                                               } else {
