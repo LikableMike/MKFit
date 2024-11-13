@@ -37,8 +37,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:m_k_fit/pages/progress_page/progress_page_widget.dart';
 import 'package:m_k_fit/pages/progress_page/progress_page_model.dart';
-
-
+import 'package:m_k_fit/chat/chat_thread_widget.dart';
 
 import 'home2_model.dart';
 export 'home2_model.dart';
@@ -70,7 +69,7 @@ class _Home2WidgetState extends State<Home2Widget> {
     super.dispose();
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     // Get the current hour
     int currentHour = DateTime.now().hour;
@@ -103,20 +102,20 @@ class _Home2WidgetState extends State<Home2Widget> {
                   Text(
                     '.', // Placeholder or can be removed
                     style: FlutterFlowTheme.of(context).labelSmall.override(
-                      fontFamily: 'Inter',
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      fontSize: 14.0,
-                      letterSpacing: 0.0,
-                    ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          fontSize: 14.0,
+                          letterSpacing: 0.0,
+                        ),
                   ),
                   Text(
                     greeting, // Dynamic greeting based on time of day
                     style: FlutterFlowTheme.of(context).labelSmall.override(
-                      fontFamily: 'Inter',
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      fontSize: 14.0,
-                      letterSpacing: 0.0,
-                    ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          fontSize: 14.0,
+                          letterSpacing: 0.0,
+                        ),
                   ),
                   StreamBuilder<List<AdminMessageRecord>>(
                     stream: queryAdminMessageRecord(
@@ -138,14 +137,16 @@ class _Home2WidgetState extends State<Home2Widget> {
                         );
                       }
 
-                      List<AdminMessageRecord> textAdminMessageRecordList = snapshot.data!;
+                      List<AdminMessageRecord> textAdminMessageRecordList =
+                          snapshot.data!;
 
                       // Return an empty Container if there are no records
                       if (textAdminMessageRecordList.isEmpty) {
                         return Container();
                       }
 
-                      final textAdminMessageRecord = textAdminMessageRecordList.first;
+                      final textAdminMessageRecord =
+                          textAdminMessageRecordList.first;
 
                       // Access the string message field directly
                       String message = textAdminMessageRecord.message;
@@ -158,10 +159,11 @@ class _Home2WidgetState extends State<Home2Widget> {
                         style: FlutterFlowTheme.of(context)
                             .headlineMedium
                             .override(
-                          fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          letterSpacing: 0.0,
-                        ),
+                              fontFamily: 'Readex Pro',
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              letterSpacing: 0.0,
+                            ),
                       );
                     },
                   ),
@@ -279,7 +281,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                             children: [
                               Padding(
                                 padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 5, 4, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 5, 4, 0),
                                 child: Container(
                                   width: 100,
                                   height: 100,
@@ -315,10 +317,10 @@ class _Home2WidgetState extends State<Home2Widget> {
                                       style: FlutterFlowTheme.of(context)
                                           .titleLarge
                                           .override(
-                                        fontFamily: 'Inter',
-                                        fontSize: 25,
-                                        letterSpacing: 0.0,
-                                      ),
+                                            fontFamily: 'Inter',
+                                            fontSize: 25,
+                                            letterSpacing: 0.0,
+                                          ),
                                     ),
                                   ),
                                 ),
@@ -341,17 +343,17 @@ class _Home2WidgetState extends State<Home2Widget> {
                             options: FFButtonOptions(
                               height: 40,
                               padding:
-                              EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                                  EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               color: Color(0xFF00831B),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                fontFamily: 'Inter',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-                              ),
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
                               elevation: 3,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
@@ -401,9 +403,9 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                             ),
                           ),
@@ -422,7 +424,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                             alignment: AlignmentDirectional(-5, 0),
                             child: Padding(
                               padding:
-                              EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
+                                  EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -446,20 +448,20 @@ class _Home2WidgetState extends State<Home2Widget> {
                                           animation: true,
                                           animateFromLastPercent: true,
                                           progressColor:
-                                          FlutterFlowTheme.of(context)
-                                              .primary,
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
                                           backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .accent4,
+                                              FlutterFlowTheme.of(context)
+                                                  .accent4,
                                           center: Text(
                                             '50%',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .headlineSmall
                                                 .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
+                                                  fontFamily: 'Readex Pro',
+                                                  letterSpacing: 0.0,
+                                                ),
                                           ),
                                         ),
                                       ),
@@ -483,24 +485,24 @@ class _Home2WidgetState extends State<Home2Widget> {
                                               xData: List.generate(
                                                   random_data.randomInteger(
                                                       5, 5),
-                                                      (index) => random_data
+                                                  (index) => random_data
                                                       .randomInteger(0, 10)),
                                               yData: List.generate(
                                                   random_data.randomInteger(
                                                       5, 5),
-                                                      (index) => random_data
+                                                  (index) => random_data
                                                       .randomInteger(0, 10)),
                                               settings: LineChartBarData(
                                                 color:
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                                 barWidth: 2,
                                                 isCurved: true,
                                                 dotData: FlDotData(show: false),
                                                 belowBarData: BarAreaData(
                                                   show: true,
                                                   color: FlutterFlowTheme.of(
-                                                      context)
+                                                          context)
                                                       .accent1,
                                                 ),
                                               ),
@@ -508,8 +510,8 @@ class _Home2WidgetState extends State<Home2Widget> {
                                           ],
                                           chartStylingInfo: ChartStylingInfo(
                                             backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
                                             showBorder: false,
                                           ),
                                           axisBounds: AxisBounds(),
@@ -546,14 +548,14 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     24, 0, 24, 0),
                                 iconPadding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 color: Color(0xFF00831B),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                                 elevation: 3,
                                 borderSide: BorderSide(
                                   color: Colors.transparent,
@@ -590,7 +592,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                         height: 100,
                         decoration: BoxDecoration(
                           color:
-                          FlutterFlowTheme.of(context).secondaryBackground,
+                              FlutterFlowTheme.of(context).secondaryBackground,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
@@ -598,7 +600,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                           children: [
                             Padding(
                               padding:
-                              EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                               child: Container(
                                 width: 84,
                                 height: 84,
@@ -627,7 +629,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                             ),
                             Padding(
                               padding:
-                              EdgeInsetsDirectional.fromSTEB(5, 5, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(5, 5, 0, 0),
                               child: Container(
                                 width: 255,
                                 height: 100,
@@ -645,9 +647,9 @@ class _Home2WidgetState extends State<Home2Widget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                       ),
                                     ),
                                     Align(
@@ -657,9 +659,9 @@ class _Home2WidgetState extends State<Home2Widget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                       ),
                                     ),
                                     Align(
@@ -669,9 +671,9 @@ class _Home2WidgetState extends State<Home2Widget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -686,29 +688,36 @@ class _Home2WidgetState extends State<Home2Widget> {
                         height: 50,
                         decoration: BoxDecoration(
                           color:
-                          FlutterFlowTheme.of(context).secondaryBackground,
+                              FlutterFlowTheme.of(context).secondaryBackground,
                         ),
                         child: Align(
                           alignment: AlignmentDirectional(0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('messagePage');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatThreadWidget(
+                                    participants: ['User UID', 'Admin UID'],
+                                  ),
+                                ),
+                              );
                             },
                             text: 'Messages',
                             options: FFButtonOptions(
                               height: 40,
                               padding:
-                              EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                                  EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               color: Color(0xFF00831B),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                fontFamily: 'Inter',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-                              ),
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
                               elevation: 3,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
