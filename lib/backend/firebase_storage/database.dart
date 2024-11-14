@@ -1,4 +1,3 @@
-
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -17,6 +16,10 @@ class DatabaseService {
 
   final CollectionReference exerciseCollection =
       FirebaseFirestore.instance.collection("exercises");
+  final CollectionReference chatCollection =
+      FirebaseFirestore.instance.collection("chat");
+  final CollectionReference chatMessageCollection =
+      FirebaseFirestore.instance.collection("chat_messages");
   final CollectionReference exerciseTestCollection =
       FirebaseFirestore.instance.collection("exercises_test");
   final usersCollection = FirebaseFirestore.instance.collection("users");
@@ -29,7 +32,9 @@ class DatabaseService {
   ];
   Future<bool> isAppointmentAvailable(DateTime newAppointmentStart) async {
     try {
-      DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+      DocumentReference startTimeDoc = FirebaseFirestore.instance
+          .collection('appointments')
+          .doc('allStartTimes');
       DocumentSnapshot snapshot = await startTimeDoc.get();
 
       if (snapshot.exists && snapshot.data() != null) {
@@ -73,7 +78,8 @@ class DatabaseService {
     try {
       final String uid = await getUID(); // Retrieve the current user's UID
       await usersCollection.doc(uid).update({
-        "username": newUsername, // Update the "username" field with the new value
+        "username":
+            newUsername, // Update the "username" field with the new value
       });
       print("Username updated successfully.");
     } catch (e) {
@@ -81,7 +87,8 @@ class DatabaseService {
     }
   }
 
-  Future<String> addAppointment(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+  Future<String> addAppointment(
+      DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     // Check if the time range is available
     bool isAvailable = await isAppointmentAvailable(newAppointmentStart);
 
@@ -99,10 +106,13 @@ class DatabaseService {
           ]),
         });
 
-        DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+        DocumentReference startTimeDoc = FirebaseFirestore.instance
+            .collection('appointments')
+            .doc('allStartTimes');
 
         await startTimeDoc.set({
-            'startTimes':FieldValue.arrayUnion([Timestamp.fromDate(newAppointmentStart)])
+          'startTimes':
+              FieldValue.arrayUnion([Timestamp.fromDate(newAppointmentStart)])
         }, SetOptions(merge: true));
 
         return 'Appointment successfully added!';
@@ -114,6 +124,7 @@ class DatabaseService {
       return 'This time slot is already taken. Please choose another.';
     }
   }
+
   Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
     await exerciseCollection.doc(name).set({
@@ -193,7 +204,8 @@ class DatabaseService {
     return user.uid;
   }
 
-  Future<void> createUser(String name, String username, String height, String weight, String email, String phoneNumber) async {
+  Future<void> createUser(String name, String username, String height,
+      String weight, String email, String phoneNumber) async {
     try {
       final String uid = await getUID();
       await usersCollection.doc(uid).set({
@@ -320,7 +332,8 @@ class DatabaseService {
       var appointments = snapshot.get("appointments");
       for (int i = 0; i < appointments.length; i++) {
         if (appointments[i]["startTime"] != null) {
-          DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+          DateTime startTime =
+              (appointments[i]["startTime"] as Timestamp).toDate();
           String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
           if (storedDate == date) {
             return true;
@@ -337,7 +350,8 @@ class DatabaseService {
       var appointments = snapshot.get("appointments");
       for (int i = 0; i < appointments.length; i++) {
         if (appointments[i]["startTime"] != null) {
-          DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+          DateTime startTime =
+              (appointments[i]["startTime"] as Timestamp).toDate();
           String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
           if (storedDate == date) {
             return DateFormat('hh:mm a').format(startTime);
@@ -347,6 +361,7 @@ class DatabaseService {
     }
     return null; // Return null if no appointment is found for the given date
   }
+
   Future<Map<String, dynamic>?> getNextAppointment() async {
     try {
       DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
@@ -366,7 +381,8 @@ class DatabaseService {
 
         // Get the earliest appointment
         Map<String, dynamic> nextAppointment = appointments.first;
-        DateTime appointmentDate = (nextAppointment['startTime'] as Timestamp).toDate();
+        DateTime appointmentDate =
+            (nextAppointment['startTime'] as Timestamp).toDate();
         TimeOfDay appointmentTime = TimeOfDay.fromDateTime(appointmentDate);
 
         return {'date': appointmentDate, 'time': appointmentTime};
@@ -376,7 +392,6 @@ class DatabaseService {
     }
     return null;
   }
-
 
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -422,7 +437,6 @@ class DatabaseService {
     return dayAppointments;
   }
 
-
   Future<void> cancelAppointment(List<String> dates) async {
     try {
       DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
@@ -434,7 +448,8 @@ class DatabaseService {
         for (String date in dates) {
           for (int i = 0; i < appointments.length; i++) {
             if (appointments[i]["startTime"] != null) {
-              DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+              DateTime startTime =
+                  (appointments[i]["startTime"] as Timestamp).toDate();
               String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
 
               if (storedDate == date) {
@@ -477,6 +492,7 @@ class DatabaseService {
     return globals.clientUIDS;
 
   }
+
 
   Future<void> updateUserWeightAndHeight(String weight, String height) async {
     try {
@@ -697,8 +713,8 @@ class DatabaseService {
     return workoutUIDS;
   }
   //Workout Page Widget
-  //Dynamically calls exercise_names 
- Future<List<String>> fetchExercises() async {
+  //Dynamically calls exercise_names
+  Future<List<String>> fetchExercises() async {
     try {
       // Fetch the main collection 'exercises'
       final snapshot = await _firestore.collection('exercises').get();
@@ -706,11 +722,12 @@ class DatabaseService {
 
       // Iterate through each document in the main collection
       for (var doc in snapshot.docs) {
-      //Prints each document ID
+        //Prints each document ID
         print('Document ID: ${doc.id}');
 
         // Fetch the subcollection 'exercises' under each document
-        final subcollectionSnapshot = await doc.reference.collection('exercises').get();
+        final subcollectionSnapshot =
+            await doc.reference.collection('exercises').get();
 
         // Iterate through each document in the subcollection
         for (var subDoc in subcollectionSnapshot.docs) {
@@ -730,6 +747,7 @@ class DatabaseService {
       return [];
     }
   }
+
 
   Future<List> fetchWorkoutExercises(uid) async{
     DocumentSnapshot snapshot = await workoutCollection.doc(uid).get();
@@ -754,6 +772,37 @@ class DatabaseService {
     });
   }
 
+
+
+  Future<List<Map<String, dynamic>>?> getChat(List<String> participants) async {
+    participants.sort();
+    try {
+      QuerySnapshot querySnapshot = await chatCollection
+          .where('participants', isEqualTo: participants)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        String chatId = querySnapshot.docs.first.get('chatId') as String;
+
+        QuerySnapshot messagesSnapshot = await chatMessageCollection
+            .where('chatId', isEqualTo: chatId)
+            .orderBy('timestamp')
+            .get();
+
+        if (messagesSnapshot.docs.isNotEmpty) {
+          return messagesSnapshot.docs
+              .map((doc) => doc.data() as Map<String, dynamic>)
+              .toList();
+        }
+      } else {
+        print("Error getting chatId.");
+        return null;
+      }
+      return null;
+    } catch (e) {
+      print("Error fetching chat: $e");
+      return null;
+    }
+  }
 
 }
 
