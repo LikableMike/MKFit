@@ -663,7 +663,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                     borderRadius: 20.0,
                                     borderWidth: 1.0,
                                     buttonSize: 40.0,
-                                    fillColor: const Color(0xFF97B690),
+                                    fillColor: const Color(0xFF87A88E),
                                     icon: Icon(
                                       Icons.upload_sharp,
                                       color: FlutterFlowTheme.of(context)
@@ -763,7 +763,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: const Color(0xFF97B690),
+                        color: const Color(0xFF87A88E),
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Figtree',

@@ -473,7 +473,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: const Color(0xFF97B690),
+                        color: const Color(0xFF87A88E),
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Figtree',

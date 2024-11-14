@@ -216,7 +216,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                             width: 100.0,
                             height: 100.0,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF103E0C),
+                              color: const Color(0xFf1c502d),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
                             child: SingleChildScrollView(
@@ -241,8 +241,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       borderRadius: BorderRadius.circular(12.0),
                                     ),
                                     child: FlutterFlowCalendar(
-                                      color: const Color(0xFF40DC28),
-                                      iconColor: const Color(0xFF57636C),
+                                      color: const Color(0xFF86BD92),
+                                      iconColor: const Color(0xFF86BD92),
                                       weekFormat: false,
                                       weekStartsMonday: true,
                                       onChange:
@@ -360,7 +360,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                   child: Text(
                                                     time,
                                                     style: TextStyle(
-                                                      color: Colors.blue,
+                                                      color: Color(0xFF3055c8),
                                                     ),
                                                   ),
                                                 );
@@ -520,6 +520,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               print(e);
                                             }
                                           },
+                                          style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xFf86bd92)
+                                          ),
                                           child: Text('Confirm Appointment'),
                                         ),
                                       ),
@@ -612,6 +615,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           },
                                         ),
                                       ),
+
 
 
                                       // This displays "Next session with Makayla and also notifies the client if their are no appointments scheduled
@@ -935,6 +939,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           ],
                                         ),
                                       ),
+
                                     ],
                                   ),
                                 ],
@@ -968,7 +973,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       ],
                                     ),
                                     child: FlutterFlowCalendar(
-                                      color: const Color(0xFF4B39EF),
+                                      color: const Color(0xFF3055c8),
                                       iconColor: const Color(0xFF57636C),
                                       weekFormat: true,
                                       weekStartsMonday: true,

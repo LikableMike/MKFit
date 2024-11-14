@@ -172,10 +172,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF2B901B),
+                                  color: Color(0xFF86BD92),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Color(0xFF40DC28),
+                                    color: Color(0xFF86BD92),
                                     width: 2,
                                   ),
                                 ),
@@ -346,10 +346,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF40DC28),
+                                  color: Color(0xFF86BD92),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Color(0xFF2B901B),
+                                    color: Color(0xFF86BD92),
                                     width: 2,
                                   ),
                                 ),
@@ -517,7 +517,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                             height: 86,
                             decoration: BoxDecoration(),
                             child: FlutterFlowIconButton(
-                              borderColor: Color(0xFF00831B),
+                              borderColor: Color(0xFF86BD92),
                               borderRadius: 40,
                               borderWidth: 3,
                               buttonSize: 40,
