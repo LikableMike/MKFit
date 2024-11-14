@@ -21,6 +21,7 @@ class DatabaseService {
       FirebaseFirestore.instance.collection("exercises_test");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
+  final workoutCollection = FirebaseFirestore.instance.collection("workouts");
   final List<String> adminUIDs = [
     "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3",
     "nOlIEy4WKkddkikrMPhQNLEjT9y1",
@@ -133,12 +134,13 @@ class DatabaseService {
 
   Future<List<Map<String, dynamic>>> getExerciseReferences(
       List<String> selectedWorkouts) async {
+
     List<Map<String, dynamic>> exerciseData = [];
 
     for (String workoutName in selectedWorkouts) {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('exercises')
-          .where('name', isEqualTo: workoutName)
+          .collection('exercises_test')
+          .where('exercise_name', isEqualTo: workoutName)
           .limit(1)
           .get();
 
@@ -165,7 +167,7 @@ class DatabaseService {
       List<Map<String, dynamic>> exercisesToSave = exerciseData.map((data) {
         return {
           'name': data['name'],
-          'reference': data['reference'],
+          'uid': data['reference'],
         };
       }).toList();
 
@@ -603,24 +605,37 @@ class DatabaseService {
   }
 
   Future<bool> getWorkouts() async {
+    //Gets a snapshot of the user
     globals.userWorkouts.clear();
     globals.testWorkouts.clear();
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+
+    //Finds the users workouts
     var userWorkouts = snapshot.get("workouts");
+
+    //Finds all available workouts and exercises in the database
     final allWorkouts = FirebaseFirestore.instance.collection("workouts");
     final allExercises =
         FirebaseFirestore.instance.collection("exercises_test");
+
+    //Loops through all of the users's workouts
     for (int i = 0; i < userWorkouts.length; i++) {
-      if (userWorkouts[i]["uid"] != null) {
+
+      if(userWorkouts[i]["uid"] != null) {
+
+        //For every workout assigned to the user, search our snap shot of all the workouts
+        // saves a snapshot of the workout with an id that matches the uid of the user's workout
         DocumentSnapshot WorkoutSnap =
             await allWorkouts.doc(userWorkouts[i]["uid"]).get();
-        var workoutName = WorkoutSnap.get("name");
+        var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
         print(workoutExercises.toString());
         globals.testWorkouts[workoutName] = [];
+
         for (int j = 0; j < workoutExercises.length; j++) {
           DocumentSnapshot exerciseSnap =
               await allExercises.doc(workoutExercises[j]["uid"]).get();
+
           globals.testWorkouts[workoutName].add({
             "uid": workoutExercises[j]["uid"],
             "reps": workoutExercises[j]["reps"],
@@ -629,11 +644,14 @@ class DatabaseService {
             "name": exerciseSnap["exercise_name"],
             "description": exerciseSnap["exercise_description"]
           });
+
         }
+
         globals.userWorkouts.add(workoutName);
         print(globals.userWorkouts.toString());
         print(globals.testWorkouts.toString());
       }
+
     }
 
     return false;
@@ -653,7 +671,7 @@ class DatabaseService {
 
         DocumentSnapshot WorkoutSnap =
         await allWorkouts.doc(userWorkouts[i]["uid"]).get();
-        var workoutName = WorkoutSnap.get("name");
+        var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
         print(workoutExercises.toString());
         globals.testWorkouts[workoutName] = [];
@@ -713,4 +731,30 @@ class DatabaseService {
     }
   }
 
+  Future<List> fetchWorkoutExercises(uid) async{
+    DocumentSnapshot snapshot = await workoutCollection.doc(uid).get();
+    List<dynamic> fetchedExercises = await snapshot["exercises"];
+    print(fetchedExercises.length);
+    for(int i = 0; i < fetchedExercises.length; i++){
+      print("uid: " + fetchedExercises[i]["uid"].toString().split("/")[1]);
+      DocumentSnapshot exerciseSnap = await exerciseTestCollection.doc(fetchedExercises[i]["uid"].toString().split("/")[1].split(")")[0]).get();
+      fetchedExercises[i]["description"] = exerciseSnap["exercise_description"].toString();
+      fetchedExercises[i]["uid"] = exerciseSnap.id;
+
+    }
+    print(fetchedExercises);
+    return fetchedExercises;
+  }
+
+  Future<void> assignWorkout() async{
+    return await usersCollection.doc(globals.selectedClient).update({
+      "workouts": FieldValue.arrayUnion([
+        {"exercises" : globals.builtWorkout, "uid": globals.selectedWorkout}
+      ])
+    });
+  }
+
+
 }
+
+

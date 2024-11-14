@@ -18,6 +18,8 @@ List userWorkouts = [];
 var selectedWorkout = "";
 var selectedClient = "";
 
+List builtWorkout = [];
+
 Map testWorkouts = {};
 
 StatefulWidget findInitialState(){

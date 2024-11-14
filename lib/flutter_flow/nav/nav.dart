@@ -112,6 +112,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SettingsPageWidget(),
         ),
         FFRoute(
+          name: 'AssignWorkoutPage',
+          path: '/AssignWorkoutPage',
+          builder: (context, params) => const AssignWorkoutPageWidget(),
+        ),
+        FFRoute(
+          name: 'ExerciseValuePage',
+          path: '/ExerciseValuesPage',
+          builder: (context, params) => const ExerciseValuePageWidget(),
+        ),
+        FFRoute(
           name: 'makeAppointment',
           path: '/makeAppointment',
           builder: (context, params) => params.isEmpty

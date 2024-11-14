@@ -96,7 +96,7 @@ class WorkoutSection extends StatelessWidget{
 });
 
   final String title;
-  final int weight;
+  final double weight;
   final String description;
   final int sets;
   final int reps;

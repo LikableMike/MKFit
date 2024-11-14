@@ -192,6 +192,7 @@ class _ClientWorkoutsPageWidgetState extends State<ClientWorkoutsPageWidget> {
                           size: 50,
                         ),
                         onPressed: () async {
+                          context.pushNamed("AssignWorkoutPage");
                           // Show a dialog to confirm if the user wants to cancel the appointment
 
                         },
