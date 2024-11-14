@@ -122,26 +122,27 @@ class _ClientWorkoutsPageWidgetState extends State<ClientWorkoutsPageWidget> {
           top: true,
           child: Column(
               children: [
+                Expanded(child: FutureBuilder<List>(
+                  future: DatabaseService().getClientWorkouts(globals.selectedClient),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Show a loading spinner while waiting for data
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      // Show error message if something went wrong
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      // Show a message if the list is empty
+                      return Center(child: Text('No clients found.'));
+                    }
 
-            FutureBuilder<List>(
-            future: DatabaseService().getClientWorkouts(globals.selectedClient),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Show a loading spinner while waiting for data
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                // Show error message if something went wrong
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                // Show a message if the list is empty
-                return Center(child: Text('No clients found.'));
-              }
+                    // If data is loaded successfully, use it
+                    List workouts = snapshot.data!;
+                    return BuildWorkouts(Workouts: workouts);
+                  },
+                ),),
 
-              // If data is loaded successfully, use it
-              List workouts = snapshot.data!;
-              return BuildWorkouts(Workouts: workouts);
-            },
-          ),
+
 
 
           Padding(
