@@ -38,6 +38,8 @@ import 'package:provider/provider.dart';
 import 'package:m_k_fit/pages/progress_page/progress_page_widget.dart';
 import 'package:m_k_fit/pages/progress_page/progress_page_model.dart';
 import 'package:m_k_fit/chat/chat_thread_widget.dart';
+import 'package:m_k_fit/backend/firebase_storage/database.dart';
+
 
 import 'home2_model.dart';
 export 'home2_model.dart';
@@ -54,12 +56,26 @@ class _Home2WidgetState extends State<Home2Widget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Map<String, Map<String, List<dynamic>>> graphData = {
+    "weight": {"x": [], "y": []},
+    "bmi": {"x": [], "y": []}
+  };
+
+  final DatabaseService databaseService = DatabaseService();
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => Home2Model());
-
+    getGraphData();
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+  }
+
+  Future getGraphData() async {
+    var data = await databaseService.getGraphData(["weight", "bmi"]);
+    setState(() {
+      graphData = data;
+    });
   }
 
   @override
@@ -429,46 +445,9 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 0, 0),
-                                    child: Container(
-                                      width: 110,
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                      ),
-                                      child: Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: CircularPercentIndicator(
-                                          percent: 0.5,
-                                          radius: 50,
-                                          lineWidth: 12,
-                                          animation: true,
-                                          animateFromLastPercent: true,
-                                          progressColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .accent4,
-                                          center: Text(
-                                            '50%',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .headlineSmall
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+
                                   Container(
                                     width: 230,
                                     height: 100,
@@ -484,28 +463,17 @@ class _Home2WidgetState extends State<Home2Widget> {
                                         child: FlutterFlowLineChart(
                                           data: [
                                             FFLineChartData(
-                                              xData: List.generate(
-                                                  random_data.randomInteger(
-                                                      5, 5),
-                                                  (index) => random_data
-                                                      .randomInteger(0, 10)),
-                                              yData: List.generate(
-                                                  random_data.randomInteger(
-                                                      5, 5),
-                                                  (index) => random_data
-                                                      .randomInteger(0, 10)),
+                                              xData: graphData["weight"]!["x"]!,
+                                              yData: graphData["weight"]!["y"]!,
                                               settings: LineChartBarData(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
+                                                color: FlutterFlowTheme.of(context).primary,
                                                 barWidth: 2,
                                                 isCurved: true,
+                                                preventCurveOverShooting: true,
                                                 dotData: FlDotData(show: false),
                                                 belowBarData: BarAreaData(
                                                   show: true,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .accent1,
+                                                  color: Color(0x4C4B39EF),
                                                 ),
                                               ),
                                             )
