@@ -341,7 +341,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                   child: Text(
                                                     time,
                                                     style: TextStyle(
-                                                      color: Color(0xFF3055c8),
+                                                      color: Colors.black,
                                                     ),
                                                   ),
                                                 );
