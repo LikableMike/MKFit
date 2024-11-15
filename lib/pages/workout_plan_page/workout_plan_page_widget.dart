@@ -194,7 +194,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                       ),
                 ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation']!),
               ),
-              BuildWorkouts(Workouts: globals.userWorkouts, animationMap: animationsMap)
+              Expanded(child: BuildWorkouts(Workouts: globals.userWorkouts, animationMap: animationsMap))
             ],
           ),
         ),
