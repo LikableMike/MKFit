@@ -288,16 +288,37 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
-                                        child: Column(
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 3.0,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0.0, 1.0),
+                                              )
+                                            ],
+                                            borderRadius: BorderRadius.circular(8.0),
+                                          ),
+                                          child: 
+                                          Padding(padding: const EdgeInsets.all(8.0),
+                                          child: 
+                                          Column(
+                                            crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                           children: [
                                             // Print statements to debug time format
+
                                             Text(
-                                              'Appointment Ends One Hour After Start Time',
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            Text(
-                                              'Select Start Time:',
-                                              style: TextStyle(color: Colors.white),
+                                              'Select Start Time: ',
+                                              style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                fontFamily: 'Outfit',
+                                                color: const Color(0xFF14181B),
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
 
                                             // Your DropdownButton
@@ -306,12 +327,12 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                               hint: Text(
                                                 _selectedTime == null ? 'Select time' : 'Time Selected: ${_selectedTime!.format(context)}',
                                                 style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                   fontSize: 16.0,
                                                 ),
                                               ),
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 16.0,
                                               ),
                                               items: _availableTimes.map((String time) {
@@ -348,6 +369,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             ),
                                           ],
                                         ),
+                                      ),
+                                      ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
