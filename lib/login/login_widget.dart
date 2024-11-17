@@ -405,42 +405,6 @@ class _LoginWidgetState extends State<LoginWidget>
                               0.0, 0.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('forgotUsername');
-                            },
-                            text: 'Forgot Username',
-                            options: FFButtonOptions(
-                              width: 230.0,
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 0.0,
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
                               context.pushNamed('forgotPassword');
                             },
                             text: 'Forgot Password',
