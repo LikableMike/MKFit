@@ -104,7 +104,7 @@ class _MessagePageWidgetState extends State<MessagePageWidget> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).primaryText,
+          color: Colors.black, // Background color set to black
           borderRadius: BorderRadius.circular(0.0),
         ),
         child: Padding(
