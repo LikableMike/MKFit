@@ -107,7 +107,7 @@ class _AdminWidgetState extends State<AdminWidget> {
                       ),
                   elevation: 3,
                   borderSide: BorderSide(
-                    color: Colors.transparent,
+                    color: Colors.black, // Changed background to black
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(8),
@@ -124,7 +124,7 @@ class _AdminWidgetState extends State<AdminWidget> {
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter',
-                        color: Colors.white,
+                        color: Colors.black, // Changed background to black
                         letterSpacing: 0.0,
                       ),
                   elevation: 3,
@@ -142,7 +142,7 @@ class _AdminWidgetState extends State<AdminWidget> {
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter',
-                        color: Colors.white,
+                        color: Colors.black, // Changed background to black
                         letterSpacing: 0.0,
                       ),
                   elevation: 3,
@@ -174,7 +174,7 @@ class _AdminWidgetState extends State<AdminWidget> {
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter',
-                        color: Colors.white,
+                        color: Colors.black, // Changed background to black
                         letterSpacing: 0.0,
                       ),
                   elevation: 3,
