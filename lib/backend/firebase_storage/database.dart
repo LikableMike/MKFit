@@ -53,6 +53,7 @@ class DatabaseService {
     }
   }
 
+
   Future<List> fetchAppointments(String UID) async {
     try {
       DocumentSnapshot userSnapshot = await usersCollection.doc(UID).get();
