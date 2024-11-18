@@ -259,7 +259,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 ),
                                 filled: true,
                                 fillColor:
-                                FlutterFlowTheme.of(context).primaryText,
+                                Colors.black, // Set background to black
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -337,7 +337,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 ),
                                 filled: true,
                                 fillColor:
-                                FlutterFlowTheme.of(context).primaryText,
+                                Colors.black, // Set background to black
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -416,7 +416,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 ),
                                 filled: true,
                                 fillColor:
-                                FlutterFlowTheme.of(context).primaryText,
+                                Colors.black, // Set background to black
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium

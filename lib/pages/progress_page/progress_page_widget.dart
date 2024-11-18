@@ -22,10 +22,49 @@ class ProgressPageWidget extends StatefulWidget {
 class _ProgressPageWidgetState extends State<ProgressPageWidget> {
   late ProgressPageModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  Map<String, Map<String, List>> graphData = {
+  double? bmiValue;
+  // Initialize the database service instance here
+  final DatabaseService databaseService = DatabaseService();
+
+  Map<String, Map<String, List<dynamic>>> graphData = {
     "weight": {"x": [], "y": []},
     "bmi": {"x": [], "y": []}
   };
+
+  Future<void> updateBMIChartData() async {
+    List<Map<String, dynamic>> bmiRecords = [
+      {"date": DateTime.now().subtract(Duration(days: 30)), "bmi": 23.5},
+      {"date": DateTime.now().subtract(Duration(days: 20)), "bmi": 24.1},
+      {"date": DateTime.now().subtract(Duration(days: 10)), "bmi": 23.9},
+      {"date": DateTime.now(), "bmi": 24.0},
+    ];
+    graphData["bmi"]!["x"] = bmiRecords.map((record) => record["date"]).toList();
+    graphData["bmi"]!["y"] = bmiRecords.map((record) => record["bmi"]).toList();
+  }
+
+  Future<double?> calculateBMI() async {
+    String? heightStr = await databaseService.getUserHeight();
+    String? weightStr = await databaseService.getUserWeight();
+
+    if (heightStr != null && weightStr != null) {
+      try {
+        List<String> heightParts = heightStr.split("'");
+        int feet = int.parse(heightParts[0].trim());
+        int inches = int.parse(heightParts[1].replaceAll("\"", "").trim());
+        double heightInMeters = ((feet * 12) + inches) * 0.0254;
+        double weightInKg = double.parse(weightStr) * 0.453592;
+        double bmi = weightInKg / (heightInMeters * heightInMeters);
+        return bmi;
+
+      } catch (e) {
+        print("Error in calculating BMI: $e");
+        return null;
+      }
+    } else {
+      print("Height or Weight data not available.");
+      return null;
+    }
+  }
 
   @override
   void initState() {
@@ -33,12 +72,15 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
     _model = createModel(context, () => ProgressPageModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
-
     getGraphData();
+    calculateBMI().then((bmi) {
+        setState(() {
+          bmiValue = bmi;
+        });
+    });
   }
 
   Future getGraphData() async {
-    final databaseService = DatabaseService();
     var data = await databaseService.getGraphData(["weight", "bmi"]);
     setState(() {
       graphData = data;
@@ -48,9 +90,9 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,10 +172,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF2B901B),
+                                  color: Color(0xFF86BD92),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Color(0xFF40DC28),
+                                    color: Color(0xFF86BD92),
                                     width: 2,
                                   ),
                                 ),
@@ -286,10 +328,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                         BoxShadow(
                           blurRadius: 4,
                           color: Color(0x33000000),
-                          offset: Offset(
-                            0,
-                            2,
-                          ),
+                          offset: Offset(0, 2),
                         )
                       ],
                       borderRadius: BorderRadius.circular(12),
@@ -298,8 +337,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 32, 16, 12),
+                          padding: EdgeInsetsDirectional.fromSTEB(16, 32, 16, 12),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -308,10 +346,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF40DC28),
+                                  color: Color(0xFF86BD92),
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Color(0xFF2B901B),
+                                    color: Color(0xFF86BD92),
                                     width: 2,
                                   ),
                                 ),
@@ -330,17 +368,14 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 4),
+                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                                         child: Text(
                                           'BMI',
                                           style: FlutterFlowTheme.of(context)
@@ -371,8 +406,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 buttonSize: 60,
                                 icon: Icon(
                                   Icons.add_circle_outline_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
+                                  color: FlutterFlowTheme.of(context).secondaryText,
                                   size: 30,
                                 ),
                                 onPressed: () async {
@@ -383,13 +417,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     context: context,
                                     builder: (context) {
                                       return GestureDetector(
-                                        onTap: () =>
-                                            FocusScope.of(context).unfocus(),
+                                        onTap: () => FocusScope.of(context).unfocus(),
                                         child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: ProgressComponentWidget(
-                                              input: "bmi"),
+                                          padding: MediaQuery.viewInsetsOf(context),
+                                          child: ProgressComponentWidget(input: "bmi"),
                                         ),
                                       );
                                     },
@@ -397,6 +428,20 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 },
                               ),
                             ],
+                          ),
+                        ),
+                        // Display BMI value
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+                          child: Text(
+                            bmiValue != null
+                                ? 'Current BMI: ${bmiValue!.toStringAsFixed(1)}'
+                                : 'Calculating BMI...',
+                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                  fontFamily: 'Inter',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                         ),
                         Padding(
@@ -410,8 +455,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                   xData: graphData["bmi"]!["x"]!,
                                   yData: graphData["bmi"]!["y"]!,
                                   settings: LineChartBarData(
-                                    color:
-                                        FlutterFlowTheme.of(context).secondary,
+                                    color: FlutterFlowTheme.of(context).secondary,
                                     barWidth: 2,
                                     isCurved: true,
                                     preventCurveOverShooting: true,
@@ -425,8 +469,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               ],
                               chartStylingInfo: ChartStylingInfo(
                                 enableTooltip: true,
-                                backgroundColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
                                 showBorder: false,
                               ),
                               axisBounds: AxisBounds(),
@@ -474,7 +517,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                             height: 86,
                             decoration: BoxDecoration(),
                             child: FlutterFlowIconButton(
-                              borderColor: Color(0xFF00831B),
+                              borderColor: Color(0xFF86BD92),
                               borderRadius: 40,
                               borderWidth: 3,
                               buttonSize: 40,

@@ -314,12 +314,12 @@ class _LoginWidgetState extends State<LoginWidget>
 
 
                                   if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" || UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
-                                    context.pushNamed('admin');
+                                    context.pushNamed('admin_new');
                                     }
 
                                   if (UID == "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3" ||
                                       UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
-                                    context.pushNamed('admin');
+                                    context.pushNamed('admin_new');
 
                                   } else if (UID ==
                                       "YIq1kNSHImdljlk1RKIULH22o2F3") {
@@ -392,42 +392,6 @@ class _LoginWidgetState extends State<LoginWidget>
                               borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              context.pushNamed('forgotUsername');
-                            },
-                            text: 'Forgot Username',
-                            options: FFButtonOptions(
-                              width: 230.0,
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 0.0,
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                width: 2.0,
                               ),
                               borderRadius: BorderRadius.circular(12.0),
                             ),

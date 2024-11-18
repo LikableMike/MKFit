@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -85,9 +88,9 @@ class _ParqWidgetState extends State<ParqWidget> {
           title: Text(
             'PARQ Form',
             style: FlutterFlowTheme.of(context).titleMedium.override(
-                  fontFamily: 'Inter',
-                  letterSpacing: 0.0,
-                ),
+              fontFamily: 'Inter',
+              letterSpacing: 0.0,
+            ),
           ),
           actions: const [],
           centerTitle: false,
@@ -101,45 +104,45 @@ class _ParqWidgetState extends State<ParqWidget> {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                  const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
                   child: Text(
                     'Pre Activity Readiness Questionnaire',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          fontFamily: 'Readex Pro',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Readex Pro',
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                 ),
                 Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 16.0, 16.0),
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 16.0, 16.0),
                   child: Text(
                     'Please answer the following questions to ensure your safety and readiness for physical activity.',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Inter',
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          letterSpacing: 0.0,
-                        ),
+                      fontFamily: 'Inter',
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      letterSpacing: 0.0,
+                    ),
                   ),
                 ),
                 Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+                  const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
                         '1. Have you been diagnosed with any medical conditions?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController1,
                           focusNode: _model.textFieldFocusNode1,
@@ -149,10 +152,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -183,10 +186,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController1Validator
                               .asValidator(context),
                         ),
@@ -194,14 +197,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '2. Do you have any current injuries or pain?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController2,
                           focusNode: _model.textFieldFocusNode2,
@@ -211,10 +214,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -245,10 +248,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController2Validator
                               .asValidator(context),
                         ),
@@ -256,14 +259,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '3. Are you taking any medications?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController3,
                           focusNode: _model.textFieldFocusNode3,
@@ -273,10 +276,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -307,10 +310,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController3Validator
                               .asValidator(context),
                         ),
@@ -318,14 +321,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '4. Have you had any surgeries in the past year?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController4,
                           focusNode: _model.textFieldFocusNode4,
@@ -335,10 +338,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -369,10 +372,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController4Validator
                               .asValidator(context),
                         ),
@@ -380,14 +383,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '5. Do you have any allergies?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController5,
                           focusNode: _model.textFieldFocusNode5,
@@ -397,10 +400,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -431,10 +434,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController5Validator
                               .asValidator(context),
                         ),
@@ -442,14 +445,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '6. Have you ever experienced chest pain during physical activity?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController6,
                           focusNode: _model.textFieldFocusNode6,
@@ -459,10 +462,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -493,10 +496,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController6Validator
                               .asValidator(context),
                         ),
@@ -504,14 +507,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '7. Do you have a family history of heart disease?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController7,
                           focusNode: _model.textFieldFocusNode7,
@@ -521,10 +524,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -555,10 +558,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController7Validator
                               .asValidator(context),
                         ),
@@ -566,14 +569,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '8. Are you currently pregnant?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController8,
                           focusNode: _model.textFieldFocusNode8,
@@ -583,10 +586,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Yes/No',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -617,10 +620,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController8Validator
                               .asValidator(context),
                         ),
@@ -628,14 +631,14 @@ class _ParqWidgetState extends State<ParqWidget> {
                       Text(
                         '9. Do you have any other concerns or considerations?',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                            ),
+                          fontFamily: 'Inter',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                         child: TextFormField(
                           controller: _model.textController9,
                           focusNode: _model.textFieldFocusNode9,
@@ -645,10 +648,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             labelText: 'Answer',
                             hintText: 'Enter your concerns or considerations',
                             hintStyle:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Inter',
+                              letterSpacing: 0.0,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -679,20 +682,59 @@ class _ParqWidgetState extends State<ParqWidget> {
                             ),
                           ),
                           style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                           validator: _model.textController9Validator
                               .asValidator(context),
                         ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed('Waiver');
+                            // Collect the user responses
+                            final answers = {
+                              "question1": _model.textController1?.text.trim() ?? '',
+                              "question2": _model.textController2?.text.trim() ?? '',
+                              "question3": _model.textController3?.text.trim() ?? '',
+                              "question4": _model.textController4?.text.trim() ?? '',
+                              "question5": _model.textController5?.text.trim() ?? '',
+                              "question6": _model.textController6?.text.trim() ?? '',
+                              "question7": _model.textController7?.text.trim() ?? '',
+                              "question8": _model.textController8?.text.trim() ?? '',
+                              "question9": _model.textController9?.text.trim() ?? '',
+                            };
+
+                            try {
+                              // Save to Firestore
+                              final user = FirebaseAuth.instance.currentUser;
+                              if (user != null) {
+                                await FirebaseFirestore.instance
+                                    .collection('parq_responses')
+                                    .doc(user.uid)
+                                    .set({
+                                  "userId": user.uid,
+                                  "responses": answers,
+                                  "submittedAt": Timestamp.now(),
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('PAR-Q responses saved successfully!')),
+                                );
+                                // Navigate to the next page after successful submission
+                                context.pushNamed('Waiver');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('User not logged in.')),
+                                );
+                              }
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Failed to save responses: $e')),
+                              );
+                            }
                           },
                           text: 'Submit',
                           options: FFButtonOptions(
@@ -706,10 +748,10 @@ class _ParqWidgetState extends State<ParqWidget> {
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
-                                  fontFamily: 'Inter',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
+                              fontFamily: 'Inter',
+                              color: Colors.white,
+                              letterSpacing: 0.0,
+                            ),
                             elevation: 2.0,
                             borderRadius: BorderRadius.circular(8.0),
                           ),

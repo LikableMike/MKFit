@@ -73,19 +73,23 @@ class _AdminCalendarWidgetState extends State<AdminCalendarWidget>
             ),
           ),
           actions: [
-            FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 70.0,
-              icon: const Icon(
-                Icons.person,
-                color: Colors.white,
-                size: 40.0,
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
+              child: FlutterFlowIconButton(
+                borderColor: const Color(0xFFE5E7EB),
+                borderRadius: 12.0,
+                borderWidth: 1.0,
+                buttonSize: 40.0,
+                fillColor: Colors.white,
+                icon: const Icon(
+                  Icons.close_rounded,
+                  color: Color(0xFF15161E),
+                  size: 24.0,
+                ),
+                onPressed: () async {
+                  context.safePop();
+                },
               ),
-              onPressed: () async {
-                context.pushNamed('SettingsPage');
-              },
             ),
           ],
           centerTitle: false,

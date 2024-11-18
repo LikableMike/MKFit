@@ -249,7 +249,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                           .asValidator(context),
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(
-                                            RegExp('[a-zA-Z]'))
+                                            RegExp('[a-zA-Z ]'))
                                       ],
                                     ),
                                   ),
@@ -452,7 +452,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                                       validator: _model.userNameTextControllerValidator?.asValidator(context), // Ensure validator is set here
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]'))
+                                        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9_]'))
                                       ],
                                     ),
 

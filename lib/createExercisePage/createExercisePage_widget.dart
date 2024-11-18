@@ -645,7 +645,7 @@ class _CreateExercisePageWidgetState extends State<CreateExercisePageWidget> {
                                     borderRadius: 20,
                                     borderWidth: 1,
                                     buttonSize: 40,
-                                    fillColor: Color(0xFF97B690),
+                                    fillColor: Color(0xFF87A88E),
                                     icon: Icon(
                                       Icons.upload_sharp,
                                       color: FlutterFlowTheme.of(context)
@@ -734,7 +734,7 @@ class _CreateExercisePageWidgetState extends State<CreateExercisePageWidget> {
                         height: 48,
                         padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                         iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        color: Color(0xFF97B690),
+                        color: Color(0xFF87A88E),
                         textStyle:
                         FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Figtree',

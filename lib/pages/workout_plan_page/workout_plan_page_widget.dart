@@ -194,7 +194,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                       ),
                 ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation']!),
               ),
-              BuildWorkouts(Workouts: globals.userWorkouts, animationMap: animationsMap)
+              Expanded(child: BuildWorkouts(Workouts: globals.userWorkouts, animationMap: animationsMap))
             ],
           ),
         ),
@@ -222,7 +222,7 @@ class WorkoutWidget extends StatelessWidget {
        width: 100.0,
        height: 150.0,
        decoration: BoxDecoration(
-         color: const Color(0xFF00831B),
+         color: const Color(0xFF86BD92),
          boxShadow: const [
            BoxShadow(
              blurRadius: 3.0,
@@ -235,7 +235,7 @@ class WorkoutWidget extends StatelessWidget {
          ],
          borderRadius: BorderRadius.circular(16.0),
          border: Border.all(
-           color: const Color(0xFF00831B),
+           color: const Color(0xFF86BD92),
            width: 2.0,
          ),
        ),
