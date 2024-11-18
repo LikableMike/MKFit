@@ -325,22 +325,65 @@ class _Home2WidgetState extends State<Home2Widget> {
                               Expanded(
                                 child: Container(
                                   height: 100,
-                                  decoration: BoxDecoration(),
+                                  decoration: const BoxDecoration(),
                                   child: Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Text(
-                                      'Next Appointment: \nApril 1st, at 1:00 PM',
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleLarge
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            fontSize: 25,
-                                            letterSpacing: 0.0,
-                                          ),
+                                    alignment: const AlignmentDirectional(-1, 0),
+                                    child: FutureBuilder<Map<String, dynamic>?>(
+                                      future: DatabaseService().getNextAppointment(), // Fetch the next appointment
+                                      builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                          // Display a loading indicator
+                                          return Text(
+                                            'Loading...',
+                                            style: FlutterFlowTheme.of(context).titleLarge.override(
+                                              fontFamily: 'Inter',
+                                              fontSize: 25,
+                                              letterSpacing: 0.0,
+                                            ),
+                                          );
+                                        } else if (snapshot.hasError) {
+                                          // Display an error message
+                                          return Text(
+                                            'Error: ${snapshot.error}',
+                                            style: FlutterFlowTheme.of(context).titleLarge.override(
+                                              fontFamily: 'Inter',
+                                              fontSize: 25,
+                                              letterSpacing: 0.0,
+                                            ),
+                                          );
+                                        } else if (snapshot.hasData && snapshot.data != null) {
+                                          // Extract the date and time
+                                          DateTime appointmentDate = snapshot.data!['date'];
+                                          TimeOfDay appointmentTime = snapshot.data!['time'];
+
+                                          String formattedDate = DateFormat('MMMM d').format(appointmentDate);
+                                          String formattedTime = appointmentTime.format(context);
+
+                                          return Text(
+                                            'Next Appointment: \n$formattedDate, at $formattedTime',
+                                            style: FlutterFlowTheme.of(context).titleLarge.override(
+                                              fontFamily: 'Inter',
+                                              fontSize: 25,
+                                              letterSpacing: 0.0,
+                                            ),
+                                          );
+                                        } else {
+                                          // If no data is available
+                                          return Text(
+                                            'No upcoming appointments',
+                                            style: FlutterFlowTheme.of(context).titleLarge.override(
+                                              fontFamily: 'Inter',
+                                              fontSize: 25,
+                                              letterSpacing: 0.0,
+                                            ),
+                                          );
+                                        }
+                                      },
                                     ),
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
                         ),
