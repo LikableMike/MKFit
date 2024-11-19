@@ -67,7 +67,13 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
 
   Future<bool> isHighlighted(DateTime date) async {
     String formattedDate = DateFormat('yyyy-MM-dd').format(date);
-    return await DatabaseService().checkAppointment(formattedDate);
+
+      if(this.widget.adminAccess){
+        return await DatabaseService().checkAdminAppointments(formattedDate);
+
+      }else {
+        return await DatabaseService().checkAppointment(formattedDate);
+      }
   }
 
   @override

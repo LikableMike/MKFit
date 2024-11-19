@@ -326,23 +326,7 @@ class DatabaseService {
     });
   }
 
-  Future<bool> checkAppointment(String date) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    if (snapshot.exists && snapshot.data() != null) {
-      var appointments = snapshot.get("appointments");
-      for (int i = 0; i < appointments.length; i++) {
-        if (appointments[i]["startTime"] != null) {
-          DateTime startTime =
-              (appointments[i]["startTime"] as Timestamp).toDate();
-          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
-          if (storedDate == date) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
+
 
   Future<String?> getAppointmentTime(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
@@ -393,6 +377,24 @@ class DatabaseService {
     return null;
   }
 
+  Future<bool> checkAppointment(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          DateTime startTime =
+          (appointments[i]["startTime"] as Timestamp).toDate();
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
     var queryDocs = snapshot.docs;
@@ -400,9 +402,13 @@ class DatabaseService {
       var userAppointments = queryDocs.elementAt(i).get("appointments");
       if (userAppointments != null) {
         for (int j = 0; j < userAppointments.length; j++) {
-          if (userAppointments[j]["date"] != null &&
-              userAppointments[j]["date"].contains(date)) {
-            return true;
+          if (userAppointments[j]["startTime"] != null) {
+            DateTime startTime =
+            (userAppointments[j]["startTime"] as Timestamp).toDate();
+            String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+            if (storedDate == date) {
+              return true;
+            }
           }
         }
       }
@@ -418,19 +424,22 @@ class DatabaseService {
       var userAppointments = queryDocs.elementAt(i).get("appointments");
       if (userAppointments != null) {
         for (int j = 0; j < userAppointments.length; j++) {
-          if (userAppointments[j]["date"] != null &&
-              userAppointments[j]["date"].contains(date)) {
-            print(queryDocs.elementAt(i).get("name") +
-                " at " +
-                userAppointments[j]["time"]);
-            dayAppointments += (queryDocs.elementAt(i).get("name") +
-                " at:\n " +
-                userAppointments[j]["time"] +
-                "\n\n");
+          if (userAppointments[j]["startTime"] != null) {
+            DateTime startTime =
+            (userAppointments[j]["startTime"] as Timestamp).toDate();
+            String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+            if (storedDate == date) {
+              dayAppointments += (queryDocs.elementAt(i).get("name") +
+                  " at:\n " +
+                  DateFormat('MM-dd-yy h:mm a').format(startTime) +
+                  "\n\n");
+            }
+          }
+
           }
         }
       }
-    }
+
     if (dayAppointments.trim().isEmpty) {
       dayAppointments = "No Appointments on:\n" + date;
     }
@@ -658,7 +667,8 @@ class DatabaseService {
             "sets": workoutExercises[j]["sets"],
             "weight": workoutExercises[j]["weight"],
             "name": exerciseSnap["exercise_name"],
-            "description": exerciseSnap["exercise_description"]
+            "description": exerciseSnap["exercise_description"],
+            "video_sample" : exerciseSnap["video_sample"]
           });
 
         }
@@ -689,7 +699,7 @@ class DatabaseService {
         await allWorkouts.doc(userWorkouts[i]["uid"]).get();
         var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
-        print(workoutExercises.toString());
+        print("Workout Exercises: " + workoutExercises.toString());
         globals.testWorkouts[workoutName] = [];
         for (int j = 0; j < workoutExercises.length; j++) {
           DocumentSnapshot exerciseSnap =
@@ -700,7 +710,8 @@ class DatabaseService {
             "sets": workoutExercises[j]["sets"],
             "weight": workoutExercises[j]["weight"],
             "name": exerciseSnap["exercise_name"],
-            "description": exerciseSnap["exercise_description"]
+            "description": exerciseSnap["exercise_description"],
+            "video_sample" : exerciseSnap["video_sample"]
           });
         }
         globals.userWorkouts.add(workoutName);
@@ -765,10 +776,37 @@ class DatabaseService {
   }
 
   Future<void> assignWorkout() async{
+    DocumentSnapshot workoutSnap = await usersCollection.doc(globals.selectedClient).get();
+    List workoutList = workoutSnap.get("workouts");
+
+    for(var currWorkout in workoutList){
+      if(currWorkout["uid"] == globals.selectedWorkout){
+        return;
+      }
+    }
+
+    
     return await usersCollection.doc(globals.selectedClient).update({
       "workouts": FieldValue.arrayUnion([
         {"exercises" : globals.builtWorkout, "uid": globals.selectedWorkout}
       ])
+    });
+  }
+
+  Future<void> removeWorkout() async{
+    Map workoutHold = {"exercises" : [], "uid" : globals.selectedWorkout};
+    for (var exercise in globals.testWorkouts[globals.selectedWorkout]){
+      workoutHold["exercises"].add({
+        "reps" : exercise["reps"],
+        "sets" : exercise["sets"],
+        "weight" : exercise["weight"],
+        "uid" : exercise["uid"]
+      });
+    }
+    return await usersCollection.doc(globals.selectedClient).update({
+      "workouts": FieldValue.arrayRemove([
+        workoutHold]
+      )
     });
   }
 

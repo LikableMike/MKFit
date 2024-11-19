@@ -8,6 +8,8 @@ import 'individual_workout_page_model.dart';
 export 'individual_workout_page_model.dart';
 import 'package:m_k_fit/backend/firebase_storage/database.dart';
 import "/backend/firebase_storage/globals.dart" as globals;
+import 'package:url_launcher/url_launcher.dart';
+
 
 class IndividualWorkoutPageWidget extends StatefulWidget {
   const IndividualWorkoutPageWidget({super.key});
@@ -93,6 +95,7 @@ class WorkoutSection extends StatelessWidget{
     this.description = "Placeholder Description",
     this.sets = 2,
     this.reps = 4,
+    this.url = "",
 });
 
   final String title;
@@ -100,6 +103,7 @@ class WorkoutSection extends StatelessWidget{
   final String description;
   final int sets;
   final int reps;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +117,14 @@ class WorkoutSection extends StatelessWidget{
           Container(
 
             width: double.infinity,
-            height: 60.0,
+            height: 80.0,
             decoration: const BoxDecoration(),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   width: 300.0,
-                  height: 50.0,
+                  height: 105.0,
                   decoration: const BoxDecoration(),
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
@@ -142,7 +146,7 @@ class WorkoutSection extends StatelessWidget{
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Container(
                     width: 40.0,
-                    height: 40.0,
+                    height: 90.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
@@ -289,24 +293,11 @@ class WorkoutSection extends StatelessWidget{
                                 size: 35.0,
                               ),
                               onPressed: () async {
-                                print("here");
-                                final databaseService =
-                                DatabaseService();
-                                String? videoUrl =
-                                await databaseService
-                                    .getExerciseVideo(
-                                    "assisted_pull_up");
-                                if (videoUrl == null) {
-                                  print(
-                                      "Cannot get video: exercise does not exist");
-                                  videoUrl = "none";
+                                print(url);
+                                final Uri URL = Uri.parse(url);
+                                if (!await launchUrl(URL)) {
+                                  throw Exception('Could not launch $URL');
                                 }
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(
-                                  SnackBar(
-                                    content: Text(videoUrl),
-                                  ),
-                                );
                               },
                             ),
                             Text(
@@ -444,7 +435,7 @@ class BuildWorkouts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: List.generate(Workouts.length, (index) {
-        return WorkoutSection(title: Workouts[index]["name"], weight: Workouts[index]["weight"], description: Workouts[index]["description"], sets: Workouts[index]["sets"], reps: Workouts[index]["reps"]);
+        return WorkoutSection(title: Workouts[index]["name"], weight: Workouts[index]["weight"], description: Workouts[index]["description"], sets: Workouts[index]["sets"], reps: Workouts[index]["reps"], url: Workouts[index]["video_sample"],);
       }),
     );
   }
