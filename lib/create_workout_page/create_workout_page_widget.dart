@@ -249,12 +249,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
-                                      fillColor: (_model.workoutNameFocusNode
-                                                  ?.hasFocus ??
-                                              false)
-                                          ? const Color(0x4D9489F5)
-                                          : Colors.white,
-                                      contentPadding:
+                                      fillColor: Colors.black, // Set background to black
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
@@ -364,11 +359,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
-                                      fillColor: (_model.descriptionFocusNode
-                                                  ?.hasFocus ??
-                                              false)
-                                          ? const Color(0x4D9489F5)
-                                          : Colors.white,
+                                      fillColor: Colors.black, // Set background to black
                                       contentPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16.0, 16.0, 16.0, 16.0),
