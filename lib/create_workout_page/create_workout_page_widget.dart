@@ -249,7 +249,8 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
-                                      fillColor: Colors.black, // Set background to black
+                                      fillColor: Colors.black,
+                                      contentPadding: // Set background to black
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),

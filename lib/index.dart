@@ -40,3 +40,5 @@ export '/ClientAppointmentsPage/client_appointments_page_widget.dart' show Clien
 export '/ClientsWorkoutsPage/clients_workout_page_widget.dart' show ClientWorkoutsPageWidget;
 export '/AssignWorkoutPage/assign_workout_page_widget.dart' show AssignWorkoutPageWidget;
 export '/ExerciseValuesPage/exercise_value_page_widget.dart' show ExerciseValuePageWidget;
+export '/ExerciseList/exercise_list_widget.dart' show ExerciseListWidget;
+export '/UpdateExercise/update_exercise_widget.dart' show UpdateExerciseWidget;

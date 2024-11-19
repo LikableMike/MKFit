@@ -206,10 +206,10 @@ class _Home2WidgetState extends State<Home2Widget> {
                   borderRadius: 20,
                   borderWidth: 1,
                   buttonSize: 40,
-                  icon: FaIcon(
-                    FontAwesomeIcons.userCircle,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    size: 30,
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 40.0,
                   ),
                   onPressed: () async {
                     context.pushNamed('SettingsPage');
@@ -460,7 +460,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                             child: Align(
                               alignment: AlignmentDirectional(0, 0),
                               child: Text(
-                                'Todays Progress',
+                                'Your Progress',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
@@ -492,7 +492,7 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 children: [
 
                                   Container(
-                                    width: 230,
+                                    width: 300,
                                     height: 100,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
@@ -528,8 +528,18 @@ class _Home2WidgetState extends State<Home2Widget> {
                                             showBorder: false,
                                           ),
                                           axisBounds: AxisBounds(),
-                                          xAxisLabelInfo: AxisLabelInfo(),
-                                          yAxisLabelInfo: AxisLabelInfo(),
+                                          xAxisLabelInfo: AxisLabelInfo(
+
+                                          ),
+                                          yAxisLabelInfo: AxisLabelInfo(
+                                            title: 'Weight lb.',
+                                            titleTextStyle: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),

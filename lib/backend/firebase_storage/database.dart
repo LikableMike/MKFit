@@ -75,6 +75,21 @@ class DatabaseService {
     }
   }
 
+  Future<Map> getAllExercises() async{
+    try {
+      QuerySnapshot exerciseSnapshot = await exerciseTestCollection.get();
+      var exerciseDocs = exerciseSnapshot.docs;
+        Map exerciseList = {};
+        for(int i = 0; i < exerciseDocs.length; i++){
+          exerciseList[exerciseDocs.elementAt(i).id] = exerciseDocs.elementAt(i).get("exercise_name");
+
+        }
+        return exerciseList;
+    } catch (e) {
+      print("ERROR FINDING EXERCISES: $e");
+      return {};
+    }
+  }
   Future<void> updateUsername(String newUsername) async {
     try {
       final String uid = await getUID(); // Retrieve the current user's UID
@@ -144,6 +159,28 @@ class DatabaseService {
     return;
   }
 
+  Future<Map> getExerciseData(uid) async{
+    Map exerciseData = {};
+    DocumentSnapshot exerciseSnap = await exerciseTestCollection.doc(uid).get();
+    exerciseData["description"] = exerciseSnap.get("exercise_description");
+    exerciseData["video_link"] = exerciseSnap.get("video_sample");
+    exerciseData["name"] = exerciseSnap.get("exercise_name");
+
+    print(exerciseData);
+    return exerciseData;
+  }
+
+  Future<void> removeExercise(String uid) async{
+   return await exerciseTestCollection.doc(uid).delete();
+  }
+
+  Future<void> updateExerciseData(Map exerciseData, String uid) async{
+    print(exerciseData);
+    print(uid);
+    print(exerciseTestCollection.doc(uid));
+    return await exerciseTestCollection.doc(uid).update({'exercise_description' : exerciseData["description"], 'exercise_name' : exerciseData["name"], 'video_sample' : exerciseData["video_link"]});
+
+  }
   Future<List<Map<String, dynamic>>> getExerciseReferences(
       List<String> selectedWorkouts) async {
 
@@ -764,7 +801,6 @@ class DatabaseService {
   Future<List> fetchWorkoutExercises(uid) async{
     DocumentSnapshot snapshot = await workoutCollection.doc(uid).get();
     List<dynamic> fetchedExercises = await snapshot["exercises"];
-    print(fetchedExercises.length);
     for(int i = 0; i < fetchedExercises.length; i++){
       print("uid: " + fetchedExercises[i]["uid"].toString().split("/")[1]);
       DocumentSnapshot exerciseSnap = await exerciseTestCollection.doc(fetchedExercises[i]["uid"].toString().split("/")[1].split(")")[0]).get();
@@ -772,7 +808,6 @@ class DatabaseService {
       fetchedExercises[i]["uid"] = exerciseSnap.id;
 
     }
-    print(fetchedExercises);
     return fetchedExercises;
   }
 

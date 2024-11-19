@@ -196,6 +196,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ChangeAddressWidget(),
         ),
         FFRoute(
+          name: 'ExerciseList',
+          path: '/ExerciseList',
+          builder: (context, params) => const ExerciseListWidget(),
+        ),
+        FFRoute(
+          name: 'UpdateExercisePage',
+          path: '/UpdateExercise',
+          builder: (context, params) => const UpdateExerciseWidget(),
+        ),
+        FFRoute(
           name: 'changeNumber',
           path: '/changeNumber',
           builder: (context, params) => const ChangeNumberWidget(),
