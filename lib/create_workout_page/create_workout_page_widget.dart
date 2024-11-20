@@ -251,6 +251,8 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                       filled: true,
                                       fillColor: Colors.black, // Set background to black
                                           const EdgeInsetsDirectional.fromSTEB(
+                                      fillColor: Colors.black, // Set background to black
+                                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
