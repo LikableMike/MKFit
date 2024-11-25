@@ -464,84 +464,148 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             // Define an end time, e.g., for a 1-hour appointment
                                             DateTime endTime = startTime.add(Duration(hours: 1));
 
-                                            try {
-                                              // Check for availability and schedule if available
-                                              bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime, endTime);
+                                            // Ask the user if they want to schedule the appointment as a recurring appointment
+                                            bool? shouldSetRecurring = await showDialog<bool>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text('Schedule Recurring Meeting'),
+                                                  content: Text(
+                                                    'Would you like to set this meeting to recur weekly on the selected day and time until a chosen end date?\n\n'
+                                                        'If you select "Yes," you will be prompted to choose an end date. By selecting "No," only the selected date will be scheduled as a single appointment.',
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop(true); // Yes for recurring appointment
+                                                      },
+                                                      child: Text('Yes'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop(false); // No for single appointment
+                                                      },
+                                                      child: Text('No'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
 
-                                              if (isAvailable) {
-                                                print('Appointment scheduled for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}');
+                                            // Handle Single Appointment
+                                            if (shouldSetRecurring == false) {
+                                              try {
+                                                // Check for availability and schedule if available
+                                                bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime, endTime);
+                                                if (isAvailable) {
+                                                  await DatabaseService().addAppointment(startTime, endTime);
 
-                                                // Add appointment to the database with both date and time
-                                                String resultMessage = await DatabaseService().addAppointment(startTime, endTime);
-                                                print(resultMessage);
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('MM-dd-yyyy').format(startTime)} at ${_selectedTime!.format(context)}')),
+                                                  );
 
-                                                // Refresh the unavailable times
-                                                await fetchUnavailableTimes(); // Ensure this method updates the UI with setState
+                                                  // Refresh the unavailable times
+                                                  await fetchUnavailableTimes();
+                                                } else {
+                                                  // Notify user if the selected time slot is unavailable
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(content: Text('This time slot is already taken. Please choose another.')),
+                                                  );
+                                                }
+                                              } catch (e) {
+                                                print("Error scheduling single appointment: $e");
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(content: Text('An error occurred while scheduling the appointment. Please try again.')),
+                                                );
+                                              }
+                                            }
 
-                                                // Prompt the user to set recurring appointments
-                                                bool? shouldSetRecurring = await showDialog<bool>(
-                                                  context: context,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text('Set Recurring Meeting'),
-                                                      content: Text.rich(
-                                                        TextSpan(
-                                                          children: [
-                                                            TextSpan(
-                                                              text: 'Would you like to set this meeting to recur weekly on the selected day and time until a chosen end date?\n\n',
-                                                            ),
-                                                            TextSpan(
-                                                              text: 'If you select "Yes," you will be prompted to choose an end date.\n\n',
-                                                            ),
-                                                            TextSpan(
-                                                              text: 'By selecting "No," only the selected date will be scheduled as a single appointment.',
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        style: TextStyle(height: 1.5),
-                                                      ),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop(true); // Return 'true' for "Yes"
-                                                          },
-                                                          child: Text('Yes'),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop(false); // Return 'false' for "No"
-                                                          },
-                                                          child: Text('No'),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
+                                            // Handle Recurring Appointments
+                                            if (shouldSetRecurring == true) {
+                                              // Ask the user to select an end date for the recurring meetings
+                                              DateTime? endDate = await showDatePicker(
+                                                context: context,
+                                                firstDate: _selectedDateRange!.start,
+                                                lastDate: DateTime(2100),
+                                                initialDate: _selectedDateRange!.start,
+                                                helpText: "Select an end date for the recurring appointments",
+                                                selectableDayPredicate: (DateTime date) {
+                                                  return date.weekday == _selectedDateRange!.start.weekday;
+                                                },
+                                              );
+
+                                              if (endDate != null) {
+                                                List<DateTime> recurringDates = generateRecurringDates(
+                                                  _selectedDateRange!.start,
+                                                  endDate,
                                                 );
 
-                                                if (shouldSetRecurring != null && shouldSetRecurring) {
-                                                  // Handle recurring appointments
-                                                  int recurringDay = _selectedDateRange!.start.weekday;
+                                                // List to track conflicts and available dates
+                                                List<DateTime> conflictingDates = [];
+                                                List<DateTime> availableDates = [];
 
-                                                  // Show date picker with only dates on or after the start date and matching the recurring day
-                                                  DateTime? endDate = await showDatePicker(
+                                                // Check availability for each recurring date
+                                                for (DateTime date in recurringDates) {
+                                                  DateTime recurringStartTime = DateTime(
+                                                    date.year,
+                                                    date.month,
+                                                    date.day,
+                                                    _selectedTime!.hour,
+                                                    _selectedTime!.minute,
+                                                  );
+                                                  DateTime recurringEndTime = recurringStartTime.add(Duration(hours: 1));
+
+                                                  // Check if the time is available
+                                                  bool isAvailable = await DatabaseService().isAppointmentAvailable(recurringStartTime, recurringEndTime);
+                                                  if (isAvailable) {
+                                                    availableDates.add(date);
+                                                  } else {
+                                                    conflictingDates.add(date);
+                                                  }
+                                                }
+
+                                                // Create strings for conflicting and available dates
+                                                String conflictingDatesString = conflictingDates.map((date) {
+                                                  return DateFormat('MMMM dd, yyyy').format(date);
+                                                }).join(', ');
+
+                                                String availableDatesString = availableDates.map((date) {
+                                                  return DateFormat('MMMM dd, yyyy').format(date);
+                                                }).join(', ');
+
+                                                // If there are conflicting dates, prompt the user to proceed with available ones
+                                                if (conflictingDates.isNotEmpty) {
+                                                  bool? proceedWithAvailable = await showDialog<bool>(
                                                     context: context,
-                                                    firstDate: _selectedDateRange!.start,
-                                                    lastDate: DateTime(2100),
-                                                    initialDate: _selectedDateRange!.start,
-                                                    helpText: "Select an end date for the recurring appointments",
-                                                    selectableDayPredicate: (DateTime date) {
-                                                      return date.weekday == recurringDay;
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('Conflicting Appointments'),
+                                                        content: Text(
+                                                          'The following date(s) have conflicting appointments:\n$conflictingDatesString.\n\n'
+                                                              'The available date(s) for scheduling are:\n$availableDatesString.\n\n'
+                                                              'Do you want to proceed with scheduling the available dates?',
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop(false); // Cancel scheduling
+                                                            },
+                                                            child: Text('No'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop(true); // Proceed with scheduling
+                                                            },
+                                                            child: Text('Yes'),
+                                                          ),
+                                                        ],
+                                                      );
                                                     },
                                                   );
 
-                                                  if (endDate != null) {
-                                                    List<DateTime> recurringDates = generateRecurringDates(
-                                                      _selectedDateRange!.start,
-                                                      endDate,
-                                                    );
-
-                                                    // Schedule each recurring appointment
-                                                    for (DateTime date in recurringDates) {
+                                                  // If user chooses to proceed, schedule only available dates
+                                                  if (proceedWithAvailable == true) {
+                                                    for (DateTime date in availableDates) {
                                                       DateTime recurringStartTime = DateTime(
                                                         date.year,
                                                         date.month,
@@ -555,25 +619,35 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     }
 
                                                     ScaffoldMessenger.of(context).showSnackBar(
-                                                      SnackBar(content: Text('Recurring appointments set every ${DateFormat('EEEE').format(_selectedDateRange!.start)} at ${_selectedTime!.format(context)} until ${DateFormat('MM-dd-yyyy').format(endDate)}')),
+                                                      SnackBar(content: Text('Recurring appointments set for available dates until ${DateFormat('MM-dd-yyyy').format(endDate)}')),
                                                     );
 
-                                                    // Refresh unavailable times again after scheduling recurring appointments
+                                                    // Refresh unavailable times after scheduling recurring appointments
                                                     await fetchUnavailableTimes();
                                                   }
                                                 } else {
+                                                  // No conflicts, schedule all recurring dates
+                                                  for (DateTime date in recurringDates) {
+                                                    DateTime recurringStartTime = DateTime(
+                                                      date.year,
+                                                      date.month,
+                                                      date.day,
+                                                      _selectedTime!.hour,
+                                                      _selectedTime!.minute,
+                                                    );
+                                                    DateTime recurringEndTime = recurringStartTime.add(Duration(hours: 1));
+
+                                                    await DatabaseService().addAppointment(recurringStartTime, recurringEndTime);
+                                                  }
+
                                                   ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('MM-dd-yyyy').format(startTime)} at ${_selectedTime!.format(context)}')),
+                                                    SnackBar(content: Text('Recurring appointments set every ${DateFormat('EEEE').format(_selectedDateRange!.start)} at ${_selectedTime!.format(context)} until ${DateFormat('MM-dd-yyyy').format(endDate)}')),
                                                   );
+
+                                                  // Refresh unavailable times after scheduling recurring appointments
+                                                  await fetchUnavailableTimes();
                                                 }
-                                              } else {
-                                                // Notify user if the selected time slot is unavailable
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                  SnackBar(content: Text('This time slot is already taken. Please choose another.')),
-                                                );
                                               }
-                                            } catch (e) {
-                                              print(e);
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -582,6 +656,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           child: Text('Confirm Appointment'),
                                         ),
                                       ),
+
 
 
 
