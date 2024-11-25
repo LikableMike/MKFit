@@ -15,13 +15,13 @@ class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final CollectionReference exerciseCollection =
-      FirebaseFirestore.instance.collection("exercises");
+  FirebaseFirestore.instance.collection("exercises");
   final CollectionReference chatCollection =
-      FirebaseFirestore.instance.collection("chat");
+  FirebaseFirestore.instance.collection("chat");
   final CollectionReference chatMessageCollection =
-      FirebaseFirestore.instance.collection("chat_messages");
+  FirebaseFirestore.instance.collection("chat_messages");
   final CollectionReference exerciseTestCollection =
-      FirebaseFirestore.instance.collection("exercises_test");
+  FirebaseFirestore.instance.collection("exercises_test");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
   final workoutCollection = FirebaseFirestore.instance.collection("workouts");
@@ -30,28 +30,33 @@ class DatabaseService {
     "nOlIEy4WKkddkikrMPhQNLEjT9y1",
     // Add more UIDs as needed
   ];
-  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart) async {
+  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     try {
-      DocumentReference startTimeDoc = FirebaseFirestore.instance
-          .collection('appointments')
-          .doc('allStartTimes');
-      DocumentSnapshot snapshot = await startTimeDoc.get();
+      QuerySnapshot allUsersSnapshot = await usersCollection.get();
+      if (allUsersSnapshot.docs.isNotEmpty) {
+        for (var userDoc in allUsersSnapshot.docs) {
+          List<dynamic> appointments = userDoc['appointments'] ?? [];
+          for (var appointment in appointments) {
+            DateTime existingStartTime = (appointment['startTime'] as Timestamp).toDate();
+            DateTime existingEndTime = (appointment['endTime'] as Timestamp).toDate();
 
-      if (snapshot.exists && snapshot.data() != null) {
-        List<dynamic> startTimes = snapshot['startTimes'] ?? [];
-        for (var startTime in startTimes) {
-          DateTime existingAppointmentStart = (startTime as Timestamp).toDate();
-          if (existingAppointmentStart.isAtSameMomentAs(newAppointmentStart)) {
-            return false;
+            // Check if the new appointment overlaps with an existing appointment
+            if ((newAppointmentStart.isBefore(existingEndTime) && newAppointmentStart.isAfter(existingStartTime)) ||
+                (newAppointmentEnd.isAfter(existingStartTime) && newAppointmentEnd.isBefore(existingEndTime)) ||
+                newAppointmentStart.isAtSameMomentAs(existingStartTime) ||
+                newAppointmentEnd.isAtSameMomentAs(existingEndTime)) {
+              return false;
+            }
           }
         }
       }
-      return true;
+      return true; // If no conflicts, return true
     } catch (e) {
       print("Error checking appointment availability: $e");
       return false;
     }
   }
+
 
 
   Future<List> fetchAppointments(String UID) async {
@@ -80,7 +85,7 @@ class DatabaseService {
       final String uid = await getUID(); // Retrieve the current user's UID
       await usersCollection.doc(uid).update({
         "username":
-            newUsername, // Update the "username" field with the new value
+        newUsername, // Update the "username" field with the new value
       });
       print("Username updated successfully.");
     } catch (e) {
@@ -88,10 +93,9 @@ class DatabaseService {
     }
   }
 
-  Future<String> addAppointment(
-      DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+  Future<String> addAppointment(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     // Check if the time range is available
-    bool isAvailable = await isAppointmentAvailable(newAppointmentStart);
+    bool isAvailable = await isAppointmentAvailable(newAppointmentStart, newAppointmentEnd);
 
     if (isAvailable) {
       try {
@@ -102,7 +106,7 @@ class DatabaseService {
           'appointments': FieldValue.arrayUnion([
             {
               'startTime': Timestamp.fromDate(newAppointmentStart),
-              'endTime': Timestamp.fromDate(newAppointmentEnd)
+              'endTime': Timestamp.fromDate(newAppointmentEnd),
             }
           ]),
         });
@@ -112,8 +116,10 @@ class DatabaseService {
             .doc('allStartTimes');
 
         await startTimeDoc.set({
-          'startTimes':
-              FieldValue.arrayUnion([Timestamp.fromDate(newAppointmentStart)])
+          'startTimes': FieldValue.arrayUnion([{
+            'timestamp': Timestamp.fromDate(newAppointmentStart),
+            'userId': userId, // Add the user ID here
+          }]),
         }, SetOptions(merge: true));
 
         return 'Appointment successfully added!';
@@ -125,6 +131,8 @@ class DatabaseService {
       return 'This time slot is already taken. Please choose another.';
     }
   }
+
+
 
   Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
@@ -174,7 +182,7 @@ class DatabaseService {
       List<String> selectedWorkouts = workoutData['exercises'];
 
       List<Map<String, dynamic>> exerciseData =
-          await getExerciseReferences(selectedWorkouts);
+      await getExerciseReferences(selectedWorkouts);
 
       List<Map<String, dynamic>> exercisesToSave = exerciseData.map((data) {
         return {
@@ -300,12 +308,12 @@ class DatabaseService {
         .orderBy("date", descending: false)
         .get()
         .then(
-      (querySnapshot) {
+          (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
           var doc = docSnapshot.data();
           for (var attr in attrs) {
             DateTime date =
-                DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
+            DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
             double? val = double.tryParse(doc[attr].toString());
             if (val != null) {
               graphData[attr]!["x"]!.add(date);
@@ -334,7 +342,7 @@ class DatabaseService {
       for (int i = 0; i < appointments.length; i++) {
         if (appointments[i]["startTime"] != null) {
           DateTime startTime =
-              (appointments[i]["startTime"] as Timestamp).toDate();
+          (appointments[i]["startTime"] as Timestamp).toDate();
           String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
           if (storedDate == date) {
             return true;
@@ -352,7 +360,7 @@ class DatabaseService {
       for (int i = 0; i < appointments.length; i++) {
         if (appointments[i]["startTime"] != null) {
           DateTime startTime =
-              (appointments[i]["startTime"] as Timestamp).toDate();
+          (appointments[i]["startTime"] as Timestamp).toDate();
           String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
           if (storedDate == date) {
             return DateFormat('hh:mm a').format(startTime);
@@ -383,7 +391,7 @@ class DatabaseService {
         // Get the earliest appointment
         Map<String, dynamic> nextAppointment = appointments.first;
         DateTime appointmentDate =
-            (nextAppointment['startTime'] as Timestamp).toDate();
+        (nextAppointment['startTime'] as Timestamp).toDate();
         TimeOfDay appointmentTime = TimeOfDay.fromDateTime(appointmentDate);
 
         return {'date': appointmentDate, 'time': appointmentTime};
@@ -440,7 +448,10 @@ class DatabaseService {
 
   Future<void> cancelAppointment(List<String> dates) async {
     try {
-      DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+      String userId = await getUID(); // Get the current user ID
+
+      // Step 1: Remove from User's Appointments
+      DocumentSnapshot snapshot = await usersCollection.doc(userId).get();
       if (snapshot.exists && snapshot.data() != null) {
         var appointments = snapshot.get("appointments");
 
@@ -449,8 +460,7 @@ class DatabaseService {
         for (String date in dates) {
           for (int i = 0; i < appointments.length; i++) {
             if (appointments[i]["startTime"] != null) {
-              DateTime startTime =
-                  (appointments[i]["startTime"] as Timestamp).toDate();
+              DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
               String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
 
               if (storedDate == date) {
@@ -461,19 +471,46 @@ class DatabaseService {
           }
         }
 
+        // Remove appointments from the user's list
         if (appointmentsToRemove.isNotEmpty) {
-          await usersCollection.doc(globals.UID).update({
+          await usersCollection.doc(userId).update({
             "appointments": FieldValue.arrayRemove(appointmentsToRemove),
           });
-          print("Appointments removed successfully.");
-        } else {
-          print("No matching appointments found to remove.");
         }
+
+        // Step 2: Remove from allStartTimes Collection for the specific user only
+        DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+        DocumentSnapshot allStartTimesSnapshot = await startTimeDoc.get();
+
+        if (allStartTimesSnapshot.exists && allStartTimesSnapshot.data() != null) {
+          List<dynamic> startTimes = allStartTimesSnapshot['startTimes'] ?? [];
+          List<dynamic> updatedStartTimes = [];
+
+          for (var startTimeEntry in startTimes) {
+            if (startTimeEntry is Map<String, dynamic>) {
+              DateTime existingAppointmentStart = (startTimeEntry['timestamp'] as Timestamp).toDate();
+              String storedDate = DateFormat('yyyy-MM-dd').format(existingAppointmentStart);
+              String existingUserId = startTimeEntry['userId'];
+
+              // Keep only those times that are not being canceled for the current user
+              if (!(dates.contains(storedDate) && existingUserId == userId)) {
+                updatedStartTimes.add(startTimeEntry);
+              }
+            }
+          }
+
+          // Update the allStartTimes document with the updated times
+          await startTimeDoc.update({"startTimes": updatedStartTimes});
+        }
+
+        print('Appointments removed successfully.');
       }
     } catch (e) {
-      print("Error canceling appointment: $e");
+      print("Error cancelling appointment: $e");
     }
   }
+
+
 
   Future<String> findClientName(String uid) async{
     DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
@@ -533,7 +570,7 @@ class DatabaseService {
 
   Future<String?> getExerciseVideo(String exercise) async {
     DocumentSnapshot snapshot =
-        await exerciseTestCollection.doc(exercise).get();
+    await exerciseTestCollection.doc(exercise).get();
     if (snapshot.exists) {
       return snapshot.get("video_sample");
     } else {
@@ -609,7 +646,7 @@ class DatabaseService {
 
     try {
       final response =
-          await http.post(apiUrl, body: jsonEncode(data), headers: headers);
+      await http.post(apiUrl, body: jsonEncode(data), headers: headers);
       if (response.statusCode != 202) {
         print(
             'Failed to send email. Received status code: ${response.statusCode}');
@@ -633,7 +670,7 @@ class DatabaseService {
     //Finds all available workouts and exercises in the database
     final allWorkouts = FirebaseFirestore.instance.collection("workouts");
     final allExercises =
-        FirebaseFirestore.instance.collection("exercises_test");
+    FirebaseFirestore.instance.collection("exercises_test");
 
     //Loops through all of the users's workouts
     for (int i = 0; i < userWorkouts.length; i++) {
@@ -643,7 +680,7 @@ class DatabaseService {
         //For every workout assigned to the user, search our snap shot of all the workouts
         // saves a snapshot of the workout with an id that matches the uid of the user's workout
         DocumentSnapshot WorkoutSnap =
-            await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+        await allWorkouts.doc(userWorkouts[i]["uid"]).get();
         var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
         print(workoutExercises.toString());
@@ -651,7 +688,7 @@ class DatabaseService {
 
         for (int j = 0; j < workoutExercises.length; j++) {
           DocumentSnapshot exerciseSnap =
-              await allExercises.doc(workoutExercises[j]["uid"]).get();
+          await allExercises.doc(workoutExercises[j]["uid"]).get();
 
           globals.testWorkouts[workoutName].add({
             "uid": workoutExercises[j]["uid"],
@@ -728,7 +765,7 @@ class DatabaseService {
 
         // Fetch the subcollection 'exercises' under each document
         final subcollectionSnapshot =
-            await doc.reference.collection('exercises').get();
+        await doc.reference.collection('exercises').get();
 
         // Iterate through each document in the subcollection
         for (var subDoc in subcollectionSnapshot.docs) {
