@@ -1,3 +1,5 @@
+// Make a warning on the account creation page that once you sign up you cannot change your email address
+
 import 'package:flutter/material.dart';
 
 class AccountCreationPage extends StatefulWidget {
