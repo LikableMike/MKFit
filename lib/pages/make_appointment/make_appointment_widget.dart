@@ -57,37 +57,43 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   }
   Set<DateTime> _unavailableTimes = {};
 
-  Map<DateTime, Set<DateTime>> _unavailableTimesByDate = {};
+  Map<DateTime, Set<TimeOfDay>> _unavailableTimesByDate = {};
+
 
   Future<void> fetchUnavailableTimes() async {
     try {
-      DocumentReference startTimeDoc = FirebaseFirestore.instance
-          .collection('appointments')
-          .doc('allStartTimes');
-      DocumentSnapshot snapshot = await startTimeDoc.get();
+      QuerySnapshot allUsersSnapshot = await FirebaseFirestore.instance.collection('users').get();
 
-      if (snapshot.exists && snapshot.data() != null) {
-        List<dynamic> startTimes = snapshot['startTimes'] ?? [];
-        Map<DateTime, Set<DateTime>> groupedTimes = {};
+      Map<DateTime, Set<TimeOfDay>> groupedTimes = {};
 
-        for (var startTime in startTimes) {
-          DateTime appointmentDate = (startTime as Timestamp).toDate();
-          DateTime dateOnly = DateTime(appointmentDate.year, appointmentDate.month, appointmentDate.day);
+      for (var userDoc in allUsersSnapshot.docs) {
+        List<dynamic> appointments = userDoc['appointments'] ?? [];
+        for (var appointment in appointments) {
+          if (appointment is Map<String, dynamic>) {
+            DateTime appointmentDate = (appointment['startTime'] as Timestamp).toDate();
+            DateTime dateOnly = DateTime(appointmentDate.year, appointmentDate.month, appointmentDate.day);
+            TimeOfDay timeOnly = TimeOfDay(hour: appointmentDate.hour, minute: appointmentDate.minute);
 
-          if (!groupedTimes.containsKey(dateOnly)) {
-            groupedTimes[dateOnly] = {};
+            if (!groupedTimes.containsKey(dateOnly)) {
+              groupedTimes[dateOnly] = {};
+            }
+            groupedTimes[dateOnly]!.add(timeOnly);
           }
-          groupedTimes[dateOnly]!.add(appointmentDate);
         }
-
-        setState(() {
-          _unavailableTimesByDate = groupedTimes;
-        });
       }
+
+      setState(() {
+        _unavailableTimesByDate = groupedTimes;
+      });
     } catch (e) {
       print("Error fetching unavailable times: $e");
     }
   }
+
+
+
+
+
 
 
 
@@ -135,7 +141,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   Future<void> attemptToBookAppointment(DateTime startTime, DateTime endTime) async {
     try {
       // Check for appointment availability
-      bool isAvailable = await dbService.isAppointmentAvailable(startTime);
+      bool isAvailable = await dbService.isAppointmentAvailable(startTime, endTime);
 
       if (isAvailable) {
         // If available, proceed with adding the appointment
@@ -156,9 +162,10 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
-  final List<String> _availableTimes = getAvailableTimes(context);
+    final List<String> _availableTimes = getAvailableTimes(context);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -339,97 +346,103 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             ],
                                             borderRadius: BorderRadius.circular(8.0),
                                           ),
-                                          child: 
+                                          child:
                                           Padding(padding: const EdgeInsets.all(8.0),
-                                          child: 
-                                          Column(
-                                            crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            // Print statements to debug time format
+                                            child:
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                // Print statements to debug time format
 
-                                            Text(
-                                              'Select Start Time: ',
-                                              style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                fontFamily: 'Outfit',
-                                                color: const Color(0xFF14181B),
-                                                fontSize: 20.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-
-                                            DropdownButton<String>(
-                                              value: _selectedTime != null ? _selectedTime!.format(context) : null,
-                                              hint: Text(
-                                                _selectedTime == null ? 'Select time' : 'Time Selected: ${_selectedTime!.format(context)}',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16.0,
+                                                Text(
+                                                  'Select Start Time: ',
+                                                  style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                    fontFamily: 'Outfit',
+                                                    color: const Color(0xFF14181B),
+                                                    fontSize: 20.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
                                                 ),
-                                              ),
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16.0,
-                                              ),
-                                              items: _availableTimes.map((String time) {
-                                                final timeParts = time.split(" ");
-                                                final period = timeParts[1];
-                                                final hourMinute = timeParts[0].split(":");
-                                                int hour = int.parse(hourMinute[0]);
-                                                int minute = int.parse(hourMinute[1]);
 
-                                                if (period == "PM" && hour != 12) {
-                                                  hour += 12;
-                                                } else if (period == "AM" && hour == 12) {
-                                                  hour = 0;
-                                                }
-
-                                                DateTime dateTime = DateTime(
-                                                  _selectedDateRange?.start.year ?? DateTime.now().year,
-                                                  _selectedDateRange?.start.month ?? DateTime.now().month,
-                                                  _selectedDateRange?.start.day ?? DateTime.now().day,
-                                                  hour,
-                                                  minute,
-                                                );
-
-                                                bool isUnavailable = _unavailableTimesByDate[_selectedDateRange?.start]?.contains(dateTime) ?? false;
-
-                                                return DropdownMenuItem<String>(
-                                                  value: time,
-                                                  child: Text(
-                                                    time,
+                                                DropdownButton<String>(
+                                                  value: _selectedTime != null ? _selectedTime!.format(context) : null,
+                                                  hint: Text(
+                                                    _selectedTime == null ? 'Select time' : 'Time Selected: ${_selectedTime!.format(context)}',
                                                     style: TextStyle(
-                                                      color: isUnavailable ? Colors.red : Colors.black,
+                                                      color: Colors.black,
+                                                      fontSize: 16.0,
                                                     ),
                                                   ),
-                                                );
-                                              }).toList(),
-                                              onChanged: (String? newValue) {
-                                                if (newValue != null) {
-                                                  final timeParts = newValue.split(" ");
-                                                  final period = timeParts[1];
-                                                  final hourMinute = timeParts[0].split(":");
-                                                  int hour = int.parse(hourMinute[0]);
-                                                  int minute = int.parse(hourMinute[1]);
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16.0,
+                                                  ),
+                                                  items: _availableTimes.map((String time) {
+                                                    // Parse the time from the dropdown item
+                                                    final timeParts = time.split(" ");
+                                                    final period = timeParts[1];
+                                                    final hourMinute = timeParts[0].split(":");
+                                                    int hour = int.parse(hourMinute[0]);
+                                                    int minute = int.parse(hourMinute[1]);
 
-                                                  if (period == "PM" && hour != 12) {
-                                                    hour += 12;
-                                                  } else if (period == "AM" && hour == 12) {
-                                                    hour = 0;
-                                                  }
+                                                    if (period == "PM" && hour != 12) {
+                                                      hour += 12;
+                                                    } else if (period == "AM" && hour == 12) {
+                                                      hour = 0;
+                                                    }
 
-                                                  setState(() {
-                                                    _selectedTime = TimeOfDay(hour: hour, minute: minute);
-                                                  });
-                                                }
-                                              },
+                                                    TimeOfDay timeOnly = TimeOfDay(hour: hour, minute: minute);
+
+                                                    // Check if the time slot is unavailable for the selected date
+                                                    bool isUnavailable = false;
+                                                    if (_selectedDateRange != null && _unavailableTimesByDate.containsKey(_selectedDateRange!.start)) {
+                                                      Set<TimeOfDay>? unavailableTimes = _unavailableTimesByDate[_selectedDateRange!.start];
+                                                      if (unavailableTimes != null) {
+                                                        isUnavailable = unavailableTimes.contains(timeOnly);
+                                                      }
+                                                    }
+
+                                                    return DropdownMenuItem<String>(
+                                                      value: time,
+                                                      child: Text(
+                                                        time,
+                                                        style: TextStyle(
+                                                          color: isUnavailable ? Colors.red : Colors.black,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (String? newValue) {
+                                                    if (newValue != null) {
+                                                      // Parse the selected value back into a TimeOfDay object
+                                                      final timeParts = newValue.split(" ");
+                                                      final period = timeParts[1];
+                                                      final hourMinute = timeParts[0].split(":");
+                                                      int hour = int.parse(hourMinute[0]);
+                                                      int minute = int.parse(hourMinute[1]);
+
+                                                      if (period == "PM" && hour != 12) {
+                                                        hour += 12;
+                                                      } else if (period == "AM" && hour == 12) {
+                                                        hour = 0;
+                                                      }
+
+                                                      setState(() {
+                                                        _selectedTime = TimeOfDay(hour: hour, minute: minute);
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+
+
+
+
+                                              ],
                                             ),
-
-                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
@@ -453,7 +466,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
                                             try {
                                               // Check for availability and schedule if available
-                                              bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime);
+                                              bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime, endTime);
 
                                               if (isAvailable) {
                                                 print('Appointment scheduled for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}');
@@ -574,8 +587,6 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
 
 
-
-
                                       // Cancel Appointment Button
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjusted padding to align parallel with Confirm Appointment button
@@ -586,7 +597,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             if (snapshot.connectionState == ConnectionState.waiting) {
                                               return CircularProgressIndicator();
                                             } else if (snapshot.hasError) {
-                                              return Text('Error: \${snapshot.error}');
+                                              return Text('Error: ${snapshot.error}');
                                             } else if (snapshot.hasData && snapshot.data == true) {
                                               return FutureBuilder<String?>(
                                                 future: DatabaseService().getAppointmentTime(
@@ -595,7 +606,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                   if (timeSnapshot.connectionState == ConnectionState.waiting) {
                                                     return CircularProgressIndicator();
                                                   } else if (timeSnapshot.hasError) {
-                                                    return Text('Error: \${timeSnapshot.error}');
+                                                    return Text('Error: ${timeSnapshot.error}');
                                                   } else {
                                                     String formattedDate = DateFormat('MM-dd-yyyy').format(_selectedDateRange!.start);
                                                     String timeString = timeSnapshot.data != null ? ' at ${timeSnapshot.data}' : '';
@@ -631,21 +642,23 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                         );
 
                                                         if (shouldCancelAppointment != null && shouldCancelAppointment) {
-                                                          // Cancel only the selected appointment
                                                           await DatabaseService().cancelAppointment([DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start)]);
 
-                                                          ScaffoldMessenger.of(context).showSnackBar(
-                                                            SnackBar(content: Text('Appointment on $formattedDate$timeString has been canceled.')),
-                                                          );
+                                                          // Show confirmation message after UI update is complete
+                                                          if (mounted) {
+                                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                              SnackBar(content: Text('Appointment on $formattedDate$timeString has been canceled.')),
+                                                            );
 
-                                                          // Refresh UI
-                                                          setState(() {
-                                                            _selectedDateRange = null;
-                                                            _selectedTime = null;
-                                                          });
+                                                            // Refresh UI
+                                                            setState(() {
+                                                              _selectedDateRange = null;
+                                                              _selectedTime = null;
+                                                            });
 
-                                                          // Trigger a re-fetch of appointments
-                                                          setState(() {});
+                                                            // Trigger a re-fetch of appointments
+                                                            fetchUnavailableTimes();
+                                                          }
                                                         }
                                                       },
                                                       child: const Text('Cancel Appointment'),
@@ -659,6 +672,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                           },
                                         ),
                                       ),
+
 
 
 
