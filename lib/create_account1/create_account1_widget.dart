@@ -210,6 +210,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
+
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: _model.fullNameTextController,
@@ -459,11 +460,15 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                   ),
                                 ),
                                 Padding(
+
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
+
                                     width: 370.0,
+
                                     child: TextFormField(
+
                                       controller: _model.passwordTextController,
                                       focusNode: _model.passwordFocusNode,
                                       autofocus: true,
@@ -472,6 +477,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       ],
                                       obscureText: !_model.passwordVisibility,
                                       decoration: InputDecoration(
+
                                         labelText: 'Password',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium

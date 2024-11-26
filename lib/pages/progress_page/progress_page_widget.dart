@@ -107,32 +107,31 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
           title: Text(
             'Progress',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Readex Pro',
-                  color: Colors.white,
-                  fontSize: 30,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              fontFamily: 'Outfit',
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              fontSize: 30.0,
+              letterSpacing: 0.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           actions: [
-          FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 72,
-          icon: Icon(
-            Icons.settings_rounded,
-            color: Colors.white,
-            size: 40,
-          ),
-          onPressed: () async {
-            context.pushNamed('SettingsPage');
-          },
-        )
-            //),
+            FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30.0,
+              borderWidth: 1.0,
+              buttonSize: 70.0,
+              icon: const Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 40.0,
+              ),
+              onPressed: () async {
+                context.pushNamed('SettingsPage');
+              },
+            ),
           ],
           centerTitle: false,
-          elevation: 2,
+          elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
@@ -377,7 +376,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                                         child: Text(
-                                          'BMI',
+                                          'Your BMI',
                                           style: FlutterFlowTheme.of(context)
                                               .headlineMedium
                                               .override(
@@ -386,15 +385,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                               ),
                                         ),
                                       ),
-                                      Text(
-                                        'Your recent activity is below.',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
+
                                     ],
                                   ),
                                 ),
@@ -444,162 +435,12 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                 ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Container(
-                            width: double.infinity,
-                            height: 200,
-                            child: FlutterFlowLineChart(
-                              data: [
-                                FFLineChartData(
-                                  xData: graphData["bmi"]!["x"]!,
-                                  yData: graphData["bmi"]!["y"]!,
-                                  settings: LineChartBarData(
-                                    color: FlutterFlowTheme.of(context).secondary,
-                                    barWidth: 2,
-                                    isCurved: true,
-                                    preventCurveOverShooting: true,
-                                    dotData: FlDotData(show: false),
-                                    belowBarData: BarAreaData(
-                                      show: true,
-                                      color: Color(0x3239D2C0),
-                                    ),
-                                  ),
-                                )
-                              ],
-                              chartStylingInfo: ChartStylingInfo(
-                                enableTooltip: true,
-                                backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-                                showBorder: false,
-                              ),
-                              axisBounds: AxisBounds(),
-                              xAxisLabelInfo: AxisLabelInfo(
-                                title: 'Last 30 Days',
-                                titleTextStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              yAxisLabelInfo: AxisLabelInfo(
-                                title: 'BMI',
-                                titleTextStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-                          child: Container(
-                            width: 86,
-                            height: 86,
-                            decoration: BoxDecoration(),
-                            child: FlutterFlowIconButton(
-                              borderColor: Color(0xFF86BD92),
-                              borderRadius: 40,
-                              borderWidth: 3,
-                              buttonSize: 40,
-                              icon: Icon(
-                                Icons.camera_alt_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 60,
-                              ),
-                              onPressed: () async {
-                                final databaseService = DatabaseService();
 
-                                FilePickerResult? file = await FilePicker
-                                    .platform
-                                    .pickFiles(type: FileType.image);
-                                String uid = await databaseService.getUID();
-                                String destination =
-                                    "images/$uid/${DateTime.now().millisecondsSinceEpoch}.jpg";
-
-                                UploadTask? uploadTask = await databaseService
-                                    .uploadFile(file, destination);
-                                if (uploadTask != null) {
-                                  TaskSnapshot taskSnapshot = await uploadTask;
-                                  String url =
-                                      await taskSnapshot.ref.getDownloadURL();
-                                  databaseService.uploadProgress("img", url);
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(-1, 0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                            child: Container(
-                              width: 244,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                              alignment: AlignmentDirectional(-1, 0),
-                              child: Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: ListView(
-                                  padding: EdgeInsets.zero,
-                                  scrollDirection: Axis.vertical,
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        'Time for a progress picture?',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 20,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ),
-                                    Text(
-                                      'Last picture taken on 1/25/24',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

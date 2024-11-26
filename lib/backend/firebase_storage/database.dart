@@ -80,6 +80,21 @@ class DatabaseService {
     }
   }
 
+  Future<Map> getAllExercises() async{
+    try {
+      QuerySnapshot exerciseSnapshot = await exerciseTestCollection.get();
+      var exerciseDocs = exerciseSnapshot.docs;
+        Map exerciseList = {};
+        for(int i = 0; i < exerciseDocs.length; i++){
+          exerciseList[exerciseDocs.elementAt(i).id] = exerciseDocs.elementAt(i).get("exercise_name");
+
+        }
+        return exerciseList;
+    } catch (e) {
+      print("ERROR FINDING EXERCISES: $e");
+      return {};
+    }
+  }
   Future<void> updateUsername(String newUsername) async {
     try {
       final String uid = await getUID(); // Retrieve the current user's UID
@@ -133,13 +148,11 @@ class DatabaseService {
   }
 
 
+  Future createExercise(String name,
 
-  Future createExercise(String name, int numSets, int numReps,
       String description, String link) async {
     await exerciseCollection.doc(name).set({
       "name": name,
-      "numSets": numSets,
-      "numReps": numReps,
       "description": description,
       "videoLink": link
     });
@@ -152,6 +165,28 @@ class DatabaseService {
     return;
   }
 
+  Future<Map> getExerciseData(uid) async{
+    Map exerciseData = {};
+    DocumentSnapshot exerciseSnap = await exerciseTestCollection.doc(uid).get();
+    exerciseData["description"] = exerciseSnap.get("exercise_description");
+    exerciseData["video_link"] = exerciseSnap.get("video_sample");
+    exerciseData["name"] = exerciseSnap.get("exercise_name");
+
+    print(exerciseData);
+    return exerciseData;
+  }
+
+  Future<void> removeExercise(String uid) async{
+   return await exerciseTestCollection.doc(uid).delete();
+  }
+
+  Future<void> updateExerciseData(Map exerciseData, String uid) async{
+    print(exerciseData);
+    print(uid);
+    print(exerciseTestCollection.doc(uid));
+    return await exerciseTestCollection.doc(uid).update({'exercise_description' : exerciseData["description"], 'exercise_name' : exerciseData["name"], 'video_sample' : exerciseData["video_link"]});
+
+  }
   Future<List<Map<String, dynamic>>> getExerciseReferences(
       List<String> selectedWorkouts) async {
 
@@ -335,6 +370,7 @@ class DatabaseService {
     });
   }
 
+
   Future<bool> checkAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     if (snapshot.exists && snapshot.data() != null) {
@@ -402,6 +438,24 @@ class DatabaseService {
     return null;
   }
 
+  Future<bool> checkAppointment(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          DateTime startTime =
+          (appointments[i]["startTime"] as Timestamp).toDate();
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
     var queryDocs = snapshot.docs;
@@ -409,9 +463,13 @@ class DatabaseService {
       var userAppointments = queryDocs.elementAt(i).get("appointments");
       if (userAppointments != null) {
         for (int j = 0; j < userAppointments.length; j++) {
-          if (userAppointments[j]["date"] != null &&
-              userAppointments[j]["date"].contains(date)) {
-            return true;
+          if (userAppointments[j]["startTime"] != null) {
+            DateTime startTime =
+            (userAppointments[j]["startTime"] as Timestamp).toDate();
+            String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+            if (storedDate == date) {
+              return true;
+            }
           }
         }
       }
@@ -427,19 +485,22 @@ class DatabaseService {
       var userAppointments = queryDocs.elementAt(i).get("appointments");
       if (userAppointments != null) {
         for (int j = 0; j < userAppointments.length; j++) {
-          if (userAppointments[j]["date"] != null &&
-              userAppointments[j]["date"].contains(date)) {
-            print(queryDocs.elementAt(i).get("name") +
-                " at " +
-                userAppointments[j]["time"]);
-            dayAppointments += (queryDocs.elementAt(i).get("name") +
-                " at:\n " +
-                userAppointments[j]["time"] +
-                "\n\n");
+          if (userAppointments[j]["startTime"] != null) {
+            DateTime startTime =
+            (userAppointments[j]["startTime"] as Timestamp).toDate();
+            String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+            if (storedDate == date) {
+              dayAppointments += (queryDocs.elementAt(i).get("name") +
+                  " at:\n " +
+                  DateFormat('MM-dd-yy h:mm a').format(startTime) +
+                  "\n\n");
+            }
+          }
+
           }
         }
       }
-    }
+
     if (dayAppointments.trim().isEmpty) {
       dayAppointments = "No Appointments on:\n" + date;
     }
@@ -696,7 +757,8 @@ class DatabaseService {
             "sets": workoutExercises[j]["sets"],
             "weight": workoutExercises[j]["weight"],
             "name": exerciseSnap["exercise_name"],
-            "description": exerciseSnap["exercise_description"]
+            "description": exerciseSnap["exercise_description"],
+            "video_sample" : exerciseSnap["video_sample"]
           });
 
         }
@@ -727,7 +789,7 @@ class DatabaseService {
         await allWorkouts.doc(userWorkouts[i]["uid"]).get();
         var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
-        print(workoutExercises.toString());
+        print("Workout Exercises: " + workoutExercises.toString());
         globals.testWorkouts[workoutName] = [];
         for (int j = 0; j < workoutExercises.length; j++) {
           DocumentSnapshot exerciseSnap =
@@ -738,7 +800,8 @@ class DatabaseService {
             "sets": workoutExercises[j]["sets"],
             "weight": workoutExercises[j]["weight"],
             "name": exerciseSnap["exercise_name"],
-            "description": exerciseSnap["exercise_description"]
+            "description": exerciseSnap["exercise_description"],
+            "video_sample" : exerciseSnap["video_sample"]
           });
         }
         globals.userWorkouts.add(workoutName);
@@ -790,7 +853,6 @@ class DatabaseService {
   Future<List> fetchWorkoutExercises(uid) async{
     DocumentSnapshot snapshot = await workoutCollection.doc(uid).get();
     List<dynamic> fetchedExercises = await snapshot["exercises"];
-    print(fetchedExercises.length);
     for(int i = 0; i < fetchedExercises.length; i++){
       print("uid: " + fetchedExercises[i]["uid"].toString().split("/")[1]);
       DocumentSnapshot exerciseSnap = await exerciseTestCollection.doc(fetchedExercises[i]["uid"].toString().split("/")[1].split(")")[0]).get();
@@ -798,15 +860,41 @@ class DatabaseService {
       fetchedExercises[i]["uid"] = exerciseSnap.id;
 
     }
-    print(fetchedExercises);
     return fetchedExercises;
   }
 
   Future<void> assignWorkout() async{
+    DocumentSnapshot workoutSnap = await usersCollection.doc(globals.selectedClient).get();
+    List workoutList = workoutSnap.get("workouts");
+
+    for(var currWorkout in workoutList){
+      if(currWorkout["uid"] == globals.selectedWorkout){
+        return;
+      }
+    }
+
+    
     return await usersCollection.doc(globals.selectedClient).update({
       "workouts": FieldValue.arrayUnion([
         {"exercises" : globals.builtWorkout, "uid": globals.selectedWorkout}
       ])
+    });
+  }
+
+  Future<void> removeWorkout() async{
+    Map workoutHold = {"exercises" : [], "uid" : globals.selectedWorkout};
+    for (var exercise in globals.testWorkouts[globals.selectedWorkout]){
+      workoutHold["exercises"].add({
+        "reps" : exercise["reps"],
+        "sets" : exercise["sets"],
+        "weight" : exercise["weight"],
+        "uid" : exercise["uid"]
+      });
+    }
+    return await usersCollection.doc(globals.selectedClient).update({
+      "workouts": FieldValue.arrayRemove([
+        workoutHold]
+      )
     });
   }
 
