@@ -109,8 +109,16 @@ class WorkoutSection extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 230.0,
-      decoration: const BoxDecoration(),
+      height: 300.0,
+      decoration: BoxDecoration(
+        color: Colors.black38,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: Border.all(
+          color: Colors.black12,
+          width: 3.0,
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -130,6 +138,7 @@ class WorkoutSection extends StatelessWidget{
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         15.0, 0.0, 0.0, 0.0),
                     child: Text(
+
                       title,
                       style: FlutterFlowTheme.of(context)
                           .headlineMedium
@@ -145,13 +154,14 @@ class WorkoutSection extends StatelessWidget{
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Container(
-                    width: 40.0,
+                    width: 65.0,
                     height: 90.0,
                     decoration: BoxDecoration(
+
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: const Color(0xFF86BD92),
-                        width: 2.0,
+                        width: 3.0,
                       ),
                     ),
                     child: Align(
@@ -176,13 +186,16 @@ class WorkoutSection extends StatelessWidget{
           ),
           Container(
             width: double.infinity,
-            height: 144.0,
+            height: 200.0,
             decoration: const BoxDecoration(),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
                   alignment: const AlignmentDirectional(-1.0, 0.0),
+                  child: Container(
+                  width: double.infinity,
+                  height: 80,
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         15.0, 0.0, 0.0, 15.0),
@@ -198,6 +211,7 @@ class WorkoutSection extends StatelessWidget{
                       ),
                     ),
                   ),
+                  )
                 ),
                 Container(
                   width: double.infinity,

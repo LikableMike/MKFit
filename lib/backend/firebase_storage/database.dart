@@ -141,12 +141,10 @@ class DatabaseService {
     }
   }
 
-  Future createExercise(String name, int numSets, int numReps,
+  Future createExercise(String name,
       String description, String link) async {
     await exerciseCollection.doc(name).set({
       "name": name,
-      "numSets": numSets,
-      "numReps": numReps,
       "description": description,
       "videoLink": link
     });
