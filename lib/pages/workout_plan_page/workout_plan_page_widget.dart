@@ -147,31 +147,32 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryText,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 70.0,
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-              size: 40.0,
-            ),
-            onPressed: () async {
-              context.pop();
-            },
-          ),
           title: Text(
             'Your Workout Plan',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Outfit',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 30.0,
-                  letterSpacing: 0.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              fontFamily: 'Outfit',
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              fontSize: 30.0,
+              letterSpacing: 0.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          actions: const [],
+          actions: [
+            FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30.0,
+              borderWidth: 1.0,
+              buttonSize: 70.0,
+              icon: const Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 40.0,
+              ),
+              onPressed: () async {
+                context.pushNamed('SettingsPage');
+              },
+            ),
+          ],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -194,7 +195,7 @@ class _WorkoutPlanPageWidgetState extends State<WorkoutPlanPageWidget>
                       ),
                 ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation']!),
               ),
-              BuildWorkouts(Workouts: globals.userWorkouts, animationMap: animationsMap)
+              Expanded(child: BuildWorkouts(Workouts: globals.userWorkouts, animationMap: animationsMap))
             ],
           ),
         ),
@@ -222,7 +223,7 @@ class WorkoutWidget extends StatelessWidget {
        width: 100.0,
        height: 150.0,
        decoration: BoxDecoration(
-         color: const Color(0xFF00831B),
+         color: const Color(0xFF86BD92),
          boxShadow: const [
            BoxShadow(
              blurRadius: 3.0,
@@ -235,7 +236,7 @@ class WorkoutWidget extends StatelessWidget {
          ],
          borderRadius: BorderRadius.circular(16.0),
          border: Border.all(
-           color: const Color(0xFF00831B),
+           color: const Color(0xFF86BD92),
            width: 2.0,
          ),
        ),
@@ -279,35 +280,7 @@ class WorkoutWidget extends StatelessWidget {
                        fontWeight: FontWeight.w500,
                      ),
                    ),
-                   RichText(
-                     textScaler:
-                     MediaQuery.of(context).textScaler,
-                     text: TextSpan(
-                       children: const [
-                         TextSpan(
-                           text: '8 Mins',
-                           style: TextStyle(),
-                         ),
-                         TextSpan(
-                           text: ' || ',
-                           style: TextStyle(),
-                         ),
-                         TextSpan(
-                           text: '3 workouts',
-                           style: TextStyle(),
-                         )
-                       ],
-                       style: FlutterFlowTheme.of(context)
-                           .labelMedium
-                           .override(
-                         fontFamily: 'Outfit',
-                         color: const Color(0xFF606A85),
-                         fontSize: 14.0,
-                         letterSpacing: 0.0,
-                         fontWeight: FontWeight.w500,
-                       ),
-                     ),
-                   ),
+
                  ].divide(const SizedBox(height: 4.0)),
                ),
              ),

@@ -119,8 +119,9 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                 color: FlutterFlowTheme.of(context).alternate,
                 size: 40,
               ),
-              onPressed: () async {
-                context.safePop();
+              onPressed: () {
+                // Just navigate back without saving changes
+                Navigator.of(context).pop();
               },
             ),
           ),
@@ -258,7 +259,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 ),
                                 filled: true,
                                 fillColor:
-                                FlutterFlowTheme.of(context).primaryText,
+                                Colors.black, // Set background to black
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -336,7 +337,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 ),
                                 filled: true,
                                 fillColor:
-                                FlutterFlowTheme.of(context).primaryText,
+                                Colors.black, // Set background to black
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -415,7 +416,7 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                                 ),
                                 filled: true,
                                 fillColor:
-                                FlutterFlowTheme.of(context).primaryText,
+                                Colors.black, // Set background to black
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -444,6 +445,22 @@ class _WeightSettingWidgetState extends State<WeightSettingWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    // Get the input values from the text fields
+                    final updatedWeight = _model.textController2.text;
+                    final updatedHeight = _model.textController3.text;
+
+                    // Call the DatabaseService to update the user's weight and height
+                    final dbService = DatabaseService();
+                    await dbService.updateUserWeightAndHeight(updatedWeight, updatedHeight);
+
+                    // Show a confirmation message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Changes saved successfully!'),
+                      ),
+                    );
+
+                    // Optionally, navigate back to the home page or another page
                     context.pushNamed(
                       'home2',
                       extra: <String, dynamic>{

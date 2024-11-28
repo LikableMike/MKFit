@@ -3,26 +3,20 @@ import 'change_address_widget.dart' show ChangeAddressWidget;
 import 'package:flutter/material.dart';
 
 class ChangeAddressModel extends FlutterFlowModel<ChangeAddressWidget> {
-  ///  State fields for stateful widgets in this page.
-
-  // State field(s) for PhoneNumber widget.
-  FocusNode? phoneNumberFocusNode1;
-  TextEditingController? phoneNumberTextController1;
-  String? Function(BuildContext, String?)? phoneNumberTextController1Validator;
-  // State field(s) for PhoneNumber widget.
-  FocusNode? phoneNumberFocusNode2;
-  TextEditingController? phoneNumberTextController2;
-  String? Function(BuildContext, String?)? phoneNumberTextController2Validator;
+  // State field(s) for email input.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    emailTextController = TextEditingController(); // Initialize email text controller
+    emailFocusNode = FocusNode(); // Initialize email focus node
+  }
 
   @override
   void dispose() {
-    phoneNumberFocusNode1?.dispose();
-    phoneNumberTextController1?.dispose();
-
-    phoneNumberFocusNode2?.dispose();
-    phoneNumberTextController2?.dispose();
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
   }
 }

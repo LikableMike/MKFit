@@ -16,6 +16,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../backend/firebase_storage/database.dart';
 
 import 'confirm_new_username_model.dart';
 export 'confirm_new_username_model.dart';
@@ -38,11 +39,9 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
     super.initState();
     _model = createModel(context, () => ConfirmNewUsernameModel());
 
-    _model.emailAddressTextController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
+    _model.usernameTextController ??= TextEditingController();
+    _model.usernameFocusNode ??= FocusNode();
 
-    _model.phoneNumberTextController ??= TextEditingController();
-    _model.phoneNumberFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -175,22 +174,25 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                 child: Container(
                   width: double.infinity,
                   child: TextFormField(
-                    controller: _model.emailAddressTextController,
-                    focusNode: _model.emailAddressFocusNode,
-                    autofillHints: [AutofillHints.email],
-                    obscureText: false,
+                    controller: _model.usernameTextController,
+                    focusNode: _model.usernameFocusNode,
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Inter',
+                      color: Colors.white, // Change text color to white
+                      letterSpacing: 0.0,
+                    ),
                     decoration: InputDecoration(
                       labelText: 'New Username',
-                      labelStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
+                      labelStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,
+                        color: Colors.white, // Change label color to white
                       ),
-                      hintText: 'Enter New UserName',
-                      hintStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
+                      hintText: 'Enter New Username',
+                      hintStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,
+                        color: Colors.white54, // Change hint color to a lighter white shade
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -222,87 +224,8 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                       ),
                       filled: true,
                       fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                      contentPadding: EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Inter',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      letterSpacing: 0.0,
-                    ),
-                    maxLines: null,
-                    keyboardType: TextInputType.emailAddress,
-                    cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.emailAddressTextControllerValidator
-                        .asValidator(context),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                child: Container(
-                  width: double.infinity,
-                  child: TextFormField(
-                    controller: _model.phoneNumberTextController,
-                    focusNode: _model.phoneNumberFocusNode,
-                    autofillHints: [AutofillHints.email],
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Confirm Username',
-                      labelStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                      hintText: 'Confirm New Username',
-                      hintStyle:
-                      FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primary,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryText,
-                      contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Inter',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      letterSpacing: 0.0,
-                    ),
-                    maxLines: null,
-                    keyboardType: TextInputType.emailAddress,
-                    cursorColor: FlutterFlowTheme.of(context).primary,
-                    validator: _model.phoneNumberTextControllerValidator
-                        .asValidator(context),
                   ),
                 ),
               ),
@@ -312,22 +235,32 @@ class _ConfirmNewUsernameWidgetState extends State<ConfirmNewUsernameWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (_model.emailAddressTextController.text.isEmpty) {
+                      final newUsername = _model.usernameTextController.text.trim();
+
+                      if (newUsername.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(
-                              'Email required!',
-                            ),
+                            content: Text('Username is required!'),
                           ),
                         );
                         return;
                       }
-                      await authManager.resetPassword(
-                        email: _model.emailAddressTextController.text,
-                        context: context,
+
+                      // Update username in Firebase
+                      final dbService = DatabaseService();
+                      await dbService.updateUsername(newUsername);
+
+                      // Show a success message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Username updated successfully!'),
+                        ),
                       );
+
+                      // Navigate back to the previous page
+                      context.pop();
                     },
-                    text: 'Reset',
+                    text: 'Save Username',
                     options: FFButtonOptions(
                       width: double.infinity,
                       height: 50,

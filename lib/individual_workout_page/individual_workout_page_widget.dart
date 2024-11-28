@@ -8,6 +8,8 @@ import 'individual_workout_page_model.dart';
 export 'individual_workout_page_model.dart';
 import 'package:m_k_fit/backend/firebase_storage/database.dart';
 import "/backend/firebase_storage/globals.dart" as globals;
+import 'package:url_launcher/url_launcher.dart';
+
 
 class IndividualWorkoutPageWidget extends StatefulWidget {
   const IndividualWorkoutPageWidget({super.key});
@@ -93,39 +95,50 @@ class WorkoutSection extends StatelessWidget{
     this.description = "Placeholder Description",
     this.sets = 2,
     this.reps = 4,
+    this.url = "",
 });
 
   final String title;
-  final int weight;
+  final double weight;
   final String description;
   final int sets;
   final int reps;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 230.0,
-      decoration: const BoxDecoration(),
+      height: 300.0,
+      decoration: BoxDecoration(
+        color: Colors.black38,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: Border.all(
+          color: Colors.black12,
+          width: 3.0,
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
 
             width: double.infinity,
-            height: 60.0,
+            height: 80.0,
             decoration: const BoxDecoration(),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   width: 300.0,
-                  height: 50.0,
+                  height: 105.0,
                   decoration: const BoxDecoration(),
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         15.0, 0.0, 0.0, 0.0),
                     child: Text(
+
                       title,
                       style: FlutterFlowTheme.of(context)
                           .headlineMedium
@@ -141,13 +154,14 @@ class WorkoutSection extends StatelessWidget{
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Container(
-                    width: 40.0,
-                    height: 40.0,
+                    width: 65.0,
+                    height: 90.0,
                     decoration: BoxDecoration(
+
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xFF97B690),
-                        width: 2.0,
+                        color: const Color(0xFF86BD92),
+                        width: 3.0,
                       ),
                     ),
                     child: Align(
@@ -172,13 +186,16 @@ class WorkoutSection extends StatelessWidget{
           ),
           Container(
             width: double.infinity,
-            height: 144.0,
+            height: 200.0,
             decoration: const BoxDecoration(),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
                   alignment: const AlignmentDirectional(-1.0, 0.0),
+                  child: Container(
+                  width: double.infinity,
+                  height: 80,
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         15.0, 0.0, 0.0, 15.0),
@@ -194,6 +211,7 @@ class WorkoutSection extends StatelessWidget{
                       ),
                     ),
                   ),
+                  )
                 ),
                 Container(
                   width: double.infinity,
@@ -285,28 +303,15 @@ class WorkoutSection extends StatelessWidget{
                               buttonSize: 44.0,
                               icon: const Icon(
                                 Icons.ondemand_video_outlined,
-                                color: Color(0xFF97B690),
+                                color: Color(0xFF86BD92),
                                 size: 35.0,
                               ),
                               onPressed: () async {
-                                print("here");
-                                final databaseService =
-                                DatabaseService();
-                                String? videoUrl =
-                                await databaseService
-                                    .getExerciseVideo(
-                                    "assisted_pull_up");
-                                if (videoUrl == null) {
-                                  print(
-                                      "Cannot get video: exercise does not exist");
-                                  videoUrl = "none";
+                                print(url);
+                                final Uri URL = Uri.parse(url);
+                                if (!await launchUrl(URL)) {
+                                  throw Exception('Could not launch $URL');
                                 }
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(
-                                  SnackBar(
-                                    content: Text(videoUrl),
-                                  ),
-                                );
                               },
                             ),
                             Text(
@@ -339,7 +344,7 @@ class WorkoutSection extends StatelessWidget{
                               buttonSize: 44.0,
                               icon: const Icon(
                                 Icons.assignment_rounded,
-                                color: Color(0xFF97B690),
+                                color: Color(0xFF86BD92),
                                 size: 35.0,
                               ),
                               onPressed: () {
@@ -444,7 +449,7 @@ class BuildWorkouts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: List.generate(Workouts.length, (index) {
-        return WorkoutSection(title: Workouts[index]["name"], weight: Workouts[index]["weight"], description: Workouts[index]["description"], sets: Workouts[index]["sets"], reps: Workouts[index]["reps"]);
+        return WorkoutSection(title: Workouts[index]["name"], weight: Workouts[index]["weight"], description: Workouts[index]["description"], sets: Workouts[index]["sets"], reps: Workouts[index]["reps"], url: Workouts[index]["video_sample"],);
       }),
     );
   }

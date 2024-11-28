@@ -73,19 +73,23 @@ class _AdminCalendarWidgetState extends State<AdminCalendarWidget>
             ),
           ),
           actions: [
-            FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 70.0,
-              icon: const Icon(
-                Icons.person,
-                color: Colors.white,
-                size: 40.0,
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
+              child: FlutterFlowIconButton(
+                borderColor: const Color(0xFFE5E7EB),
+                borderRadius: 12.0,
+                borderWidth: 1.0,
+                buttonSize: 40.0,
+                fillColor: Colors.white,
+                icon: const Icon(
+                  Icons.close_rounded,
+                  color: Color(0xFF15161E),
+                  size: 24.0,
+                ),
+                onPressed: () async {
+                  context.safePop();
+                },
               ),
-              onPressed: () async {
-                context.pushNamed('SettingsPage');
-              },
             ),
           ],
           centerTitle: false,
@@ -231,7 +235,7 @@ class _AdminCalendarWidgetState extends State<AdminCalendarWidget>
                                         padding: const EdgeInsets.all(16.0),
                                       child: FutureBuilder<bool>(
 
-                                        future: DatabaseService().checkAdminAppointments(_selectedDateRange?.start.toString() ?? "null"),
+                                        future: DatabaseService().checkAdminAppointments(_selectedDateRange?.start.toString().split(" ")[0] ?? "null"),
                                         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                                           if (snapshot.connectionState == ConnectionState.waiting) {
                                             // While the future is still loading, show a loading indicator
@@ -260,7 +264,7 @@ class _AdminCalendarWidgetState extends State<AdminCalendarWidget>
                                                     return Text(snapshot.error.toString() ?? "Error");
                                                   } else if (snapshot.hasData) {
                                                     // Once the data is available, display it
-                                                    return Text(snapshot.data ?? "No Appointments Found", style: TextStyle(color: Color(0xFF486E00), fontWeight: FontWeight.bold, fontSize: 20));
+                                                    return Text(snapshot.data ?? "No Appointments Found", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20));
                                                   } else {
                                                     // Handle any other case (unlikely but good to cover it)
                                                     return const Text('No data available');

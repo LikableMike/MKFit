@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -42,6 +44,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   @override
   void initState() {
     super.initState();
+    fetchUnavailableTimes();
     dbService = DatabaseService();
     _model = createModel(context, () => MakeAppointmentModel());
 
@@ -52,6 +55,47 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
     );
 
   }
+  Set<DateTime> _unavailableTimes = {};
+
+  Map<DateTime, Set<TimeOfDay>> _unavailableTimesByDate = {};
+
+
+  Future<void> fetchUnavailableTimes() async {
+    try {
+      QuerySnapshot allUsersSnapshot = await FirebaseFirestore.instance.collection('users').get();
+
+      Map<DateTime, Set<TimeOfDay>> groupedTimes = {};
+
+      for (var userDoc in allUsersSnapshot.docs) {
+        List<dynamic> appointments = userDoc['appointments'] ?? [];
+        for (var appointment in appointments) {
+          if (appointment is Map<String, dynamic>) {
+            DateTime appointmentDate = (appointment['startTime'] as Timestamp).toDate();
+            DateTime dateOnly = DateTime(appointmentDate.year, appointmentDate.month, appointmentDate.day);
+            TimeOfDay timeOnly = TimeOfDay(hour: appointmentDate.hour, minute: appointmentDate.minute);
+
+            if (!groupedTimes.containsKey(dateOnly)) {
+              groupedTimes[dateOnly] = {};
+            }
+            groupedTimes[dateOnly]!.add(timeOnly);
+          }
+        }
+      }
+
+      setState(() {
+        _unavailableTimesByDate = groupedTimes;
+      });
+    } catch (e) {
+      print("Error fetching unavailable times: $e");
+    }
+  }
+
+
+
+
+
+
+
 
   @override
   void dispose() {
@@ -97,7 +141,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   Future<void> attemptToBookAppointment(DateTime startTime, DateTime endTime) async {
     try {
       // Check for appointment availability
-      bool isAvailable = await dbService.isAppointmentAvailable(startTime);
+      bool isAvailable = await dbService.isAppointmentAvailable(startTime, endTime);
 
       if (isAvailable) {
         // If available, proceed with adding the appointment
@@ -118,9 +162,10 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
-  final List<String> _availableTimes = getAvailableTimes(context);
+    final List<String> _availableTimes = getAvailableTimes(context);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -167,47 +212,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                 padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
                 child: Column(
                   children: [
-                    Align(
-                      alignment: const Alignment(0.0, 0),
-                      child: FlutterFlowButtonTabBar(
-                        useToggleButtonStyle: true,
-                        isScrollable: true,
-                        labelStyle:
-                        FlutterFlowTheme.of(context).titleMedium.override(
-                          fontFamily: 'Plus Jakarta Sans',
-                          color: Colors.white,
-                          fontSize: 18.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        unselectedLabelStyle: const TextStyle(),
-                        labelColor: const Color(0xFF14181B),
-                        unselectedLabelColor:
-                        FlutterFlowTheme.of(context).primaryText,
-                        backgroundColor: Colors.white,
-                        unselectedBackgroundColor: const Color(0xFFE0E3E7),
-                        borderColor: const Color(0xFFE0E3E7),
-                        borderWidth: 2.0,
-                        borderRadius: 12.0,
-                        elevation: 0.0,
-                        labelPadding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 0.0),
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 12.0, 0.0, 12.0),
-                        tabs: const [
-                          Tab(
-                            text: 'Month',
-                          ),
-                          Tab(
-                            text: 'Week',
-                          ),
-                        ],
-                        controller: _model.tabBarController,
-                        onTap: (i) async {
-                          [() async {}, () async {}][i]();
-                        },
-                      ),
-                    ),
+
                     Expanded(
                       child: TabBarView(
                         controller: _model.tabBarController,
@@ -216,7 +221,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                             width: 100.0,
                             height: 100.0,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF103E0C),
+                              color: const Color(0xFf1c502d),
                               borderRadius: BorderRadius.circular(12.0),
                             ),
                             child: SingleChildScrollView(
@@ -241,8 +246,8 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       borderRadius: BorderRadius.circular(12.0),
                                     ),
                                     child: FlutterFlowCalendar(
-                                      color: const Color(0xFF40DC28),
-                                      iconColor: const Color(0xFF57636C),
+                                      color: const Color(0xFF86BD92),
+                                      iconColor: const Color(0xFF86BD92),
                                       weekFormat: false,
                                       weekStartsMonday: true,
                                       onChange:
@@ -328,65 +333,115 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          children: [
-                                            // Print statements to debug time format
-                                            Text(
-                                              'Appointment Ends One Hour After Start Time',
-                                              style: TextStyle(color: Colors.white),
-                                            ),
-                                            Text(
-                                              'Select Start Time:',
-                                              style: TextStyle(color: Colors.white),
-                                            ),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 3.0,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0.0, 1.0),
+                                              )
+                                            ],
+                                            borderRadius: BorderRadius.circular(8.0),
+                                          ),
+                                          child:
+                                          Padding(padding: const EdgeInsets.all(8.0),
+                                            child:
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                // Print statements to debug time format
 
-                                            // Your DropdownButton
-                                            DropdownButton<String>(
-                                              value: _selectedTime != null ? _selectedTime!.format(context) : null,
-                                              hint: Text(
-                                                _selectedTime == null ? 'Select time' : 'Time Selected: ${_selectedTime!.format(context)}',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
+                                                Text(
+                                                  'Select Start Time: ',
+                                                  style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                    fontFamily: 'Outfit',
+                                                    color: const Color(0xFF14181B),
+                                                    fontSize: 20.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
                                                 ),
-                                              ),
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.0,
-                                              ),
-                                              items: _availableTimes.map((String time) {
-                                                return DropdownMenuItem<String>(
-                                                  value: time,
-                                                  child: Text(
-                                                    time,
+
+                                                DropdownButton<String>(
+                                                  value: _selectedTime != null ? _selectedTime!.format(context) : null,
+                                                  hint: Text(
+                                                    _selectedTime == null ? 'Select time' : 'Time Selected: ${_selectedTime!.format(context)}',
                                                     style: TextStyle(
-                                                      color: Colors.blue,
+                                                      color: Colors.black,
+                                                      fontSize: 16.0,
                                                     ),
                                                   ),
-                                                );
-                                              }).toList(),
-                                              onChanged: (String? newValue) {
-                                                if (newValue != null) {
-                                                  // Parse the new value back into a TimeOfDay object
-                                                  final timeParts = newValue.split(" ");
-                                                  final period = timeParts[1];
-                                                  final hourMinute = timeParts[0].split(":");
-                                                  int hour = int.parse(hourMinute[0]);
-                                                  int minute = int.parse(hourMinute[1]);
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16.0,
+                                                  ),
+                                                  items: _availableTimes.map((String time) {
+                                                    // Parse the time from the dropdown item
+                                                    final timeParts = time.split(" ");
+                                                    final period = timeParts[1];
+                                                    final hourMinute = timeParts[0].split(":");
+                                                    int hour = int.parse(hourMinute[0]);
+                                                    int minute = int.parse(hourMinute[1]);
 
-                                                  if (period == "PM" && hour != 12) {
-                                                    hour += 12;
-                                                  } else if (period == "AM" && hour == 12) {
-                                                    hour = 0;
-                                                  }
+                                                    if (period == "PM" && hour != 12) {
+                                                      hour += 12;
+                                                    } else if (period == "AM" && hour == 12) {
+                                                      hour = 0;
+                                                    }
 
-                                                  setState(() {
-                                                    _selectedTime = TimeOfDay(hour: hour, minute: minute);
-                                                  });
-                                                }
-                                              },
+                                                    TimeOfDay timeOnly = TimeOfDay(hour: hour, minute: minute);
+
+                                                    // Check if the time slot is unavailable for the selected date
+                                                    bool isUnavailable = false;
+                                                    if (_selectedDateRange != null && _unavailableTimesByDate.containsKey(_selectedDateRange!.start)) {
+                                                      Set<TimeOfDay>? unavailableTimes = _unavailableTimesByDate[_selectedDateRange!.start];
+                                                      if (unavailableTimes != null) {
+                                                        isUnavailable = unavailableTimes.contains(timeOnly);
+                                                      }
+                                                    }
+
+                                                    return DropdownMenuItem<String>(
+                                                      value: time,
+                                                      child: Text(
+                                                        time,
+                                                        style: TextStyle(
+                                                          color: isUnavailable ? Colors.red : Colors.black,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (String? newValue) {
+                                                    if (newValue != null) {
+                                                      // Parse the selected value back into a TimeOfDay object
+                                                      final timeParts = newValue.split(" ");
+                                                      final period = timeParts[1];
+                                                      final hourMinute = timeParts[0].split(":");
+                                                      int hour = int.parse(hourMinute[0]);
+                                                      int minute = int.parse(hourMinute[1]);
+
+                                                      if (period == "PM" && hour != 12) {
+                                                        hour += 12;
+                                                      } else if (period == "AM" && hour == 12) {
+                                                        hour = 0;
+                                                      }
+
+                                                      setState(() {
+                                                        _selectedTime = TimeOfDay(hour: hour, minute: minute);
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+
+
+
+
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -409,63 +464,154 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                             // Define an end time, e.g., for a 1-hour appointment
                                             DateTime endTime = startTime.add(Duration(hours: 1));
 
-                                            try {
-                                              // Check for availability and schedule if available
-                                              bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime);
-
-                                              if (isAvailable) {
-                                                print('Appointment scheduled for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}');
-
-                                                // Add appointment to the database with both date and time
-                                                String resultMessage = await DatabaseService().addAppointment(startTime, endTime);
-                                                print(resultMessage);
-
-                                                // Show dialog for recurring option
-                                                bool? shouldSetRecurring = await showDialog<bool>(
-                                                  context: context,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text('Set Recurring Meeting'),
-                                                      content: Text('Would you like to set this meeting to recurring?'),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop(true); // Return 'true' for "Yes"
-                                                          },
-                                                          child: Text('Yes'),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(context).pop(false); // Return 'false' for "No"
-                                                          },
-                                                          child: Text('No'),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
+                                            // Ask the user if they want to schedule the appointment as a recurring appointment
+                                            bool? shouldSetRecurring = await showDialog<bool>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text('Schedule Recurring Meeting'),
+                                                  content: Text(
+                                                    'Would you like to set this meeting to recur weekly on the selected day and time until a chosen end date?\n\n'
+                                                        'If you select "Yes," you will be prompted to choose an end date. By selecting "No," only the selected date will be scheduled as a single appointment.',
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop(true); // Yes for recurring appointment
+                                                      },
+                                                      child: Text('Yes'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop(false); // No for single appointment
+                                                      },
+                                                      child: Text('No'),
+                                                    ),
+                                                  ],
                                                 );
+                                              },
+                                            );
 
-                                                if (shouldSetRecurring != null && shouldSetRecurring) {
-                                                  DateTimeRange? recurringDateRange = await showDateRangePicker(
-                                                    context: context,
-                                                    firstDate: DateTime.now(),
-                                                    lastDate: DateTime(2100),
-                                                    initialDateRange: _selectedDateRange,
+                                            // Handle Single Appointment
+                                            if (shouldSetRecurring == false) {
+                                              try {
+                                                // Check for availability and schedule if available
+                                                bool isAvailable = await DatabaseService().isAppointmentAvailable(startTime, endTime);
+                                                if (isAvailable) {
+                                                  await DatabaseService().addAppointment(startTime, endTime);
+
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('MM-dd-yyyy').format(startTime)} at ${_selectedTime!.format(context)}')),
                                                   );
 
-                                                  if (recurringDateRange != null) {
-                                                    List<DateTime> recurringDates = generateRecurringDates(
-                                                      _selectedDateRange!.start,
-                                                      recurringDateRange.end,
-                                                    );
+                                                  // Refresh the unavailable times
+                                                  await fetchUnavailableTimes();
+                                                } else {
+                                                  // Notify user if the selected time slot is unavailable
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(content: Text('This time slot is already taken. Please choose another.')),
+                                                  );
+                                                }
+                                              } catch (e) {
+                                                print("Error scheduling single appointment: $e");
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(content: Text('An error occurred while scheduling the appointment. Please try again.')),
+                                                );
+                                              }
+                                            }
 
-                                                    for (DateTime date in recurringDates) {
+                                            // Handle Recurring Appointments
+                                            if (shouldSetRecurring == true) {
+                                              // Ask the user to select an end date for the recurring meetings
+                                              DateTime? endDate = await showDatePicker(
+                                                context: context,
+                                                firstDate: _selectedDateRange!.start,
+                                                lastDate: DateTime(2100),
+                                                initialDate: _selectedDateRange!.start,
+                                                helpText: "Select an end date for the recurring appointments",
+                                                selectableDayPredicate: (DateTime date) {
+                                                  return date.weekday == _selectedDateRange!.start.weekday;
+                                                },
+                                              );
+
+                                              if (endDate != null) {
+                                                List<DateTime> recurringDates = generateRecurringDates(
+                                                  _selectedDateRange!.start,
+                                                  endDate,
+                                                );
+
+                                                // List to track conflicts and available dates
+                                                List<DateTime> conflictingDates = [];
+                                                List<DateTime> availableDates = [];
+
+                                                // Check availability for each recurring date
+                                                for (DateTime date in recurringDates) {
+                                                  DateTime recurringStartTime = DateTime(
+                                                    date.year,
+                                                    date.month,
+                                                    date.day,
+                                                    _selectedTime!.hour,
+                                                    _selectedTime!.minute,
+                                                  );
+                                                  DateTime recurringEndTime = recurringStartTime.add(Duration(hours: 1));
+
+                                                  // Check if the time is available
+                                                  bool isAvailable = await DatabaseService().isAppointmentAvailable(recurringStartTime, recurringEndTime);
+                                                  if (isAvailable) {
+                                                    availableDates.add(date);
+                                                  } else {
+                                                    conflictingDates.add(date);
+                                                  }
+                                                }
+
+                                                // Create strings for conflicting and available dates
+                                                String conflictingDatesString = conflictingDates.map((date) {
+                                                  return DateFormat('MMMM dd, yyyy').format(date);
+                                                }).join(', ');
+
+                                                String availableDatesString = availableDates.map((date) {
+                                                  return DateFormat('MMMM dd, yyyy').format(date);
+                                                }).join(', ');
+
+                                                // If there are conflicting dates, prompt the user to proceed with available ones
+                                                if (conflictingDates.isNotEmpty) {
+                                                  bool? proceedWithAvailable = await showDialog<bool>(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('Conflicting Appointments'),
+                                                        content: Text(
+                                                          'The following date(s) have conflicting appointments:\n$conflictingDatesString.\n\n'
+                                                              'The available date(s) for scheduling are:\n$availableDatesString.\n\n'
+                                                              'Do you want to proceed with scheduling the available dates?',
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop(false); // Cancel scheduling
+                                                            },
+                                                            child: Text('No'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop(true); // Proceed with scheduling
+                                                            },
+                                                            child: Text('Yes'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+
+                                                  // If user chooses to proceed, schedule only available dates
+                                                  if (proceedWithAvailable == true) {
+                                                    for (DateTime date in availableDates) {
                                                       DateTime recurringStartTime = DateTime(
                                                         date.year,
                                                         date.month,
                                                         date.day,
-                                                        selectedTime.hour,
-                                                        selectedTime.minute,
+                                                        _selectedTime!.hour,
+                                                        _selectedTime!.minute,
                                                       );
                                                       DateTime recurringEndTime = recurringStartTime.add(Duration(hours: 1));
 
@@ -473,24 +619,40 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                                     }
 
                                                     ScaffoldMessenger.of(context).showSnackBar(
-                                                      SnackBar(content: Text('Recurring appointments set from ${DateFormat('yyyy-MM-dd').format(recurringDateRange.start)} to ${DateFormat('yyyy-MM-dd').format(recurringDateRange.end)} at ${_selectedTime!.format(context)}')),
+                                                      SnackBar(content: Text('Recurring appointments set for available dates until ${DateFormat('MM-dd-yyyy').format(endDate)}')),
                                                     );
+
+                                                    // Refresh unavailable times after scheduling recurring appointments
+                                                    await fetchUnavailableTimes();
                                                   }
                                                 } else {
+                                                  // No conflicts, schedule all recurring dates
+                                                  for (DateTime date in recurringDates) {
+                                                    DateTime recurringStartTime = DateTime(
+                                                      date.year,
+                                                      date.month,
+                                                      date.day,
+                                                      _selectedTime!.hour,
+                                                      _selectedTime!.minute,
+                                                    );
+                                                    DateTime recurringEndTime = recurringStartTime.add(Duration(hours: 1));
+
+                                                    await DatabaseService().addAppointment(recurringStartTime, recurringEndTime);
+                                                  }
+
                                                   ScaffoldMessenger.of(context).showSnackBar(
-                                                    SnackBar(content: Text('Appointment confirmed for ${DateFormat('yyyy-MM-dd – kk:mm').format(startTime)}')),
+                                                    SnackBar(content: Text('Recurring appointments set every ${DateFormat('EEEE').format(_selectedDateRange!.start)} at ${_selectedTime!.format(context)} until ${DateFormat('MM-dd-yyyy').format(endDate)}')),
                                                   );
+
+                                                  // Refresh unavailable times after scheduling recurring appointments
+                                                  await fetchUnavailableTimes();
                                                 }
-                                              } else {
-                                                // Notify user if the selected time slot is unavailable
-                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                  SnackBar(content: Text('This time slot is already taken. Please choose another.')),
-                                                );
                                               }
-                                            } catch (e) {
-                                              print(e);
                                             }
                                           },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color(0xFF86BD92),
+                                          ),
                                           child: Text('Confirm Appointment'),
                                         ),
                                       ),
@@ -500,492 +662,234 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
 
 
 
-                          // Cancel Appointment Button
-                          FutureBuilder<bool>(
-                            future: DatabaseService().checkAppointment(_selectedDateRange?.start.toString() ?? "null"),
-                            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (snapshot.hasData && snapshot.data == true) {
-                                return ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red,
-                                  ),
-                                  onPressed: () async {
-                                    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start);
-
-                                    // Show a dialog to confirm if the user wants to cancel all recurring appointments
-                                    bool? shouldCancelRecurring = await showDialog<bool>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Cancel Appointment'),
-                                          content: Text('Would you like to cancel all recurring appointments, or just this one?'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(true); // Yes, cancel all recurring
-                                              },
-                                              child: Text('All Recurring'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(false); // No, just this one
-                                              },
-                                              child: Text('Just This One'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-
-                                    if (shouldCancelRecurring != null && shouldCancelRecurring) {
-                                      // If the user chooses to cancel all recurring, gather all dates
-                                      List<DateTime> recurringDates = generateRecurringDates(
-                                        _selectedDateRange!.start,
-                                        _selectedDateRange!.end, // Adjust as needed
-                                      );
-
-                                      List<String> formattedDates = recurringDates
-                                          .map((date) => DateFormat('yyyy-MM-dd').format(date))
-                                          .toList();
-
-                                      await DatabaseService().cancelAppointment(formattedDates);
-
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text('All recurring appointments have been canceled.')),
-                                      );
-                                    } else {
-                                      // Cancel only the selected appointment
-                                      await DatabaseService().cancelAppointment([formattedDate]);
-
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text('Appointment on $formattedDate at $_selectedTime has been canceled.')),
-                                      );
-                                    }
-
-                                    setState(() {
-                                      _selectedDateRange = null;
-                                      _selectedTime = null;
-                                    });
-                                  },
-                                  child: const Text('Cancel Appointment'),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                          // ElevatedButton(
-                                      //     style: ElevatedButton.styleFrom(
-                                      //       backgroundColor: Colors.red, // Red color for the cancel button
-                                      //     ),
-                                      //     onPressed: () {
-                                      //       setState(() {
-                                      //         // Clear the selected date and time to cancel the appointment
-                                      //         _selectedDateRange = null;
-                                      //         _selectedTime = null;
-                                      //       });
-                                      //       ScaffoldMessenger.of(context).showSnackBar(
-                                      //         const SnackBar(content: Text('Appointment has been canceled.')),
-                                      //       );
-                                      //     },
-                                      //     child: const Text('Cancel Appointment')
-                                      // ),
-
+                                      // Cancel Appointment Button
                                       Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(
+                                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjusted padding to align parallel with Confirm Appointment button
+                                        child: FutureBuilder<bool>(
+                                          future: DatabaseService().checkAppointment(
+                                              DateFormat('yyyy-MM-dd').format(_selectedDateRange?.start ?? DateTime.now())),
+                                          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text('Error: ${snapshot.error}');
+                                            } else if (snapshot.hasData && snapshot.data == true) {
+                                              return FutureBuilder<String?>(
+                                                future: DatabaseService().getAppointmentTime(
+                                                    DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start)),
+                                                builder: (BuildContext context, AsyncSnapshot<String?> timeSnapshot) {
+                                                  if (timeSnapshot.connectionState == ConnectionState.waiting) {
+                                                    return CircularProgressIndicator();
+                                                  } else if (timeSnapshot.hasError) {
+                                                    return Text('Error: ${timeSnapshot.error}');
+                                                  } else {
+                                                    String formattedDate = DateFormat('MM-dd-yyyy').format(_selectedDateRange!.start);
+                                                    String timeString = timeSnapshot.data != null ? ' at ${timeSnapshot.data}' : '';
 
-                                            0.0, 12.0, 0.0, 0.0),
-                                        child: ListView(
-                                          padding: EdgeInsets.zero,
-                                          primary: false,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                  16.0, 0.0, 16.0, 12.0),
-                                              child: Container(
-                                                width: 100.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      blurRadius: 3.0,
-                                                      color: Color(0x33000000),
-                                                      offset: Offset(
-                                                        0.0,
-                                                        1.0,
+                                                    return ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors.red,
                                                       ),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      8.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                    MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        mainAxisSize:
-                                                        MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                4.0,
-                                                                0.0,
-                                                                0.0,
-                                                                0.0),
-                                                            child: Text(
-                                                              _selectedDateRange != null && _selectedTime != null
-                                                                  ? 'Next Session with Makayla: ${_selectedDateRange!.start.toString().split(' ')[0]} at $_selectedTime'
-                                                                  : 'Next Session with Makayla',
-                                                              style: FlutterFlowTheme
-                                                                  .of(context)
-                                                                  .headlineSmall
-                                                                  .override(
-                                                                fontFamily:
-                                                                'Outfit',
-                                                                color: const Color(
-                                                                    0xFF14181B),
-                                                                fontSize:
-                                                                24.0,
-                                                                letterSpacing:
-                                                                0.0,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w500,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0.0,
-                                                                4.0,
-                                                                0.0,
-                                                                0.0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                              MainAxisSize
-                                                                  .max,
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      8.0,
-                                                                      0.0),
-                                                                  child: Card(
-                                                                    clipBehavior:
-                                                                    Clip.antiAliasWithSaveLayer,
-                                                                    color: const Color(
-                                                                        0x4DEE8B60),
-                                                                    elevation:
-                                                                    0.0,
-                                                                    shape:
-                                                                    RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          8.0),
-                                                                    ),
-                                                                    child:
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                          8.0,
-                                                                          4.0,
-                                                                          8.0,
-                                                                          4.0),
-                                                                      child:
-                                                                      Text(
-                                                                        _selectedTime != null ? _selectedTime!.format(context) : 'Select Time',
-                                                                        style: FlutterFlowTheme
-                                                                            .of(
-                                                                            context)
-
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                          fontFamily: 'Plus Jakarta Sans',
-                                                                          color: const Color(
-                                                                              0xFF150903),
-                                                                          fontSize: 14.0,
-                                                                          letterSpacing: 0.0,
-                                                                          fontWeight: FontWeight.normal,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
+                                                      onPressed: () async {
+                                                        // Show a dialog to confirm if the user wants to cancel the appointment
+                                                        bool? shouldCancelAppointment = await showDialog<bool>(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialog(
+                                                              title: Text('Cancel Appointment'),
+                                                              content: Text('Do you wish to cancel your appointment on $formattedDate$timeString?'),
+                                                              actions: <Widget>[
+                                                                TextButton(
+                                                                  onPressed: () {
+                                                                    Navigator.of(context).pop(true); // Yes, cancel the appointment
+                                                                  },
+                                                                  child: Text('Yes'),
                                                                 ),
-                                                                Text(
-                                                                  _selectedDateRange != null
-                                                                      ? _selectedDateRange!.start.toString().split(' ')[0]
-                                                                      : '', // Leave blank if no date is selected
-                                                                  style: FlutterFlowTheme
-                                                                      .of(
-                                                                      context)
-
-                                                                      .bodySmall
-                                                                      .override(
-                                                                    fontFamily:
-                                                                    'Plus Jakarta Sans',
-                                                                    color: const Color(
-                                                                        0xFF14181B),
-                                                                    fontSize:
-                                                                    12.0,
-                                                                    letterSpacing:
-                                                                    0.0,
-                                                                    fontWeight:
-                                                                    FontWeight.normal,
-                                                                  ),
+                                                                TextButton(
+                                                                  onPressed: () {
+                                                                    Navigator.of(context).pop(false); // No, keep the appointment
+                                                                  },
+                                                                  child: Text('No'),
                                                                 ),
                                                               ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        if (shouldCancelAppointment != null && shouldCancelAppointment) {
+                                                          await DatabaseService().cancelAppointment([DateFormat('yyyy-MM-dd').format(_selectedDateRange!.start)]);
+
+                                                          // Show confirmation message after UI update is complete
+                                                          if (mounted) {
+                                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                              SnackBar(content: Text('Appointment on $formattedDate$timeString has been canceled.')),
+                                                            );
+
+                                                            // Refresh UI
+                                                            setState(() {
+                                                              _selectedDateRange = null;
+                                                              _selectedTime = null;
+                                                            });
+
+                                                            // Trigger a re-fetch of appointments
+                                                            fetchUnavailableTimes();
+                                                          }
+                                                        }
+                                                      },
+                                                      child: const Text('Cancel Appointment'),
+                                                    );
+                                                  }
+                                                },
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          },
+                                        ),
+                                      ),
+
+
+
+
+                                      // This displays "Next session with Makayla and also notifies the client if their are no appointments scheduled
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                                        child: FutureBuilder(
+                                          future: DatabaseService().getNextAppointment(),
+                                          builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return CircularProgressIndicator();
+                                            } else if (snapshot.hasError) {
+                                              return Text('Error: \${snapshot.error}');
+                                            } else if (snapshot.hasData && snapshot.data != null) {
+                                              // Extracting data
+                                              DateTime appointmentDate = snapshot.data!['date'];
+                                              TimeOfDay appointmentTime = snapshot.data!['time'];
+
+                                              String formattedDate = DateFormat('MM-dd-yyyy').format(appointmentDate);
+                                              String timeString = appointmentTime.format(context);
+
+                                              return Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        blurRadius: 3.0,
+                                                        color: Color(0x33000000),
+                                                        offset: Offset(0.0, 1.0),
+                                                      )
                                                     ],
+                                                    borderRadius: BorderRadius.circular(8.0),
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 12.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Payment',
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelMedium
-                                              .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color:
-                                            FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 24.0),
-                                        child: ListView(
-                                          padding: EdgeInsets.zero,
-                                          primary: false,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                  16.0, 0.0, 16.0, 12.0),
-                                              child: Container(
-                                                width: 100.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                      blurRadius: 3.0,
-                                                      color: Color(0x33000000),
-                                                      offset: Offset(
-                                                        0.0,
-                                                        1.0,
-                                                      ),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      8.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                    MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        mainAxisSize:
-                                                        MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                4.0,
-                                                                0.0,
-                                                                0.0,
-                                                                0.0),
-                                                            child: Text(
-                                                              'Next Payment',
-                                                              style: FlutterFlowTheme
-                                                                  .of(context)
-                                                                  .headlineSmall
-                                                                  .override(
-                                                                fontFamily:
-                                                                'Outfit',
-                                                                color: const Color(
-                                                                    0xFF14181B),
-                                                                fontSize:
-                                                                24.0,
-                                                                letterSpacing:
-                                                                0.0,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w500,
-                                                              ),
-                                                            ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          'Next Session with Makayla:',
+                                                          style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                            fontFamily: 'Outfit',
+                                                            color: const Color(0xFF14181B),
+                                                            fontSize: 20.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight: FontWeight.w500,
                                                           ),
-                                                          Row(
-                                                            mainAxisSize:
-                                                            MainAxisSize
-                                                                .max,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0),
-                                                                child: Card(
-                                                                  clipBehavior:
-                                                                  Clip.antiAliasWithSaveLayer,
-                                                                  color: const Color(
-                                                                      0x4C4B39EF),
-                                                                  elevation:
-                                                                  0.0,
-                                                                  shape:
-                                                                  RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        8.0),
-                                                                  ),
-                                                                  child:
-                                                                  Padding(
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        8.0,
-                                                                        4.0,
-                                                                        8.0,
-                                                                        4.0),
-                                                                    child: Text(
-                                                                      '2:20pm',
-                                                                      style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                          .bodyLarge
-                                                                          .override(
-                                                                        fontFamily:
-                                                                        'Inter',
-                                                                        letterSpacing:
-                                                                        0.0,
-                                                                      ),
+                                                        ),
+                                                        const SizedBox(height: 4.0),
+                                                        Row(
+                                                          mainAxisSize: MainAxisSize.max,
+                                                          children: [
+                                                            Padding(
+                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                                                              child: Card(
+                                                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                                color: const Color(0x4CFFA726), // Light orange color
+                                                                elevation: 0.0,
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 4.0),
+                                                                  child: Text(
+                                                                    timeString,
+                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                      fontFamily: 'Outfit',
+                                                                      color: const Color(0xFF14181B),
+                                                                      fontSize: 16.0,
+                                                                      letterSpacing: 0.0,
+                                                                      fontWeight: FontWeight.normal,
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                              Padding(
-                                                                padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    4.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                                child: Text(
-                                                                  'Wed, 03/08/2022',
-                                                                  style: FlutterFlowTheme.of(
-                                                                      context)
-                                                                      .bodySmall
-                                                                      .override(
-                                                                    fontFamily:
-                                                                    'Plus Jakarta Sans',
-                                                                    color: const Color(
-                                                                        0xFF14181B),
-                                                                    fontSize:
-                                                                    18.0,
-                                                                    letterSpacing:
-                                                                    0.0,
-                                                                    fontWeight:
-                                                                    FontWeight.normal,
-                                                                  ),
-                                                                ),
+                                                            ),
+                                                            Text(
+                                                              formattedDate,
+                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                fontFamily: 'Outfit',
+                                                                color: const Color(0xFF14181B),
+                                                                fontSize: 16.0,
+                                                                letterSpacing: 0.0,
+                                                                fontWeight: FontWeight.normal,
                                                               ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
+                                              );
+                                            } else {
+                                              return Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        blurRadius: 3.0,
+                                                        color: Color(0x33000000),
+                                                        offset: Offset(0.0, 1.0),
+                                                      )
+                                                    ],
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Row(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        Text(
+                                                          'No Appointments Currently Scheduled',
+                                                          style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                            fontFamily: 'Outfit',
+                                                            color: const Color(0xFF14181B),
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
                                         ),
                                       ),
+
+
+
                                     ],
                                   ),
                                 ],
@@ -1019,7 +923,7 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
                                       ],
                                     ),
                                     child: FlutterFlowCalendar(
-                                      color: const Color(0xFF4B39EF),
+                                      color: const Color(0xFF3055c8),
                                       iconColor: const Color(0xFF57636C),
                                       weekFormat: true,
                                       weekStartsMonday: true,

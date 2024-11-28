@@ -249,15 +249,11 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
-                                      fillColor: (_model.workoutNameFocusNode
-                                                  ?.hasFocus ??
-                                              false)
-                                          ? const Color(0x4D9489F5)
-                                          : Colors.white,
-                                      contentPadding:
+
+                                      fillColor: Colors.black,
+                                      contentPadding: // Set background to black
                                           const EdgeInsetsDirectional.fromSTEB(
-                                      fillColor: Colors.black, // Set background to black
-                                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
+
                                               16.0, 20.0, 16.0, 20.0),
                                     ),
                                     style: FlutterFlowTheme.of(context)
@@ -366,11 +362,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                                             BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
-                                      fillColor: (_model.descriptionFocusNode
-                                                  ?.hasFocus ??
-                                              false)
-                                          ? const Color(0x4D9489F5)
-                                          : Colors.white,
+                                      fillColor: Colors.black, // Set background to black
                                       contentPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16.0, 16.0, 16.0, 16.0),
@@ -475,7 +467,7 @@ class _CreateWorkoutPageWidgetState extends State<CreateWorkoutPageWidget> {
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: const Color(0xFF97B690),
+                        color: const Color(0xFF87A88E),
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Figtree',

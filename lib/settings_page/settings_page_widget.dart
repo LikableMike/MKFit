@@ -129,7 +129,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Change Name',
+                              'Change Username',
                               style: FlutterFlowTheme.of(context)
                                   .titleLarge
                                   .override(
@@ -146,65 +146,6 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                               highlightColor: Colors.transparent,
                               onTap: () async {
                                 context.pushNamed('changeName');
-                              },
-                              child: Icon(
-                                Icons.chevron_right_rounded,
-                                color:
-                                FlutterFlowTheme.of(context).secondaryText,
-                                size: 24,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed(
-                        'changeAddress',
-                        extra: <String, dynamic>{
-                          kTransitionInfoKey: TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.bottomToTop,
-                          ),
-                        },
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Change Address',
-                              style: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                fontFamily: 'Inter',
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                letterSpacing: 0.0,
-                              ),
-                            ),
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('changeAddress');
                               },
                               child: Icon(
                                 Icons.chevron_right_rounded,

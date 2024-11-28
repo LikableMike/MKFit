@@ -229,7 +229,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ],
                     borderRadius: BorderRadius.circular(16.0),
                     border: Border.all(
-                      color: const Color(0xFF00831B),
+                      color: const Color(0xFF87A88E),
                     ),
                   ),
                   child: ClipRRect(
@@ -287,7 +287,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   width: 100.0,
                                   height: 100.0,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF00831B),
+                                    color: const Color(0xFF87A88E),
                                     borderRadius: BorderRadius.circular(50.0),
                                   ),
                                   child: FlutterFlowIconButton(
@@ -351,7 +351,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   iconPadding:
                                       const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
-                                  color: const Color(0xFF00831B),
+                                  color: const Color(0xFF87A88E),
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -557,7 +557,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 iconPadding:
                                     const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
-                                color: const Color(0xFF00831B),
+                                color: const Color(0xFF87A88E),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -618,7 +618,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       .secondaryBackground,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(0xFF00831B),
+                                    color: const Color(0xFF87A88E),
                                     width: 4.0,
                                   ),
                                 ),
@@ -715,7 +715,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   24.0, 0.0, 24.0, 0.0),
                               iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: const Color(0xFF00831B),
+                              color: const Color(0xFF87A88E),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
