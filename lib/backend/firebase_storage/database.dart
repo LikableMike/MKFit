@@ -435,8 +435,75 @@ class DatabaseService {
     } catch (e) {
       print("Error fetching next appointment: $e");
     }
+
+  Future<String?> getAppointmentTime(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          DateTime startTime =
+          (appointments[i]["startTime"] as Timestamp).toDate();
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return DateFormat('hh:mm a').format(startTime);
+          }
+        }
+      }
+    }
+    return null; // Return null if no appointment is found for the given date
+  }
+
+  Future<Map<String, dynamic>?> getNextAppointment() async {
+    try {
+      DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+      if (snapshot.exists && snapshot.data() != null) {
+        List<dynamic> appointments = snapshot.get("appointments");
+
+        if (appointments.isEmpty) {
+          return null;
+        }
+
+        // Sort appointments by date
+        appointments.sort((a, b) {
+          DateTime aDate = (a['startTime'] as Timestamp).toDate();
+          DateTime bDate = (b['startTime'] as Timestamp).toDate();
+          return aDate.compareTo(bDate);
+        });
+
+        // Get the earliest appointment
+        Map<String, dynamic> nextAppointment = appointments.first;
+        DateTime appointmentDate =
+        (nextAppointment['startTime'] as Timestamp).toDate();
+        TimeOfDay appointmentTime = TimeOfDay.fromDateTime(appointmentDate);
+
+        return {'date': appointmentDate, 'time': appointmentTime};
+      }
+    } catch (e) {
+      print("Error fetching next appointment: $e");
+    }
     return null;
   }
+
+  Future<bool> checkAppointment(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    if (snapshot.exists && snapshot.data() != null) {
+      var appointments = snapshot.get("appointments");
+      for (int i = 0; i < appointments.length; i++) {
+        if (appointments[i]["startTime"] != null) {
+          DateTime startTime =
+          (appointments[i]["startTime"] as Timestamp).toDate();
+          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+          if (storedDate == date) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
 
   Future<bool> checkAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
@@ -507,9 +574,127 @@ class DatabaseService {
     return dayAppointments;
   }
 
+
+
+  Future cancelAppointment(List<String> dates) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+
   Future<void> cancelAppointment(List<String> dates) async {
     try {
       String userId = await getUID(); // Get the current user ID
+
+      // Step 1: Remove from User's Appointments
+      DocumentSnapshot snapshot = await usersCollection.doc(userId).get();
+      if (snapshot.exists && snapshot.data() != null) {
+        var appointments = snapshot.get("appointments");
+
+        List<Map<String, dynamic>> appointmentsToRemove = [];
+
+        for (String date in dates) {
+          for (int i = 0; i < appointments.length; i++) {
+            if (appointments[i]["startTime"] != null) {
+              DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+              String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
+
+              if (storedDate == date) {
+                // Collect the appointment to remove
+                appointmentsToRemove.add(appointments[i]);
+              }
+            }
+          }
+        }
+
+        // Remove appointments from the user's list
+        if (appointmentsToRemove.isNotEmpty) {
+          await usersCollection.doc(userId).update({
+            "appointments": FieldValue.arrayRemove(appointmentsToRemove),
+          });
+        }
+
+        // Step 2: Remove from allStartTimes Collection for the specific user only
+        DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+        DocumentSnapshot allStartTimesSnapshot = await startTimeDoc.get();
+
+        if (allStartTimesSnapshot.exists && allStartTimesSnapshot.data() != null) {
+          List<dynamic> startTimes = allStartTimesSnapshot['startTimes'] ?? [];
+          List<dynamic> updatedStartTimes = [];
+
+          for (var startTimeEntry in startTimes) {
+            if (startTimeEntry is Map<String, dynamic>) {
+              DateTime existingAppointmentStart = (startTimeEntry['timestamp'] as Timestamp).toDate();
+              String storedDate = DateFormat('yyyy-MM-dd').format(existingAppointmentStart);
+              String existingUserId = startTimeEntry['userId'];
+
+              // Keep only those times that are not being canceled for the current user
+              if (!(dates.contains(storedDate) && existingUserId == userId)) {
+                updatedStartTimes.add(startTimeEntry);
+              }
+            }
+          }
+
+          // Update the allStartTimes document with the updated times
+          await startTimeDoc.update({"startTimes": updatedStartTimes});
+        }
+
+        print('Appointments removed successfully.');
+      }
+    } catch (e) {
+      print("Error cancelling appointment: $e");
+    }
+  }
+
+
+
+  Future<String> findClientName(String uid) async{
+    DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+    var name = snapshot.get("name");
+    print(name);
+    return name;
+  }
+
+  Future<List> getClients() async{
+    QuerySnapshot snapshot = await usersCollection.get();
+    List clientsHold = [];
+    for (var doc in snapshot.docs){
+      clientsHold.add(doc.id);
+    }
+    globals.clientUIDS = clientsHold;
+    print(globals.clientUIDS.length);
+    return globals.clientUIDS;
+
+  }
+
+  Future<void> updateUserWeight(String weight) async {
+    try {
+      final String uid = await getUID(); // Fetch user ID
+      await usersCollection.doc(uid).update({"weight": weight});
+      print("Weight updated successfully.");
+    } catch (e) {
+      print("Error updating weight: $e");
+    }
+  }
+  Future<void> updateUserWeightAndHeight(String weight, String height) async {
+    try {
+      final String uid = await getUID(); // Get the user's UID
+      await usersCollection.doc(uid).update({
+        "weight": weight,
+        "height": height,
+      });
+      print("User weight and height updated successfully.");
+    } catch (e) {
+      print("Error updating weight and height: $e");
+    }
+  }
+
+  Future cancelClientAppointment(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.selectedClient).get();
+
+    var appointments = snapshot.get("appointments");
+
+  Future<void> cancelAppointment(List<String> dates) async {
+    try {
+      String userId = await getUID(); // Get the current user ID
+
 
       // Step 1: Remove from User's Appointments
       DocumentSnapshot snapshot = await usersCollection.doc(userId).get();
