@@ -369,6 +369,7 @@ class DatabaseService {
       ])
     });
   }
+
   Future<void> updateUserWeight(String weight) async {
     try {
       final String uid = await getUID(); // Get the user's UID
@@ -444,6 +445,17 @@ class DatabaseService {
             return true;
           }
         }
+      }
+    }
+
+
+  Future<bool> checkAppointment(String date) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
+    var appointments = snapshot.get("appointments");
+    for (int i = 0; i < appointments.length; i++) {
+      if (appointments[i]["date"] != null &&
+          appointments[i]["date"].contains(date)) {
+        return true;
       }
     }
     return false;
@@ -601,6 +613,9 @@ class DatabaseService {
 
   Future cancelClientAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.selectedClient).get();
+
+  Future cancelAppointment(List<String> dates) async {
+    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     var appointments = snapshot.get("appointments");
 
     for (int i = 0; i < appointments.length; i++) {

@@ -246,20 +246,17 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     context: context,
                                     builder: (context) {
                                       return GestureDetector(
-                                        onTap: () => FocusScope.of(context).unfocus(),
+                                        onTap: () =>
+                                            FocusScope.of(context).unfocus(),
                                         child: Padding(
-                                          padding: MediaQuery.viewInsetsOf(context),
-                                          child: ProgressComponentWidget(input: "Weight in Lbs"),
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: ProgressComponentWidget(
+                                              input: "weight"),
                                         ),
                                       );
                                     },
-                                  ).then((value) async {
-                                    if (value != null && value is String && value.isNotEmpty) {
-                                      // Update the weight in the database using the databaseService instance
-                                      await databaseService.updateUserWeight(value);
-                                    }
-                                    safeSetState(() {});
-                                  });
+                                  ).then((value) => safeSetState(() {}));
                                 },
                               ),
                             ],
@@ -403,6 +400,23 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                   color: FlutterFlowTheme.of(context).secondaryText,
                                   size: 30,
                                 ),
+                                onPressed: () async {
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return GestureDetector(
+                                        onTap: () => FocusScope.of(context).unfocus(),
+                                        child: Padding(
+                                          padding: MediaQuery.viewInsetsOf(context),
+                                          child: ProgressComponentWidget(input: "bmi"),
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) => safeSetState(() {}));
+                                },
                               ),
                             ],
                           ),
