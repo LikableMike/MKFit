@@ -272,12 +272,17 @@ class WorkoutWidget extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Column(
+                child: Row(
+
+                children: [
+                  Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    Container(
+                      width: 280,
+                    child: Text(
                       name,
                       style: FlutterFlowTheme.of(context)
                           .titleLarge
@@ -289,36 +294,48 @@ class WorkoutWidget extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    RichText(
-                      textScaler:
-                      MediaQuery.of(context).textScaler,
-                      text: TextSpan(
-                        children: const [
-                          TextSpan(
-                            text: '8 Mins',
-                            style: TextStyle(),
-                          ),
-                          TextSpan(
-                            text: ' || ',
-                            style: TextStyle(),
-                          ),
-                          TextSpan(
-                            text: '3 workouts',
-                            style: TextStyle(),
-                          )
-                        ],
-                        style: FlutterFlowTheme.of(context)
-                            .labelMedium
-                            .override(
-                          fontFamily: 'Outfit',
-                          color: const Color(0xFF606A85),
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+            ),
+
                   ].divide(const SizedBox(height: 4.0)),
+                ),
+                  FlutterFlowIconButton(
+                    buttonSize: 60,
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.black54,
+                      size: 50,
+                    ),
+                    onPressed: () async {
+                      showDialog<bool>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Remove ' + name + " from " + globals.selectedClient + "'s workouts?"),
+
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () async {
+                                  globals.selectedWorkout = name;
+                                  await DatabaseService().removeWorkout();
+                                  Navigator.of(context).pop(true); // Return 'true' for "Yes"
+                                },
+                                child: Text('Yes'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(false); // Return 'false' for "No"
+                                },
+                                child: Text('No'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      // Show a dialog to confirm if the user wants to cancel the appointment
+
+                    },
+                  ),
+                ]
                 ),
               ),
             ),
@@ -330,7 +347,7 @@ class WorkoutWidget extends StatelessWidget {
               },
               text: '',
               options: FFButtonOptions(
-                width: double.infinity,
+                width: 270,
                 height: 148.0,
                 padding: const EdgeInsetsDirectional.fromSTEB(
                     24.0, 0.0, 24.0, 0.0),
@@ -344,7 +361,7 @@ class WorkoutWidget extends StatelessWidget {
                   color: Colors.white,
                   letterSpacing: 0.0,
                 ),
-                elevation: 3.0,
+                elevation: 0.0,
                 borderSide: const BorderSide(
                   color: Colors.transparent,
                   width: 1.0,

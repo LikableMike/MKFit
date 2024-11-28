@@ -325,10 +325,11 @@ class _LoginWidgetState extends State<LoginWidget>
                                       "YIq1kNSHImdljlk1RKIULH22o2F3") {
                                     context.pushNamed('admin_new');
                                   } else {
+                                    globals.UID = UID;
+                                    DatabaseService().getWorkouts();
                                     context.pushNamed('home');
                                   }
-                                  globals.UID = UID;
-                                  DatabaseService().getWorkouts();
+
                                   print(
                                       "UID SET TO: " + globals.UID.toString());
                                 }

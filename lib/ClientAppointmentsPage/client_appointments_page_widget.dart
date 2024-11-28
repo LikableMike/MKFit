@@ -165,7 +165,7 @@ class DateWidget extends StatelessWidget {
         padding:
         const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
         child: Container(
-          width: 100.0,
+          width: 70.0,
           height: 80.0,
           decoration: BoxDecoration(
             color: const Color(0xFF00831B),
@@ -221,7 +221,7 @@ class DateWidget extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(100.0, 8.0, 0.0, 8.0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(90.0, 8.0, 0.0, 8.0),
 
                         ),
                         Column(

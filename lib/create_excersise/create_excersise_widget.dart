@@ -239,200 +239,8 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                         .fullNameTextControllerValidator
                                         .asValidator(context),
                                   ),
-                                  TextFormField(
-                                    controller: _model.ageTextController,
-                                    focusNode: _model.ageFocusNode,
-                                    autofocus: true,
-                                    textCapitalization:
-                                        TextCapitalization.words,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Number of Sets*',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelLarge
-                                          .override(
-                                            fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                      errorStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
-                                            fontSize: 12.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE5E7EB),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF6F61EF),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFFF5963),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFFF5963),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      filled: true,
-                                      fillColor:
-                                          (_model.ageFocusNode?.hasFocus ??
-                                                  false)
-                                              ? const Color(0x4D9489F5)
-                                              : Colors.white,
-                                      contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 20.0, 16.0, 20.0),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Figtree',
-                                          color: const Color(0xFF15161E),
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                    keyboardType: TextInputType.number,
-                                    cursorColor: const Color(0xFF6F61EF),
-                                    validator: _model.ageTextControllerValidator
-                                        .asValidator(context),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                          RegExp('[0-9]'))
-                                    ],
-                                  ),
-                                  TextFormField(
-                                    controller:
-                                        _model.phoneNumberTextController,
-                                    focusNode: _model.phoneNumberFocusNode,
-                                    autofocus: true,
-                                    textCapitalization:
-                                        TextCapitalization.words,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Number of Repetitions*',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelLarge
-                                          .override(
-                                            fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Outfit',
-                                            color: const Color(0xFF606A85),
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                      errorStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Figtree',
-                                            color: const Color(0xFFFF5963),
-                                            fontSize: 12.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE5E7EB),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF6F61EF),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFFF5963),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFFF5963),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: (_model.phoneNumberFocusNode
-                                                  ?.hasFocus ??
-                                              false)
-                                          ? const Color(0x4D9489F5)
-                                          : Colors.white,
-                                      contentPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 20.0, 16.0, 20.0),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Figtree',
-                                          color: const Color(0xFF15161E),
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                    keyboardType: TextInputType.number,
-                                    cursorColor: const Color(0xFF6F61EF),
-                                    validator: _model
-                                        .phoneNumberTextControllerValidator
-                                        .asValidator(context),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                          RegExp('[0-9]'))
-                                    ],
-                                  ),
+
+
                                   Text(
                                     'Brief Exercise Description',
                                     style: FlutterFlowTheme.of(context)
@@ -558,8 +366,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                     controller: _model.videoLinkTextController,
                                     focusNode: _model.videoLinkFocusNode,
                                     autofocus: true,
-                                    textCapitalization:
-                                        TextCapitalization.words,
+
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: 'Video Link...',
@@ -645,7 +452,6 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                     validator: _model
                                         .videoLinkTextControllerValidator
                                         .asValidator(context),
-                                    inputFormatters: [_model.videoLinkMask],
                                   ),
                                   Text(
                                     'PDF File',
@@ -746,7 +552,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
 
                           print("Attempting to create Exercise");
                           await DatabaseService().createExercise(
-                              _model.fullNameTextController.text, int.parse(_model.ageTextController.text), int.parse(_model.phoneNumberTextController.text), _model.descriptionTextController.text, _model.videoLinkTextController.text);
+                              _model.fullNameTextController.text, _model.descriptionTextController.text, _model.videoLinkTextController.text);
                         }catch(e){
                           print(e);
                         }

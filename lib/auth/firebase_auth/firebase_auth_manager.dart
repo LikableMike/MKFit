@@ -42,7 +42,6 @@ class FirebaseAuthManager extends AuthManager
     with
         EmailSignInManager,
         GoogleSignInManager,
-        AppleSignInManager,
         AnonymousSignInManager,
         JwtSignInManager,
         GithubSignInManager,
@@ -150,9 +149,6 @@ class FirebaseAuthManager extends AuthManager
   ) =>
       _signInOrCreateAccount(context, anonymousSignInFunc, 'ANONYMOUS');
 
-  @override
-  Future<BaseAuthUser?> signInWithApple(BuildContext context) =>
-      _signInOrCreateAccount(context, appleSignIn, 'APPLE');
 
   @override
   Future<BaseAuthUser?> signInWithGoogle(BuildContext context) =>

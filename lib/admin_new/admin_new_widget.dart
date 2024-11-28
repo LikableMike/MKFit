@@ -421,7 +421,7 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('updateExercise');
+                                context.pushNamed('ExerciseList');
                               },
                               child: Container(
                                 width: double.infinity,

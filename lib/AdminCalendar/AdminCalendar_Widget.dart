@@ -235,7 +235,7 @@ class _AdminCalendarWidgetState extends State<AdminCalendarWidget>
                                         padding: const EdgeInsets.all(16.0),
                                       child: FutureBuilder<bool>(
 
-                                        future: DatabaseService().checkAdminAppointments(_selectedDateRange?.start.toString() ?? "null"),
+                                        future: DatabaseService().checkAdminAppointments(_selectedDateRange?.start.toString().split(" ")[0] ?? "null"),
                                         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                                           if (snapshot.connectionState == ConnectionState.waiting) {
                                             // While the future is still loading, show a loading indicator
@@ -264,7 +264,7 @@ class _AdminCalendarWidgetState extends State<AdminCalendarWidget>
                                                     return Text(snapshot.error.toString() ?? "Error");
                                                   } else if (snapshot.hasData) {
                                                     // Once the data is available, display it
-                                                    return Text(snapshot.data ?? "No Appointments Found", style: TextStyle(color: Color(0xFF486E00), fontWeight: FontWeight.bold, fontSize: 20));
+                                                    return Text(snapshot.data ?? "No Appointments Found", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20));
                                                   } else {
                                                     // Handle any other case (unlikely but good to cover it)
                                                     return const Text('No data available');
