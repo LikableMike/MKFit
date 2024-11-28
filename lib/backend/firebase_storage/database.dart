@@ -369,25 +369,18 @@ class DatabaseService {
       ])
     });
   }
-
-
-  Future<bool> checkAppointment(String date) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    if (snapshot.exists && snapshot.data() != null) {
-      var appointments = snapshot.get("appointments");
-      for (int i = 0; i < appointments.length; i++) {
-        if (appointments[i]["startTime"] != null) {
-          DateTime startTime =
-          (appointments[i]["startTime"] as Timestamp).toDate();
-          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
-          if (storedDate == date) {
-            return true;
-          }
-        }
-      }
+  Future<void> updateUserWeight(String weight) async {
+    try {
+      final String uid = await getUID(); // Get the user's UID
+      await usersCollection.doc(uid).update({
+        "weight": weight,
+      });
+      print("User weight updated successfully.");
+    } catch (e) {
+      print("Error updating weight: $e");
     }
-    return false;
   }
+
 
   Future<String?> getAppointmentTime(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
