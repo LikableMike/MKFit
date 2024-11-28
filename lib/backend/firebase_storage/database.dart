@@ -505,23 +505,23 @@ class DatabaseService {
   }
 
 
-  Future<bool> checkAppointment(String date) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    if (snapshot.exists && snapshot.data() != null) {
-      var appointments = snapshot.get("appointments");
-      for (int i = 0; i < appointments.length; i++) {
-        if (appointments[i]["startTime"] != null) {
-          DateTime startTime =
-          (appointments[i]["startTime"] as Timestamp).toDate();
-          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
-          if (storedDate == date) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -664,15 +664,7 @@ class DatabaseService {
 
   }
 
-  Future<void> updateUserWeight(String weight) async {
-    try {
-      final String uid = await getUID(); // Fetch user ID
-      await usersCollection.doc(uid).update({"weight": weight});
-      print("Weight updated successfully.");
-    } catch (e) {
-      print("Error updating weight: $e");
-    }
-  }
+
   Future<void> updateUserWeightAndHeight(String weight, String height) async {
     try {
       final String uid = await getUID(); // Get the user's UID
@@ -1058,7 +1050,7 @@ class DatabaseService {
       }
     }
 
-    
+
     return await usersCollection.doc(globals.selectedClient).update({
       "workouts": FieldValue.arrayUnion([
         {"exercises" : globals.builtWorkout, "uid": globals.selectedWorkout}
@@ -1114,6 +1106,15 @@ class DatabaseService {
       return null;
     }
   }
+  Future<void> updateUserWeight(String weight) async {
+      try {
+        final String uid = await getUID(); // Fetch user ID
+        await usersCollection.doc(uid).update({"weight": weight});
+        print("Weight updated successfully.");
+      } catch (e) {
+        print("Error updating weight: $e");
+      }
+    }
 
 }
 
