@@ -291,7 +291,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     .secondaryBackground,
                                 showBorder: false,
                               ),
-                              axisBounds: AxisBounds(),
+                              axisBounds: AxisBounds(
+                                minY: 90,
+                                maxY: 300
+                              ),
                               xAxisLabelInfo: AxisLabelInfo(
                                 title: 'Last 30 Days',
                                 titleTextStyle: FlutterFlowTheme.of(context)

@@ -543,64 +543,64 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                     width: 1,
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 12, 16, 12),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 0, 0),
-                                        child: Container(
-                                          width: 44,
-                                          height: 44,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF86BD92),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Text(
-                                            'U',
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: Colors.white,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12, 0, 12, 0),
-                                          child: Text(
-                                            'Update Workout',
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleSmall
-                                                .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 34,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                // child: Padding(
+                                //   padding: EdgeInsetsDirectional.fromSTEB(
+                                //       0, 12, 16, 12),
+                                //   child: Row(
+                                //     mainAxisSize: MainAxisSize.max,
+                                //     mainAxisAlignment:
+                                //         MainAxisAlignment.spaceBetween,
+                                //     children: [
+                                //       Padding(
+                                //         padding: EdgeInsetsDirectional.fromSTEB(
+                                //             16, 0, 0, 0),
+                                //         child: Container(
+                                //           width: 44,
+                                //           height: 44,
+                                //           decoration: BoxDecoration(
+                                //             color: Color(0xFF86BD92),
+                                //             shape: BoxShape.circle,
+                                //           ),
+                                //           alignment: AlignmentDirectional(0, 0),
+                                //           child: Text(
+                                //             'U',
+                                //             style: FlutterFlowTheme.of(context)
+                                //                 .titleMedium
+                                //                 .override(
+                                //                   fontFamily: 'Inter',
+                                //                   color: Colors.white,
+                                //                   letterSpacing: 0.0,
+                                //                 ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Expanded(
+                                //         child: Padding(
+                                //           padding:
+                                //               EdgeInsetsDirectional.fromSTEB(
+                                //                   12, 0, 12, 0),
+                                //           child: Text(
+                                //             'Update Workout',
+                                //             style: FlutterFlowTheme.of(context)
+                                //                 .titleSmall
+                                //                 .override(
+                                //                 fontFamily: 'Inter',
+                                //                 letterSpacing: 0.0,
+                                //                 color: Colors.black,
+                                //                 fontSize: 20
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Icon(
+                                //         Icons.chevron_right_rounded,
+                                //         color: FlutterFlowTheme.of(context)
+                                //             .secondaryText,
+                                //         size: 34,
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                               ),
                             ),
                           ),

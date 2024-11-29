@@ -65,7 +65,7 @@ class _IndividualWorkoutPageWidgetState
             },
           ),
           title: Text(
-            'Shoulder Session',
+            globals.selectedWorkout,
             style: FlutterFlowTheme.of(context).headlineLarge.override(
                   fontFamily: 'Readex Pro',
                   color: FlutterFlowTheme.of(context).primaryBackground,

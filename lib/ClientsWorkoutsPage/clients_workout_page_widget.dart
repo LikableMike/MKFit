@@ -75,9 +75,11 @@ class _ClientWorkoutsPageWidgetState extends State<ClientWorkoutsPageWidget> {
                     // Handle errors here
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
+                    globals.selectedClientName = snapshot.data!;
                     // Display the text once data is available
                     return Text(
                       snapshot.data!,
+
                       style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Outfit',
                         color: FlutterFlowTheme.of(context).primaryBackground,
@@ -138,7 +140,7 @@ class _ClientWorkoutsPageWidgetState extends State<ClientWorkoutsPageWidget> {
 
                     // If data is loaded successfully, use it
                     List workouts = snapshot.data!;
-                    return BuildWorkouts(Workouts: workouts);
+                    return BuildWorkouts(Workouts: snapshot.data!);
                   },
                 ),),
 
@@ -310,7 +312,7 @@ class WorkoutWidget extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Remove ' + name + " from " + globals.selectedClient + "'s workouts?"),
+                            title: Text('Remove ' + name + " from " + globals.selectedClientName + "'s workouts?"),
 
                             actions: <Widget>[
                               TextButton(

@@ -159,8 +159,8 @@ class DatabaseService {
     var uid = name.toLowerCase().replaceAll(" ", "_");
     await exerciseTestCollection.doc(uid).set({
       "exercise_name": name,
-      "exercise_description": description,
-      "video_sample": link
+      "exercise_description": description != "" ? description : "No Description",
+      "video_sample": link != "" ? link : "No Video Link"
     });
     return;
   }
@@ -438,23 +438,7 @@ class DatabaseService {
     return null;
   }
 
-  Future<bool> checkAppointment(String date) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
-    if (snapshot.exists && snapshot.data() != null) {
-      var appointments = snapshot.get("appointments");
-      for (int i = 0; i < appointments.length; i++) {
-        if (appointments[i]["startTime"] != null) {
-          DateTime startTime =
-          (appointments[i]["startTime"] as Timestamp).toDate();
-          String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
-          if (storedDate == date) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
+
 
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -774,35 +758,36 @@ class DatabaseService {
   }
 
   Future<List> getClientWorkouts(UID) async {
+    print("Finding Clients Workouts");
     globals.userWorkouts.clear();
     globals.testWorkouts.clear();
     DocumentSnapshot snapshot = await usersCollection.doc(UID).get();
     var userWorkouts = snapshot.get("workouts");
     final allWorkouts = FirebaseFirestore.instance.collection("workouts");
-    final allExercises =
-    FirebaseFirestore.instance.collection("exercises_test");
+    final allExercises = FirebaseFirestore.instance.collection("exercises_test");
     var workoutUIDS = [];
     for (int i = 0; i < userWorkouts.length; i++) {
       if (userWorkouts[i]["uid"] != null) {
+        print("Workout: " + userWorkouts[i]["uid"]);
 
-        DocumentSnapshot WorkoutSnap =
-        await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+        DocumentSnapshot WorkoutSnap = await allWorkouts.doc(userWorkouts[i]["uid"]).get();
         var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
-        print("Workout Exercises: " + workoutExercises.toString());
-        globals.testWorkouts[workoutName] = [];
-        for (int j = 0; j < workoutExercises.length; j++) {
-          DocumentSnapshot exerciseSnap =
-          await allExercises.doc(workoutExercises[j]["uid"]).get();
-          globals.testWorkouts[workoutName].add({
-            "uid": workoutExercises[j]["uid"],
-            "reps": workoutExercises[j]["reps"],
-            "sets": workoutExercises[j]["sets"],
-            "weight": workoutExercises[j]["weight"],
-            "name": exerciseSnap["exercise_name"],
-            "description": exerciseSnap["exercise_description"],
-            "video_sample" : exerciseSnap["video_sample"]
-          });
+        if(!globals.testWorkouts.keys.contains(workoutName)) {
+          globals.testWorkouts[workoutName] = [];
+          for (int j = 0; j < workoutExercises.length; j++) {
+            DocumentSnapshot exerciseSnap =
+            await allExercises.doc(workoutExercises[j]["uid"]).get();
+            globals.testWorkouts[workoutName].add({
+              "uid": workoutExercises[j]["uid"],
+              "reps": workoutExercises[j]["reps"],
+              "sets": workoutExercises[j]["sets"],
+              "weight": workoutExercises[j]["weight"],
+              "name": exerciseSnap["exercise_name"],
+              "description": exerciseSnap["exercise_description"],
+              "video_sample": exerciseSnap["video_sample"]
+            });
+          }
         }
         globals.userWorkouts.add(workoutName);
         workoutUIDS.add(workoutName);
@@ -810,7 +795,6 @@ class DatabaseService {
         print(globals.testWorkouts.toString());
       }
     }
-
     return workoutUIDS;
   }
   //Workout Page Widget

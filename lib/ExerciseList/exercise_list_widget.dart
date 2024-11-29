@@ -169,7 +169,7 @@ class _ExerciseListWidgetState extends State<ExerciseListWidget> {
                                 size: 50,
                               ),
                               onPressed: () async {
-                                context.pushNamed("AssignWorkoutPage");
+                                context.pushNamed("CreateExercisePage");
                                 // Show a dialog to confirm if the user wants to cancel the appointment
 
                               },

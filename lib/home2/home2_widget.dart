@@ -196,15 +196,10 @@ class _Home2WidgetState extends State<Home2Widget> {
               child: Container(
                 width: 48,
                 height: 48,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 1,
-                  ),
-                ),
+
                 child: FlutterFlowIconButton(
                   borderRadius: 20,
-                  borderWidth: 1,
+                  borderWidth: 0,
                   buttonSize: 40,
                   icon: const Icon(
                     Icons.person,
@@ -527,7 +522,10 @@ class _Home2WidgetState extends State<Home2Widget> {
                                                     .secondaryBackground,
                                             showBorder: false,
                                           ),
-                                          axisBounds: AxisBounds(),
+                                          axisBounds: AxisBounds(
+                                              minY: 90,
+                                              maxY: 300
+                                          ),
                                           xAxisLabelInfo: AxisLabelInfo(
 
                                           ),

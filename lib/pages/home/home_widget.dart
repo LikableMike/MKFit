@@ -521,7 +521,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                     .secondaryBackground,
                                             showBorder: false,
                                           ),
-                                          axisBounds: const AxisBounds(),
+                                          axisBounds: const AxisBounds(
+                                              minY: 90,
+                                              maxY: 300
+                                          ),
                                           xAxisLabelInfo: const AxisLabelInfo(),
                                           yAxisLabelInfo: const AxisLabelInfo(),
                                         ),

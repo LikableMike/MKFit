@@ -22,7 +22,7 @@ class CreateExercisePageModel extends FlutterFlowModel<CreateExercisePageWidget>
   String? Function(BuildContext, String?)? fullNameControllerValidator;
   String? _fullNameControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'Please enter the patients full name.';
+      return 'Please enter the name of the exercise.';
     }
 
     return null;
