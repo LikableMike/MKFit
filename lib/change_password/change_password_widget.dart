@@ -152,7 +152,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Colors.white,
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -171,7 +171,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     hintText: 'Enter new password',
                     hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Inter',
-                          color: const Color(0xFFFBF9F5),
+                          color: Colors.white,
                           letterSpacing: 0.0,
                         ),
                     enabledBorder: OutlineInputBorder(
@@ -219,7 +219,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Colors.white,
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -238,7 +238,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     hintText: 'Re-enter new password',
                     hintStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Inter',
-                          color: const Color(0xFFFBF9F5),
+                          color: Colors.white,
                           letterSpacing: 0.0,
                         ),
                     enabledBorder: OutlineInputBorder(
@@ -286,7 +286,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
-                        color: const Color(0xFFFBF9F5),
+                        color: Colors.white,
                         letterSpacing: 0.0,
                       ),
                   validator:
@@ -307,7 +307,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                         const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                     iconPadding:
                         const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: const Color(0xFFFBF9F5),
+                    color: Colors.white,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Inter',
                           color: FlutterFlowTheme.of(context).primaryText,

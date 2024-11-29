@@ -105,6 +105,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Current Password',
+                labelStyle: TextStyle(color: Colors.white), // Add this line
                 errorText: _errorMessage.isNotEmpty ? _errorMessage : null,
               ),
             ),
@@ -114,6 +115,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'New Password',
+                labelStyle: TextStyle(color: Colors.white), // Add this line
               ),
             ),
             SizedBox(height: 20),
@@ -122,6 +124,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Confirm New Password',
+                labelStyle: TextStyle(color: Colors.white), // Add this line
               ),
             ),
             SizedBox(height: 20),
