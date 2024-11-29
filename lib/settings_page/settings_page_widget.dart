@@ -96,40 +96,6 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    'https://picsum.photos/seed/823/600',
-                    width: 180.0,  // Increase the width to make the image larger
-                    height: 150.0,  // Adjust height accordingly
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(width: 16.0), // Add some space between the image and the button
-                FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Edit Picture',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: Color(0x00507583),
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Inter',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 0.0,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-              ],
-            ),
             ListView(
               padding: EdgeInsets.zero,
               shrinkWrap: true,

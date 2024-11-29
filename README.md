@@ -45,7 +45,17 @@ Makayla is an independent personal trainer based out of Woodland California. Her
 
 ## Solution
 ---
-Creating a tailored mobile app based our clients business model, customer base and challenges they face. This tailored approach ensures that the app addresses the specific problems faced by our client in order to create a positive impact on their business. 
+Embarking on a fitness journey to become the best version of yourself is no small feat. It demands discipline, consistency, and unwavering commitment to achieve meaningful results. To better support Makayla's clients in reaching their fitness goals and staying motivated, we developed a mobile application designed to enhance engagement and keep clients actively connected to their fitness plans between appointments. 
+
+The app offers the following features: 
+
+- **Enhanced Client Interaction:** Makayla can engage with her clients directly through the app, fostering a stronger coach-client connection.
+- **Access to Personalized Workout Plans:** Users can follow workout routines prescribed by Makayla at their convenience, promoting self-driven progress.
+- **Progress Tracking:** A dedicated progress page allows clients to monitor their weight and BMI, keeping them focused on their goals.
+- **Streamlined Appointment Management:** An integrated appointment page enables users to easily view upcoming sessions and cancel them when needed.
+
+With this app, Makayla's clients can stay motivated, track their progress, and remain fully engaged in their fitness journey.
+
 
 
 ## Prototype
