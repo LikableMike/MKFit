@@ -57,6 +57,12 @@ With this app, Makayla's clients can stay motivated, track their progress, and r
 
 ## Screenshots
 ---
+![image](https://github.com/user-attachments/assets/6aa11325-bd63-4655-bf44-390b53bd9f6c)
+![image](https://github.com/user-attachments/assets/e57655eb-509d-4fc6-89e8-957c3764bc4b)
+![image](https://github.com/user-attachments/assets/e8d17213-1e1b-431d-aa4e-0a24cade7e58)
+![image](https://github.com/user-attachments/assets/19e9ecb1-e0da-4e5e-9c94-3dc1f7d78a24)
+![image](https://github.com/user-attachments/assets/8fadeeb5-4f87-4708-9999-d0c2a75c38e2)
+![image](https://github.com/user-attachments/assets/55f6f084-3551-4ba9-b1f1-145652d96dd1)
 
 
 
