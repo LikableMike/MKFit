@@ -74,8 +74,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ?  globals.findInitialState() : const LoginWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? globals.findInitialState()
+          : const LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -256,6 +257,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'admin_new',
           path: '/admin_new',
           builder: (context, params) => const AdminNewWidget(),
+        ),
+        FFRoute(
+          name: 'chat_list',
+          path: '/chat_list',
+          builder: (context, params) => const ChatListWidget(),
         ),
         FFRoute(
           name: 'changeName',

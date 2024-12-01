@@ -15,13 +15,13 @@ class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final CollectionReference exerciseCollection =
-  FirebaseFirestore.instance.collection("exercises");
+      FirebaseFirestore.instance.collection("exercises");
   final CollectionReference chatCollection =
-  FirebaseFirestore.instance.collection("chat");
+      FirebaseFirestore.instance.collection("chat");
   final CollectionReference chatMessageCollection =
-  FirebaseFirestore.instance.collection("chat_messages");
+      FirebaseFirestore.instance.collection("chat_messages");
   final CollectionReference exerciseTestCollection =
-  FirebaseFirestore.instance.collection("exercises_test");
+      FirebaseFirestore.instance.collection("exercises_test");
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
   final workoutCollection = FirebaseFirestore.instance.collection("workouts");
@@ -30,19 +30,24 @@ class DatabaseService {
     "nOlIEy4WKkddkikrMPhQNLEjT9y1",
     // Add more UIDs as needed
   ];
-  Future<bool> isAppointmentAvailable(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+  Future<bool> isAppointmentAvailable(
+      DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     try {
       QuerySnapshot allUsersSnapshot = await usersCollection.get();
       if (allUsersSnapshot.docs.isNotEmpty) {
         for (var userDoc in allUsersSnapshot.docs) {
           List<dynamic> appointments = userDoc['appointments'] ?? [];
           for (var appointment in appointments) {
-            DateTime existingStartTime = (appointment['startTime'] as Timestamp).toDate();
-            DateTime existingEndTime = (appointment['endTime'] as Timestamp).toDate();
+            DateTime existingStartTime =
+                (appointment['startTime'] as Timestamp).toDate();
+            DateTime existingEndTime =
+                (appointment['endTime'] as Timestamp).toDate();
 
             // Check if the new appointment overlaps with an existing appointment
-            if ((newAppointmentStart.isBefore(existingEndTime) && newAppointmentStart.isAfter(existingStartTime)) ||
-                (newAppointmentEnd.isAfter(existingStartTime) && newAppointmentEnd.isBefore(existingEndTime)) ||
+            if ((newAppointmentStart.isBefore(existingEndTime) &&
+                    newAppointmentStart.isAfter(existingStartTime)) ||
+                (newAppointmentEnd.isAfter(existingStartTime) &&
+                    newAppointmentEnd.isBefore(existingEndTime)) ||
                 newAppointmentStart.isAtSameMomentAs(existingStartTime) ||
                 newAppointmentEnd.isAtSameMomentAs(existingEndTime)) {
               return false;
@@ -57,19 +62,15 @@ class DatabaseService {
     }
   }
 
-
-
   Future<List> fetchAppointments(String UID) async {
     try {
       DocumentSnapshot userSnapshot = await usersCollection.doc(UID).get();
 
       if (userSnapshot.exists) {
         List<dynamic> appointments = userSnapshot['appointments'] ?? [];
-        for(int i = 0; i < appointments.length; i++){
-
-
-          List<String> dateSplit = appointments[i]["date"].toString().split(" ")[0].split("-");
-
+        for (int i = 0; i < appointments.length; i++) {
+          List<String> dateSplit =
+              appointments[i]["date"].toString().split(" ")[0].split("-");
         }
         return appointments;
       }
@@ -80,27 +81,28 @@ class DatabaseService {
     }
   }
 
-  Future<Map> getAllExercises() async{
+  Future<Map> getAllExercises() async {
     try {
       QuerySnapshot exerciseSnapshot = await exerciseTestCollection.get();
       var exerciseDocs = exerciseSnapshot.docs;
-        Map exerciseList = {};
-        for(int i = 0; i < exerciseDocs.length; i++){
-          exerciseList[exerciseDocs.elementAt(i).id] = exerciseDocs.elementAt(i).get("exercise_name");
-
-        }
-        return exerciseList;
+      Map exerciseList = {};
+      for (int i = 0; i < exerciseDocs.length; i++) {
+        exerciseList[exerciseDocs.elementAt(i).id] =
+            exerciseDocs.elementAt(i).get("exercise_name");
+      }
+      return exerciseList;
     } catch (e) {
       print("ERROR FINDING EXERCISES: $e");
       return {};
     }
   }
+
   Future<void> updateUsername(String newUsername) async {
     try {
       final String uid = await getUID(); // Retrieve the current user's UID
       await usersCollection.doc(uid).update({
         "username":
-        newUsername, // Update the "username" field with the new value
+            newUsername, // Update the "username" field with the new value
       });
       print("Username updated successfully.");
     } catch (e) {
@@ -108,9 +110,11 @@ class DatabaseService {
     }
   }
 
-  Future<String> addAppointment(DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
+  Future<String> addAppointment(
+      DateTime newAppointmentStart, DateTime newAppointmentEnd) async {
     // Check if the time range is available
-    bool isAvailable = await isAppointmentAvailable(newAppointmentStart, newAppointmentEnd);
+    bool isAvailable =
+        await isAppointmentAvailable(newAppointmentStart, newAppointmentEnd);
 
     if (isAvailable) {
       try {
@@ -131,10 +135,12 @@ class DatabaseService {
             .doc('allStartTimes');
 
         await startTimeDoc.set({
-          'startTimes': FieldValue.arrayUnion([{
-            'timestamp': Timestamp.fromDate(newAppointmentStart),
-            'userId': userId, // Add the user ID here
-          }]),
+          'startTimes': FieldValue.arrayUnion([
+            {
+              'timestamp': Timestamp.fromDate(newAppointmentStart),
+              'userId': userId, // Add the user ID here
+            }
+          ]),
         }, SetOptions(merge: true));
 
         return 'Appointment successfully added!';
@@ -147,15 +153,10 @@ class DatabaseService {
     }
   }
 
-
-  Future createExercise(String name,
-
-      String description, String link) async {
-    await exerciseCollection.doc(name).set({
-      "name": name,
-      "description": description,
-      "videoLink": link
-    });
+  Future createExercise(String name, String description, String link) async {
+    await exerciseCollection
+        .doc(name)
+        .set({"name": name, "description": description, "videoLink": link});
     var uid = name.toLowerCase().replaceAll(" ", "_");
     await exerciseTestCollection.doc(uid).set({
       "exercise_name": name,
@@ -165,7 +166,7 @@ class DatabaseService {
     return;
   }
 
-  Future<Map> getExerciseData(uid) async{
+  Future<Map> getExerciseData(uid) async {
     Map exerciseData = {};
     DocumentSnapshot exerciseSnap = await exerciseTestCollection.doc(uid).get();
     exerciseData["description"] = exerciseSnap.get("exercise_description");
@@ -176,20 +177,23 @@ class DatabaseService {
     return exerciseData;
   }
 
-  Future<void> removeExercise(String uid) async{
-   return await exerciseTestCollection.doc(uid).delete();
+  Future<void> removeExercise(String uid) async {
+    return await exerciseTestCollection.doc(uid).delete();
   }
 
-  Future<void> updateExerciseData(Map exerciseData, String uid) async{
+  Future<void> updateExerciseData(Map exerciseData, String uid) async {
     print(exerciseData);
     print(uid);
     print(exerciseTestCollection.doc(uid));
-    return await exerciseTestCollection.doc(uid).update({'exercise_description' : exerciseData["description"], 'exercise_name' : exerciseData["name"], 'video_sample' : exerciseData["video_link"]});
-
+    return await exerciseTestCollection.doc(uid).update({
+      'exercise_description': exerciseData["description"],
+      'exercise_name': exerciseData["name"],
+      'video_sample': exerciseData["video_link"]
+    });
   }
+
   Future<List<Map<String, dynamic>>> getExerciseReferences(
       List<String> selectedWorkouts) async {
-
     List<Map<String, dynamic>> exerciseData = [];
 
     for (String workoutName in selectedWorkouts) {
@@ -217,7 +221,7 @@ class DatabaseService {
       List<String> selectedWorkouts = workoutData['exercises'];
 
       List<Map<String, dynamic>> exerciseData =
-      await getExerciseReferences(selectedWorkouts);
+          await getExerciseReferences(selectedWorkouts);
 
       List<Map<String, dynamic>> exercisesToSave = exerciseData.map((data) {
         return {
@@ -260,8 +264,8 @@ class DatabaseService {
         "email": email,
         "phoneNumber": phoneNumber, // Add phone number here
         "createdAt": DateTime.now().millisecondsSinceEpoch.toString(),
-        "appointments" : [],
-        "workouts" : [],
+        "appointments": [],
+        "workouts": [],
       });
       print("User created successfully with phone number.");
     } catch (e) {
@@ -343,12 +347,12 @@ class DatabaseService {
         .orderBy("date", descending: false)
         .get()
         .then(
-          (querySnapshot) {
+      (querySnapshot) {
         for (var docSnapshot in querySnapshot.docs) {
           var doc = docSnapshot.data();
           for (var attr in attrs) {
             DateTime date =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
+                DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
             double? val = double.tryParse(doc[attr].toString());
             if (val != null) {
               graphData[attr]!["x"]!.add(date);
@@ -370,7 +374,6 @@ class DatabaseService {
     });
   }
 
-
   Future<bool> checkAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     if (snapshot.exists && snapshot.data() != null) {
@@ -378,7 +381,7 @@ class DatabaseService {
       for (int i = 0; i < appointments.length; i++) {
         if (appointments[i]["startTime"] != null) {
           DateTime startTime =
-          (appointments[i]["startTime"] as Timestamp).toDate();
+              (appointments[i]["startTime"] as Timestamp).toDate();
           String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
           if (storedDate == date) {
             return true;
@@ -396,7 +399,7 @@ class DatabaseService {
       for (int i = 0; i < appointments.length; i++) {
         if (appointments[i]["startTime"] != null) {
           DateTime startTime =
-          (appointments[i]["startTime"] as Timestamp).toDate();
+              (appointments[i]["startTime"] as Timestamp).toDate();
           String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
           if (storedDate == date) {
             return DateFormat('hh:mm a').format(startTime);
@@ -427,7 +430,7 @@ class DatabaseService {
         // Get the earliest appointment
         Map<String, dynamic> nextAppointment = appointments.first;
         DateTime appointmentDate =
-        (nextAppointment['startTime'] as Timestamp).toDate();
+            (nextAppointment['startTime'] as Timestamp).toDate();
         TimeOfDay appointmentTime = TimeOfDay.fromDateTime(appointmentDate);
 
         return {'date': appointmentDate, 'time': appointmentTime};
@@ -438,6 +441,7 @@ class DatabaseService {
     return null;
   }
 
+  /*
   Future<bool> checkAppointment(String date) async {
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     if (snapshot.exists && snapshot.data() != null) {
@@ -455,6 +459,7 @@ class DatabaseService {
     }
     return false;
   }
+  */
 
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -465,7 +470,7 @@ class DatabaseService {
         for (int j = 0; j < userAppointments.length; j++) {
           if (userAppointments[j]["startTime"] != null) {
             DateTime startTime =
-            (userAppointments[j]["startTime"] as Timestamp).toDate();
+                (userAppointments[j]["startTime"] as Timestamp).toDate();
             String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
             if (storedDate == date) {
               return true;
@@ -487,7 +492,7 @@ class DatabaseService {
         for (int j = 0; j < userAppointments.length; j++) {
           if (userAppointments[j]["startTime"] != null) {
             DateTime startTime =
-            (userAppointments[j]["startTime"] as Timestamp).toDate();
+                (userAppointments[j]["startTime"] as Timestamp).toDate();
             String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
             if (storedDate == date) {
               dayAppointments += (queryDocs.elementAt(i).get("name") +
@@ -496,10 +501,9 @@ class DatabaseService {
                   "\n\n");
             }
           }
-
-          }
         }
       }
+    }
 
     if (dayAppointments.trim().isEmpty) {
       dayAppointments = "No Appointments on:\n" + date;
@@ -521,7 +525,8 @@ class DatabaseService {
         for (String date in dates) {
           for (int i = 0; i < appointments.length; i++) {
             if (appointments[i]["startTime"] != null) {
-              DateTime startTime = (appointments[i]["startTime"] as Timestamp).toDate();
+              DateTime startTime =
+                  (appointments[i]["startTime"] as Timestamp).toDate();
               String storedDate = DateFormat('yyyy-MM-dd').format(startTime);
 
               if (storedDate == date) {
@@ -540,17 +545,22 @@ class DatabaseService {
         }
 
         // Step 2: Remove from allStartTimes Collection for the specific user only
-        DocumentReference startTimeDoc = FirebaseFirestore.instance.collection('appointments').doc('allStartTimes');
+        DocumentReference startTimeDoc = FirebaseFirestore.instance
+            .collection('appointments')
+            .doc('allStartTimes');
         DocumentSnapshot allStartTimesSnapshot = await startTimeDoc.get();
 
-        if (allStartTimesSnapshot.exists && allStartTimesSnapshot.data() != null) {
+        if (allStartTimesSnapshot.exists &&
+            allStartTimesSnapshot.data() != null) {
           List<dynamic> startTimes = allStartTimesSnapshot['startTimes'] ?? [];
           List<dynamic> updatedStartTimes = [];
 
           for (var startTimeEntry in startTimes) {
             if (startTimeEntry is Map<String, dynamic>) {
-              DateTime existingAppointmentStart = (startTimeEntry['timestamp'] as Timestamp).toDate();
-              String storedDate = DateFormat('yyyy-MM-dd').format(existingAppointmentStart);
+              DateTime existingAppointmentStart =
+                  (startTimeEntry['timestamp'] as Timestamp).toDate();
+              String storedDate =
+                  DateFormat('yyyy-MM-dd').format(existingAppointmentStart);
               String existingUserId = startTimeEntry['userId'];
 
               // Keep only those times that are not being canceled for the current user
@@ -571,27 +581,23 @@ class DatabaseService {
     }
   }
 
-
-
-  Future<String> findClientName(String uid) async{
+  Future<String> findClientName(String uid) async {
     DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
     var name = snapshot.get("name");
     print(name);
     return name;
   }
 
-  Future<List> getClients() async{
+  Future<List> getClients() async {
     QuerySnapshot snapshot = await usersCollection.get();
     List clientsHold = [];
-    for (var doc in snapshot.docs){
+    for (var doc in snapshot.docs) {
       clientsHold.add(doc.id);
     }
     globals.clientUIDS = clientsHold;
     print(globals.clientUIDS.length);
     return globals.clientUIDS;
-
   }
-
 
   Future<void> updateUserWeightAndHeight(String weight, String height) async {
     try {
@@ -607,18 +613,25 @@ class DatabaseService {
   }
 
   Future cancelClientAppointment(String date) async {
-    DocumentSnapshot snapshot = await usersCollection.doc(globals.selectedClient).get();
+    DocumentSnapshot snapshot =
+        await usersCollection.doc(globals.selectedClient).get();
     var appointments = snapshot.get("appointments");
 
     for (int i = 0; i < appointments.length; i++) {
       print(appointments[i]["startTime"].toDate().toString());
       print(date.split(" ")[0]);
       if (appointments[i]["startTime"] != null &&
-          appointments[i]["startTime"].toDate().toString().contains(date.split(" ")[0])) {
+          appointments[i]["startTime"]
+              .toDate()
+              .toString()
+              .contains(date.split(" ")[0])) {
         print("Date Found");
         return await usersCollection.doc(globals.selectedClient).update({
           "appointments": FieldValue.arrayRemove([
-            {"startTime": appointments[i]["startTime"], "endTime" : appointments[i]["endTime"]}
+            {
+              "startTime": appointments[i]["startTime"],
+              "endTime": appointments[i]["endTime"]
+            }
           ])
         });
       }
@@ -631,7 +644,7 @@ class DatabaseService {
 
   Future<String?> getExerciseVideo(String exercise) async {
     DocumentSnapshot snapshot =
-    await exerciseTestCollection.doc(exercise).get();
+        await exerciseTestCollection.doc(exercise).get();
     if (snapshot.exists) {
       return snapshot.get("video_sample");
     } else {
@@ -653,6 +666,21 @@ class DatabaseService {
     } catch (e) {
       print("Error fetching user name: $e");
       return null;
+    }
+  }
+
+  Future<String> getName(String uid) async {
+    try {
+      DocumentSnapshot snapshot = await usersCollection.doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.get("name");
+      } else {
+        print("User document does not exist");
+        return "None";
+      }
+    } catch (e) {
+      print("Error fetching name: $e");
+      return "None";
     }
   }
 
@@ -707,7 +735,7 @@ class DatabaseService {
 
     try {
       final response =
-      await http.post(apiUrl, body: jsonEncode(data), headers: headers);
+          await http.post(apiUrl, body: jsonEncode(data), headers: headers);
       if (response.statusCode != 202) {
         print(
             'Failed to send email. Received status code: ${response.statusCode}');
@@ -731,17 +759,15 @@ class DatabaseService {
     //Finds all available workouts and exercises in the database
     final allWorkouts = FirebaseFirestore.instance.collection("workouts");
     final allExercises =
-    FirebaseFirestore.instance.collection("exercises_test");
+        FirebaseFirestore.instance.collection("exercises_test");
 
     //Loops through all of the users's workouts
     for (int i = 0; i < userWorkouts.length; i++) {
-
-      if(userWorkouts[i]["uid"] != null) {
-
+      if (userWorkouts[i]["uid"] != null) {
         //For every workout assigned to the user, search our snap shot of all the workouts
         // saves a snapshot of the workout with an id that matches the uid of the user's workout
         DocumentSnapshot WorkoutSnap =
-        await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+            await allWorkouts.doc(userWorkouts[i]["uid"]).get();
         var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
         print(workoutExercises.toString());
@@ -749,7 +775,7 @@ class DatabaseService {
 
         for (int j = 0; j < workoutExercises.length; j++) {
           DocumentSnapshot exerciseSnap =
-          await allExercises.doc(workoutExercises[j]["uid"]).get();
+              await allExercises.doc(workoutExercises[j]["uid"]).get();
 
           globals.testWorkouts[workoutName].add({
             "uid": workoutExercises[j]["uid"],
@@ -758,16 +784,14 @@ class DatabaseService {
             "weight": workoutExercises[j]["weight"],
             "name": exerciseSnap["exercise_name"],
             "description": exerciseSnap["exercise_description"],
-            "video_sample" : exerciseSnap["video_sample"]
+            "video_sample": exerciseSnap["video_sample"]
           });
-
         }
 
         globals.userWorkouts.add(workoutName);
         print(globals.userWorkouts.toString());
         print(globals.testWorkouts.toString());
       }
-
     }
 
     return false;
@@ -780,20 +804,19 @@ class DatabaseService {
     var userWorkouts = snapshot.get("workouts");
     final allWorkouts = FirebaseFirestore.instance.collection("workouts");
     final allExercises =
-    FirebaseFirestore.instance.collection("exercises_test");
+        FirebaseFirestore.instance.collection("exercises_test");
     var workoutUIDS = [];
     for (int i = 0; i < userWorkouts.length; i++) {
       if (userWorkouts[i]["uid"] != null) {
-
         DocumentSnapshot WorkoutSnap =
-        await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+            await allWorkouts.doc(userWorkouts[i]["uid"]).get();
         var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
         print("Workout Exercises: " + workoutExercises.toString());
         globals.testWorkouts[workoutName] = [];
         for (int j = 0; j < workoutExercises.length; j++) {
           DocumentSnapshot exerciseSnap =
-          await allExercises.doc(workoutExercises[j]["uid"]).get();
+              await allExercises.doc(workoutExercises[j]["uid"]).get();
           globals.testWorkouts[workoutName].add({
             "uid": workoutExercises[j]["uid"],
             "reps": workoutExercises[j]["reps"],
@@ -801,7 +824,7 @@ class DatabaseService {
             "weight": workoutExercises[j]["weight"],
             "name": exerciseSnap["exercise_name"],
             "description": exerciseSnap["exercise_description"],
-            "video_sample" : exerciseSnap["video_sample"]
+            "video_sample": exerciseSnap["video_sample"]
           });
         }
         globals.userWorkouts.add(workoutName);
@@ -813,6 +836,7 @@ class DatabaseService {
 
     return workoutUIDS;
   }
+
   //Workout Page Widget
   //Dynamically calls exercise_names
   Future<List<String>> fetchExercises() async {
@@ -828,7 +852,7 @@ class DatabaseService {
 
         // Fetch the subcollection 'exercises' under each document
         final subcollectionSnapshot =
-        await doc.reference.collection('exercises').get();
+            await doc.reference.collection('exercises').get();
 
         // Iterate through each document in the subcollection
         for (var subDoc in subcollectionSnapshot.docs) {
@@ -849,58 +873,57 @@ class DatabaseService {
     }
   }
 
-
-  Future<List> fetchWorkoutExercises(uid) async{
+  Future<List> fetchWorkoutExercises(uid) async {
     DocumentSnapshot snapshot = await workoutCollection.doc(uid).get();
     List<dynamic> fetchedExercises = await snapshot["exercises"];
-    for(int i = 0; i < fetchedExercises.length; i++){
+    for (int i = 0; i < fetchedExercises.length; i++) {
       print("uid: " + fetchedExercises[i]["uid"].toString().split("/")[1]);
-      DocumentSnapshot exerciseSnap = await exerciseTestCollection.doc(fetchedExercises[i]["uid"].toString().split("/")[1].split(")")[0]).get();
-      fetchedExercises[i]["description"] = exerciseSnap["exercise_description"].toString();
+      DocumentSnapshot exerciseSnap = await exerciseTestCollection
+          .doc(
+              fetchedExercises[i]["uid"].toString().split("/")[1].split(")")[0])
+          .get();
+      fetchedExercises[i]["description"] =
+          exerciseSnap["exercise_description"].toString();
       fetchedExercises[i]["uid"] = exerciseSnap.id;
-
     }
     return fetchedExercises;
   }
 
-  Future<void> assignWorkout() async{
-    DocumentSnapshot workoutSnap = await usersCollection.doc(globals.selectedClient).get();
+  Future<void> assignWorkout() async {
+    DocumentSnapshot workoutSnap =
+        await usersCollection.doc(globals.selectedClient).get();
     List workoutList = workoutSnap.get("workouts");
 
-    for(var currWorkout in workoutList){
-      if(currWorkout["uid"] == globals.selectedWorkout){
+    for (var currWorkout in workoutList) {
+      if (currWorkout["uid"] == globals.selectedWorkout) {
         return;
       }
     }
 
-    
     return await usersCollection.doc(globals.selectedClient).update({
       "workouts": FieldValue.arrayUnion([
-        {"exercises" : globals.builtWorkout, "uid": globals.selectedWorkout}
+        {"exercises": globals.builtWorkout, "uid": globals.selectedWorkout}
       ])
     });
   }
 
-  Future<void> removeWorkout() async{
-    Map workoutHold = {"exercises" : [], "uid" : globals.selectedWorkout};
-    for (var exercise in globals.testWorkouts[globals.selectedWorkout]){
+  Future<void> removeWorkout() async {
+    Map workoutHold = {"exercises": [], "uid": globals.selectedWorkout};
+    for (var exercise in globals.testWorkouts[globals.selectedWorkout]) {
       workoutHold["exercises"].add({
-        "reps" : exercise["reps"],
-        "sets" : exercise["sets"],
-        "weight" : exercise["weight"],
-        "uid" : exercise["uid"]
+        "reps": exercise["reps"],
+        "sets": exercise["sets"],
+        "weight": exercise["weight"],
+        "uid": exercise["uid"]
       });
     }
     return await usersCollection.doc(globals.selectedClient).update({
-      "workouts": FieldValue.arrayRemove([
-        workoutHold]
-      )
+      "workouts": FieldValue.arrayRemove([workoutHold])
     });
   }
 
-
-
-  Future<List<Map<String, dynamic>>?> getChat(List<String> participants) async {
+  Stream<List<Map<String, dynamic>>> getChatMessagesStream(
+      List<String> participants) async* {
     participants.sort();
     try {
       QuerySnapshot querySnapshot = await chatCollection
@@ -909,27 +932,81 @@ class DatabaseService {
       if (querySnapshot.docs.isNotEmpty) {
         String chatId = querySnapshot.docs.first.get('chatId') as String;
 
-        QuerySnapshot messagesSnapshot = await chatMessageCollection
+        yield* chatMessageCollection
             .where('chatId', isEqualTo: chatId)
             .orderBy('timestamp')
-            .get();
-
-        if (messagesSnapshot.docs.isNotEmpty) {
-          return messagesSnapshot.docs
-              .map((doc) => doc.data() as Map<String, dynamic>)
-              .toList();
-        }
+            .snapshots()
+            .map((snapshot) => snapshot.docs
+                .map((doc) => doc.data() as Map<String, dynamic>)
+                .toList());
       } else {
         print("Error getting chatId.");
-        return null;
+        yield [];
       }
-      return null;
     } catch (e) {
-      print("Error fetching chat: $e");
-      return null;
+      print("Error fetching chat");
+      yield [];
     }
   }
 
+  Future<void> sendChat(List<String> participants, String text) async {
+    participants.sort();
+    final sender = await getUID();
+    String? receiver;
+    for (String participant in participants) {
+      if (participant != sender) {
+        receiver = participant;
+        break;
+      }
+    }
+    try {
+      QuerySnapshot querySnapshot = await chatCollection
+          .where('participants', isEqualTo: participants)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        String chatId = querySnapshot.docs.first.get('chatId') as String;
+        final message = {
+          'text': text,
+          'timestamp': Timestamp.now(),
+          'sender': sender,
+          'receiver': receiver,
+          'chatId': chatId
+        };
+        await chatMessageCollection.add(message);
+      } else {
+        print("Error getting chatId");
+      }
+    } catch (e) {
+      print("Error sending chat");
+    }
+  }
+
+  Future<void> createChat(List<String> participants) async {
+    try {
+      participants.sort();
+      String chatId = chatCollection.doc().id;
+      await chatCollection.add({
+        'chatId': chatId,
+        'participants': participants,
+        'createdAt': Timestamp.now(),
+      });
+    } catch (e) {
+      print('Error creating chat');
+    }
+  }
+
+  Stream<List<Map<String, dynamic>>> getChatStream() async* {
+    try {
+      final uid = await getUID();
+      yield* chatCollection
+          .where('participants', arrayContains: uid)
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((doc) => doc.data() as Map<String, dynamic>)
+              .toList());
+    } catch (e) {
+      print("Error fetching chat");
+      yield [];
+    }
+  }
 }
-
-
