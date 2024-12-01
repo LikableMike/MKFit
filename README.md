@@ -6,7 +6,8 @@
 
 # TonneItUp
 This application will facilitate communication between trainers and  clients, simplifying the tracking progress; our goal is not to replace existing apps like MyFitnessPal, but to complement them. 
-By focusing on monitoring BMI, updating progress photos, introducing new workout routines, and maintaining transparency, trainers can easily monitor their clients' exercises, track their progress over time, and make necessary adjustments to their exercise routines. Through our work, we strive to satisfy and improve the workout experience for trainer and client.  
+By focusing on monitoring BMI, updating progress photos, introducing new workout routines, and maintaining transparency, trainers can easily monitor their clients' exercises, track their progress over time, and make necessary adjustments to their exercise routines. Through our work, we strive to satisfy and improve the workout experience for trainer and client. 
+This application is designed to strengthen the bond between trainers and clients, providing personalized support tailored to each individual’s fitness objectives. By incorporating features that emphasize accountability and interaction, we aim to create a motivating and supportive platform that promotes long-term success.  
 
 
 ## Table of Contents
