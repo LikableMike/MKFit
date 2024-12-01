@@ -108,7 +108,7 @@ Testing will be done using this emulator.  You can run it at any time using the 
 
 With Android Studio's environment set up properly and the emulator downloaded, you will be able to run the project. Run it using the triangular "play" button on the top bar or by typing "flutter run" in the terminal window; if you have an emulator open it will automatically select the device for you.
 
-
+Ensure that the Flutter and Dart SDK paths are properly configured in Android Studio to prevent runtime errors. Verify that the emulator settings align with the application's target API level for accurate simulation. Whenever possible, test the application on physical devices to assess performance and compatibility in real-world scenarios. To streamline development, use Flutter's "Hot Reload" feature to instantly reflect changes in the application without rebuilding the project.
 
 ## Deployment
 ---
@@ -133,6 +133,11 @@ Testing Before Release:
 Post-Deployment:
 Monitoring app performance and user feedback.
 Submitting updates or fixes as needed.
+
+Compliance:
+ - Ensure the app adheres to app store policies, including user privacy and data handling, to avoid review rejections.
+ - Verify that all required permissions are clearly explained and justified to users during app use.
+ - Include clear disclaimers or consent forms for collecting sensitive data, ensuring compliance with regulations such as GDPR, CCPA, or other applicable laws.
 
 
 ## Timeline
