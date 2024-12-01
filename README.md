@@ -113,11 +113,26 @@ With Android Studio's environment set up properly and the emulator downloaded, y
 ## Deployment
 ---
 
-To deploy this app, users must first have a Google Play developer account or an iOS developer account.  The process for each differs, however as this is a flutter project, examples have been provided:
-https://flutter-ko.dev/deployment/android
-https://flutter-ko.dev/deployment/ios
+Prerequisites:
+ - Developer accounts for app stores (Google Play Developer and Apple Developer).
+ - Tools and environment setup (Flutter SDK, Android Studio, Xcode).
 
-For all applications intended for their respective App stores, apps must have a current version (pubspec.yaml) and be signed.  Please see the maintenance manual for more details.
+Steps for Android Deployment:
+ - Preparing the app for release (updating version numbers and metadata).
+ - Generating a signed APK (the Android app package).
+ - Uploading the app to the Google Play Console and submitting it for review.
+
+Steps for iOS Deployment:
+ - Preparing the app (configuring project files and signing certificates).
+ - Archiving the build in Xcode.
+ - Uploading to App Store Connect and submitting it for review.
+
+Testing Before Release:
+ - Ensuring the app works correctly on both platforms through emulators and real devices.
+
+Post-Deployment:
+Monitoring app performance and user feedback.
+Submitting updates or fixes as needed.
 
 
 ## Timeline
