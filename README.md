@@ -6,7 +6,7 @@
 
 # TonneItUp
 This application will facilitate communication between trainers and  clients, simplifying the tracking progress; our goal is not to replace existing apps like MyFitnessPal, but to complement them. 
-By focusing on monitoring BMI, updating progress photos, introducing new workout routines, and maintaining transparency, trainers can easily monitor their clients' exercises, track their progress over time, and make necessary adjustments to their exercise routines. Through our work, we strive to satisfy and improve the workout experience for trainer and client. 
+By focusing on monitoring BMI, updating progress photos, introducing new workout routines, and maintaining transparency, trainers can easily monitor their clients' exercises, track their progress over time, and make necessary adjustments to their exercise routines. Through our work, we strive to satisfy and improve the workout experience for trainers and clients. 
 This application is designed to strengthen the bond between trainers and clients, providing personalized support tailored to each individual’s fitness objectives. By incorporating features that emphasize accountability and interaction, we aim to create a motivating and supportive platform that promotes long-term success.  
 
 
@@ -146,9 +146,9 @@ Compliance:
 
 <b>March 2024:</b> Base Flutter demo completion.
 
-<b>April 2024:</b> Began front end with account creation, login, passwords pages.
+<b>April 2024:</b> Began front end with account creation, login, and password pages.
 
-<b>May 2024:</b> Functional front end for users nearing completion. Front page integration, ability to view worksouts as a PDF, calendars.
+<b>May 2024:</b> Functional front end for users nearing completion. Front page integration, ability to view workouts as a PDF, calendars.
 
 <b>September 2024:</b> Database implementation completed, back end work begins.
 
