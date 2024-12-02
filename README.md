@@ -80,7 +80,7 @@ By focusing on these aspirations, TonneItUp aims to redefine the standard for tr
 ## Testing
 ---
 
-<Testing for this application is done manually. To quickly verify that the system is still working after changes, identify the affected components and ensure all features, such as navigation and text entry, still function. Backend functionality can be tested by reviewing runtime logs seen in the terminal when running the app.
+Testing for this application is done manually. To quickly verify that the system is still working after changes, identify the affected components and ensure all features, such as navigation and text entry, still function. Backend functionality can be tested by reviewing runtime logs seen in the terminal when running the app.
 
 
 
