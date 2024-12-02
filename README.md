@@ -79,9 +79,9 @@ By focusing on these aspirations, TonneItUp aims to redefine the standard for tr
 
 ## Testing
 ---
-
+This sections outlines the testing framework and instructions for running tests to ensure application functionality.
 Testing for this application is done manually. To quickly verify that the system is still working after changes, identify the affected components and ensure all features, such as navigation and text entry, still function. Backend functionality can be tested by reviewing runtime logs seen in the terminal when running the app.
-
+Key areas are tested by verifying functionality through normal use cases. Efficiency and speed were tested through examining response times, data processing, transitions between app features, and how responsive the user interface is.
 
 
 
