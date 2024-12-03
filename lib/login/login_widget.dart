@@ -311,18 +311,17 @@ class _LoginWidgetState extends State<LoginWidget>
                                 if (user != null) {
                                   var UID = user.user?.uid;
 
-
-
-                                  if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" || UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
+                                  if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
+                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin_new');
-                                    }
+                                  }
 
                                   if (UID == "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3" ||
                                       UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
                                     context.pushNamed('admin_new');
-
                                   } else if (UID ==
-                                      "YIq1kNSHImdljlk1RKIULH22o2F3") {
+                                          "YIq1kNSHImdljlk1RKIULH22o2F3" ||
+                                      UID == "eYJLyiWEaVhwAtW3J0ZsPhg2mmc2") {
                                     context.pushNamed('admin_new');
                                   } else {
                                     globals.UID = UID;
@@ -337,7 +336,6 @@ class _LoginWidgetState extends State<LoginWidget>
                                 print(e);
                               }
                             },
-
                             text: 'Sign In',
                             options: FFButtonOptions(
                               width: 230.0,

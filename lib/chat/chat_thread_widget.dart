@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:m_k_fit/backend/firebase_storage/database.dart';
 import 'package:m_k_fit/chat/message_widget.dart';
@@ -16,6 +15,7 @@ class ChatThreadWidget extends StatefulWidget {
 }
 
 class _ChatThreadWidgetState extends State<ChatThreadWidget> {
+  String? UID;
   List<Map<String, dynamic>> chat = [];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _textController = TextEditingController();
@@ -23,16 +23,12 @@ class _ChatThreadWidgetState extends State<ChatThreadWidget> {
   @override
   void initState() {
     super.initState();
-    fetchChat();
+    getUID();
   }
 
-  void fetchChat() async {
-    final chatList = await DatabaseService().getChat(widget.participants);
-    if (chatList != null) {
-      setState(() {
-        chat = chatList;
-      });
-    }
+  Future<void> getUID() async {
+    UID = await DatabaseService().getUID();
+    setState(() {});
   }
 
   @override
@@ -44,21 +40,30 @@ class _ChatThreadWidgetState extends State<ChatThreadWidget> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.fromLTRB(0, 12, 0, 24),
-              reverse: true,
-              itemCount: chat.length,
-              itemBuilder: (context, index) {
-                final message = chat[index];
-                final senderUid = message['sender'];
-                final db = DatabaseService();
-                final UID = "User UID";
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: senderUid == UID
-                      ? MyMessageWidget(chatMessage: message)
-                      : MessageWidget(chatMessage: message),
+            child: StreamBuilder<List<Map<String, dynamic>>>(
+              stream:
+                  DatabaseService().getChatMessagesStream(widget.participants),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final chat = snapshot.data!;
+                return ListView.builder(
+                  padding: EdgeInsets.fromLTRB(0, 12, 0, 24),
+                  reverse: false,
+                  itemCount: chat.length,
+                  itemBuilder: (context, index) {
+                    final message = chat[index];
+                    final senderUid = message['sender'];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: senderUid == UID
+                          ? MyMessageWidget(chatMessage: message)
+                          : MessageWidget(chatMessage: message),
+                    );
+                  },
                 );
               },
             ),
@@ -138,34 +143,26 @@ class _ChatThreadWidgetState extends State<ChatThreadWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 4, 6, 4),
                             child: FlutterFlowIconButton(
-                                borderColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: 20,
-                                borderWidth: 1,
-                                buttonSize: 40,
-                                fillColor: FlutterFlowTheme.of(context).accent1,
-                                icon: Icon(
-                                  Icons.send_rounded,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 20,
-                                ),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    final text = _textController.text.trim();
-                                    _textController.clear();
-
-                                    final message = {
-                                      'text': text,
-                                      'timestamp': Timestamp.now(),
-                                      'sender': 'User UID',
-                                      'reciever': 'Admin UID',
-                                      'chatId': '1'
-                                    };
-                                    setState(() {
-                                      chat.insert(0, message);
-                                    });
-                                  }
-                                }),
+                              borderColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: 20,
+                              borderWidth: 1,
+                              buttonSize: 40,
+                              fillColor: FlutterFlowTheme.of(context).accent1,
+                              icon: Icon(
+                                Icons.send_rounded,
+                                color: FlutterFlowTheme.of(context).primary,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  final text = _textController.text.trim();
+                                  _textController.clear();
+                                  DatabaseService()
+                                      .sendChat(widget.participants, text);
+                                }
+                              },
+                            ),
                           ),
                         ),
                       ],
