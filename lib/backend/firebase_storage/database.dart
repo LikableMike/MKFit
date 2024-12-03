@@ -26,6 +26,7 @@ class DatabaseService {
   final progressCollection = FirebaseFirestore.instance.collection("progress");
   final workoutCollection = FirebaseFirestore.instance.collection("workouts");
   final adminCollection = FirebaseFirestore.instance.collection("Admin_UIDS");
+
   final List<String> adminUIDs = [
     "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3",
     "nOlIEy4WKkddkikrMPhQNLEjT9y1",
@@ -371,12 +372,13 @@ class DatabaseService {
         .get()
         .then(
       (querySnapshot) {
+
         for (var docSnapshot in querySnapshot.docs) {
           var doc = docSnapshot.data();
           for (var attr in attrs) {
             DateTime date =
                 DateTime.fromMillisecondsSinceEpoch(int.parse(doc["date"]));
-            double? val = double.tryParse(doc[attr].toString());
+            double? val = double.tryParse(doc["Weight in Lbs"].toString());
             if (val != null) {
               graphData[attr]!["x"]!.add(date);
               graphData[attr]!["y"]!.add(val);
@@ -386,6 +388,8 @@ class DatabaseService {
       },
       onError: (e) => print("Error getting graph data: $e"),
     );
+    print(graphData);
+    print(globals.UID);
     return graphData;
   }
 
@@ -1048,7 +1052,7 @@ class DatabaseService {
   Future<void> updateUserWeight(String weight) async {
       try {
         final String uid = await getUID(); // Fetch user ID
-        await usersCollection.doc(uid).update({"weight": weight});
+        await usersCollection.doc(globals.UID).update({"weight": weight});
         print("Weight updated successfully.");
       } catch (e) {
         print("Error updating weight: $e");
