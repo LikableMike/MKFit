@@ -41,8 +41,6 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
     super.dispose();
   }
 
-
-
   //----------UPDATE DAILY MESSAGE FUNCTION
   Future<void> _updateMessage(String newMessage) async {
     if (newMessage.isNotEmpty) {
@@ -102,7 +100,8 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                   //18 may be safer
                 } else if (newMessage.length > 20) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Message cannot exceed 20 characters.')),
+                    SnackBar(
+                        content: Text('Message cannot exceed 20 characters.')),
                   );
                 } else {
                   _updateMessage(newMessage);
@@ -115,7 +114,6 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -130,16 +128,17 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
           title: Text(
             'Admin',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-              fontFamily: 'Outfit',
-              color: FlutterFlowTheme.of(context).primaryBackground,
-              fontSize: 40.0,
-              letterSpacing: 0.0,
-              fontWeight: FontWeight.bold,
-            ),
+                  fontFamily: 'Outfit',
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  fontSize: 40.0,
+                  letterSpacing: 0.0,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 12.0, 8.0),
               child: FlutterFlowIconButton(
                 borderColor: const Color(0xFFE5E7EB),
                 borderRadius: 12.0,
@@ -167,8 +166,8 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 20.0,20.0, 20.0),
-
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      20.0, 20.0, 20.0, 20.0),
                 ),
                 StickyHeader(
                   overlapHeaders: false,
@@ -180,8 +179,9 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                     ),
                     decoration: BoxDecoration(
                       color: Color(0xFf4D4D4D),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12)),
                     ),
                     alignment: AlignmentDirectional(-1, 0),
                     child: Align(
@@ -190,13 +190,15 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: Text(
                           'Workout',
-                          style: FlutterFlowTheme.of(context).headlineMedium.override(
-                            fontFamily: 'Readex Pro',
-                            color: Colors.white,
-                            fontSize: 30,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                fontSize: 30,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
                     ),
@@ -292,12 +294,10 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                              color: Colors.black,
-                                              fontSize: 20
-                                            ),
-
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                    color: Colors.black,
+                                                    fontSize: 20),
                                           ),
                                         ),
                                       ),
@@ -390,11 +390,10 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                    color: Colors.black,
+                                                    fontSize: 20),
                                           ),
                                         ),
                                       ),
@@ -487,11 +486,10 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                    color: Colors.black,
+                                                    fontSize: 20),
                                           ),
                                         ),
                                       ),
@@ -584,11 +582,10 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                    color: Colors.black,
+                                                    fontSize: 20),
                                           ),
                                         ),
                                       ),
@@ -628,13 +625,15 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: Text(
                           'Daily Message',
-                          style: FlutterFlowTheme.of(context).headlineMedium.override(
-                            fontFamily: 'Readex Pro',
-                            color: Colors.white,
-                            fontSize: 30,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                fontSize: 30,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
                     ),
@@ -730,11 +729,10 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                    color: Colors.black,
+                                                    fontSize: 20),
                                           ),
                                         ),
                                       ),
@@ -751,7 +749,6 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -765,7 +762,7 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                       maxWidth: 400,
                     ),
                     decoration: BoxDecoration(
-                      color:Color(0xFf4D4D4D) ,
+                      color: Color(0xFf4D4D4D),
                       borderRadius: BorderRadius.circular(0),
                     ),
                     alignment: AlignmentDirectional(-1, 0),
@@ -775,13 +772,15 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: Text(
                           'Misc',
-                          style: FlutterFlowTheme.of(context).headlineMedium.override(
-                            fontFamily: 'Readex Pro',
-                            color: Colors.white,
-                            fontSize: 30,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                fontSize: 30,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
                     ),
@@ -877,11 +876,10 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                    color: Colors.black,
+                                                    fontSize: 20),
                                           ),
                                         ),
                                       ),
@@ -939,7 +937,7 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -957,28 +955,121 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .titleMedium
                                                 .override(
-                                              fontFamily: 'Inter',
-                                              color: Colors.white,
-                                              letterSpacing: 0.0,
-                                            ),
+                                                  fontFamily: 'Inter',
+                                                  color: Colors.white,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           ),
                                         ),
                                       ),
                                       Expanded(
                                         child: Padding(
                                           padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              12, 0, 12, 0),
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12, 0, 12, 0),
                                           child: Text(
                                             'Clients',
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 34,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('chat_list');
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 0,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      offset: Offset(0, 1),
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(0),
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 12, 16, 12),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 0, 0),
+                                        child: Container(
+                                          width: 44,
+                                          height: 44,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF86BD92),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          alignment: AlignmentDirectional(0, 0),
+                                          child: Text(
+                                            'M',
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  color: Colors.white,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12, 0, 12, 0),
+                                          child: Text(
+                                            'Messages',
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleSmall
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                ),
                                           ),
                                         ),
                                       ),
@@ -1009,11 +1100,9 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                       constraints: BoxConstraints(
                         maxWidth: 400,
                       ),
-
                       alignment: AlignmentDirectional(-1, 0),
                       child: Align(
                         alignment: AlignmentDirectional(-1, 0),
-
                       ),
                     ),
                     content: Container(),

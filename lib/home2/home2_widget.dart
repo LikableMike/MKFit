@@ -40,7 +40,6 @@ import 'package:m_k_fit/pages/progress_page/progress_page_model.dart';
 import 'package:m_k_fit/chat/chat_thread_widget.dart';
 import 'package:m_k_fit/backend/firebase_storage/database.dart';
 
-
 import 'home2_model.dart';
 export 'home2_model.dart';
 
@@ -61,6 +60,8 @@ class _Home2WidgetState extends State<Home2Widget> {
     "bmi": {"x": [], "y": []}
   };
 
+  String? UID;
+
   final DatabaseService databaseService = DatabaseService();
 
   @override
@@ -68,7 +69,13 @@ class _Home2WidgetState extends State<Home2Widget> {
     super.initState();
     _model = createModel(context, () => Home2Model());
     getGraphData();
+    fetchUID();
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+  }
+
+  Future<void> fetchUID() async {
+    UID = await DatabaseService().getUID();
+    setState(() {});
   }
 
   Future getGraphData() async {
@@ -327,55 +334,74 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   height: 100,
                                   decoration: const BoxDecoration(),
                                   child: Align(
-                                    alignment: const AlignmentDirectional(-1, 0),
+                                    alignment:
+                                        const AlignmentDirectional(-1, 0),
                                     child: FutureBuilder<Map<String, dynamic>?>(
-                                      future: DatabaseService().getNextAppointment(), // Fetch the next appointment
-                                      builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
-                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                      future: DatabaseService()
+                                          .getNextAppointment(), // Fetch the next appointment
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<Map<String, dynamic>?>
+                                              snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
                                           // Display a loading indicator
                                           return Text(
                                             'Loading...',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
                                         } else if (snapshot.hasError) {
                                           // Display an error message
                                           return Text(
                                             'Error: ${snapshot.error}',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
-                                        } else if (snapshot.hasData && snapshot.data != null) {
+                                        } else if (snapshot.hasData &&
+                                            snapshot.data != null) {
                                           // Extract the date and time
-                                          DateTime appointmentDate = snapshot.data!['date'];
-                                          TimeOfDay appointmentTime = snapshot.data!['time'];
+                                          DateTime appointmentDate =
+                                              snapshot.data!['date'];
+                                          TimeOfDay appointmentTime =
+                                              snapshot.data!['time'];
 
-                                          String formattedDate = DateFormat('MMMM d').format(appointmentDate);
-                                          String formattedTime = appointmentTime.format(context);
+                                          String formattedDate =
+                                              DateFormat('MMMM d')
+                                                  .format(appointmentDate);
+                                          String formattedTime =
+                                              appointmentTime.format(context);
 
                                           return Text(
                                             'Next Appointment: \n$formattedDate, at $formattedTime',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
                                         } else {
                                           // If no data is available
                                           return Text(
                                             'No upcoming appointments',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
                                         }
                                       },
@@ -383,7 +409,6 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                         ),
@@ -404,10 +429,8 @@ class _Home2WidgetState extends State<Home2Widget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
-
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               color: Color(0xFF86BD92),
-
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -490,7 +513,6 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-
                                   Container(
                                     width: 300,
                                     height: 100,
@@ -509,7 +531,9 @@ class _Home2WidgetState extends State<Home2Widget> {
                                               xData: graphData["weight"]!["x"]!,
                                               yData: graphData["weight"]!["y"]!,
                                               settings: LineChartBarData(
-                                                color: FlutterFlowTheme.of(context).primary,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                                 barWidth: 2,
                                                 isCurved: true,
                                                 preventCurveOverShooting: true,
@@ -528,17 +552,16 @@ class _Home2WidgetState extends State<Home2Widget> {
                                             showBorder: false,
                                           ),
                                           axisBounds: AxisBounds(),
-                                          xAxisLabelInfo: AxisLabelInfo(
-
-                                          ),
+                                          xAxisLabelInfo: AxisLabelInfo(),
                                           yAxisLabelInfo: AxisLabelInfo(
                                             title: 'Weight lb.',
-                                            titleTextStyle: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                            titleTextStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      letterSpacing: 0.0,
+                                                    ),
                                           ),
                                         ),
                                       ),
@@ -571,10 +594,8 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     24, 0, 24, 0),
                                 iconPadding:
-
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 color: Color(0xFF86BD92),
-
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -723,7 +744,10 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ChatThreadWidget(
-                                    participants: ['User UID', 'Admin UID'],
+                                    participants: [
+                                      UID!,
+                                      'eYJLyiWEaVhwAtW3J0ZsPhg2mmc2'
+                                    ],
                                   ),
                                 ),
                               );
@@ -734,17 +758,15 @@ class _Home2WidgetState extends State<Home2Widget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               color: Color(0xFF86BD92),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                fontFamily: 'Inter',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-
-                              ),
-
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
                               elevation: 3,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
