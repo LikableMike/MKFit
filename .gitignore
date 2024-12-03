@@ -70,7 +70,7 @@ android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 # iOS
 ios/Flutter/flutter_export_environment.sh
 ios/Flutter/Generated.xcconfig
-ios/Runner/GeneratedPluginRegistrant.*
-ios/Runner.xcworkspace/xcuserdata/
-ios/Runner.xcworkspace/contents.xcworkspacedata
+ios/TonneItUp/GeneratedPluginRegistrant.*
+ios/TonneItUp.xcworkspace/xcuserdata/
+ios/TonneItUp.xcworkspace/contents.xcworkspacedata
 ios/.symlinks/
