@@ -410,7 +410,7 @@ class DatabaseService {
     return null; // Return null if no appointment is found for the given date
   }
 
-  Future<Map<String, dynamic>?> getNextAppointment() async {
+  Future<Map<String, dynamic>?> getNextAppointment() async  {
     try {
       DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
       if (snapshot.exists && snapshot.data() != null) {
@@ -441,8 +441,8 @@ class DatabaseService {
     return null;
   }
 
-  /*
-  Future<bool> checkAppointment(String date) async {
+  /*Future<bool> checkAppointment(String date) async {
+
     DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
     if (snapshot.exists && snapshot.data() != null) {
       var appointments = snapshot.get("appointments");
@@ -458,8 +458,9 @@ class DatabaseService {
       }
     }
     return false;
-  }
-  */
+
+  }*/
+
 
   Future<bool> checkAdminAppointments(String date) async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -900,6 +901,7 @@ class DatabaseService {
       }
     }
 
+
     return await usersCollection.doc(globals.selectedClient).update({
       "workouts": FieldValue.arrayUnion([
         {"exercises": globals.builtWorkout, "uid": globals.selectedWorkout}
@@ -949,6 +951,7 @@ class DatabaseService {
     }
   }
 
+
   Future<void> sendChat(List<String> participants, String text) async {
     participants.sort();
     final sender = await getUID();
@@ -980,6 +983,17 @@ class DatabaseService {
       print("Error sending chat");
     }
   }
+
+  Future<void> updateUserWeight(String weight) async {
+      try {
+        final String uid = await getUID(); // Fetch user ID
+        await usersCollection.doc(uid).update({"weight": weight});
+        print("Weight updated successfully.");
+      } catch (e) {
+        print("Error updating weight: $e");
+      }
+    }
+
 
   Future<void> createChat(List<String> participants) async {
     try {
