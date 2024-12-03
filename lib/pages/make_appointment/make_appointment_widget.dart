@@ -78,6 +78,9 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
               groupedTimes[dateOnly] = {};
             }
             groupedTimes[dateOnly]!.add(timeOnly);
+            groupedTimes[dateOnly]!.add(plusMinutes(timeOnly, 15));
+            groupedTimes[dateOnly]!.add(plusMinutes(timeOnly, 30));
+            groupedTimes[dateOnly]!.add(plusMinutes(timeOnly, 45));
           }
         }
       }
@@ -87,6 +90,22 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
       });
     } catch (e) {
       print("Error fetching unavailable times: $e");
+    }
+  }
+
+  TimeOfDay plusMinutes(TimeOfDay start, int minutes) {
+    if (minutes == 0) {
+      return start;
+    } else {
+      int mofd = start.hour * 60 + start.minute;
+      int newMofd = ((minutes % 1440) + mofd + 1440) % 1440;
+      if (mofd == newMofd) {
+        return start;
+      } else {
+        int newHour = newMofd ~/ 60;
+        int newMinute = newMofd % 60;
+        return TimeOfDay(hour: newHour, minute: newMinute);
+      }
     }
   }
 
@@ -106,11 +125,29 @@ class _MakeAppointmentWidgetState extends State<MakeAppointmentWidget>
   List<String> getAvailableTimes(BuildContext context) {
     return [
       TimeOfDay(hour: 10, minute: 0).format(context),
+      TimeOfDay(hour: 10, minute: 15).format(context),
+      TimeOfDay(hour: 10, minute: 30).format(context),
+      TimeOfDay(hour: 10, minute: 45).format(context),
       TimeOfDay(hour: 11, minute: 0).format(context),
+      TimeOfDay(hour: 11, minute: 15).format(context),
+      TimeOfDay(hour: 11, minute: 30).format(context),
+      TimeOfDay(hour: 11, minute: 45).format(context),
       TimeOfDay(hour: 12, minute: 0).format(context),
+      TimeOfDay(hour: 12, minute: 15).format(context),
+      TimeOfDay(hour: 12, minute: 30).format(context),
+      TimeOfDay(hour: 12, minute: 45).format(context),
       TimeOfDay(hour: 13, minute: 0).format(context),
+      TimeOfDay(hour: 13, minute: 15).format(context),
+      TimeOfDay(hour: 13, minute: 30).format(context),
+      TimeOfDay(hour: 13, minute: 45).format(context),
       TimeOfDay(hour: 14, minute: 0).format(context),
+      TimeOfDay(hour: 14, minute: 15).format(context),
+      TimeOfDay(hour: 14, minute: 30).format(context),
+      TimeOfDay(hour: 14, minute: 45).format(context),
       TimeOfDay(hour: 15, minute: 0).format(context),
+      TimeOfDay(hour: 15, minute: 15).format(context),
+      TimeOfDay(hour: 15, minute: 30).format(context),
+      TimeOfDay(hour: 15, minute: 45).format(context),
       TimeOfDay(hour: 16, minute: 0).format(context),
     ];
   }

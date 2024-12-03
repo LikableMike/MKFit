@@ -48,3 +48,5 @@ export '/ExerciseValuesPage/exercise_value_page_widget.dart'
 export '/ExerciseList/exercise_list_widget.dart' show ExerciseListWidget;
 export '/UpdateExercise/update_exercise_widget.dart' show UpdateExerciseWidget;
 export '/chat/chat_list_widget.dart' show ChatListWidget;
+export '/WorkoutList/workout_list_widget.dart' show WorkoutListWidget;
+export '/ClientDetailsPage/client_details_widget.dart' show ClientDetailsWidget;

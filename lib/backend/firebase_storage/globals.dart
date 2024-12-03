@@ -17,6 +17,7 @@ List userWorkouts = [];
 
 var selectedWorkout = "";
 var selectedClient = "";
+var selectedClientName = "";
 Map selectedExerciseData = {};
 var selectedExercise = "";
 List builtWorkout = [];

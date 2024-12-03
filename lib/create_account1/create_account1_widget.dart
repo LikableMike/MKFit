@@ -644,7 +644,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       );
                                       await databaseService.createChat([
                                         await databaseService.getUID(),
-                                        'eYJLyiWEaVhwAtW3J0ZsPhg2mmc2'
+                                        await databaseService.getMainAdminUID()
                                       ]);
                                     },
                                     text: 'Create Account',

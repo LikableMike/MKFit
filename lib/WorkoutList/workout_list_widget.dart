@@ -7,20 +7,20 @@ import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
 import '../backend/firebase_storage/database.dart';
 import 'package:flutter/services.dart';
-import 'exercise_list_model.dart';
-export 'exercise_list_model.dart';
+import 'workout_list_model.dart';
+export 'workout_list_model.dart';
 import "/backend/firebase_storage/globals.dart" as globals;
 
-class ExerciseListWidget extends StatefulWidget {
-  const ExerciseListWidget({super.key});
+class WorkoutListWidget extends StatefulWidget {
+  const WorkoutListWidget({super.key});
 
   @override
-  State<ExerciseListWidget> createState() =>
-      _ExerciseListWidgetState();
+  State<WorkoutListWidget> createState() =>
+      _WorkoutListWidgetState();
 }
 
-class _ExerciseListWidgetState extends State<ExerciseListWidget> {
-  late ExerciseListModel _model;
+class _WorkoutListWidgetState extends State<WorkoutListWidget> {
+  late WorkoutListModel _model;
   List<String> selectedWorkouts = [];
   List<String> workouts = [];
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,7 +31,7 @@ class _ExerciseListWidgetState extends State<ExerciseListWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ExerciseListModel());
+    _model = createModel(context, () => WorkoutListModel());
 
     _model.workoutNameTextController ??= TextEditingController();
     _model.workoutNameFocusNode ??= FocusNode();
@@ -66,7 +66,7 @@ class _ExerciseListWidgetState extends State<ExerciseListWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Update Exercise"
+                  "View Workouts"
               )
 
             ].divide(const SizedBox(height: 4.0)),
@@ -99,7 +99,7 @@ class _ExerciseListWidgetState extends State<ExerciseListWidget> {
           child: Column(
               children: [
                 Expanded(child: FutureBuilder<Map>(
-                  future: DatabaseService().getAllExercises(),
+                  future: DatabaseService().getAllWorkouts(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // Show a loading spinner while waiting for data
@@ -109,7 +109,7 @@ class _ExerciseListWidgetState extends State<ExerciseListWidget> {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       // Show a message if the list is empty
-                      return Center(child: Text('No Exercises found.'));
+                      return Center(child: Text('No Workouts found.'));
                     }
 
                     // If data is loaded successfully, use it
@@ -168,11 +168,7 @@ class _ExerciseListWidgetState extends State<ExerciseListWidget> {
                                 color: Color(0xFF7EB687),
                                 size: 50,
                               ),
-                              onPressed: () async {
-                                context.pushNamed("CreateExercisePage");
-                                // Show a dialog to confirm if the user wants to cancel the appointment
 
-                              },
                             ),
                           ),
 
@@ -292,8 +288,7 @@ class WorkoutWidget extends StatelessWidget {
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () async {
-                                        globals.selectedWorkout = name;
-                                        await DatabaseService().removeExercise(uid);
+                                        await DatabaseService().deleteWorkout(name);
                                         Navigator.of(context).pop(true); // Return 'true' for "Yes"
                                       },
                                       child: Text('Yes'),
@@ -373,7 +368,7 @@ class BuildExerciseList extends StatelessWidget {
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       children: List.generate(Exercises.length, (index) {
-        return WorkoutWidget(name: Exercises[Exercises.keys.elementAt(index)], uid: Exercises.keys.elementAt(index));
+        return WorkoutWidget(name: Exercises.keys.elementAt(index), uid: Exercises.keys.elementAt(index));
       }),
     );
   }

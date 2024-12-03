@@ -321,7 +321,7 @@ List fixDates(dates){
   var newDates = [];
   var finalDates = [];
   for(int i = 0; i < dates.length; i++){
-    newDates.add(dates[i]["startTime"].toDate().toString());
+    newDates.add(DateFormat('yyyy-MM-dd h:mm a').format(dates[i]["startTime"].toDate()));
   }
   for(int i = 0; i < (newDates.length); i++){
     var currDate = newDates[i].split(" ")[0].split("-");
@@ -329,14 +329,15 @@ List fixDates(dates){
       print(todaysDate.toString() + "  " + currDate.toString() + " Index:" +
           i.toString());
       if (int.parse(currDate[0]) >= int.parse(todaysDate[0])) {
+
         if (int.parse(currDate[1]) > int.parse(todaysDate[1])) {
           finalDates.add(
-              newDates[i].split(".")[0]);
+              newDates[i]);
         }
         else if (int.parse(currDate[1]) == int.parse(todaysDate[1]) &&
             int.parse(currDate[2]) >= int.parse(todaysDate[2])) {
           finalDates.add(
-              newDates[i].split(".")[0]);
+              newDates[i]);
         }
       }
 

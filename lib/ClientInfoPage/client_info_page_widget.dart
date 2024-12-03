@@ -231,7 +231,56 @@ class _ClientInfoPageWidgetState extends State<ClientInfoPageWidget> {
                       ]
                   ),
 
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
 
+                  ),
+
+                  Row(
+                    //padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
+                      children:[
+                        FlutterFlowIconButton(
+                          borderColor: Color(0xFf1c502d),
+                          borderRadius: 40,
+                          borderWidth: 4,
+                          buttonSize: 90,
+                          icon: Icon(
+                            Icons.info_outline,
+                            color: Color(0xFF7EB687),
+                            size: 60,
+                          ),
+                          onPressed: () {
+                            context.pushNamed("ClientDetails");
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
+
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.pushNamed("ClientDetails");
+                          },
+                          child: Text(
+                            'Client \nDetails',
+                            style: FlutterFlowTheme.of(context).labelMedium.override(
+                              fontFamily: 'Outfit',
+                              color: const Color(0xFF606A85),
+                              fontSize: 30.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                          ),
+
+                        )
+
+
+                      ]
+                  ),
 
 
 
