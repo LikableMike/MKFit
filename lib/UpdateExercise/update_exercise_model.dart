@@ -20,16 +20,10 @@ class UpdateExerciseModel extends FlutterFlowModel<UpdateExerciseWidget> {
   }
 
   // State field(s) for age widget.
-  FocusNode? ageFocusNode;
-  TextEditingController? ageTextController;
-  String? Function(BuildContext, String?)? ageTextControllerValidator;
-  String? _ageTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Please enter an age for the patient.';
-    }
+  FocusNode? DocLinkFocusNode;
+  TextEditingController? DocLinkController;
+  String? Function(BuildContext, String?)? DocLinkControllerValidator;
 
-    return null;
-  }
 
   // State field(s) for phoneNumber widget.
   FocusNode? phoneNumberFocusNode;
@@ -52,7 +46,6 @@ class UpdateExerciseModel extends FlutterFlowModel<UpdateExerciseWidget> {
   @override
   void initState(BuildContext context) {
     fullNameTextControllerValidator = _fullNameTextControllerValidator;
-    ageTextControllerValidator = _ageTextControllerValidator;
   }
 
   @override
@@ -60,8 +53,8 @@ class UpdateExerciseModel extends FlutterFlowModel<UpdateExerciseWidget> {
     fullNameFocusNode?.dispose();
     fullNameTextController?.dispose();
 
-    ageFocusNode?.dispose();
-    ageTextController?.dispose();
+    DocLinkFocusNode?.dispose();
+    DocLinkController?.dispose();
 
     phoneNumberFocusNode?.dispose();
     phoneNumberTextController?.dispose();

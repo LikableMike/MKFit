@@ -41,11 +41,33 @@ class _ChatWidgetState extends State<ChatWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatThreadWidget(
-              participants: [
-                widget.participant,
-                'eYJLyiWEaVhwAtW3J0ZsPhg2mmc2',
-              ],
+            builder: (context) => FutureBuilder<String>(
+              future: DatabaseService().getMainAdminUID(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  ); // Loading indicator while the future is being resolved
+                }
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Error loading admin UID'),
+                  );
+                }
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return const Center(
+                    child: Text('No data available'),
+                  );
+                }
+
+                // Once the Future resolves, build the ChatThreadWidget
+                return ChatThreadWidget(
+                  participants: [
+                    widget.participant,
+                    snapshot.data!,
+                  ],
+                );
+              },
             ),
           ),
         );

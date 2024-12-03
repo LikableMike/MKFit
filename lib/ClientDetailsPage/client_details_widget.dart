@@ -4,31 +4,31 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'individual_workout_page_model.dart';
-export 'individual_workout_page_model.dart';
+import 'client_details_model.dart';
+export 'client_details_model.dart';
 import 'package:m_k_fit/backend/firebase_storage/database.dart';
 import "/backend/firebase_storage/globals.dart" as globals;
 import 'package:url_launcher/url_launcher.dart';
 
 
-class IndividualWorkoutPageWidget extends StatefulWidget {
-  const IndividualWorkoutPageWidget({super.key});
+class ClientDetailsPageWidget extends StatefulWidget {
+  const ClientDetailsPageWidget({super.key});
 
   @override
-  State<IndividualWorkoutPageWidget> createState() =>
-      _IndividualWorkoutPageWidgetState();
+  State<ClientDetailsPageWidget> createState() =>
+      _ClientDetailsPageWidgetState();
 }
 
-class _IndividualWorkoutPageWidgetState
-    extends State<IndividualWorkoutPageWidget> {
-  late IndividualWorkoutPageModel _model;
+class _ClientDetailsPageWidgetState
+    extends State<ClientDetailsPageWidget> {
+  late ClientDetailsPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => IndividualWorkoutPageModel());
+    _model = createModel(context, () => ClientDetailsPageModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -64,13 +64,32 @@ class _IndividualWorkoutPageWidgetState
               context.pop();
             },
           ),
-          title: Text(
-            globals.selectedWorkout,
-            style: FlutterFlowTheme.of(context).headlineLarge.override(
-                  fontFamily: 'Readex Pro',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  letterSpacing: 0.0,
-                ),
+          title: FutureBuilder<String>(
+            future: DatabaseService().findClientName(globals.selectedClient),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Display a loading indicator while waiting
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                // Handle errors here
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.hasData) {
+                // Display the text once data is available
+                return Text(
+                  snapshot.data!,
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Readex Pro',
+                    color: Colors.white,
+                    fontSize: 34,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              } else {
+                // Handle the case where there is no data
+                return Text('No client name found');
+              }
+            },
           ),
           actions: const [],
           centerTitle: false,
@@ -79,7 +98,116 @@ class _IndividualWorkoutPageWidgetState
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
-            child: BuildWorkouts(Workouts: globals.testWorkouts[globals.selectedWorkout],)
+              child: Padding(padding: const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 8.0),
+                    child:
+              Container(
+                  child:
+                  FutureBuilder<Map>(
+                    future: DatabaseService().getClientDetails(globals.selectedClient),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Show a loading spinner while waiting for data
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        // Show error message if something went wrong
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        // Show a message if the list is empty
+                        return Center(child: Text('No clients found.'));
+                      }
+
+                      // If data is loaded successfully, use it
+                      var clientDetails = snapshot.data!;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("User Details:",
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                              fontFamily: 'Readex Pro',
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              letterSpacing: 0.0,
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold
+                            ),
+                          textAlign: TextAlign.left,),
+                          Text("Name: " + clientDetails["name"],
+
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                              fontFamily: 'Inter',
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              letterSpacing: 0.0,
+                              fontSize: 20
+                            ),
+                            textAlign: TextAlign.left,),
+                          Text("Email: " + clientDetails["email"],
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                                fontSize: 20
+                            ),
+                            textAlign: TextAlign.left,),
+                          Text("Phone Number: " + clientDetails["phone"],
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                                fontSize: 20
+                            ),
+                            textAlign: TextAlign.left,),
+                          Text("Current Weight: " + clientDetails["weight"],
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                                fontSize: 20
+                            ),
+                            textAlign: TextAlign.left,),
+                          Text("Height: " + clientDetails["height"],
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                                fontSize: 20
+                            ),
+                            textAlign: TextAlign.left,),
+                          Text("Client Since: " + clientDetails["accountCreated"],
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                                fontSize: 20
+                            ),
+                            textAlign: TextAlign.left,),
+                        ],
+                      );
+
+                    },
+                  ),
+              ),
+      ),
+
           ),
         ),
       ),
@@ -97,7 +225,7 @@ class WorkoutSection extends StatelessWidget{
     this.reps = 4,
     this.url = "",
     this.docLink = "",
-});
+  });
 
   final String title;
   final double weight;
@@ -194,32 +322,32 @@ class WorkoutSection extends StatelessWidget{
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
-                  child: Container(
-                  width: double.infinity,
-                  height: 80,
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        15.0, 0.0, 0.0, 15.0),
-                    child: Text(
-                      description,
-                      style: FlutterFlowTheme.of(context)
-                          .bodyMedium
-                          .override(
-                        fontFamily: 'Inter',
-                        color: FlutterFlowTheme.of(context)
-                            .primaryBackground,
-                        letterSpacing: 0.0,
+                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 80,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            15.0, 0.0, 0.0, 15.0),
+                        child: Text(
+                          description,
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                            fontFamily: 'Inter',
+                            color: FlutterFlowTheme.of(context)
+                                .primaryBackground,
+                            letterSpacing: 0.0,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  )
+                    )
                 ),
                 Container(
-                  width: double.infinity,
-                  height: 42.0,
-                  decoration: const BoxDecoration(),
-                  child: SetBubble(height: 40.0,width: 40.0,reps: reps,sets: sets)
+                    width: double.infinity,
+                    height: 42.0,
+                    decoration: const BoxDecoration(),
+                    child: SetBubble(height: 40.0,width: 40.0,reps: reps,sets: sets)
                 ),
                 Container(
                   width: double.infinity,
@@ -427,11 +555,11 @@ class _SetBubbleState extends State<SetBubble> {
             ),
           ),
         ),
-          Row(
+        Row(
           children: List.generate(widget.sets, (index) {
-      return ColorChangingBubble(width: widget.width, height: widget.height, reps: widget.reps, startFillColor: startfillColor, completedFillColor: completedfillColor,);
-    }),
-    ),
+            return ColorChangingBubble(width: widget.width, height: widget.height, reps: widget.reps, startFillColor: startfillColor, completedFillColor: completedfillColor,);
+          }),
+        ),
       ],
     );
 

@@ -293,7 +293,10 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                     .secondaryBackground,
                                 showBorder: false,
                               ),
-                              axisBounds: AxisBounds(),
+                              axisBounds: AxisBounds(
+                                minY: 90,
+                                maxY: 300
+                              ),
                               xAxisLabelInfo: AxisLabelInfo(
                                 title: 'Time',
                                 titleTextStyle: FlutterFlowTheme.of(context)
@@ -371,7 +374,7 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      12, 0, 0, 0),
+                                      12, 0, 0,12),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -382,7 +385,9 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 4),
                                         child: Text(
-                                          'Your BMI',
+                                          'Your BMI: ' + (bmiValue != null
+                                              ? '${bmiValue!.toStringAsFixed(1)}'
+                                              : 'Calculating'),
                                           style: FlutterFlowTheme.of(context)
                                               .headlineMedium
                                               .override(
@@ -395,60 +400,12 @@ class _ProgressPageWidgetState extends State<ProgressPageWidget> {
                                   ),
                                 ),
                               ),
-                              FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 60,
-                                icon: Icon(
-                                  Icons.add_circle_outline_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 30,
-                                ),
 
-                                onPressed: () async {
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    enableDrag: false,
-                                    context: context,
-                                    builder: (context) {
-                                      return GestureDetector(
-                                        onTap: () =>
-                                            FocusScope.of(context).unfocus(),
-                                        child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: ProgressComponentWidget(
-                                              input: "bmi"),
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => safeSetState(() {}));
-                                },
-
-                              ),
                             ],
                           ),
                         ),
                         // Display BMI value
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
-                          child: Text(
-                            bmiValue != null
-                                ? 'Current BMI: ${bmiValue!.toStringAsFixed(1)}'
-                                : 'Calculating BMI...',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
+
                       ],
                     ),
                   ),

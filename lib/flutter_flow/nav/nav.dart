@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:m_k_fit/AdminClientList/admin_client_list_widget.dart';
+import 'package:m_k_fit/ClientDetailsPage/client_details_widget.dart';
 import 'package:m_k_fit/ClientInfoPage/client_info_page_widget.dart';
 import 'package:provider/provider.dart';
 import '/backend/firebase_storage/globals.dart' as globals;
@@ -200,6 +201,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ExerciseList',
           path: '/ExerciseList',
           builder: (context, params) => const ExerciseListWidget(),
+        ),
+        FFRoute(
+          name: 'WorkoutList',
+          path: '/WorkoutList',
+          builder: (context, params) => const WorkoutListWidget(),
+        ),
+        FFRoute(
+          name: 'ClientDetails',
+          path: '/ClientDetails',
+          builder: (context, params) => const ClientDetailsPageWidget(),
         ),
         FFRoute(
           name: 'UpdateExercisePage',

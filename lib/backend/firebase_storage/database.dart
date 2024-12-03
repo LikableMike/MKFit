@@ -25,6 +25,7 @@ class DatabaseService {
   final usersCollection = FirebaseFirestore.instance.collection("users");
   final progressCollection = FirebaseFirestore.instance.collection("progress");
   final workoutCollection = FirebaseFirestore.instance.collection("workouts");
+  final adminCollection = FirebaseFirestore.instance.collection("Admin_UIDS");
   final List<String> adminUIDs = [
     "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3",
     "nOlIEy4WKkddkikrMPhQNLEjT9y1",
@@ -97,6 +98,26 @@ class DatabaseService {
     }
   }
 
+  Future<Map> getAllWorkouts() async {
+    try {
+      QuerySnapshot exerciseSnapshot = await workoutCollection.get();
+      var workoutDocs = exerciseSnapshot.docs;
+      Map workoutList = {};
+      for (int i = 0; i < workoutDocs.length; i++) {
+        workoutList[workoutDocs.elementAt(i).id] =
+            [];
+
+        for (int j = 0; j < workoutDocs.elementAt(i).get("exercises").length; j++){
+          workoutList[workoutDocs.elementAt(i).id].add(workoutDocs.elementAt(i).get("exercises").elementAt(j)["name"]);
+        }
+      }
+      return workoutList;
+    } catch (e) {
+      print("ERROR FINDING EXERCISES: $e");
+      return {};
+    }
+  }
+
   Future<void> updateUsername(String newUsername) async {
     try {
       final String uid = await getUID(); // Retrieve the current user's UID
@@ -153,15 +174,16 @@ class DatabaseService {
     }
   }
 
-  Future createExercise(String name, String description, String link) async {
+  Future createExercise(String name, String description, String link, String docLink) async {
     await exerciseCollection
         .doc(name)
         .set({"name": name, "description": description, "videoLink": link});
     var uid = name.toLowerCase().replaceAll(" ", "_");
     await exerciseTestCollection.doc(uid).set({
       "exercise_name": name,
-      "exercise_description": description,
-      "video_sample": link
+      "exercise_description": description != "" ? description : "No Description",
+      "video_sample": link != "" ? link : "No Video Link",
+      "doc_link" : docLink != "" ? docLink : "No Doc Link"
     });
     return;
   }
@@ -188,7 +210,8 @@ class DatabaseService {
     return await exerciseTestCollection.doc(uid).update({
       'exercise_description': exerciseData["description"],
       'exercise_name': exerciseData["name"],
-      'video_sample': exerciseData["video_link"]
+      'video_sample': exerciseData["video_link"],
+      "doc_link" : exerciseData["doc_link"]
     });
   }
 
@@ -410,6 +433,26 @@ class DatabaseService {
     return null; // Return null if no appointment is found for the given date
   }
 
+  Future<Map<String, dynamic>> getClientDetails(String UID) async{
+    DocumentSnapshot snapshot = await usersCollection.doc(UID).get();
+    if (snapshot.exists && snapshot.data() != null) {
+      var details = {
+        "name" : snapshot.get("name"),
+        "email" : snapshot.get("email"),
+        "phone" : snapshot.get("phoneNumber"),
+        "weight" : snapshot.get("weight"),
+        "height" : snapshot.get("height"),
+        "accountCreated" : DateFormat('MM-dd-yyyy').format(DateTime.fromMicrosecondsSinceEpoch(int.parse(snapshot.get("createdAt")))).toString()
+      };
+      return details;
+    }
+    return {};
+  }
+
+  Future<String> getMainAdminUID() async{
+    DocumentSnapshot snapshot =  await adminCollection.doc("MainAdmin").get();
+    return snapshot.get("UID");
+  }
   Future<Map<String, dynamic>?> getNextAppointment() async  {
     try {
       DocumentSnapshot snapshot = await usersCollection.doc(globals.UID).get();
@@ -440,6 +483,7 @@ class DatabaseService {
     }
     return null;
   }
+
 
   /*Future<bool> checkAppointment(String date) async {
 
@@ -613,6 +657,8 @@ class DatabaseService {
     }
   }
 
+
+
   Future cancelClientAppointment(String date) async {
     DocumentSnapshot snapshot =
         await usersCollection.doc(globals.selectedClient).get();
@@ -785,7 +831,8 @@ class DatabaseService {
             "weight": workoutExercises[j]["weight"],
             "name": exerciseSnap["exercise_name"],
             "description": exerciseSnap["exercise_description"],
-            "video_sample": exerciseSnap["video_sample"]
+            "video_sample": exerciseSnap["video_sample"],
+            "doc_link": exerciseSnap.exists && (exerciseSnap.data() as Map).containsKey("doc_link") ? exerciseSnap["doc_link"] : "No Doc Link"
           });
         }
 
@@ -799,34 +846,39 @@ class DatabaseService {
   }
 
   Future<List> getClientWorkouts(UID) async {
+    print("Finding Clients Workouts");
     globals.userWorkouts.clear();
     globals.testWorkouts.clear();
     DocumentSnapshot snapshot = await usersCollection.doc(UID).get();
     var userWorkouts = snapshot.get("workouts");
     final allWorkouts = FirebaseFirestore.instance.collection("workouts");
-    final allExercises =
-        FirebaseFirestore.instance.collection("exercises_test");
+
+    final allExercises = FirebaseFirestore.instance.collection("exercises_test");
     var workoutUIDS = [];
     for (int i = 0; i < userWorkouts.length; i++) {
       if (userWorkouts[i]["uid"] != null) {
-        DocumentSnapshot WorkoutSnap =
-            await allWorkouts.doc(userWorkouts[i]["uid"]).get();
+        print("Workout: " + userWorkouts[i]["uid"]);
+
+        DocumentSnapshot WorkoutSnap = await allWorkouts.doc(userWorkouts[i]["uid"]).get();
         var workoutName = WorkoutSnap.id;
         List workoutExercises = userWorkouts[i]["exercises"];
-        print("Workout Exercises: " + workoutExercises.toString());
-        globals.testWorkouts[workoutName] = [];
-        for (int j = 0; j < workoutExercises.length; j++) {
-          DocumentSnapshot exerciseSnap =
-              await allExercises.doc(workoutExercises[j]["uid"]).get();
-          globals.testWorkouts[workoutName].add({
-            "uid": workoutExercises[j]["uid"],
-            "reps": workoutExercises[j]["reps"],
-            "sets": workoutExercises[j]["sets"],
-            "weight": workoutExercises[j]["weight"],
-            "name": exerciseSnap["exercise_name"],
-            "description": exerciseSnap["exercise_description"],
-            "video_sample": exerciseSnap["video_sample"]
-          });
+        if(!globals.testWorkouts.keys.contains(workoutName)) {
+          globals.testWorkouts[workoutName] = [];
+          for (int j = 0; j < workoutExercises.length; j++) {
+            DocumentSnapshot exerciseSnap =
+            await allExercises.doc(workoutExercises[j]["uid"]).get();
+            globals.testWorkouts[workoutName].add({
+              "uid": workoutExercises[j]["uid"],
+              "reps": workoutExercises[j]["reps"],
+              "sets": workoutExercises[j]["sets"],
+              "weight": workoutExercises[j]["weight"],
+              "name": exerciseSnap["exercise_name"],
+              "description": exerciseSnap["exercise_description"],
+              "video_sample": exerciseSnap["video_sample"],
+              "doc_link": exerciseSnap.exists && (exerciseSnap.data() as Map).containsKey("doc_link") ? exerciseSnap["doc_link"] : "No Doc Link"
+            });
+          }
+
         }
         globals.userWorkouts.add(workoutName);
         workoutUIDS.add(workoutName);
@@ -834,7 +886,6 @@ class DatabaseService {
         print(globals.testWorkouts.toString());
       }
     }
-
     return workoutUIDS;
   }
 
@@ -874,6 +925,11 @@ class DatabaseService {
     }
   }
 
+  Future<dynamic> getAdminUIDs() async{
+    DocumentSnapshot snapshot = await adminCollection.doc("UIDS").get();
+    List<dynamic> fetchedUIDs = await snapshot["UID_LIST"];
+    return fetchedUIDs;
+  }
   Future<List> fetchWorkoutExercises(uid) async {
     DocumentSnapshot snapshot = await workoutCollection.doc(uid).get();
     List<dynamic> fetchedExercises = await snapshot["exercises"];
@@ -889,6 +945,7 @@ class DatabaseService {
     }
     return fetchedExercises;
   }
+
 
   Future<void> assignWorkout() async {
     DocumentSnapshot workoutSnap =
@@ -922,6 +979,10 @@ class DatabaseService {
     return await usersCollection.doc(globals.selectedClient).update({
       "workouts": FieldValue.arrayRemove([workoutHold])
     });
+  }
+
+  Future<void> deleteWorkout(String uid) async {
+    return await workoutCollection.doc(uid).delete();
   }
 
   Stream<List<Map<String, dynamic>>> getChatMessagesStream(

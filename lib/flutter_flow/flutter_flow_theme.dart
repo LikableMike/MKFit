@@ -295,18 +295,18 @@ class DarkModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF6898AB);
+  late Color primary = const Color(0xFF507583);
   late Color secondary = const Color(0xFF18AA99);
   late Color tertiary = const Color(0xFF928163);
-  late Color alternate = const Color(0xFF1C262E);
-  late Color primaryText = const Color(0xFFFFFFFF);
-  late Color secondaryText = const Color(0xFF95A1AC);
-  late Color primaryBackground = const Color(0xFF182026);
-  late Color secondaryBackground = const Color(0xFF101518);
-  late Color accent1 = const Color(0x4C6898AB);
+  late Color alternate = const Color(0xFFEDE8DF);
+  late Color primaryText = const Color(0xFF101518);
+  late Color secondaryText = const Color(0xFF57636C);
+  late Color primaryBackground = const Color(0xFFFBF9F5);
+  late Color secondaryBackground = const Color(0xFFFFFFFF);
+  late Color accent1 = const Color(0x4F507583);
   late Color accent2 = const Color(0x4D18AA99);
   late Color accent3 = const Color(0x4D928163);
-  late Color accent4 = const Color(0xB20B191E);
+  late Color accent4 = const Color(0xB2FFFFFF);
   late Color success = const Color(0xFF16857B);
   late Color warning = const Color(0xFFF3C344);
   late Color error = const Color(0xFFC4454D);

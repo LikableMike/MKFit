@@ -516,7 +516,7 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('admin');
+                                context.pushNamed('WorkoutList');
                               },
                               child: Container(
                                 width: double.infinity,
@@ -541,6 +541,7 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                     width: 1,
                                   ),
                                 ),
+
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 12, 16, 12),
@@ -578,14 +579,15 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   12, 0, 12, 0),
                                           child: Text(
-                                            'Update Workout',
+                                            'Delete Workout',
                                             style: FlutterFlowTheme.of(context)
                                                 .titleSmall
                                                 .override(
-                                                    fontFamily: 'Inter',
-                                                    letterSpacing: 0.0,
-                                                    color: Colors.black,
-                                                    fontSize: 20),
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                                color: Colors.black,
+                                                fontSize: 20
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -598,6 +600,7 @@ class _AdminNewWidgetState extends State<AdminNewWidget> {
                                     ],
                                   ),
                                 ),
+
                               ),
                             ),
                           ),

@@ -98,7 +98,7 @@ class _LoginWidgetState extends State<LoginWidget>
                 alignment: const AlignmentDirectional(0.0, -20.0),
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
-                      16.0, 0.0, 16.0, 16.0),
+                      16.0, 128.0, 16.0, 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -117,10 +117,10 @@ class _LoginWidgetState extends State<LoginWidget>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
-                                'assets/images/MK_Fit_Logo.png',
-                                width: 300.0,
+                                'assets/images/NewLogoTonneItUp.png',
+                                width: double.infinity,
                                 height: 284.0,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -310,18 +310,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                             _model.passwordTextController.text);
                                 if (user != null) {
                                   var UID = user.user?.uid;
-
-                                  if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
-                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
-                                    context.pushNamed('admin_new');
-                                  }
-
-                                  if (UID == "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3" ||
-                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
-                                    context.pushNamed('admin_new');
-                                  } else if (UID ==
-                                          "YIq1kNSHImdljlk1RKIULH22o2F3" ||
-                                      UID == "eYJLyiWEaVhwAtW3J0ZsPhg2mmc2") {
+                                  var UID_LIST = await DatabaseService().getAdminUIDs();
+                                  if (UID_LIST.contains(UID)){
                                     context.pushNamed('admin_new');
                                   } else {
                                     globals.UID = UID;
