@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:m_k_fit/backend/firebase_storage/database.dart';
 import 'package:m_k_fit/chat/chat_thread_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 
-class ChatWidget extends StatelessWidget {
+class ChatWidget extends StatefulWidget {
   final String participant;
 
   const ChatWidget({Key? key, required this.participant}) : super(key: key);
+
+  @override
+  _ChatWidgetState createState() => _ChatWidgetState();
+}
+
+class _ChatWidgetState extends State<ChatWidget> {
+  String participantName = '--';
+
+  @override
+  void initState() {
+    super.initState();
+    getParticipantName();
+  }
+
+  Future<void> getParticipantName() async {
+    try {
+      final name = await DatabaseService().getName(widget.participant);
+      setState(() {
+        participantName = name;
+      });
+    } catch (e) {
+      setState(() {
+        participantName = '--';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +41,33 @@ class ChatWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatThreadWidget(
-              participants: [participant, 'eYJLyiWEaVhwAtW3J0ZsPhg2mmc2'],
+            builder: (context) => FutureBuilder<String>(
+              future: DatabaseService().getMainAdminUID(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  ); // Loading indicator while the future is being resolved
+                }
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Error loading admin UID'),
+                  );
+                }
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return const Center(
+                    child: Text('No data available'),
+                  );
+                }
+
+                // Once the Future resolves, build the ChatThreadWidget
+                return ChatThreadWidget(
+                  participants: [
+                    widget.participant,
+                    snapshot.data!,
+                  ],
+                );
+              },
             ),
           ),
         );
@@ -34,7 +86,7 @@ class ChatWidget extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                participant[0],
+                participantName.isNotEmpty ? participantName[0] : '?',
                 style: FlutterFlowTheme.of(context).bodyLarge.override(
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.bold,
@@ -47,7 +99,7 @@ class ChatWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    participant.isNotEmpty ? participant : 'None',
+                    participantName,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.bold,

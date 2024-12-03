@@ -30,9 +30,9 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
     _model.fullNameTextController ??= TextEditingController();
     _model.fullNameFocusNode ??= FocusNode();
     _model.fullNameFocusNode!.addListener(() => safeSetState(() {}));
-    _model.ageTextController ??= TextEditingController();
-    _model.ageFocusNode ??= FocusNode();
-    _model.ageFocusNode!.addListener(() => safeSetState(() {}));
+    _model.DocLinkController ??= TextEditingController();
+    _model.DocLinkFocusNode ??= FocusNode();
+    _model.DocLinkFocusNode!.addListener(() => safeSetState(() {}));
     _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
     _model.phoneNumberFocusNode!.addListener(() => safeSetState(() {}));
@@ -465,67 +465,96 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                   ),
-                                  FlutterFlowIconButton(
-                                    borderRadius: 20.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 40.0,
-                                    fillColor: const Color(0xFF87A88E),
-                                    icon: Icon(
-                                      Icons.upload_sharp,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 24.0,
+                                  TextFormField(
+                                    controller: _model.DocLinkController,
+                                    focusNode: _model.DocLinkFocusNode,
+                                    autofocus: true,
+
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Document Link...',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelLarge
+                                          .override(
+                                        fontFamily: 'Outfit',
+                                        color: const Color(0xFF606A85),
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                        fontFamily: 'Outfit',
+                                        color: const Color(0xFF606A85),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      errorStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                        fontFamily: 'Figtree',
+                                        color: const Color(0xFFFF5963),
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE5E7EB),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFF6F61EF),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFFF5963),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFFF5963),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: (_model.DocLinkFocusNode
+                                          ?.hasFocus ??
+                                          false)
+                                          ? const Color(0x4D9489F5)
+                                          : Colors.white,
+                                      contentPadding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 20.0, 16.0, 20.0),
                                     ),
-                                    onPressed: () async {
-                                      final selectedFiles = await selectFiles(
-                                        allowedExtensions: ['pdf'],
-                                        multiFile: false,
-                                      );
-                                      if (selectedFiles != null) {
-                                        safeSetState(() =>
-                                            _model.isDataUploading = true);
-                                        var selectedUploadedFiles =
-                                            <FFUploadedFile>[];
-
-                                        var downloadUrls = <String>[];
-                                        try {
-                                          selectedUploadedFiles = selectedFiles
-                                              .map((m) => FFUploadedFile(
-                                                    name: m.storagePath
-                                                        .split('/')
-                                                        .last,
-                                                    bytes: m.bytes,
-                                                  ))
-                                              .toList();
-
-                                          downloadUrls = (await Future.wait(
-                                            selectedFiles.map(
-                                              (f) async => await uploadData(
-                                                  f.storagePath, f.bytes),
-                                            ),
-                                          ))
-                                              .where((u) => u != null)
-                                              .map((u) => u!)
-                                              .toList();
-                                        } finally {
-                                          _model.isDataUploading = false;
-                                        }
-                                        if (selectedUploadedFiles.length ==
-                                                selectedFiles.length &&
-                                            downloadUrls.length ==
-                                                selectedFiles.length) {
-                                          safeSetState(() {
-                                            _model.uploadedLocalFile =
-                                                selectedUploadedFiles.first;
-                                            _model.uploadedFileUrl =
-                                                downloadUrls.first;
-                                          });
-                                        } else {
-                                          safeSetState(() {});
-                                          return;
-                                        }
-                                      }
-                                    },
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                      fontFamily: 'Figtree',
+                                      color: const Color(0xFF15161E),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    cursorColor: const Color(0xFF6F61EF),
+                                    validator: _model
+                                        .DocLinkControllerValidator
+                                        .asValidator(context),
                                   ),
                                 ]
                                     .divide(const SizedBox(height: 12.0))
@@ -552,7 +581,7 @@ class _CreateExcersiseWidgetState extends State<CreateExcersiseWidget> {
 
                           print("Attempting to create Exercise");
                           await DatabaseService().createExercise(
-                              _model.fullNameTextController.text, _model.descriptionTextController.text, _model.videoLinkTextController.text);
+                              _model.fullNameTextController.text, _model.descriptionTextController.text, _model.videoLinkTextController.text, _model.DocLinkController.text);
                         }catch(e){
                           print(e);
                         }

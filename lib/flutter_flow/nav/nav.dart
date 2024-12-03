@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:m_k_fit/AdminClientList/admin_client_list_widget.dart';
+import 'package:m_k_fit/ClientDetailsPage/client_details_widget.dart';
 import 'package:m_k_fit/ClientInfoPage/client_info_page_widget.dart';
 import 'package:provider/provider.dart';
 import '/backend/firebase_storage/globals.dart' as globals;
@@ -74,8 +75,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ?  globals.findInitialState() : const LoginWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? globals.findInitialState()
+          : const LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -201,6 +203,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ExerciseListWidget(),
         ),
         FFRoute(
+          name: 'WorkoutList',
+          path: '/WorkoutList',
+          builder: (context, params) => const WorkoutListWidget(),
+        ),
+        FFRoute(
+          name: 'ClientDetails',
+          path: '/ClientDetails',
+          builder: (context, params) => const ClientDetailsPageWidget(),
+        ),
+        FFRoute(
           name: 'UpdateExercisePage',
           path: '/UpdateExercise',
           builder: (context, params) => const UpdateExerciseWidget(),
@@ -256,6 +268,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'admin_new',
           path: '/admin_new',
           builder: (context, params) => const AdminNewWidget(),
+        ),
+        FFRoute(
+          name: 'chat_list',
+          path: '/chat_list',
+          builder: (context, params) => const ChatListWidget(),
         ),
         FFRoute(
           name: 'changeName',

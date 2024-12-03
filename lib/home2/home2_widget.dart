@@ -39,8 +39,7 @@ import 'package:m_k_fit/pages/progress_page/progress_page_widget.dart';
 import 'package:m_k_fit/pages/progress_page/progress_page_model.dart';
 import 'package:m_k_fit/chat/chat_thread_widget.dart';
 import 'package:m_k_fit/backend/firebase_storage/database.dart';
-
-
+import '/backend/firebase_storage/globals.dart' as Globals;
 import 'home2_model.dart';
 export 'home2_model.dart';
 
@@ -61,6 +60,8 @@ class _Home2WidgetState extends State<Home2Widget> {
     "bmi": {"x": [], "y": []}
   };
 
+  String? UID;
+
   final DatabaseService databaseService = DatabaseService();
 
   @override
@@ -68,7 +69,13 @@ class _Home2WidgetState extends State<Home2Widget> {
     super.initState();
     _model = createModel(context, () => Home2Model());
     getGraphData();
+    fetchUID();
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+  }
+
+  Future<void> fetchUID() async {
+    UID = await DatabaseService().getUID();
+    setState(() {});
   }
 
   Future getGraphData() async {
@@ -196,15 +203,10 @@ class _Home2WidgetState extends State<Home2Widget> {
               child: Container(
                 width: 48,
                 height: 48,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 1,
-                  ),
-                ),
+
                 child: FlutterFlowIconButton(
                   borderRadius: 20,
-                  borderWidth: 1,
+                  borderWidth: 0,
                   buttonSize: 40,
                   icon: const Icon(
                     Icons.person,
@@ -251,8 +253,8 @@ class _Home2WidgetState extends State<Home2Widget> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Image.network(
-                      'https://picsum.photos/seed/634/600',
+                    child: Image.asset(
+                      'assets/images/Gym.jpg',
                       width: 300,
                       height: 200,
                       fit: BoxFit.cover,
@@ -327,55 +329,74 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   height: 100,
                                   decoration: const BoxDecoration(),
                                   child: Align(
-                                    alignment: const AlignmentDirectional(-1, 0),
+                                    alignment:
+                                        const AlignmentDirectional(-1, 0),
                                     child: FutureBuilder<Map<String, dynamic>?>(
-                                      future: DatabaseService().getNextAppointment(), // Fetch the next appointment
-                                      builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
-                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                      future: DatabaseService()
+                                          .getNextAppointment(), // Fetch the next appointment
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<Map<String, dynamic>?>
+                                              snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
                                           // Display a loading indicator
                                           return Text(
                                             'Loading...',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
                                         } else if (snapshot.hasError) {
                                           // Display an error message
                                           return Text(
                                             'Error: ${snapshot.error}',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
-                                        } else if (snapshot.hasData && snapshot.data != null) {
+                                        } else if (snapshot.hasData &&
+                                            snapshot.data != null) {
                                           // Extract the date and time
-                                          DateTime appointmentDate = snapshot.data!['date'];
-                                          TimeOfDay appointmentTime = snapshot.data!['time'];
+                                          DateTime appointmentDate =
+                                              snapshot.data!['date'];
+                                          TimeOfDay appointmentTime =
+                                              snapshot.data!['time'];
 
-                                          String formattedDate = DateFormat('MMMM d').format(appointmentDate);
-                                          String formattedTime = appointmentTime.format(context);
+                                          String formattedDate =
+                                              DateFormat('MMMM d')
+                                                  .format(appointmentDate);
+                                          String formattedTime =
+                                              appointmentTime.format(context);
 
                                           return Text(
                                             'Next Appointment: \n$formattedDate, at $formattedTime',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
                                         } else {
                                           // If no data is available
                                           return Text(
                                             'No upcoming appointments',
-                                            style: FlutterFlowTheme.of(context).titleLarge.override(
-                                              fontFamily: 'Inter',
-                                              fontSize: 25,
-                                              letterSpacing: 0.0,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 25,
+                                                  letterSpacing: 0.0,
+                                                ),
                                           );
                                         }
                                       },
@@ -383,7 +404,6 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                         ),
@@ -404,10 +424,8 @@ class _Home2WidgetState extends State<Home2Widget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
-
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               color: Color(0xFF86BD92),
-
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -490,7 +508,6 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-
                                   Container(
                                     width: 300,
                                     height: 100,
@@ -509,7 +526,9 @@ class _Home2WidgetState extends State<Home2Widget> {
                                               xData: graphData["weight"]!["x"]!,
                                               yData: graphData["weight"]!["y"]!,
                                               settings: LineChartBarData(
-                                                color: FlutterFlowTheme.of(context).primary,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                                 barWidth: 2,
                                                 isCurved: true,
                                                 preventCurveOverShooting: true,
@@ -527,18 +546,24 @@ class _Home2WidgetState extends State<Home2Widget> {
                                                     .secondaryBackground,
                                             showBorder: false,
                                           ),
-                                          axisBounds: AxisBounds(),
+
+                                          axisBounds: AxisBounds(
+                                              minY: 90,
+                                              maxY: 300
+                                          ),
                                           xAxisLabelInfo: AxisLabelInfo(
 
                                           ),
+
                                           yAxisLabelInfo: AxisLabelInfo(
                                             title: 'Weight lb.',
-                                            titleTextStyle: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                            titleTextStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      letterSpacing: 0.0,
+                                                    ),
                                           ),
                                         ),
                                       ),
@@ -571,10 +596,8 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     24, 0, 24, 0),
                                 iconPadding:
-
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 color: Color(0xFF86BD92),
-
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -645,8 +668,8 @@ class _Home2WidgetState extends State<Home2Widget> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
-                                  child: Image.network(
-                                    'https://images.unsplash.com/photo-1606902965551-dce093cda6e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwxfHxmaXQlMjBnaXJsfGVufDB8fHx8MTcxMDM5MDQ1N3ww&ixlib=rb-4.0.3&q=80&w=1080',
+                                  child: Image.asset(
+                                    "assets/images/KaylaIcon.png",
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -665,40 +688,166 @@ class _Home2WidgetState extends State<Home2Widget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
+                                    Padding(padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),),
                                     Align(
                                       alignment: AlignmentDirectional(-1, -1),
                                       child: Text(
-                                        'MK FIT',
+                                        "Chat With Makayla:",
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
                                               fontFamily: 'Inter',
                                               letterSpacing: 0.0,
+                                            fontSize: 20,
+                                          fontWeight: FontWeight.bold
                                             ),
                                       ),
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        'Are you free this friday for a workout session?',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                      child: FutureBuilder<String>(
+                                        future: DatabaseService().getMainAdminUID(), // Fetch admin UID first
+                                        builder: (context, adminSnapshot) {
+                                          if (adminSnapshot.connectionState == ConnectionState.waiting) {
+                                            return const CircularProgressIndicator(); // Show a loader while waiting
+                                          }
+                                          if (adminSnapshot.hasError) {
+                                            return Text(
+                                              'Error: ${adminSnapshot.error}',
+                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                            );
+                                          }
+                                          if (!adminSnapshot.hasData || adminSnapshot.data!.isEmpty) {
+                                            return Text(
+                                              'No admin UID found',
+                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                            );
+                                          }
+
+                                          // Admin UID resolved, proceed to listen to chat messages
+                                          String adminUID = adminSnapshot.data!;
+                                          return StreamBuilder<List<Map<String, dynamic>>>(
+                                            stream: DatabaseService().getChatMessagesStream([adminUID, Globals.UID ?? "Null"]),
+                                            builder: (context, chatSnapshot) {
+                                              if (chatSnapshot.connectionState == ConnectionState.waiting) {
+                                                return const CircularProgressIndicator(); // Loader for the stream
+                                              }
+                                              if (chatSnapshot.hasError) {
+                                                return Text(
+                                                  'Error: ${chatSnapshot.error}',
+                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                                );
+                                              }
+                                              if (!chatSnapshot.hasData || chatSnapshot.data!.isEmpty) {
+                                                return Text(
+                                                  'No messages',
+                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                                );
+                                              }
+
+                                              // Process the messages and display the latest one
+                                              List<Map<String, dynamic>> messages = chatSnapshot.data!;
+                                              Map<String, dynamic> latestMessage = messages.last; // Get the latest message
+                                              String messageContent = (latestMessage['text'].length > 20 ? "${latestMessage['text'].substring(0,20)}..." : latestMessage['text']);
+
+                                              return Text(
+                                                messageContent,
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                    fontSize: 20
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
                                       ),
+
+
                                     ),
                                     Align(
                                       alignment: AlignmentDirectional(-1, 1),
-                                      child: Text(
-                                        'Mon. July 3rd - 4:12pm',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              letterSpacing: 0.0,
-                                            ),
+                                      child: FutureBuilder<String>(
+                                        future: DatabaseService().getMainAdminUID(), // Fetch admin UID first
+                                        builder: (context, adminSnapshot) {
+                                          if (adminSnapshot.connectionState == ConnectionState.waiting) {
+                                            return const CircularProgressIndicator(); // Show a loader while waiting
+                                          }
+                                          if (adminSnapshot.hasError) {
+                                            return Text(
+                                              'Error: ${adminSnapshot.error}',
+                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                            );
+                                          }
+                                          if (!adminSnapshot.hasData || adminSnapshot.data!.isEmpty) {
+                                            return Text(
+                                              'No admin UID found',
+                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                            );
+                                          }
+
+                                          // Admin UID resolved, proceed to listen to chat messages
+                                          String adminUID = adminSnapshot.data!;
+                                          return StreamBuilder<List<Map<String, dynamic>>>(
+                                            stream: DatabaseService().getChatMessagesStream([adminUID, Globals.UID ?? "Null"]),
+                                            builder: (context, chatSnapshot) {
+                                              if (chatSnapshot.connectionState == ConnectionState.waiting) {
+                                                return const CircularProgressIndicator(); // Loader for the stream
+                                              }
+                                              if (chatSnapshot.hasError) {
+                                                return Text(
+                                                  'Error: ${chatSnapshot.error}',
+                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                                );
+                                              }
+                                              if (!chatSnapshot.hasData || chatSnapshot.data!.isEmpty) {
+                                                return Text(
+                                                  'No messages',
+                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                                );
+                                              }
+
+                                              // Process the messages and display the latest one
+                                              List<Map<String, dynamic>> messages = chatSnapshot.data!;
+                                              Map<String, dynamic> latestMessage = messages.last; // Get the latest message
+                                              String messageContent = ("Sent on: " + DateFormat("MM-dd").format(latestMessage['timestamp'].toDate())) ?? 'No content';
+
+                                              return Text(
+                                                messageContent,
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                  fontSize: 15
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
@@ -722,8 +871,33 @@ class _Home2WidgetState extends State<Home2Widget> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ChatThreadWidget(
-                                    participants: ['User UID', 'Admin UID'],
+                                  builder: (context) => FutureBuilder<String>(
+                                    future: DatabaseService().getMainAdminUID(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        ); // Loading indicator while the future is being resolved
+                                      }
+                                      if (snapshot.hasError) {
+                                        return const Center(
+                                          child: Text('Error loading admin UID'),
+                                        );
+                                      }
+                                      if (!snapshot.hasData || snapshot.data == null) {
+                                        return const Center(
+                                          child: Text('No data available'),
+                                        );
+                                      }
+
+                                      // Once the Future resolves, build the ChatThreadWidget
+                                      return ChatThreadWidget(
+                                        participants: [
+                                          Globals.UID ?? "Null",
+                                          snapshot.data!,
+                                        ],
+                                      );
+                                    },
                                   ),
                                 ),
                               );
@@ -734,17 +908,15 @@ class _Home2WidgetState extends State<Home2Widget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                               iconPadding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               color: Color(0xFF86BD92),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
-                                fontFamily: 'Inter',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-
-                              ),
-
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
                               elevation: 3,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
