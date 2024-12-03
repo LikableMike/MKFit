@@ -46,19 +46,24 @@ class _ProgressComponentWidgetState extends State<ProgressComponentWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+      padding: EdgeInsetsDirectional.fromSTEB(16, 300, 16, 16),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
+        child:
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+        child:
+        Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Text(
-              'Enter Your ${widget.input}',
+              'Enter Your Weight in Pounds',
               style: FlutterFlowTheme.of(context).titleLarge.override(
                     fontFamily: 'Inter',
                     letterSpacing: 0.0,
@@ -149,6 +154,10 @@ class _ProgressComponentWidgetState extends State<ProgressComponentWidget> {
                     final databaseService = DatabaseService();
                     databaseService.uploadProgress(
                         widget.input, _model.textController.text);
+                    if(_model.textController.text != "") {
+                      await databaseService.updateUserWeight(
+                          _model.textController.text);
+                    }
                     Navigator.pop(context);
                   },
                   text: 'Submit',
@@ -171,6 +180,7 @@ class _ProgressComponentWidgetState extends State<ProgressComponentWidget> {
             ),
           ].divide(SizedBox(height: 16)),
         ),
+            ),
       ),
     );
   }

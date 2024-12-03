@@ -33,8 +33,8 @@ class _UpdateExerciseWidgetState extends State<UpdateExerciseWidget> {
 
     _model.fullNameTextController ??= TextEditingController();
     _model.fullNameFocusNode ??= FocusNode();
-    _model.ageTextController ??= TextEditingController();
-    _model.ageFocusNode ??= FocusNode();
+    _model.DocLinkController ??= TextEditingController();
+    _model.DocLinkFocusNode ??= FocusNode();
     _model.phoneNumberTextController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
     _model.descriptionTextController ??= TextEditingController();
@@ -513,24 +513,96 @@ class _UpdateExerciseWidgetState extends State<UpdateExerciseWidget> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  FlutterFlowIconButton(
-                                    borderRadius: 20.0,
-                                    borderWidth: 1.0,
-                                    buttonSize: 40.0,
-                                    fillColor: const Color(0xFF87A88E),
-                                    icon: Icon(
-                                      Icons.upload_sharp,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 24.0,
-                                    ),
-                                    onPressed: () async {
-                                      final selectedFiles = await selectFiles(
-                                        allowedExtensions: ['pdf'],
-                                        multiFile: false,
-                                      );
+                                  TextFormField(
+                                    controller: _model.DocLinkController,
+                                    focusNode: _model.DocLinkFocusNode,
+                                    autofocus: true,
 
-                                    },
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Document Link...',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelLarge
+                                          .override(
+                                        fontFamily: 'Outfit',
+                                        color: const Color(0xFF606A85),
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                        fontFamily: 'Outfit',
+                                        color: const Color(0xFF606A85),
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      errorStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                        fontFamily: 'Figtree',
+                                        color: const Color(0xFFFF5963),
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE5E7EB),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFF6F61EF),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFFF5963),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFFF5963),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: (_model.DocLinkFocusNode
+                                          ?.hasFocus ??
+                                          false)
+                                          ? const Color(0x4D9489F5)
+                                          : Colors.white,
+                                      contentPadding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 20.0, 16.0, 20.0),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                      fontFamily: 'Figtree',
+                                      color: const Color(0xFF15161E),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    cursorColor: const Color(0xFF6F61EF),
+                                    validator: _model
+                                        .DocLinkControllerValidator
+                                        .asValidator(context),
                                   ),
                                 ]
                                     .divide(const SizedBox(height: 12.0))
@@ -557,6 +629,7 @@ class _UpdateExerciseWidgetState extends State<UpdateExerciseWidget> {
                             "name": _model.fullNameTextController.text.trim(),
                             "description": _model.descriptionTextController.text.trim(),
                             "video_link": _model.videoLinkTextController.text.trim(),
+                            "doc_link" : _model.DocLinkController.text.trim(),
                           };
                           print("Attempting to update Exercise");
                           await DatabaseService().updateExerciseData(totalExercise, globals.selectedExercise);

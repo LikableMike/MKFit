@@ -310,18 +310,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                             _model.passwordTextController.text);
                                 if (user != null) {
                                   var UID = user.user?.uid;
-
-                                  if (UID == "thdhQ7m16tRX5ljBFFuq0Qoh3Dj2" ||
-                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
-                                    context.pushNamed('admin_new');
-                                  }
-
-                                  if (UID == "Qtg99NjZtpZW7EvWOYoy7Xvh7kF3" ||
-                                      UID == "nOlIEy4WKkddkikrMPhQNLEjT9y1") {
-                                    context.pushNamed('admin_new');
-                                  } else if (UID ==
-                                          "YIq1kNSHImdljlk1RKIULH22o2F3" ||
-                                      UID == "eYJLyiWEaVhwAtW3J0ZsPhg2mmc2") {
+                                  var UID_LIST = await DatabaseService().getAdminUIDs();
+                                  if (UID_LIST.contains(UID)){
                                     context.pushNamed('admin_new');
                                   } else {
                                     globals.UID = UID;
