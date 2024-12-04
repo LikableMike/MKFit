@@ -5,7 +5,7 @@
 
 
     <application
-        android:label="MKFit"
+        android:label="Tonne It Up"
         tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">

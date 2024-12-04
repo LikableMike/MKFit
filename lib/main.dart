@@ -64,7 +64,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
 
     super.initState();
-    globals.futureUID = DatabaseService().getUID();
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
     userStream = mKFitFirebaseUserStream()
