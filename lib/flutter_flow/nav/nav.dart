@@ -114,6 +114,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SettingsPageWidget(),
         ),
         FFRoute(
+          name: 'DeleteAccount',
+          path: '/DeleteAccount',
+          builder: (context, params) => const DeleteAccountWidget(),
+        ),
+        FFRoute(
           name: 'AssignWorkoutPage',
           path: '/AssignWorkoutPage',
           builder: (context, params) => const AssignWorkoutPageWidget(),

@@ -50,3 +50,4 @@ export '/UpdateExercise/update_exercise_widget.dart' show UpdateExerciseWidget;
 export '/chat/chat_list_widget.dart' show ChatListWidget;
 export '/WorkoutList/workout_list_widget.dart' show WorkoutListWidget;
 export '/ClientDetailsPage/client_details_widget.dart' show ClientDetailsWidget;
+export '/DeleteAccount/delete_account_widget.dart' show DeleteAccountWidget;

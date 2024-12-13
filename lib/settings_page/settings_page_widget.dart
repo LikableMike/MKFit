@@ -429,6 +429,57 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                   ),
                 ),
                 Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      context.pushNamed('DeleteAccount');
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(),
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Delete Account',
+                              style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                letterSpacing: 0.0,
+                              ),
+                            ),
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('DeleteAccount');
+                              },
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color:
+                                FlutterFlowTheme.of(context).secondaryText,
+                                size: 24,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(25, 0, 25, 10),
                   child: FFButtonWidget(
                     onPressed: () async {
@@ -467,7 +518,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
               child: Text(
-                'v0.0.1',
+                'v1.0.0',
                 style: FlutterFlowTheme.of(context).labelMedium.override(
                   fontFamily: 'Inter',
                   letterSpacing: 0.0,

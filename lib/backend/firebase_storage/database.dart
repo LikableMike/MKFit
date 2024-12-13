@@ -2,6 +2,7 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:file_picker/file_picker.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:m_k_fit/backend/backend.dart";
 import "package:sqflite/sqflite.dart";
 import 'dart:convert';
 import "package:firebase_storage/firebase_storage.dart";
@@ -14,6 +15,7 @@ class DatabaseService {
   DatabaseService();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  final CollectionReference allAppointments = FirebaseFirestore.instance.collection("appointments");
   final CollectionReference exerciseCollection =
       FirebaseFirestore.instance.collection("exercises");
   final CollectionReference chatCollection =
@@ -297,6 +299,70 @@ class DatabaseService {
     }
   }
 
+  Future<void> deleteAccount() async{
+    //DELETING ALL APPOINTMENTS
+    DocumentReference docRef = allAppointments.doc("allStartTimes");
+    DocumentSnapshot snapshot = await allAppointments.doc("allStartTimes").get();
+    List apps = snapshot["startTimes"];
+    var appsNum = apps.length;
+    List removeIndexes = [];
+    print(appsNum);
+    for (int i = 0; i < appsNum; i++){
+      if(apps[i]["userId"] == globals.UID){
+        print("Match");
+        removeIndexes.add(i);
+      }
+    }
+    var newAppointments = [];
+    for(int j = 0; j < appsNum; j++){
+      if(!removeIndexes.contains(j)){
+        newAppointments.add(apps[j]);
+      }
+
+    }
+    await docRef.update({"startTimes" : newAppointments});
+
+    //DELETING ALL CHAT REFERENCES
+    QuerySnapshot allChats = await chatCollection.where("participants", arrayContains: globals.UID).get();
+    for(int i = 0 ; i < allChats.docs.length; i++){
+      chatCollection.doc(allChats.docs[i].id).delete();
+    }
+
+    //DELETING ALL MESSAGES
+    QuerySnapshot allReceived = await chatMessageCollection.where("receiver", isEqualTo: globals.UID).get();
+    QuerySnapshot allSent = await chatMessageCollection.where("sender", isEqualTo: globals.UID).get();
+
+    List allSentAndReceived = [];
+    allSentAndReceived.addAll(allReceived.docs);
+    allSentAndReceived.addAll(allSent.docs);
+    print(globals.UID);
+    for(int i = 0; i < allSentAndReceived.length; i++){
+      chatMessageCollection.doc(allSentAndReceived[i].id).delete();
+    }
+
+    //DELETING ALL PROGRESS POINTS
+    QuerySnapshot allProgress = await progressCollection.where("uid", isEqualTo: globals.UID).get();
+    for(int i = 0; i < allProgress.docs.length; i++){
+      progressCollection.doc(allProgress.docs[i].id).delete();
+    }
+
+    //DELETING PARQ RESPONSE
+    QuerySnapshot parqResponse = await FirebaseFirestore.instance.collection("parq_responses").where("userId", isEqualTo: globals.UID).get();
+    for(int i = 0; i < parqResponse.docs.length; i++){
+      FirebaseFirestore.instance.collection("parq_responses").doc(parqResponse.docs[i].id).delete();
+    }
+
+    //DELETING USER DATA
+    usersCollection.doc(globals.UID).delete();
+
+    //REMOVING USER AUTHENTICATION
+    User? user = FirebaseAuth.instance.currentUser;
+    if(user != null){
+      user.delete();
+    }
+
+
+  }
   Future<void> updatePhoneNumber(String newPhoneNumber) async {
     try {
       final String uid = await getUID();
