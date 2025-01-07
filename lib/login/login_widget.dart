@@ -194,7 +194,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                           .primaryBackground,
                                       letterSpacing: 0.0,
                                     ),
-                                maxLength: 25,
+                                maxLength: 99,
                                 maxLengthEnforcement:
                                     MaxLengthEnforcement.enforced,
                                 cursorColor: FlutterFlowTheme.of(context)

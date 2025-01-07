@@ -138,32 +138,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Upload profile picture Optional',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                        Container(
-                          width: 100.0,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).secondary,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/upload_photo.png',
-                              width: 300.0,
-                              height: 200.0,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+
                         Align(
                           alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Padding(
@@ -310,7 +285,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       ],
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Phone Number',
+                                        labelText: 'Phone Number (Optional)',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
@@ -356,7 +331,7 @@ class _CreateAccount1WidgetState extends State<CreateAccount1Widget> {
                                       ],
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: "Height (e.g., 5'10\")",
+                                        labelText: "Height (Optional)",
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
